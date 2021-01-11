@@ -6,9 +6,10 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <skin.support.constraint.SkinCompatConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorContentBg">
 
         <com.lizl.wtmg.custom.view.CustomTitleBar
             android:id="@+id/ctb_title"
@@ -17,10 +18,68 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_input_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="54dp"
+            android:layout_marginEnd="@dimen/global_content_padding_edge"
+            android:gravity="center"
+            android:textColor="@color/colorEmphasize"
+            android:textSize="@dimen/global_text_size_bigger"
+            app:layout_constraintBottom_toTopOf="@+id/view_input_key"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <com.lizl.wtmg.custom.view.InputKeyView
-            android:id="@+id/rv_input_key"
-            android:layout_width="match_parent"
+            android:id="@+id/view_input_key"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.75" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/view_input_key"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view_input_key"
+            app:layout_constraintTop_toTopOf="@+id/view_input_key">
+
+            <com.lizl.wtmg.module.skin.view.SkinImageView
+                android:id="@+id/iv_backspace"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_click_ripple"
+                android:paddingTop="25dp"
+                android:paddingBottom="15dp"
+                android:src="@drawable/ic_baseline_backspace_24"
+                android:tint="@color/colorSvgTint"
+                app:layout_constraintHeight_percent="0.25"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <skin.support.widget.SkinCompatTextView
+                android:id="@+id/tv_record_one_more"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_click_ripple"
+                android:gravity="center"
+                android:text="@string/record_once_more"
+                android:textColor="@color/colorTextColor"
+                android:textSize="@dimen/global_text_size_bigger"
+                app:layout_constraintHeight_percent="0.375"
+                app:layout_constraintTop_toBottomOf="@+id/iv_backspace" />
+
+            <skin.support.widget.SkinCompatTextView
+                android:id="@+id/tv_save"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_click_ripple_emphasize"
+                android:gravity="center"
+                android:text="@string/save"
+                android:textColor="@color/white"
+                android:textSize="@dimen/global_text_size_bigger"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_record_one_more" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </skin.support.constraint.SkinCompatConstraintLayout>
 </layout>

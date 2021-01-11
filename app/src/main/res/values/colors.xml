@@ -13,6 +13,7 @@
     <color name="colorSvgTint">@color/colorTextColor</color>
     <color name="colorClickRipple">#33757575</color>
 
+    <color name="colorEmphasize">#f44336</color>
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="black">#000000</color>

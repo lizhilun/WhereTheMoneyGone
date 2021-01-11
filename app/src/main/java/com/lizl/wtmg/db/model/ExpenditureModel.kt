@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "expenditureModel")
+@Entity(tableName = "ExpenditureModel")
 data class ExpenditureModel(
         @PrimaryKey(autoGenerate = true)
         var id: Long = 0L,

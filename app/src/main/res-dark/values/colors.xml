@@ -12,7 +12,7 @@
     <color name="colorTransparentBlackBg_dark">#CCFFFFFF</color>
     <color name="colorTransparentWhiteBg_dark">#CC000000</color>
     <color name="colorSvgTint_dark">@color/colorTextColor_dark</color>
-    <color name="colorClickRipple_night">#33999999</color>
+    <color name="colorClickRipple_dark">#33999999</color>
 
     <color name="color_dialog_bg_dark">#242424</color>
     <color name="color_dialog_button_text_enable_dark">@color/colorPrimary_dark</color>

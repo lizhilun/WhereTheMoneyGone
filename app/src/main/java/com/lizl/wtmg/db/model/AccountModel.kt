@@ -4,16 +4,13 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "IncomeModel")
-data class IncomeModel(
+@Entity(tableName = "AccountModel")
+data class AccountModel(
         @PrimaryKey(autoGenerate = true)
         var id: Long = 0L,
 
         @ColumnInfo
-        var amonunt: Float,
+        var type: String,
 
         @ColumnInfo
-        var incomeType: String,
-
-        @ColumnInfo
-        var time: Long)
+        var amount: Int)

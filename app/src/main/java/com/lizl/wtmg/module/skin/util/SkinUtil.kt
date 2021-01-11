@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
+import android.util.Log
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.Utils
@@ -23,6 +24,8 @@ import skin.support.design.app.SkinMaterialViewInflater
 
 object SkinUtil
 {
+    private val TAG = "SkinUtil"
+
     private const val SKIN_DARK = "dark"
 
     fun init(application: Application)
