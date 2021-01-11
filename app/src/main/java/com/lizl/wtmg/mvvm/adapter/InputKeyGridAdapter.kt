@@ -23,14 +23,16 @@ class InputKeyGridAdapter(keyList: MutableList<InputKeyModel>) : BaseQuickAdapte
 
             if (item.keyBgResId != null)
             {
-                setBackgroundResource(item.keyBgResId!!)
+                setBackgroundColor(item.keyBgResId!!)
                 tv_name.setTextColor(ColorUtils.getColor(R.color.white))
             }
             else
             {
-                setBackgroundResource(R.color.transparent)
+                setBackgroundResource(R.drawable.bg_click_ripple)
                 tv_name.setTextColor(SkinUtil.getColor(context, R.color.colorTextColor))
             }
+
+            setOnClickListener { }
         }
     }
 }

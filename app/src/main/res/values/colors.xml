@@ -11,6 +11,7 @@
     <color name="colorTransparentBlackBg">#CC000000</color>
     <color name="colorTransparentWhiteBg">#CCFFFFFF</color>
     <color name="colorSvgTint">@color/colorTextColor</color>
+    <color name="colorClickRipple">#33757575</color>
 
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFFFF</color>

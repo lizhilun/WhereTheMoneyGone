@@ -1,20 +1,25 @@
 package com.lizl.wtmg.custom.view
 
 import android.content.Context
-import android.graphics.Color
 import android.util.AttributeSet
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.ColorUtils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.mvvm.adapter.InputKeyGridAdapter
 import com.lizl.wtmg.mvvm.model.InputKeyModel
 
 class InputKeyView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : RecyclerView(context, attrs, defStyleAttr)
 {
+    constructor(context: Context) : this(context, null)
+
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+
     init
     {
         layoutManager = GridLayoutManager(context, 4)
         adapter = InputKeyGridAdapter(getInputKeyList())
+        overScrollMode = OVER_SCROLL_NEVER
     }
 
     private fun getInputKeyList(): MutableList<InputKeyModel>
@@ -35,7 +40,7 @@ class InputKeyView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : 
             add(InputKeyModel(context.getString(R.string.record_once_more)))
             add(InputKeyModel("0"))
             add(InputKeyModel("."))
-            add(InputKeyModel(context.getString(R.string.save), keyBgResId = Color.RED))
+            add(InputKeyModel(context.getString(R.string.save), keyBgResId = ColorUtils.getColor(R.color.colorPrimary)))
         }
     }
 }
