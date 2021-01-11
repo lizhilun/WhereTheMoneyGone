@@ -1,0 +1,86 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/colorContentBg</item>
+        <item name="android:statusBarColor">@color/colorContentBg</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <style name="ToolbarLayoutStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/global_toolbar_height</item>
+    </style>
+
+    <style name="GlobalTitleTextStyle">
+        <item name="android:textSize">@dimen/global_text_size_biggest</item>
+        <item name="android:textColor">@color/colorTextColor</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="GlobalTextStyle">
+        <item name="android:textSize">@dimen/global_text_size</item>
+        <item name="android:textColor">@color/colorTextColor</item>
+    </style>
+
+    <style name="GlobalSmallTextStyle">
+        <item name="android:textSize">@dimen/global_text_size_small</item>
+        <item name="android:textColor">@color/colorTextColor</item>
+    </style>
+
+    <style name="GlobalSmallerTextStyle">
+        <item name="android:textSize">@dimen/global_text_size_smaller</item>
+        <item name="android:textColor">@color/colorTextColor</item>
+    </style>
+
+    <style name="GlobalSecondaryTextStyle">
+        <item name="android:textSize">@dimen/global_text_size_smaller</item>
+        <item name="android:textColor">@color/colorSecondaryTextColor</item>
+    </style>
+
+    <style name="GlobalSecondarySmallerTextStyle">
+        <item name="android:textSize">@dimen/global_text_size_smallest</item>
+        <item name="android:textColor">@color/colorSecondaryTextColor</item>
+    </style>
+
+    <style name="NewsSourceItemImageStyle">
+        <item name="android:layout_width">@dimen/news_source_item_image_size</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:paddingStart">@dimen/news_source_item_image_padding</item>
+        <item name="android:paddingEnd">@dimen/news_source_item_image_padding</item>
+        <item name="android:tint">@color/colorTextColor</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+
+    <style name="SettingItemIconStyle">
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="android:tint">@color/colorSvgTint</item>
+        <item name="layout_constraintTop_toTopOf">parent</item>
+        <item name="layout_constraintBottom_toBottomOf">parent</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+    </style>
+
+    <style name="DialogButtonTextStyle">
+        <item name="android:textSize">@dimen/global_text_size</item>
+        <item name="android:textColor">@drawable/color_dialog_button_text</item>
+        <item name="android:layout_height">@dimen/dialog_button_height</item>
+        <item name="android:layout_width">@dimen/dialog_button_width</item>
+        <item name="android:gravity">center_vertical|end</item>
+    </style>
+
+    <style name="GlobalFABStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">12dp</item>
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="layout_anchorGravity">bottom|end</item>
+        <item name="layout_constraintBottom_toBottomOf">parent</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+    </style>
+</resources>
