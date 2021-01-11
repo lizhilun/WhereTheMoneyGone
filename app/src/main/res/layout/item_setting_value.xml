@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<skin.support.constraint.SkinCompatConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/global_short_list_item_height"
+    android:paddingStart="@dimen/global_content_padding_edge"
+    android:paddingEnd="@dimen/global_content_padding_edge">
+
+    <com.lizl.wtmg.module.skin.view.SkinImageView
+        android:id="@+id/iv_value_icon"
+        style="@style/SettingItemIconStyle" />
+
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_value_setting_name"
+        style="@style/GlobalTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:gravity="start|center_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_value_icon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_value_setting_value"
+        style="@style/GlobalSecondaryTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</skin.support.constraint.SkinCompatConstraintLayout>

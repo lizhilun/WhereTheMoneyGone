@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<skin.support.constraint.SkinCompatConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_dialog_bg">
+
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="@dimen/global_content_padding_edge"
+        android:layout_marginTop="@dimen/global_content_padding_edge"
+        android:layout_marginEnd="@dimen/global_content_padding_edge"
+        android:maxLines="1"
+        android:textColor="@color/colorTextColor"
+        android:textSize="@dimen/dialog_title_text_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <skin.support.widget.SkinCompatEditText
+        android:id="@+id/et_input"
+        style="@style/GlobalTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="@dimen/global_content_padding_edge"
+        android:layout_marginEnd="@dimen/global_content_padding_edge"
+        android:background="@drawable/bg_edit_text"
+        android:paddingStart="@dimen/global_content_padding_edge_half"
+        android:paddingEnd="@dimen/global_content_padding_edge_half"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_confirm"
+        style="@style/DialogButtonTextStyle"
+        android:layout_marginEnd="20dp"
+        android:enabled="true"
+        android:text="@string/confirm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_input" />
+
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_cancel"
+        style="@style/DialogButtonTextStyle"
+        android:layout_marginEnd="10dp"
+        android:enabled="true"
+        android:text="@string/cancel"
+        app:layout_constraintEnd_toStartOf="@+id/tv_confirm"
+        app:layout_constraintTop_toTopOf="@+id/tv_confirm" />
+
+</skin.support.constraint.SkinCompatConstraintLayout>

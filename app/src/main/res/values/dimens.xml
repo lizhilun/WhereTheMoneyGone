@@ -23,6 +23,8 @@
     <dimen name="global_check_btn_size">24dp</dimen>
     <dimen name="global_toggle_btn_size">36dp</dimen>
 
+    <dimen name="fab_margin">24dp</dimen>
+
     <dimen name="toolbar_content_padding_edge">16dp</dimen>
     <dimen name="toolbar_back_icon_size">@dimen/global_toolbar_height</dimen>
     <dimen name="toolbar_icon_padding">16dp</dimen>

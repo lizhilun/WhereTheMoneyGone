@@ -24,6 +24,7 @@ open class BaseActivity<DB : ViewDataBinding>(private val layoutId: Int) : AppCo
 
         initView()
         initData()
+        initListener()
     }
 
     override fun onResume()
@@ -73,6 +74,11 @@ open class BaseActivity<DB : ViewDataBinding>(private val layoutId: Int) : AppCo
     }
 
     open fun initData()
+    {
+
+    }
+
+    open fun initListener()
     {
 
     }
