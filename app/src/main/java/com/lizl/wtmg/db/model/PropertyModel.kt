@@ -10,6 +10,9 @@ data class PropertyModel(
         var id: Long = 0L,
 
         @ColumnInfo
+        var category: String,
+
+        @ColumnInfo
         var type: String,
 
         @ColumnInfo

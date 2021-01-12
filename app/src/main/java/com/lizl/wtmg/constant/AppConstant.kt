@@ -18,4 +18,8 @@ object AppConstant
     const val PROPERTY_TYPE_ALI_PAY = "ali pay"
     const val PROPERTY_TYPE_WE_CHAT = "we chat"
     const val PROPERTY_TYPE_BACK_CARD = "bank card"
+
+    const val PROPERTY_CATEGORY_TYPE_CAPITAL = "capital"
+    const val PROPERTY_CATEGORY_TYPE_CREDIT = "credit"
+    const val PROPERTY_CATEGORY_TYPE_INVESTMENT = "investment"
 }

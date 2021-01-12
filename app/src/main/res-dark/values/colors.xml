@@ -7,7 +7,8 @@
     <color name="colorTextColor_dark">#DDDDDD</color>
     <color name="colorSecondaryTextColor_dark">#BBBBBB</color>
     <color name="colorThirdTextColor_dark">#888888</color>
-    <color name="colorContentBg_dark">#121212</color>
+    <color name="colorWindowBg_dark">#080808</color>
+    <color name="colorContentBg_dark">#1F1F1F</color>
     <color name="colorDivideView_dark">#EEEEEE</color>
     <color name="colorTransparentBlackBg_dark">#CCFFFFFF</color>
     <color name="colorTransparentWhiteBg_dark">#CC000000</color>

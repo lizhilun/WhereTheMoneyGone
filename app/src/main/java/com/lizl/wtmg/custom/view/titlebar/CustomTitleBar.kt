@@ -3,12 +3,13 @@ package com.lizl.wtmg.custom.view.titlebar
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import com.lizl.wtmg.R
+import com.lizl.wtmg.custom.view.StatusBarPlaceholder
 import kotlinx.android.synthetic.main.layout_custom_title_bar.view.*
-import skin.support.widget.SkinCompatFrameLayout
 
-class CustomTitleBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : SkinCompatFrameLayout(context, attrs, defStyleAttr)
+class CustomTitleBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : LinearLayout(context, attrs, defStyleAttr)
 {
     private var onBackBtnClickListener: (() -> Unit)? = null
 
@@ -18,11 +19,14 @@ class CustomTitleBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
 
     init
     {
+        orientation = VERTICAL
         initView(context, attrs)
     }
 
     private fun initView(context: Context, attrs: AttributeSet?)
     {
+        addView(StatusBarPlaceholder(context))
+
         LayoutInflater.from(context).inflate(R.layout.layout_custom_title_bar, null).apply {
 
             addView(this)

@@ -77,6 +77,7 @@ dependencies {
     implementation "skin.support:skin-support-appcompat:${skin_version}"
     implementation "skin.support:skin-support-design:${skin_version}"
     implementation "skin.support:skin-support-constraint-layout:${skin_version}"
+    implementation "skin.support:skin-support-cardview:${skin_version}"
     def room_version = '2.2.5'
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"

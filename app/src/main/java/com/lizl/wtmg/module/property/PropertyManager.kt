@@ -17,4 +17,27 @@ object PropertyManager
             else                                -> ""
         }
     }
+
+    fun getPropertyCategoryByType(propertyType: String): String
+    {
+        return when (propertyType)
+        {
+            AppConstant.PROPERTY_TYPE_CASH -> AppConstant.PROPERTY_CATEGORY_TYPE_CAPITAL
+            AppConstant.PROPERTY_TYPE_ALI_PAY -> AppConstant.PROPERTY_CATEGORY_TYPE_CAPITAL
+            AppConstant.PROPERTY_TYPE_WE_CHAT -> AppConstant.PROPERTY_CATEGORY_TYPE_CAPITAL
+            AppConstant.PROPERTY_TYPE_BACK_CARD -> AppConstant.PROPERTY_CATEGORY_TYPE_CAPITAL
+            else                                -> AppConstant.PROPERTY_CATEGORY_TYPE_CAPITAL
+        }
+    }
+
+    fun getPropertyCategoryName(category: String): String
+    {
+        return when (category)
+        {
+            AppConstant.PROPERTY_CATEGORY_TYPE_CAPITAL -> StringUtils.getString(R.string.capital_account)
+            AppConstant.PROPERTY_CATEGORY_TYPE_CREDIT -> StringUtils.getString(R.string.credit_account)
+            AppConstant.PROPERTY_CATEGORY_TYPE_INVESTMENT -> StringUtils.getString(R.string.investment_account)
+            else                                          -> ""
+        }
+    }
 }

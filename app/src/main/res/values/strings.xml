@@ -26,4 +26,8 @@
     <string name="ali_pay">支付宝</string>
     <string name="we_chat">微信</string>
     <string name="bank_card">银行卡</string>
+
+    <string name="capital_account">资金</string>
+    <string name="credit_account">信用</string>
+    <string name="investment_account">投资账户</string>
 </resources>

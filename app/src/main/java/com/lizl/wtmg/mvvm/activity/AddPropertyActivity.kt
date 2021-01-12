@@ -1,6 +1,5 @@
 package com.lizl.wtmg.mvvm.activity
 
-import com.blankj.utilcode.util.ProcessUtils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.function.ui
@@ -24,6 +23,7 @@ class AddPropertyActivity : BaseActivity<ActivityPropertyManagerBinding>(R.layou
 
     override fun initListener()
     {
+        ctb_title.setOnBackBtnClickListener { onBackPressed() }
         tv_save.setOnClickListener { onSaveBtnClick() }
     }
 
@@ -35,8 +35,8 @@ class AddPropertyActivity : BaseActivity<ActivityPropertyManagerBinding>(R.layou
             var propertyModel = AppDatabase.getInstance().getPropertyDao().queryPropertyByType(propertyType)
             if (propertyModel == null)
             {
-                propertyModel =
-                        PropertyModel(type = propertyType, name = PropertyManager.getPropertyNameByType(propertyType), amount = amount, showInTotal = true)
+                propertyModel = PropertyModel(type = propertyType, name = PropertyManager.getPropertyNameByType(propertyType),
+                        category = PropertyManager.getPropertyCategoryByType(propertyType), amount = amount, showInTotal = true)
             }
             else
             {

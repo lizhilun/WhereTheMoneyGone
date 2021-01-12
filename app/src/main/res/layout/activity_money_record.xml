@@ -9,13 +9,12 @@
     <skin.support.constraint.SkinCompatConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorContentBg">
+        android:background="@color/colorWindowBg">
 
         <com.lizl.wtmg.custom.view.titlebar.CustomTitleBar
             android:id="@+id/ctb_title"
-            style="@style/ToolbarLayoutStyle"
-            app:backBtnVisible="true"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
