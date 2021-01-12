@@ -12,16 +12,10 @@
         android:layout_height="match_parent"
         tools:context=".mvvm.activity.MainActivity">
 
-        <com.lizl.wtmg.module.skin.view.SkinImageView
-            android:id="@+id/iv_menu"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/global_toolbar_height"
-            android:layout_marginStart="10dp"
-            android:padding="12dp"
-            android:src="@drawable/ic_baseline_menu_24"
-            android:tint="@color/colorSvgTint"
-            app:layout_constraintDimensionRatio="W,1:1"
-            app:layout_constraintStart_toStartOf="parent"
+        <com.lizl.wtmg.custom.view.titlebar.CustomTitleBar
+            android:id="@+id/ctb_title"
+            style="@style/ToolbarLayoutStyle"
+            app:backBtnSrc="@drawable/ic_baseline_menu_24"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

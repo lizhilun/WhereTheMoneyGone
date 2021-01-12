@@ -22,4 +22,8 @@
     <color name="color_dialog_button_text_enable">@color/colorPrimary</color>
     <color name="color_dialog_button_text_disable">#cc999999</color>
 
+    <color name="color_toolbar_text">#FFFFFF</color>
+    <color name="color_toolbar_text_button_bg">#0f000000</color>
+    <color name="color_toolbar_text_button_stroke">#28000000</color>
+
 </resources>

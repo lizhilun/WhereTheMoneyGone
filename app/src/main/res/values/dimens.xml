@@ -32,6 +32,9 @@
     <dimen name="toolbar_title_text_size">20sp</dimen>
     <dimen name="toolbar_action_text_size">14sp</dimen>
     <dimen name="toolbar_image_btn_size">@dimen/global_toolbar_height</dimen>
+    <dimen name="toolbar_text_button_height">32dp</dimen>
+    <dimen name="toolbar_text_button_width">60dp</dimen>
+    <dimen name="toolbar_text_button_text_size">14sp</dimen>
 
     <dimen name="news_source_item_image_size">48dp</dimen>
     <dimen name="news_source_item_image_padding">12dp</dimen>

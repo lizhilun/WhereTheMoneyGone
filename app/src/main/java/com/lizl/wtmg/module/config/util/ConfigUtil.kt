@@ -1,7 +1,6 @@
 package com.lizl.wtmg.module.config.util
 
 import android.content.Context
-import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -18,8 +17,6 @@ import kotlinx.coroutines.flow.map
 
 object ConfigUtil
 {
-    private val TAG = "ConfigUtil"
-
     private val defaultConfigMap = HashMap<String, Any>()
 
     private lateinit var dataStore: DataStore<Preferences>
@@ -30,7 +27,7 @@ object ConfigUtil
     {
         dataStore = context.createDataStore(name = "settings")
         ConfigConstant::class.java.declaredMethods.forEach { method ->
-            val configKey = method.name.replace("\$annotations", "").delete("get")
+            val configKey = method.name.delete("\$annotations").delete("get")
             method.annotations.forEach {
                 when (it)
                 {

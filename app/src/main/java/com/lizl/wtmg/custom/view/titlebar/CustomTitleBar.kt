@@ -1,4 +1,4 @@
-package com.lizl.wtmg.custom.view
+package com.lizl.wtmg.custom.view.titlebar
 
 import android.content.Context
 import android.util.AttributeSet
@@ -11,7 +11,6 @@ import skin.support.widget.SkinCompatFrameLayout
 class CustomTitleBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : SkinCompatFrameLayout(context, attrs, defStyleAttr)
 {
     private var onBackBtnClickListener: (() -> Unit)? = null
-    private var onActionClickListener: (() -> Unit)? = null
 
     constructor(context: Context) : this(context, null)
 
@@ -31,21 +30,20 @@ class CustomTitleBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
             val typeArray = context.obtainStyledAttributes(attrs, R.styleable.CustomTitleBar)
             iv_back.isVisible = typeArray.getBoolean(R.styleable.CustomTitleBar_backBtnVisible, true)
             tv_title.text = typeArray.getString(R.styleable.CustomTitleBar_titleText)
-            tv_action.text = typeArray.getString(R.styleable.CustomTitleBar_actionText)
+            iv_back.setImageResource(typeArray.getResourceId(R.styleable.CustomTitleBar_backBtnSrc, R.drawable.ic_baseline_arrow_back_24))
             typeArray.recycle()
 
             iv_back.setOnClickListener { onBackBtnClickListener?.invoke() }
-            tv_action.setOnClickListener { onActionClickListener?.invoke() }
         }
+    }
+
+    fun setActionList(btnList: List<TitleBarBtnBean.BaseBtnBean>)
+    {
+        rv_action_list.adapter = TitleBarBtnListAdapter(btnList)
     }
 
     fun setOnBackBtnClickListener(onBackBtnClickListener: () -> Unit)
     {
         this.onBackBtnClickListener = onBackBtnClickListener
-    }
-
-    fun setOnActionClickListener(onActionClickListener: () -> Unit)
-    {
-        this.onActionClickListener = onActionClickListener
     }
 }

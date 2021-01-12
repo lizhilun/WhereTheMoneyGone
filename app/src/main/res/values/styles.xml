@@ -83,4 +83,22 @@
         <item name="layout_constraintBottom_toBottomOf">parent</item>
         <item name="layout_constraintEnd_toEndOf">parent</item>
     </style>
+
+    <style name="ToolbarLayoutImageButtonStyle">
+        <item name="android:layout_width">@dimen/toolbar_image_btn_size</item>
+        <item name="android:layout_height">@dimen/toolbar_image_btn_size</item>
+        <item name="android:padding">@dimen/toolbar_icon_padding</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:tint">@color/colorSvgTint</item>
+    </style>
+
+    <style name="ToolbarLayoutTextButtonStyle">
+        <item name="android:layout_width">@dimen/toolbar_text_button_width</item>
+        <item name="android:layout_height">@dimen/toolbar_text_button_height</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/toolbar_text_button_text_size</item>
+        <item name="android:textColor">@color/color_toolbar_text</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:background">@drawable/bg_toolbar_text_button</item>
+    </style>
 </resources>

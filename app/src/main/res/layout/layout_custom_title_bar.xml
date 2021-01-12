@@ -28,15 +28,15 @@
         app:layout_constraintStart_toEndOf="@+id/iv_back"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <skin.support.widget.SkinCompatTextView
-        android:id="@+id/tv_action"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_action_list"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:paddingStart="@dimen/toolbar_content_padding_edge"
-        android:paddingEnd="@dimen/toolbar_content_padding_edge"
+        android:orientation="horizontal"
         android:textColor="@color/colorTextColor"
-        android:textSize="@dimen/toolbar_action_text_size"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:reverseLayout="true" />
 
 </skin.support.constraint.SkinCompatConstraintLayout>

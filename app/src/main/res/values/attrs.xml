@@ -4,6 +4,7 @@
         <attr name="backBtnVisible" format="boolean" />
         <attr name="titleText" format="string|reference" />
         <attr name="actionText" format="string|reference" />
+        <attr name="backBtnSrc" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="SkinImageView">
