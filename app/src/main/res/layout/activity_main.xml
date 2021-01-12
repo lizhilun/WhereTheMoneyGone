@@ -15,20 +15,11 @@
         <com.lizl.wtmg.custom.view.titlebar.CustomTitleBar
             android:id="@+id/ctb_title"
             style="@style/ToolbarLayoutStyle"
-            app:backBtnSrc="@drawable/ic_baseline_menu_24"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:backBtnSrc="@drawable/ic_baseline_menu_24" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fab_margin"
-            android:layout_marginBottom="24dp"
-            app:backgroundTint="?attr/colorPrimary"
-            app:fabSize="normal"
-            app:layout_anchorGravity="bottom|end"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/GlobalFABStyle"
             app:srcCompat="@drawable/ic_baseline_add_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

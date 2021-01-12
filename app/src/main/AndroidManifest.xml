@@ -20,6 +20,10 @@
         </activity>
 
         <activity android:name=".mvvm.activity.MoneyRecordActivity" />
+
+        <activity android:name=".mvvm.activity.PropertyManagerActivity" />
+
+        <activity android:name=".mvvm.activity.AddPropertyActivity" />
     </application>
 
 </manifest>

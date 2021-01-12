@@ -6,6 +6,7 @@
     <color name="colorDivideLine">#dfdfdf</color>
     <color name="colorTextColor">#212121</color>
     <color name="colorSecondaryTextColor">#757575</color>
+    <color name="colorThirdTextColor">#AAAAAA</color>
     <color name="colorContentBg">#FFFFFFFF</color>
     <color name="colorDivideView">#EEEEEE</color>
     <color name="colorTransparentBlackBg">#CC000000</color>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.lizl.wtmg.util.DimensionUtils" />
+
+        <import type="com.lizl.wtmg.R" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.lizl.wtmg.custom.view.titlebar.CustomTitleBar
+            android:id="@+id/ctb_title"
+            style="@style/ToolbarLayoutStyle" />
+
+        <skin.support.constraint.SkinCompatConstraintLayout
+            android:id="@+id/cl_property_type"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:paddingStart="@dimen/global_content_padding_edge"
+            android:paddingEnd="@dimen/global_content_padding_edge"
+            app:layout_constraintTop_toBottomOf="@+id/ctb_title">
+
+            <skin.support.widget.SkinCompatTextView
+                style="@style/GlobalTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/property_type"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_property_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/global_text_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/iv_right_arrow"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.lizl.wtmg.module.skin.view.SkinImageView
+                android:id="@+id/iv_right_arrow"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+                android:tint="@color/colorSvgTint"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </skin.support.constraint.SkinCompatConstraintLayout>
+
+        <skin.support.constraint.SkinCompatConstraintLayout
+            android:id="@+id/cl_property_amount"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/global_content_padding_content"
+            app:layout_constraintTop_toBottomOf="@+id/cl_property_type">
+
+            <skin.support.widget.SkinCompatTextView
+                android:id="@+id/tv_amount_des"
+                style="@style/GlobalTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/global_content_padding_edge"
+                android:text="@string/property_amount"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <skin.support.widget.SkinCompatEditText
+                android:id="@+id/et_amount"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical|end"
+                android:hint="@string/please_input"
+                android:inputType="number"
+                android:maxLength="8"
+                android:maxLines="1"
+                android:paddingEnd="@dimen/global_content_padding_edge"
+                android:textColor="@color/colorTextColor"
+                android:textColorHint="@color/colorThirdTextColor"
+                android:textSize="@dimen/global_text_size"
+                app:hintTextSize="@{DimensionUtils.INSTANCE.getDimension(R.dimen.global_text_size_small)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_amount_des" />
+
+        </skin.support.constraint.SkinCompatConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_save"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/global_content_padding_content"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:textSize="@dimen/global_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_property_amount"
+            app:layout_constraintWidth_percent="0.9" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

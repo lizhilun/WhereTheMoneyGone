@@ -8,8 +8,22 @@
     <string name="record_once_more">再记</string>
     <string name="save">保存</string>
 
+    <string name="please_input">请输入</string>
+
     <string name="dark_mode_config">暗黑模式</string>
     <string name="on">开</string>
     <string name="off">关</string>
     <string name="follow_system">跟随系统</string>
+
+    <string name="total_property">总资产</string>
+    <string name="net_property">净资产</string>
+    <string name="total_liabilities">总负债</string>
+
+    <string name="property_type">资产类型</string>
+    <string name="property_amount">资产金额</string>
+
+    <string name="cash">现金</string>
+    <string name="ali_pay">支付宝</string>
+    <string name="we_chat">微信</string>
+    <string name="bank_card">银行卡</string>
 </resources>

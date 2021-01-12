@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <skin.support.widget.SkinCompatTextView
+            android:id="@+id/tv_total_property_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/total_property"
+            android:textColor="@color/colorSecondaryTextColor"
+            android:textSize="@dimen/global_text_size_smaller"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <skin.support.widget.SkinCompatTextView
+            android:id="@+id/tv_total_property"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextColor"
+            android:textSize="@dimen/global_text_size"
+            app:layout_constraintEnd_toEndOf="@+id/tv_total_property_des"
+            app:layout_constraintStart_toStartOf="@+id/tv_total_property_des"
+            app:layout_constraintTop_toBottomOf="@+id/tv_total_property_des" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <skin.support.widget.SkinCompatTextView
+            android:id="@+id/tv_net_property_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/net_property"
+            android:textColor="@color/colorSecondaryTextColor"
+            android:textSize="@dimen/global_text_size_smaller"
+            app:layout_constraintEnd_toEndOf="@+id/gl_center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_total_property" />
+
+        <skin.support.widget.SkinCompatTextView
+            android:id="@+id/tv_net_property"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextColor"
+            android:textSize="@dimen/global_text_size"
+            app:layout_constraintEnd_toEndOf="@+id/tv_net_property_des"
+            app:layout_constraintStart_toStartOf="@+id/tv_net_property_des"
+            app:layout_constraintTop_toBottomOf="@+id/tv_net_property_des" />
+
+        <skin.support.widget.SkinCompatTextView
+            android:id="@+id/tv_total_liabilities_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/total_liabilities"
+            android:textColor="@color/colorSecondaryTextColor"
+            android:textSize="@dimen/global_text_size_smaller"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/gl_center"
+            app:layout_constraintTop_toTopOf="@+id/tv_net_property_des" />
+
+        <skin.support.widget.SkinCompatTextView
+            android:id="@+id/tv_total_liabilities"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextColor"
+            android:textSize="@dimen/global_text_size"
+            app:layout_constraintEnd_toEndOf="@+id/tv_total_liabilities_des"
+            app:layout_constraintStart_toStartOf="@+id/tv_total_liabilities_des"
+            app:layout_constraintTop_toBottomOf="@+id/tv_total_liabilities_des" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add"
+            style="@style/GlobalFABStyle"
+            app:srcCompat="@drawable/ic_baseline_add_24" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

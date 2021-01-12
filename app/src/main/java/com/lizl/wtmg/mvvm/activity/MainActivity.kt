@@ -17,7 +17,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main)
     override fun initView()
     {
         ctb_title.setActionList(mutableListOf<TitleBarBtnBean.BaseBtnBean>().apply {
-            add(TitleBarBtnBean.ImageBtnBean(R.drawable.ic_baseline_property_24) {})
+            add(TitleBarBtnBean.ImageBtnBean(R.drawable.ic_baseline_property_24) {
+                ActivityUtils.startActivity(PropertyManagerActivity::class.java)
+            })
         })
     }
 
