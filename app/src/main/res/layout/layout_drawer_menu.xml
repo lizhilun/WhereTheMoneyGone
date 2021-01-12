@@ -5,6 +5,28 @@
     android:layout_height="match_parent"
     android:background="@color/colorContentBg">
 
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/global_content_padding_edge"
+        android:layout_marginTop="40dp"
+        android:text="@string/app_name"
+        android:textColor="@color/colorTextColor"
+        android:textSize="@dimen/global_text_size_biggest"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_app_introduce"
+        style="@style/GlobalSecondaryTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_introduce"
+        app:layout_constraintStart_toStartOf="@+id/tv_app_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_app_name" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_menu"
         android:layout_width="270dp"

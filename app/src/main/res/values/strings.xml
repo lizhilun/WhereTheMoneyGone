@@ -1,9 +1,15 @@
 <resources>
-    <string name="app_name">WhereTheMoneyGone</string>
+    <string name="app_name">WhereMyMoneyGone</string>
+    <string name="app_introduce">Traces your money \nprotect your money</string>
 
     <string name="cancel">取消</string>
     <string name="confirm">确认</string>
 
     <string name="record_once_more">再记</string>
     <string name="save">保存</string>
+
+    <string name="dark_mode_config">暗黑模式</string>
+    <string name="on">开</string>
+    <string name="off">关</string>
+    <string name="follow_system">跟随系统</string>
 </resources>

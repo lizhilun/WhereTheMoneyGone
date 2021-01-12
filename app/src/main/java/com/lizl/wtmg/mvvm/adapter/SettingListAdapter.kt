@@ -14,7 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class SettingListAdapter : BaseDelegateMultiAdapter<BaseSettingModel, SettingListAdapter.ViewHolder>()
+class SettingListAdapter(settingList: MutableList<BaseSettingModel>) : BaseDelegateMultiAdapter<BaseSettingModel, SettingListAdapter.ViewHolder>(settingList)
 {
 
     companion object
