@@ -6,6 +6,7 @@ import android.text.style.AbsoluteSizeSpan
 import android.widget.EditText
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.blankj.utilcode.util.SizeUtils
 
 object DataBindUtil
@@ -25,5 +26,16 @@ object DataBindUtil
         val ass = AbsoluteSizeSpan(SizeUtils.px2dp(textSize), true)
         ss.setSpan(ass, 0, ss.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         editText.hint = SpannableString(ss)
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:overScrollMode")
+    fun bindOverScrollModel(viewPager: ViewPager2, mode: Int)
+    {
+        val child = viewPager.getChildAt(0)
+        if (child is RecyclerView)
+        {
+            child.overScrollMode = mode
+        }
     }
 }

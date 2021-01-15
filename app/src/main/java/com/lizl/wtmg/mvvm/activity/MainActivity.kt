@@ -1,34 +1,34 @@
 package com.lizl.wtmg.mvvm.activity
 
-import com.blankj.utilcode.util.ActivityUtils
+import androidx.fragment.app.Fragment
+import com.jeremyliao.liveeventbus.LiveEventBus
+import com.lizl.wtmg.mvvm.adapter.FragmentPagerAdapter
 import com.lizl.wtmg.R
-import com.lizl.wtmg.custom.view.MenuDrawLayout
-import com.lizl.wtmg.custom.view.titlebar.TitleBarBtnBean
+import com.lizl.wtmg.constant.EventConstant
 import com.lizl.wtmg.databinding.ActivityMainBinding
 import com.lizl.wtmg.mvvm.base.BaseActivity
-import com.lxj.xpopup.XPopup
-import com.lxj.xpopup.enums.PopupPosition
+import com.lizl.wtmg.mvvm.fragment.PropertyManagerFragment
+import com.lizl.wtmg.mvvm.fragment.PropertyOutlineFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main)
 {
-    private val menuDrawLayout: MenuDrawLayout by lazy { MenuDrawLayout(this) }
-
     override fun initView()
     {
-        ctb_title.setActionList(mutableListOf<TitleBarBtnBean.BaseBtnBean>().apply {
-            add(TitleBarBtnBean.ImageBtnBean(R.drawable.ic_baseline_property_24) {
-                ActivityUtils.startActivity(PropertyManagerActivity::class.java)
+        vp_content.offscreenPageLimit = 2
+
+        vp_content.adapter = FragmentPagerAdapter(this).apply {
+            setFragmentList(mutableListOf<Fragment>().apply {
+                add(PropertyOutlineFragment())
+                add(PropertyManagerFragment())
             })
-        })
+        }
     }
 
-    override fun initListener()
+    override fun initData()
     {
-        fab_add.setOnClickListener { ActivityUtils.startActivity(MoneyRecordActivity::class.java) }
-
-        ctb_title.setOnBackBtnClickListener {
-            XPopup.Builder(this).popupPosition(PopupPosition.Left).hasStatusBarShadow(false).asCustom(menuDrawLayout).show()
-        }
+        LiveEventBus.get(EventConstant.EVENT_GO_TO_PROPERTY_MANAGER_VIEW).observe(this, {
+            vp_content.setCurrentItem(1, true)
+        })
     }
 }

@@ -40,6 +40,7 @@ open class BaseFragment<DB : ViewDataBinding>(private val layoutId: Int) : Fragm
 
         initView()
         initData()
+        initListener()
     }
 
     override fun onStart()
@@ -96,6 +97,11 @@ open class BaseFragment<DB : ViewDataBinding>(private val layoutId: Int) : Fragm
     }
 
     open fun initData()
+    {
+
+    }
+
+    open fun initListener()
     {
 
     }

@@ -5,6 +5,7 @@
 
     <data>
 
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,16 +13,10 @@
         android:layout_height="match_parent"
         tools:context=".mvvm.activity.MainActivity">
 
-        <com.lizl.wtmg.custom.view.titlebar.CustomTitleBar
-            android:id="@+id/ctb_title"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:backBtnSrc="@drawable/ic_baseline_menu_24"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_add"
-            style="@style/GlobalFABStyle"
-            app:srcCompat="@drawable/ic_baseline_add_24" />
+            android:layout_height="match_parent"
+            app:overScrollMode="@{View.OVER_SCROLL_NEVER}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

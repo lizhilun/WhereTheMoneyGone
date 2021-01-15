@@ -1,15 +1,16 @@
-package com.lizl.wtmg.mvvm.activity
+package com.lizl.wtmg.mvvm.fragment
 
 import com.blankj.utilcode.util.ActivityUtils
 import com.lizl.wtmg.R
-import com.lizl.wtmg.databinding.ActivityPropertyManagerBinding
+import com.lizl.wtmg.databinding.FragmentPropertyManagerBinding
 import com.lizl.wtmg.db.AppDatabase
+import com.lizl.wtmg.mvvm.activity.AddPropertyActivity
 import com.lizl.wtmg.mvvm.adapter.PropertyCategoryGroupAdapter
-import com.lizl.wtmg.mvvm.base.BaseActivity
+import com.lizl.wtmg.mvvm.base.BaseFragment
 import com.lizl.wtmg.mvvm.model.PropertyCategoryGroupModel
-import kotlinx.android.synthetic.main.activity_property_manager.*
+import kotlinx.android.synthetic.main.fragment_property_manager.*
 
-class PropertyManagerActivity : BaseActivity<ActivityPropertyManagerBinding>(R.layout.activity_property_manager)
+class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.layout.fragment_property_manager)
 {
     private lateinit var propertyCategoryGroupAdapter: PropertyCategoryGroupAdapter
 
