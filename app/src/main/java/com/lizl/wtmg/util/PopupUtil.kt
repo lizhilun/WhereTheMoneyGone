@@ -1,13 +1,14 @@
 package com.lizl.wtmg.util
 
 import com.blankj.utilcode.util.ActivityUtils
+import com.lizl.wtmg.custom.popup.PopupBottomList
 import com.lizl.wtmg.custom.popup.PopupConfirm
 import com.lizl.wtmg.custom.popup.PopupInput
 import com.lizl.wtmg.custom.popup.PopupRadioGroup
+import com.lizl.wtmg.mvvm.model.BottomModel
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import kotlinx.coroutines.*
-
 
 object PopupUtil
 {
@@ -18,6 +19,12 @@ object PopupUtil
     {
         val context = ActivityUtils.getTopActivity() ?: return
         showPopup(XPopup.Builder(context).asCustom(PopupRadioGroup(context, title, radioList, checkedRadio, onSelectFinishListener)))
+    }
+
+    fun showBottomListPopup(bottomList: MutableList<BottomModel>, onSelectFinishListener: (BottomModel) -> Unit)
+    {
+        val context = ActivityUtils.getTopActivity() ?: return
+        showPopup(XPopup.Builder(context).asCustom(PopupBottomList(context, bottomList, onSelectFinishListener)))
     }
 
     fun showInputPopup(title: String, onInputFinish: (String) -> Unit)

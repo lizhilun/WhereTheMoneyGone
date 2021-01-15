@@ -8,6 +8,8 @@ import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.PropertyModel
 import com.lizl.wtmg.module.property.PropertyManager
 import com.lizl.wtmg.mvvm.base.BaseActivity
+import com.lizl.wtmg.mvvm.model.BottomModel
+import com.lizl.wtmg.util.PopupUtil
 import kotlinx.android.synthetic.main.activity_add_property.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -25,6 +27,21 @@ class AddPropertyActivity : BaseActivity<ActivityAddPropertyBinding>(R.layout.ac
     {
         ctb_title.setOnBackBtnClickListener { onBackPressed() }
         tv_save.setOnClickListener { onSaveBtnClick() }
+
+        cl_property_type.setOnClickListener {
+
+            val propertyList = listOf(AppConstant.PROPERTY_TYPE_CASH, AppConstant.PROPERTY_TYPE_ALI_PAY, AppConstant.PROPERTY_TYPE_WE_CHAT,
+                    AppConstant.PROPERTY_TYPE_BACK_CARD)
+
+            PopupUtil.showBottomListPopup(mutableListOf<BottomModel>().apply {
+                propertyList.forEach {
+                    add(BottomModel(PropertyManager.getPropertyIcon(it), PropertyManager.getPropertyNameByType(it), it))
+                }
+            }) {
+                propertyType = it.tag as String
+                tv_property_type.text = PropertyManager.getPropertyNameByType(propertyType)
+            }
+        }
     }
 
     private fun onSaveBtnClick()

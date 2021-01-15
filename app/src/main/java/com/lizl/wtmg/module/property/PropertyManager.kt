@@ -18,6 +18,18 @@ object PropertyManager
         }
     }
 
+    fun getPropertyIcon(propertyType: String): Int
+    {
+        return when (propertyType)
+        {
+            AppConstant.PROPERTY_TYPE_CASH -> R.drawable.ic_baseline_cash_24
+            AppConstant.PROPERTY_TYPE_WE_CHAT -> R.drawable.ic_baseline_we_chat_24
+            AppConstant.PROPERTY_TYPE_ALI_PAY -> R.drawable.ic_baseline_ali_pay_24
+            AppConstant.PROPERTY_TYPE_BACK_CARD -> R.drawable.ic_baseline_bank_card_24
+            else                                -> R.drawable.ic_baseline_cash_24
+        }
+    }
+
     fun getPropertyCategoryByType(propertyType: String): String
     {
         return when (propertyType)
@@ -40,4 +52,5 @@ object PropertyManager
             else                                          -> ""
         }
     }
+
 }
