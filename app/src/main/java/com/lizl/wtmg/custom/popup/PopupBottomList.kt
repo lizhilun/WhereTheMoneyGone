@@ -17,7 +17,6 @@ class PopupBottomList(context: Context, private val bottomList: MutableList<Bott
     {
         popupInfo?.let {
             it.hasShadowBg = true
-            it.hasBlurBg = true
         }
 
         rv_list.adapter = BottomListAdapter(bottomList).apply {

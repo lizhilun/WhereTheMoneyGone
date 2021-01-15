@@ -6,6 +6,9 @@ import com.lizl.wtmg.constant.AppConstant
 
 object PropertyManager
 {
+    fun getPropertyList() = listOf(AppConstant.PROPERTY_TYPE_CASH, AppConstant.PROPERTY_TYPE_ALI_PAY,
+            AppConstant.PROPERTY_TYPE_WE_CHAT, AppConstant.PROPERTY_TYPE_BACK_CARD)
+
     fun getPropertyNameByType(propertyType: String): String
     {
         return when (propertyType)

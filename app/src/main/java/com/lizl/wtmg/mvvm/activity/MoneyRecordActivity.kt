@@ -1,22 +1,41 @@
 package com.lizl.wtmg.mvvm.activity
 
+import com.blankj.utilcode.util.TimeUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.lizl.wtmg.R
+import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.function.backspace
 import com.lizl.wtmg.custom.function.setOnClickListener
 import com.lizl.wtmg.databinding.ActivityMoneyRecordBinding
+import com.lizl.wtmg.db.AppDatabase
+import com.lizl.wtmg.db.model.ExpenditureModel
+import com.lizl.wtmg.module.property.PropertyManager
 import com.lizl.wtmg.mvvm.base.BaseActivity
+import com.lizl.wtmg.mvvm.model.BottomModel
+import com.lizl.wtmg.util.DateUtil
+import com.lizl.wtmg.util.PopupUtil
 import kotlinx.android.synthetic.main.activity_money_record.*
+import kotlinx.android.synthetic.main.activity_money_record.ctb_title
+import kotlinx.android.synthetic.main.activity_money_record.tv_save
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.activity_money_record)
 {
     private var inputTemp = ""
 
+    private var accountType = AppConstant.PROPERTY_TYPE_CASH
+    private var selectTime = DateUtil.Date()
+
     override fun initView()
     {
         clearInput()
+
+        tv_account.text = "${getString(R.string.account)}：${PropertyManager.getPropertyNameByType(accountType)}"
+        tv_time.text = String.format("%d-%02d-%02d %02d:%2d", selectTime.year, selectTime.month, selectTime.day, selectTime.hour, selectTime.minute)
     }
 
     override fun initListener()
@@ -31,15 +50,48 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
 
         tv_record_one_more.setOnClickListener(true) {
             GlobalScope.launch {
-                saveInput()
-                clearInput()
+                if (saveInput())
+                {
+                    clearInput()
+                }
             }
         }
 
         tv_save.setOnClickListener(true) {
             GlobalScope.launch {
-                saveInput()
-                GlobalScope.launch(Dispatchers.Main) { onBackPressed() }
+                if (saveInput())
+                {
+                    GlobalScope.launch(Dispatchers.Main) { onBackPressed() }
+                }
+            }
+        }
+
+        tv_account.setOnClickListener(true) {
+            PopupUtil.showBottomListPopup(mutableListOf<BottomModel>().apply {
+                PropertyManager.getPropertyList().forEach {
+                    add(BottomModel(PropertyManager.getPropertyIcon(it), PropertyManager.getPropertyNameByType(it), it))
+                }
+            }) {
+                accountType = it.tag as String
+                tv_account.text = "${getString(R.string.account)}：${PropertyManager.getPropertyNameByType(accountType)}"
+            }
+        }
+
+        tv_time.setOnClickListener(true) {
+            PopupUtil.showDatePickerDialog(selectTime.year, selectTime.month - 1, selectTime.day) { _, year, month, dayOfMonth ->
+                run {
+                    PopupUtil.showTimePickerDialog(selectTime.hour, selectTime.minute) { _, hourOfDay, minute ->
+                        run {
+                            selectTime.year = year
+                            selectTime.month = month + 1
+                            selectTime.day = dayOfMonth
+                            selectTime.hour = hourOfDay
+                            selectTime.minute = minute
+                            tv_time.text =
+                                String.format("%d-%02d-%02d %02d:%2d", selectTime.year, selectTime.month, selectTime.day, selectTime.hour, selectTime.minute)
+                        }
+                    }
+                }
             }
         }
     }
@@ -56,7 +108,7 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
     {
         when (key)
         {
-            "D" -> inputTemp = inputTemp.backspace()
+            "D"      -> inputTemp = inputTemp.backspace()
             "-", "+" ->
             {
                 cluInput()
@@ -97,10 +149,23 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
         }
     }
 
-    private fun saveInput()
+    private fun saveInput(): Boolean
     {
         cluInput()
 
         val amount = inputTemp.toIntOrNull() ?: 0
+
+        if (amount == 0)
+        {
+            ToastUtils.showShort(R.string.pleas_input_amount)
+            return false
+        }
+
+        val expenditureModel = ExpenditureModel(amonunt = amount.toFloat(), expenditureType = AppConstant.EXPENDITURE_TYPE_MEALS, payType = accountType,
+                recordTime = selectTime.time, recordYear = selectTime.year, recordMonth = selectTime.month)
+
+        AppDatabase.getInstance().getExpenditureDao().insert(expenditureModel)
+
+        return true
     }
 }

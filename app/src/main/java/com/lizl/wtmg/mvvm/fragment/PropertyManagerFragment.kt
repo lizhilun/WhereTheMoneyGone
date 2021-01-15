@@ -1,5 +1,6 @@
 package com.lizl.wtmg.mvvm.fragment
 
+import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.databinding.FragmentPropertyManagerBinding
@@ -22,7 +23,7 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
 
     override fun initData()
     {
-        AppDatabase.getInstance().getPropertyDao().obAllProperty().observe(this, { propertyList ->
+        AppDatabase.getInstance().getPropertyDao().obAllProperty().observe(this, Observer { propertyList ->
             tv_total_property.text = propertyList.sumBy { it.amount }.toString()
             tv_net_property.text = propertyList.sumBy { it.amount }.toString()
             tv_total_liabilities.text = 0.toString()

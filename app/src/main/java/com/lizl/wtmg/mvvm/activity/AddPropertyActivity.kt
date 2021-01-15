@@ -29,12 +29,8 @@ class AddPropertyActivity : BaseActivity<ActivityAddPropertyBinding>(R.layout.ac
         tv_save.setOnClickListener { onSaveBtnClick() }
 
         cl_property_type.setOnClickListener {
-
-            val propertyList = listOf(AppConstant.PROPERTY_TYPE_CASH, AppConstant.PROPERTY_TYPE_ALI_PAY, AppConstant.PROPERTY_TYPE_WE_CHAT,
-                    AppConstant.PROPERTY_TYPE_BACK_CARD)
-
             PopupUtil.showBottomListPopup(mutableListOf<BottomModel>().apply {
-                propertyList.forEach {
+                PropertyManager.getPropertyList().forEach {
                     add(BottomModel(PropertyManager.getPropertyIcon(it), PropertyManager.getPropertyNameByType(it), it))
                 }
             }) {

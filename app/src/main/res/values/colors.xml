@@ -9,6 +9,7 @@
     <color name="colorThirdTextColor">#AAAAAA</color>
     <color name="colorWindowBg">#FFE8E8E8</color>
     <color name="colorContentBg">#FFF6F6F6</color>
+    <color name="colorSecondaryContentBg">#FFEFEFEF</color>
     <color name="colorDivideView">#EEEEEE</color>
     <color name="colorTransparentBlackBg">#CC000000</color>
     <color name="colorTransparentWhiteBg">#CCFFFFFF</color>

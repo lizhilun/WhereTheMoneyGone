@@ -1,5 +1,10 @@
 package com.lizl.wtmg.util
 
+import android.app.DatePickerDialog
+import android.app.Dialog
+import android.app.TimePickerDialog
+import android.widget.DatePicker
+import android.widget.TimePicker
 import com.blankj.utilcode.util.ActivityUtils
 import com.lizl.wtmg.custom.popup.PopupBottomList
 import com.lizl.wtmg.custom.popup.PopupConfirm
@@ -13,6 +18,7 @@ import kotlinx.coroutines.*
 object PopupUtil
 {
     private var curPopup: BasePopupView? = null
+    private var curDialog: Dialog? = null
     private var showPopupJob: Job? = null
 
     fun showRadioGroupPopup(title: String, radioList: List<String>, checkedRadio: String, onSelectFinishListener: (result: String) -> Unit)
@@ -39,6 +45,18 @@ object PopupUtil
         showPopup(XPopup.Builder(context).asCustom(PopupConfirm(context, notify, onConfirm)))
     }
 
+    fun showDatePickerDialog(year: Int, month: Int, day: Int, dateSetListener: (View: DatePicker, Int, Int, Int) -> Unit)
+    {
+        val context = ActivityUtils.getTopActivity() ?: return
+        showDialog(DatePickerDialog(context, dateSetListener, year, month, day))
+    }
+
+    fun showTimePickerDialog(hour: Int, minute: Int, timeSetListener: (View: TimePicker, Int, Int) -> Unit)
+    {
+        val context = ActivityUtils.getTopActivity() ?: return
+        showDialog(TimePickerDialog(context, timeSetListener, hour, minute, true))
+    }
+
     fun dismissAll()
     {
         GlobalScope.launch(Dispatchers.Main) {
@@ -60,6 +78,18 @@ object PopupUtil
                 curPopup = popup
                 curPopup?.show()
             }
+        }
+    }
+
+    private fun showDialog(dialog: Dialog)
+    {
+        GlobalScope.launch(Dispatchers.Main) {
+            showPopupJob?.cancel()
+            curPopup?.dismiss()
+            curDialog?.dismiss()
+
+            curDialog = dialog
+            curDialog?.show()
         }
     }
 }

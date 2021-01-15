@@ -1,6 +1,7 @@
 package com.lizl.wtmg.mvvm.activity
 
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.lizl.wtmg.mvvm.adapter.FragmentPagerAdapter
 import com.lizl.wtmg.R
@@ -27,8 +28,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main)
 
     override fun initData()
     {
-        LiveEventBus.get(EventConstant.EVENT_GO_TO_PROPERTY_MANAGER_VIEW).observe(this, {
+        LiveEventBus.get(EventConstant.EVENT_GO_TO_PROPERTY_MANAGER_VIEW).observe(this, Observer {
             vp_content.setCurrentItem(1, true)
         })
+    }
+
+    override fun onBackPressed()
+    {
+        if (vp_content.currentItem == 1)
+        {
+            vp_content.setCurrentItem(0, true)
+            return
+        }
+        super.onBackPressed()
     }
 }

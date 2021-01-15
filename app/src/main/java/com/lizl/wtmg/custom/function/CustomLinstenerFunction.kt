@@ -19,22 +19,14 @@ fun ViewPager2.registerOnPageChangeCallback(onPageSelectedListener: (position: I
 fun <T> BaseQuickAdapter<T, *>.setOnItemClickListener(listener: (model: T) -> Unit)
 {
     setOnItemClickListener { _, _, position ->
-        val model = data.getOrNull(position)
-        if (model != null)
-        {
-            listener.invoke(model)
-        }
+        data.getOrNull(position)?.let { listener.invoke(it) }
     }
 }
 
 fun <T> BaseQuickAdapter<T, *>.setOnItemLongClickListener(listener: (model: T) -> Unit)
 {
     setOnItemLongClickListener { _, _, position ->
-        val model = data.getOrNull(position)
-        if (model != null)
-        {
-            listener.invoke(model)
-        }
+        data.getOrNull(position)?.let { listener.invoke(it) }
         true
     }
 }
@@ -42,7 +34,7 @@ fun <T> BaseQuickAdapter<T, *>.setOnItemLongClickListener(listener: (model: T) -
 fun View.setOnClickListener(vibrate: Boolean, listener: (View) -> Unit)
 {
     setOnClickListener {
-        VibrateUtils.vibrate(30)
+        if (vibrate) VibrateUtils.vibrate(30)
         listener.invoke(it)
     }
 }
