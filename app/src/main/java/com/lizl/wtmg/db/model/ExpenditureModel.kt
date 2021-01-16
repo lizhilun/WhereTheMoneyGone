@@ -25,6 +25,9 @@ data class ExpenditureModel(
         var recordMonth: Int,
 
         @ColumnInfo
+        var recordDay: Int,
+
+        @ColumnInfo
         var recordTime: Long,
 
         @ColumnInfo

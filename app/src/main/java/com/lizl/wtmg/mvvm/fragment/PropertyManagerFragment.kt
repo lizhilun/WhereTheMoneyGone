@@ -5,20 +5,22 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.databinding.FragmentPropertyManagerBinding
 import com.lizl.wtmg.db.AppDatabase
+import com.lizl.wtmg.module.property.PropertyManager
 import com.lizl.wtmg.mvvm.activity.AddPropertyActivity
-import com.lizl.wtmg.mvvm.adapter.PropertyCategoryGroupAdapter
+import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseFragment
-import com.lizl.wtmg.mvvm.model.PropertyCategoryGroupModel
+import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
+import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
 import kotlinx.android.synthetic.main.fragment_property_manager.*
 
 class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.layout.fragment_property_manager)
 {
-    private lateinit var propertyCategoryGroupAdapter: PropertyCategoryGroupAdapter
+    private lateinit var polymerizeGroupAdapter: PolymerizeGroupAdapter
 
     override fun initView()
     {
-        propertyCategoryGroupAdapter = PropertyCategoryGroupAdapter()
-        rv_property_category_group.adapter = propertyCategoryGroupAdapter
+        polymerizeGroupAdapter = PolymerizeGroupAdapter()
+        rv_property_category_group.adapter = polymerizeGroupAdapter
     }
 
     override fun initData()
@@ -28,11 +30,18 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
             tv_net_property.text = propertyList.sumBy { it.amount }.toString()
             tv_total_liabilities.text = 0.toString()
 
-            val categoryGroupList = mutableListOf<PropertyCategoryGroupModel>()
+            val polymerizeGroupList = mutableListOf<PolymerizeGroupModel>()
+
             propertyList.groupBy { it.category }.forEach { (t, u) ->
-                categoryGroupList.add(PropertyCategoryGroupModel(t, u.toMutableList()))
+                polymerizeGroupList.add(PolymerizeGroupModel(PropertyManager.getPropertyCategoryName(t), u.sumBy { it.amount }.toString(),
+                        mutableListOf<PolymerizeChildModel>().apply {
+                            u.forEach { propertyModel ->
+                                add(PolymerizeChildModel(PropertyManager.getPropertyIcon(propertyModel.type),
+                                        PropertyManager.getPropertyNameByType(propertyModel.type), propertyModel.amount.toString(), propertyModel))
+                            }
+                        }))
             }
-            propertyCategoryGroupAdapter.replaceData(categoryGroupList)
+            polymerizeGroupAdapter.replaceData(polymerizeGroupList)
         })
     }
 

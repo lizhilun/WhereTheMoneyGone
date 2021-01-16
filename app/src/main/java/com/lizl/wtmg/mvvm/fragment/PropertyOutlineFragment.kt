@@ -26,7 +26,6 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
     {
         val date = DateUtil.Date()
 
-
         AppDatabase.getInstance().getExpenditureDao().queryExpenditureByMonth(date.month).observe(this, Observer { expenditureLis ->
             monthExpenditure = expenditureLis.sumBy { it.amonunt.toInt() }
             updateMonthOutline()

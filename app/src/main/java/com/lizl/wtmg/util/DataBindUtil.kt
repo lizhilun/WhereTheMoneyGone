@@ -4,6 +4,7 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.AbsoluteSizeSpan
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -16,6 +17,14 @@ object DataBindUtil
     fun bindAdapter(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<*>?)
     {
         recyclerView.adapter = adapter
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:image")
+    fun bindAdapter(imageView: ImageView, imageRes: Int?)
+    {
+        imageRes ?: return
+        imageView.setImageResource(imageRes)
     }
 
     @JvmStatic

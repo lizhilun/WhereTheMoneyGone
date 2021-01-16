@@ -87,8 +87,8 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
                             selectTime.day = dayOfMonth
                             selectTime.hour = hourOfDay
                             selectTime.minute = minute
-                            tv_time.text =
-                                String.format("%d-%02d-%02d %02d:%2d", selectTime.year, selectTime.month, selectTime.day, selectTime.hour, selectTime.minute)
+                            tv_time.text = String.format("%d-%02d-%02d %02d:%2d", selectTime.year, selectTime.month, selectTime.day, selectTime.hour,
+                                    selectTime.minute)
                         }
                     }
                 }
@@ -108,7 +108,7 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
     {
         when (key)
         {
-            "D"      -> inputTemp = inputTemp.backspace()
+            "D" -> inputTemp = inputTemp.backspace()
             "-", "+" ->
             {
                 cluInput()
@@ -162,7 +162,7 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
         }
 
         val expenditureModel = ExpenditureModel(amonunt = amount.toFloat(), expenditureType = AppConstant.EXPENDITURE_TYPE_MEALS, payType = accountType,
-                recordTime = selectTime.time, recordYear = selectTime.year, recordMonth = selectTime.month)
+                recordTime = selectTime.time, recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)
 
         AppDatabase.getInstance().getExpenditureDao().insert(expenditureModel)
 
