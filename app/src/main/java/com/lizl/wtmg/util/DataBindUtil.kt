@@ -3,6 +3,7 @@ package com.lizl.wtmg.util
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.AbsoluteSizeSpan
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
@@ -46,5 +47,12 @@ object DataBindUtil
         {
             child.overScrollMode = mode
         }
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:isSelected")
+    fun bindSelected(view: View, isSelected: Boolean)
+    {
+        view.isSelected = isSelected
     }
 }

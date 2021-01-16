@@ -5,10 +5,11 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.EventConstant
+import com.lizl.wtmg.custom.function.setOnClickListener
+import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.custom.view.MenuDrawLayout
 import com.lizl.wtmg.databinding.FragmentPropertyOutlineBinding
 import com.lizl.wtmg.db.AppDatabase
-import com.lizl.wtmg.module.property.PropertyManager
 import com.lizl.wtmg.mvvm.activity.MoneyRecordActivity
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseFragment
@@ -33,6 +34,7 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
     {
         polymerizeGroupAdapter = PolymerizeGroupAdapter()
         rv_daily_outline.adapter = polymerizeGroupAdapter
+        rv_daily_outline.addItemDecoration(ListDividerItemDecoration(resources.getDimensionPixelSize(R.dimen.global_content_padding_content)))
     }
 
     override fun initData()
@@ -70,7 +72,7 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
             XPopup.Builder(requireContext()).popupPosition(PopupPosition.Left).hasStatusBarShadow(false).asCustom(menuDrawLayout).show()
         }
 
-        iv_property_manager.setOnClickListener { LiveEventBus.get(EventConstant.EVENT_GO_TO_PROPERTY_MANAGER_VIEW).post(true) }
+        iv_property_manager.setOnClickListener(true) { LiveEventBus.get(EventConstant.EVENT_GO_TO_PROPERTY_MANAGER_VIEW).post(true) }
     }
 
     private fun updateMonthOutline()

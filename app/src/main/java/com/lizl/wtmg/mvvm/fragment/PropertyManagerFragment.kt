@@ -3,6 +3,9 @@ package com.lizl.wtmg.mvvm.fragment
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
 import com.lizl.wtmg.R
+import com.lizl.wtmg.R.dimen
+import com.lizl.wtmg.custom.function.setOnClickListener
+import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.databinding.FragmentPropertyManagerBinding
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.module.property.PropertyManager
@@ -22,6 +25,7 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
     {
         polymerizeGroupAdapter = PolymerizeGroupAdapter()
         rv_property_category_group.adapter = polymerizeGroupAdapter
+        rv_property_category_group.addItemDecoration(ListDividerItemDecoration(resources.getDimensionPixelSize(dimen.global_content_padding_content)))
     }
 
     override fun initData()
@@ -48,6 +52,6 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
 
     override fun initListener()
     {
-        fab_add.setOnClickListener { ActivityUtils.startActivity(AddPropertyActivity::class.java) }
+        fab_add.setOnClickListener(true) { ActivityUtils.startActivity(AddPropertyActivity::class.java) }
     }
 }

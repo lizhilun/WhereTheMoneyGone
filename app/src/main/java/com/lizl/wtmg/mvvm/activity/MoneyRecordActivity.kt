@@ -6,12 +6,16 @@ import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.function.backspace
 import com.lizl.wtmg.custom.function.setOnClickListener
+import com.lizl.wtmg.custom.function.setOnItemClickListener
+import com.lizl.wtmg.custom.function.update
 import com.lizl.wtmg.databinding.ActivityMoneyRecordBinding
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.ExpenditureModel
 import com.lizl.wtmg.module.property.PropertyManager
+import com.lizl.wtmg.mvvm.adapter.ExpenditureTypeAdapter
 import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.mvvm.model.BottomModel
+import com.lizl.wtmg.mvvm.model.ExpenditureTypeModel
 import com.lizl.wtmg.util.DateUtil
 import com.lizl.wtmg.util.PopupUtil
 import kotlinx.android.synthetic.main.activity_money_record.*
@@ -28,10 +32,22 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
 
     private var accountType = AppConstant.PROPERTY_TYPE_CASH
     private var selectTime = DateUtil.Date()
+    private var expenditureType = AppConstant.EXPENDITURE_TYPE_MEALS
+
+    private lateinit var expenditureTypeAdapter: ExpenditureTypeAdapter
 
     override fun initView()
     {
         clearInput()
+
+        expenditureTypeAdapter = ExpenditureTypeAdapter()
+        rv_expenditure_type.adapter = expenditureTypeAdapter
+
+        val expenditureTypeList = mutableListOf<ExpenditureTypeModel>()
+        PropertyManager.getExpenditureTypeList().forEach {
+            expenditureTypeList.add(ExpenditureTypeModel(it, it == expenditureType))
+        }
+        expenditureTypeAdapter.setNewData(expenditureTypeList)
 
         tv_account.text = "${getString(R.string.account)}：${TranslateUtil.translatePropertyType(accountType)}"
         tv_time.text = String.format("%d-%02d-%02d %02d:%2d", selectTime.year, selectTime.month, selectTime.day, selectTime.hour, selectTime.minute)
@@ -92,6 +108,20 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
                     }
                 }
             }
+        }
+
+        expenditureTypeAdapter.setOnItemClickListener { expenditureTypeModel ->
+            if (expenditureTypeModel.isSelected) return@setOnItemClickListener
+            expenditureTypeAdapter.data.forEach {
+                if (it.isSelected)
+                {
+                    it.isSelected = false
+                    expenditureTypeAdapter.update(it)
+                }
+            }
+            expenditureTypeModel.isSelected = true
+            expenditureTypeAdapter.update(expenditureTypeModel)
+            expenditureType = expenditureTypeModel.type
         }
     }
 
@@ -160,8 +190,9 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
             return false
         }
 
-        val expenditureModel = ExpenditureModel(amonunt = amount.toFloat(), expenditureType = AppConstant.EXPENDITURE_TYPE_MEALS, payType = accountType,
-                recordTime = selectTime.time, recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)
+        val expenditureModel =
+                ExpenditureModel(amonunt = amount.toFloat(), expenditureType = expenditureType, payType = accountType, recordTime = selectTime.time,
+                        recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)
 
         AppDatabase.getInstance().getExpenditureDao().insert(expenditureModel)
 

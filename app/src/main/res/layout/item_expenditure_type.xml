@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.lizl.wtmg.module.property.PropertyManager" />
+
+        <import type="com.lizl.wtmg.util.TranslateUtil" />
+
+        <variable
+            name="expenditureTypeModel"
+            type="com.lizl.wtmg.mvvm.model.ExpenditureTypeModel" />
+    </data>
+
+    <skin.support.constraint.SkinCompatConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="W,1:1">
+
+            <skin.support.widget.SkinCompatFrameLayout
+                android:id="@+id/fl_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_expenditure_type"
+                android:padding="5dp"
+                app:isSelected="@{expenditureTypeModel.selected}"
+                app:layout_constraintBottom_toTopOf="@+id/tv_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed">
+
+                <com.lizl.wtmg.module.skin.view.SkinImageView
+                    android:id="@+id/iv_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:tint="@drawable/color_expenditure_type_tint"
+                    app:image="@{PropertyManager.INSTANCE.getExpenditureTypeIcon(expenditureTypeModel.type)}" />
+            </skin.support.widget.SkinCompatFrameLayout>
+
+            <skin.support.widget.SkinCompatTextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{TranslateUtil.INSTANCE.translateExpenditureType(expenditureTypeModel.type)}"
+                android:textColor="@color/colorTextColor"
+                android:textSize="@dimen/global_text_size_smaller"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fl_image" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </skin.support.constraint.SkinCompatConstraintLayout>
+
+</layout>
