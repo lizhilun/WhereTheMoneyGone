@@ -5,6 +5,7 @@
     <string name="account">账户</string>
     <string name="cancel">取消</string>
     <string name="confirm">确认</string>
+    <string name="delete">删除</string>
 
     <string name="month_expenditure">月支出</string>
     <string name="month_income">月收入</string>

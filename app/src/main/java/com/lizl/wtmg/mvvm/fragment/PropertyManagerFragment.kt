@@ -8,12 +8,16 @@ import com.lizl.wtmg.custom.function.setOnClickListener
 import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.databinding.FragmentPropertyManagerBinding
 import com.lizl.wtmg.db.AppDatabase
+import com.lizl.wtmg.db.model.ExpenditureModel
+import com.lizl.wtmg.db.model.PropertyModel
 import com.lizl.wtmg.module.property.PropertyManager
 import com.lizl.wtmg.mvvm.activity.AddPropertyActivity
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseFragment
+import com.lizl.wtmg.mvvm.model.BottomModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
+import com.lizl.wtmg.util.PopupUtil
 import com.lizl.wtmg.util.TranslateUtil
 import kotlinx.android.synthetic.main.fragment_property_manager.*
 

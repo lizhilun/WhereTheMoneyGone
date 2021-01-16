@@ -7,10 +7,15 @@ import com.lizl.wtmg.R
 import com.lizl.wtmg.custom.function.setOnItemClickListener
 import com.lizl.wtmg.custom.function.setOnItemLongClickListener
 import com.lizl.wtmg.databinding.ItemPolymerizeGroupBinding
+import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
 
 class PolymerizeGroupAdapter : BaseQuickAdapter<PolymerizeGroupModel, BaseViewHolder>(R.layout.item_polymerize_group)
 {
+
+    private var onChildItemClickListener: ((PolymerizeChildModel) -> Unit)? = null
+
+    private var onChildItemLongClickListener: ((PolymerizeChildModel) -> Unit)? = null
 
     override fun onItemViewHolderCreated(viewHolder: BaseViewHolder, viewType: Int)
     {
@@ -24,10 +29,20 @@ class PolymerizeGroupAdapter : BaseQuickAdapter<PolymerizeGroupModel, BaseViewHo
 
             rvChildList.adapter = PolymerizeChildAdapter(item.childList).apply {
 
-                setOnItemClickListener { propertyModel -> }
+                setOnItemClickListener { childModel -> onChildItemClickListener?.invoke(childModel) }
 
-                setOnItemLongClickListener { propertyModel -> }
+                setOnItemLongClickListener { childModel -> onChildItemLongClickListener?.invoke(childModel) }
             }
         }
+    }
+
+    fun setOnChildItemClickListener(onChildItemClickListener: (PolymerizeChildModel) -> Unit)
+    {
+        this.onChildItemClickListener = onChildItemClickListener
+    }
+
+    fun setOnChildItemLongClickListener(onChildItemLongClickListener: (PolymerizeChildModel) -> Unit)
+    {
+        this.onChildItemLongClickListener = onChildItemLongClickListener
     }
 }

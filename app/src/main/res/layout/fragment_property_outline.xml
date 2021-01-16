@@ -23,11 +23,13 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:paddingBottom="80dp">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_main_pic"
@@ -47,37 +49,6 @@
                     app:layout_constraintEnd_toEndOf="@+id/iv_main_pic"
                     app:layout_constraintStart_toStartOf="@+id/iv_main_pic"
                     app:layout_constraintTop_toTopOf="@+id/iv_main_pic" />
-
-                <com.lizl.wtmg.custom.view.StatusBarPlaceholder
-                    android:id="@+id/view_status_holder"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_tool_bar"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/global_toolbar_height"
-                    app:layout_constraintTop_toBottomOf="@+id/view_status_holder">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_menu"
-                        style="@style/ToolbarLayoutBackButtonStyle"
-                        android:src="@drawable/ic_baseline_menu_24"
-                        android:tint="@color/white"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_property_manager"
-                        style="@style/ToolbarLayoutImageButtonStyle"
-                        android:src="@drawable/ic_baseline_property_24"
-                        android:tint="@color/white"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_month_expenditure_des"
@@ -161,6 +132,37 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
+
+        <com.lizl.wtmg.custom.view.StatusBarPlaceholder
+            android:id="@+id/view_status_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/global_toolbar_height"
+            app:layout_constraintTop_toBottomOf="@+id/view_status_holder">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_menu"
+                style="@style/ToolbarLayoutBackButtonStyle"
+                android:src="@drawable/ic_baseline_menu_24"
+                android:tint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_property_manager"
+                style="@style/ToolbarLayoutImageButtonStyle"
+                android:src="@drawable/ic_baseline_property_24"
+                android:tint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_add"

@@ -10,12 +10,15 @@ import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.custom.view.MenuDrawLayout
 import com.lizl.wtmg.databinding.FragmentPropertyOutlineBinding
 import com.lizl.wtmg.db.AppDatabase
+import com.lizl.wtmg.db.model.ExpenditureModel
 import com.lizl.wtmg.mvvm.activity.MoneyRecordActivity
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseFragment
+import com.lizl.wtmg.mvvm.model.BottomModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
 import com.lizl.wtmg.util.DateUtil
+import com.lizl.wtmg.util.PopupUtil
 import com.lizl.wtmg.util.TranslateUtil
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.enums.PopupPosition
@@ -73,6 +76,25 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
         }
 
         iv_property_manager.setOnClickListener(true) { LiveEventBus.get(EventConstant.EVENT_GO_TO_PROPERTY_MANAGER_VIEW).post(true) }
+
+        polymerizeGroupAdapter.setOnChildItemClickListener { }
+
+        polymerizeGroupAdapter.setOnChildItemLongClickListener { polymerizeChildModel ->
+            PopupUtil.showBottomListPopup(mutableListOf<BottomModel>().apply {
+                add(BottomModel(name = getString(R.string.delete), tag = "D"))
+            }) {
+                when (it.tag)
+                {
+                    "D" ->
+                    {
+                        if (polymerizeChildModel.tag is ExpenditureModel)
+                        {
+                            AppDatabase.getInstance().getExpenditureDao().delete(polymerizeChildModel.tag)
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun updateMonthOutline()

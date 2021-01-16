@@ -1,5 +1,6 @@
 package com.lizl.wtmg.mvvm.adapter
 
+import androidx.core.view.isVisible
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.lizl.wtmg.R
@@ -12,7 +13,8 @@ class BottomListAdapter(bottomList: MutableList<BottomModel>) : BaseQuickAdapter
     {
         with(helper.itemView) {
             tv_name.text = item.name
-            iv_icon.setImageResource(item.icon)
+            iv_icon.isVisible = item.icon != null
+            iv_icon.setImageResource(item.icon ?: R.color.transparent)
         }
     }
 }
