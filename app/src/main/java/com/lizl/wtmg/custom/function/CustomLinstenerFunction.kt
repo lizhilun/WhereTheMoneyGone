@@ -16,9 +16,10 @@ fun ViewPager2.registerOnPageChangeCallback(onPageSelectedListener: (position: I
     })
 }
 
-fun <T> BaseQuickAdapter<T, *>.setOnItemClickListener(listener: (model: T) -> Unit)
+fun <T> BaseQuickAdapter<T, *>.setOnItemClickListener(vibrate: Boolean = false, listener: (model: T) -> Unit)
 {
     setOnItemClickListener { _, _, position ->
+        if (vibrate) VibrateUtils.vibrate(30)
         data.getOrNull(position)?.let { listener.invoke(it) }
     }
 }

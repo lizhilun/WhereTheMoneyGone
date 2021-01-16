@@ -110,7 +110,7 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
             }
         }
 
-        expenditureTypeAdapter.setOnItemClickListener { expenditureTypeModel ->
+        expenditureTypeAdapter.setOnItemClickListener(true) { expenditureTypeModel ->
             if (expenditureTypeModel.isSelected) return@setOnItemClickListener
             expenditureTypeAdapter.data.forEach {
                 if (it.isSelected)
