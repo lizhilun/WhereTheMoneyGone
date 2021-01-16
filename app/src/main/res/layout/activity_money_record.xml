@@ -46,7 +46,7 @@
                 android:background="@drawable/bg_click_secondary_content_ripple"
                 android:padding="@dimen/global_content_padding_edge_half"
                 android:textColor="@color/colorTextColor"
-                android:textSize="@dimen/global_text_size_small"
+                android:textSize="@dimen/global_text_size_smaller"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -59,7 +59,7 @@
                 android:background="@drawable/bg_click_secondary_content_ripple"
                 android:padding="@dimen/global_content_padding_edge_half"
                 android:textColor="@color/colorTextColor"
-                android:textSize="@dimen/global_text_size_small"
+                android:textSize="@dimen/global_text_size_smaller"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_account"
                 app:layout_constraintStart_toEndOf="@+id/tv_account"
                 app:layout_constraintTop_toTopOf="@+id/tv_account"

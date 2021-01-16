@@ -41,7 +41,7 @@ object SkinUtil
         ConfigUtil.obConfig(ConfigConstant.CONFIG_DARK_MODE).observeForever { GlobalScope.launch { loadSkin() } }
     }
 
-    private suspend fun loadSkin()
+    suspend fun loadSkin()
     {
         if (isNightModeOn())
         {

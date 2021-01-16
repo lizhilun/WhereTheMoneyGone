@@ -23,7 +23,7 @@
     </style>
 
     <style name="GlobalSmallTextStyle">
-        <item name="android:textSize">@dimen/global_text_size_small</item>
+        <item name="android:textSize">@dimen/global_text_size_smaller</item>
         <item name="android:textColor">@color/colorTextColor</item>
     </style>
 
@@ -40,15 +40,6 @@
     <style name="GlobalSecondarySmallerTextStyle">
         <item name="android:textSize">@dimen/global_text_size_smallest</item>
         <item name="android:textColor">@color/colorSecondaryTextColor</item>
-    </style>
-
-    <style name="NewsSourceItemImageStyle">
-        <item name="android:layout_width">@dimen/news_source_item_image_size</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:paddingStart">@dimen/news_source_item_image_padding</item>
-        <item name="android:paddingEnd">@dimen/news_source_item_image_padding</item>
-        <item name="android:tint">@color/colorTextColor</item>
-        <item name="android:scaleType">fitCenter</item>
     </style>
 
     <style name="SettingItemIconStyle">
@@ -78,11 +69,18 @@
         <item name="layout_constraintEnd_toEndOf">parent</item>
     </style>
 
-    <style name="ToolbarLayoutImageButtonStyle">
+    <style name="ToolbarLayoutBackButtonStyle">
         <item name="android:layout_width">@dimen/toolbar_image_btn_size</item>
         <item name="android:layout_height">@dimen/toolbar_image_btn_size</item>
         <item name="android:padding">@dimen/toolbar_icon_padding</item>
         <item name="android:scaleType">fitCenter</item>
+    </style>
+
+    <style name="ToolbarLayoutImageButtonStyle">
+        <item name="android:layout_width">@dimen/toolbar_image_btn_size</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/toolbar_icon_padding</item>
+        <item name="android:scaleType">fitStart</item>
         <item name="android:tint">@color/colorSvgTint</item>
     </style>
 

@@ -90,7 +90,7 @@
                 android:textColor="@color/colorTextColor"
                 android:textColorHint="@color/colorThirdTextColor"
                 android:textSize="@dimen/global_text_size"
-                app:hintTextSize="@{DimensionUtils.INSTANCE.getDimension(R.dimen.global_text_size_small)}"
+                app:hintTextSize="@{DimensionUtils.INSTANCE.getDimension(R.dimen.global_text_size_smaller)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_amount_des" />
 

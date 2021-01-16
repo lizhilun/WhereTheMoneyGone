@@ -100,7 +100,6 @@
                         app:layout_constraintTop_toBottomOf="@+id/tv_total_liabilities_des" />
                 </skin.support.constraint.SkinCompatConstraintLayout>
 
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_property_category_group"
                     android:layout_width="match_parent"

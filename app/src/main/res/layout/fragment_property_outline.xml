@@ -4,6 +4,17 @@
 
     <data>
 
+        <variable
+            name="monthExpenditure"
+            type="String" />
+
+        <variable
+            name="monthIncome"
+            type="String" />
+
+        <variable
+            name="monthBalance"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,25 +35,119 @@
                     android:layout_height="0dp"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/pic_main_default"
-                    app:layout_constraintDimensionRatio="W,9:16"
+                    app:layout_constraintDimensionRatio="W,10:16"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <View
+                <skin.support.widget.SkinCompatView
                     android:id="@+id/view_cover"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:background="@color/trans_black_50"
+                    android:background="@color/colorMainPicCover"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_main_pic"
                     app:layout_constraintEnd_toEndOf="@+id/iv_main_pic"
                     app:layout_constraintStart_toStartOf="@+id/iv_main_pic"
                     app:layout_constraintTop_toTopOf="@+id/iv_main_pic" />
 
-                <com.lizl.wtmg.custom.view.titlebar.CustomTitleBar
-                    android:id="@+id/ctb_title"
+                <com.lizl.wtmg.custom.view.StatusBarPlaceholder
+                    android:id="@+id/view_status_holder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:backBtnSrc="@drawable/ic_baseline_menu_24"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_tool_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/global_toolbar_height"
+                    app:layout_constraintTop_toBottomOf="@+id/view_status_holder">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_menu"
+                        style="@style/ToolbarLayoutBackButtonStyle"
+                        android:src="@drawable/ic_baseline_menu_24"
+                        android:tint="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_property_manager"
+                        style="@style/ToolbarLayoutImageButtonStyle"
+                        android:src="@drawable/ic_baseline_property_24"
+                        android:tint="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_month_expenditure_des"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/month_expenditure"
+                    android:textColor="@color/colorTextColor_dark"
+                    android:textSize="@dimen/global_text_size_smaller"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_month_expenditure"
+                    app:layout_constraintStart_toStartOf="@+id/tv_month_expenditure" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_month_expenditure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/global_content_padding_content"
+                    android:text="@{monthExpenditure}"
+                    android:textColor="@color/colorTextColor_dark"
+                    android:textSize="@dimen/global_text_size_bigger"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_month_income_des"
+                    app:layout_constraintStart_toStartOf="@+id/tv_month_income_des" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_month_income_des"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/global_content_padding_edge"
+                    android:layout_marginBottom="40dp"
+                    android:text="@string/month_income"
+                    android:textColor="@color/colorTextColor_dark"
+                    android:textSize="@dimen/global_text_size_smaller"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_month_income"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/global_text_size"
+                    android:text="@{monthIncome}"
+                    android:textColor="@color/colorTextColor_dark"
+                    android:textSize="@dimen/global_text_size_smaller"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_month_income_des"
+                    app:layout_constraintStart_toEndOf="@+id/tv_month_income_des"
+                    app:layout_constraintTop_toTopOf="@+id/tv_month_income_des" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_month_balance_des"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/global_content_padding_content"
+                    android:text="@string/month_balance"
+                    android:textColor="@color/colorTextColor_dark"
+                    android:textSize="@dimen/global_text_size_smaller"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_month_income_des"
+                    app:layout_constraintStart_toEndOf="@+id/tv_month_income"
+                    app:layout_constraintTop_toTopOf="@+id/tv_month_income_des" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_month_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/global_text_size"
+                    android:text="@{monthBalance}"
+                    android:textColor="@color/colorTextColor_dark"
+                    android:textSize="@dimen/global_text_size_smaller"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_month_income_des"
+                    app:layout_constraintStart_toEndOf="@+id/tv_month_balance_des"
+                    app:layout_constraintTop_toTopOf="@+id/tv_month_income_des" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

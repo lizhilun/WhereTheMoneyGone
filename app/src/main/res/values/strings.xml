@@ -3,9 +3,12 @@
     <string name="app_introduce">Traces your money \nprotect your money</string>
 
     <string name="account">账户</string>
-
     <string name="cancel">取消</string>
     <string name="confirm">确认</string>
+
+    <string name="month_expenditure">月支出</string>
+    <string name="month_income">月收入</string>
+    <string name="month_balance">月结余</string>
 
     <string name="record_once_more">再记</string>
     <string name="save">保存</string>

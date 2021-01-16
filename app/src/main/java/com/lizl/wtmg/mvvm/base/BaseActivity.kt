@@ -1,5 +1,6 @@
 package com.lizl.wtmg.mvvm.base
 
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.SkinAppCompatDelegateImpl
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.lizl.wtmg.module.skin.util.SkinUtil
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 open class BaseActivity<DB : ViewDataBinding>(private val layoutId: Int) : AppCompatActivity()
 {
@@ -73,6 +77,12 @@ open class BaseActivity<DB : ViewDataBinding>(private val layoutId: Int) : AppCo
     override fun getDelegate(): AppCompatDelegate
     {
         return SkinAppCompatDelegateImpl.get(this, this)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration)
+    {
+        super.onConfigurationChanged(newConfig)
+        GlobalScope.launch { SkinUtil.loadSkin() }
     }
 
     open fun initView()

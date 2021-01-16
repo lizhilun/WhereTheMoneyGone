@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/global_content_padding_edge_half"
         android:textColor="@color/colorTextColor"
-        android:textSize="@dimen/global_text_size_small"
+        android:textSize="@dimen/global_text_size_smaller"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/global_content_padding_edge_half"
         android:textColor="@color/colorTextColor"
-        android:textSize="@dimen/global_text_size_small"
+        android:textSize="@dimen/global_text_size_smaller"
         app:layout_constraintBottom_toBottomOf="@+id/tv_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_name" />
