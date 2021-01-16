@@ -12,6 +12,9 @@ interface PropertyDao : BaseDao<PropertyModel>
     @Query("select * from PropertyModel")
     fun obAllProperty(): LiveData<MutableList<PropertyModel>>
 
+    @Query("select * from PropertyModel")
+    fun queryAllProperty(): MutableList<PropertyModel>
+
     @Query("select * from PropertyModel where type == :propertyType")
     fun queryPropertyByType(propertyType: String): PropertyModel?
 

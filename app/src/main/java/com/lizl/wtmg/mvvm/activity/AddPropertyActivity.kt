@@ -50,7 +50,7 @@ class AddPropertyActivity : BaseActivity<ActivityAddPropertyBinding>(R.layout.ac
             if (propertyModel == null)
             {
                 propertyModel = PropertyModel(type = propertyType, name = TranslateUtil.translatePropertyType(propertyType),
-                        category = PropertyManager.getPropertyCategoryByType(propertyType), amount = amount, showInTotal = true)
+                        category = PropertyManager.getPropertyCategoryByType(propertyType), amount = amount.toFloat(), showInTotal = true)
             }
             else
             {

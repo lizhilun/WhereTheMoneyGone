@@ -1,5 +1,6 @@
 package com.lizl.wtmg.mvvm.activity
 
+import com.blankj.utilcode.util.ActivityUtils
 import com.lizl.wtmg.util.TranslateUtil
 import com.blankj.utilcode.util.ToastUtils
 import com.lizl.wtmg.R
@@ -29,7 +30,7 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
 {
     private var inputTemp = ""
 
-    private var accountType = AppConstant.PROPERTY_TYPE_CASH
+    private var accountType = ""
     private var selectTime = DateUtil.Date()
     private var expenditureType = AppConstant.EXPENDITURE_TYPE_MEALS
 
@@ -54,7 +55,7 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
 
     override fun initListener()
     {
-        ctb_title.setOnClickListener { onBackPressed() }
+        ctb_title.setOnBackBtnClickListener { onBackPressed() }
 
         view_input_key.setOnKeyClickListener { onNewKeyInput(it) }
 
@@ -82,10 +83,16 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
 
         tv_account.setOnClickListener(true) {
             PopupUtil.showBottomListPopup(mutableListOf<BottomModel>().apply {
-                PropertyManager.getPropertyList().forEach {
-                    add(BottomModel(PropertyManager.getPropertyIcon(it), TranslateUtil.translatePropertyType(it), it))
+                AppDatabase.getInstance().getPropertyDao().queryAllProperty().forEach {
+                    add(BottomModel(PropertyManager.getPropertyIcon(it.type), TranslateUtil.translatePropertyType(it.type), it.type))
                 }
+                add(BottomModel(R.drawable.ic_baseline_add_colourful_24, getString(R.string.add), "A"))
             }) {
+                if (it.tag == "A")
+                {
+                    ActivityUtils.startActivity(AddPropertyActivity::class.java)
+                    return@showBottomListPopup
+                }
                 accountType = it.tag as String
                 tv_account.text = "${getString(R.string.account)}：${TranslateUtil.translatePropertyType(accountType)}"
             }
@@ -101,8 +108,8 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
                             selectTime.day = dayOfMonth
                             selectTime.hour = hourOfDay
                             selectTime.minute = minute
-                            tv_time.text = String.format("%d-%02d-%02d %02d:%2d", selectTime.year, selectTime.month, selectTime.day, selectTime.hour,
-                                    selectTime.minute)
+                            tv_time.text =
+                                String.format("%d-%02d-%02d %02d:%2d", selectTime.year, selectTime.month, selectTime.day, selectTime.hour, selectTime.minute)
                         }
                     }
                 }
@@ -136,7 +143,7 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
     {
         when (key)
         {
-            "D" -> inputTemp = inputTemp.backspace()
+            "D"      -> inputTemp = inputTemp.backspace()
             "-", "+" ->
             {
                 cluInput()
@@ -185,13 +192,23 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
 
         if (amount == 0)
         {
-            ToastUtils.showShort(R.string.pleas_input_amount)
+            ToastUtils.showShort(R.string.please_input_amount)
             return false
         }
 
-        val expenditureModel =
-                ExpenditureModel(amonunt = amount.toFloat(), expenditureType = expenditureType, payType = accountType, recordTime = selectTime.time,
-                        recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)
+        val propertyModel = AppDatabase.getInstance().getPropertyDao().queryPropertyByType(accountType)
+        if (propertyModel == null)
+        {
+            ToastUtils.showShort(R.string.please_select_account)
+            return false
+        }
+
+        propertyModel.amount = propertyModel.amount - amount
+
+        AppDatabase.getInstance().getPropertyDao().insert(propertyModel)
+
+        val expenditureModel = ExpenditureModel(amonunt = amount.toFloat(), expenditureType = expenditureType, accountType = accountType, recordTime = selectTime.time,
+                    recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)
 
         AppDatabase.getInstance().getExpenditureDao().insert(expenditureModel)
 

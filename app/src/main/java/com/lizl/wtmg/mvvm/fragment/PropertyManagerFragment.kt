@@ -8,16 +8,12 @@ import com.lizl.wtmg.custom.function.setOnClickListener
 import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.databinding.FragmentPropertyManagerBinding
 import com.lizl.wtmg.db.AppDatabase
-import com.lizl.wtmg.db.model.ExpenditureModel
-import com.lizl.wtmg.db.model.PropertyModel
 import com.lizl.wtmg.module.property.PropertyManager
 import com.lizl.wtmg.mvvm.activity.AddPropertyActivity
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseFragment
-import com.lizl.wtmg.mvvm.model.BottomModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
-import com.lizl.wtmg.util.PopupUtil
 import com.lizl.wtmg.util.TranslateUtil
 import kotlinx.android.synthetic.main.fragment_property_manager.*
 
@@ -35,18 +31,18 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
     override fun initData()
     {
         AppDatabase.getInstance().getPropertyDao().obAllProperty().observe(this, Observer { propertyList ->
-            tv_total_property.text = propertyList.sumBy { it.amount }.toString()
-            tv_net_property.text = propertyList.sumBy { it.amount }.toString()
+            tv_total_property.text = propertyList.sumBy { it.amount.toInt() }.toString()
+            tv_net_property.text = propertyList.sumBy { it.amount.toInt() }.toString()
             tv_total_liabilities.text = 0.toString()
 
             val polymerizeGroupList = mutableListOf<PolymerizeGroupModel>()
 
             propertyList.groupBy { it.category }.forEach { (t, u) ->
-                polymerizeGroupList.add(PolymerizeGroupModel(TranslateUtil.translatePropertyCategory(t), u.sumBy { it.amount }.toString(),
+                polymerizeGroupList.add(PolymerizeGroupModel(TranslateUtil.translatePropertyCategory(t), u.sumBy { it.amount.toInt() }.toString(),
                         mutableListOf<PolymerizeChildModel>().apply {
                             u.forEach { propertyModel ->
                                 add(PolymerizeChildModel(PropertyManager.getPropertyIcon(propertyModel.type),
-                                        TranslateUtil.translatePropertyType(propertyModel.type), propertyModel.amount.toString(), propertyModel))
+                                        TranslateUtil.translatePropertyType(propertyModel.type), propertyModel.amount.toInt().toString(), propertyModel))
                             }
                         }))
             }

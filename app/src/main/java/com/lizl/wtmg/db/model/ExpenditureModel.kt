@@ -16,7 +16,7 @@ data class ExpenditureModel(
         var expenditureType: String,
 
         @ColumnInfo
-        var payType: String,
+        var accountType: String,
 
         @ColumnInfo
         var recordYear: Int,

@@ -85,15 +85,18 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
             }) {
                 when (it.tag)
                 {
-                    "D" ->
-                    {
-                        if (polymerizeChildModel.tag is ExpenditureModel)
-                        {
-                            AppDatabase.getInstance().getExpenditureDao().delete(polymerizeChildModel.tag)
-                        }
-                    }
+                    "D" -> deleteExpenditure(polymerizeChildModel.tag as ExpenditureModel)
                 }
             }
+        }
+    }
+
+    private fun deleteExpenditure(expenditureModel: ExpenditureModel)
+    {
+        AppDatabase.getInstance().getExpenditureDao().delete(expenditureModel)
+        AppDatabase.getInstance().getPropertyDao().queryPropertyByType(expenditureModel.accountType)?.let {
+            it.amount = it.amount + expenditureModel.amonunt
+            AppDatabase.getInstance().getPropertyDao().update(it)
         }
     }
 

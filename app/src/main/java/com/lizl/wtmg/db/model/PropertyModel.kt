@@ -22,4 +22,4 @@ data class PropertyModel(
         var showInTotal: Boolean,
 
         @ColumnInfo
-        var amount: Int)
+        var amount: Float)
