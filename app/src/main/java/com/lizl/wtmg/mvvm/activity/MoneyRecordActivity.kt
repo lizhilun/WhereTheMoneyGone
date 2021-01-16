@@ -1,6 +1,6 @@
 package com.lizl.wtmg.mvvm.activity
 
-import com.blankj.utilcode.util.TimeUtils
+import com.lizl.wtmg.util.TranslateUtil
 import com.blankj.utilcode.util.ToastUtils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
@@ -20,7 +20,6 @@ import kotlinx.android.synthetic.main.activity_money_record.tv_save
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.util.*
 
 class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.activity_money_record)
@@ -34,7 +33,7 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
     {
         clearInput()
 
-        tv_account.text = "${getString(R.string.account)}：${PropertyManager.getPropertyNameByType(accountType)}"
+        tv_account.text = "${getString(R.string.account)}：${TranslateUtil.translatePropertyType(accountType)}"
         tv_time.text = String.format("%d-%02d-%02d %02d:%2d", selectTime.year, selectTime.month, selectTime.day, selectTime.hour, selectTime.minute)
     }
 
@@ -69,11 +68,11 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
         tv_account.setOnClickListener(true) {
             PopupUtil.showBottomListPopup(mutableListOf<BottomModel>().apply {
                 PropertyManager.getPropertyList().forEach {
-                    add(BottomModel(PropertyManager.getPropertyIcon(it), PropertyManager.getPropertyNameByType(it), it))
+                    add(BottomModel(PropertyManager.getPropertyIcon(it), TranslateUtil.translatePropertyType(it), it))
                 }
             }) {
                 accountType = it.tag as String
-                tv_account.text = "${getString(R.string.account)}：${PropertyManager.getPropertyNameByType(accountType)}"
+                tv_account.text = "${getString(R.string.account)}：${TranslateUtil.translatePropertyType(accountType)}"
             }
         }
 

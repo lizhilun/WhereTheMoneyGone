@@ -10,6 +10,7 @@ import com.lizl.wtmg.module.property.PropertyManager
 import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.mvvm.model.BottomModel
 import com.lizl.wtmg.util.PopupUtil
+import com.lizl.wtmg.util.TranslateUtil
 import kotlinx.android.synthetic.main.activity_add_property.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -20,7 +21,7 @@ class AddPropertyActivity : BaseActivity<ActivityAddPropertyBinding>(R.layout.ac
 
     override fun initView()
     {
-        tv_property_type.text = PropertyManager.getPropertyNameByType(propertyType)
+        tv_property_type.text = TranslateUtil.translatePropertyType(propertyType)
     }
 
     override fun initListener()
@@ -31,11 +32,11 @@ class AddPropertyActivity : BaseActivity<ActivityAddPropertyBinding>(R.layout.ac
         cl_property_type.setOnClickListener {
             PopupUtil.showBottomListPopup(mutableListOf<BottomModel>().apply {
                 PropertyManager.getPropertyList().forEach {
-                    add(BottomModel(PropertyManager.getPropertyIcon(it), PropertyManager.getPropertyNameByType(it), it))
+                    add(BottomModel(PropertyManager.getPropertyIcon(it), TranslateUtil.translatePropertyType(it), it))
                 }
             }) {
                 propertyType = it.tag as String
-                tv_property_type.text = PropertyManager.getPropertyNameByType(propertyType)
+                tv_property_type.text = TranslateUtil.translatePropertyType(propertyType)
             }
         }
     }
@@ -48,7 +49,7 @@ class AddPropertyActivity : BaseActivity<ActivityAddPropertyBinding>(R.layout.ac
             var propertyModel = AppDatabase.getInstance().getPropertyDao().queryPropertyByType(propertyType)
             if (propertyModel == null)
             {
-                propertyModel = PropertyModel(type = propertyType, name = PropertyManager.getPropertyNameByType(propertyType),
+                propertyModel = PropertyModel(type = propertyType, name = TranslateUtil.translatePropertyType(propertyType),
                         category = PropertyManager.getPropertyCategoryByType(propertyType), amount = amount, showInTotal = true)
             }
             else

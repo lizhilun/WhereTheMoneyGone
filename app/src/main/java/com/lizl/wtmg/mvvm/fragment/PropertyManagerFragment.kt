@@ -11,6 +11,7 @@ import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseFragment
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
+import com.lizl.wtmg.util.TranslateUtil
 import kotlinx.android.synthetic.main.fragment_property_manager.*
 
 class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.layout.fragment_property_manager)
@@ -33,11 +34,11 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
             val polymerizeGroupList = mutableListOf<PolymerizeGroupModel>()
 
             propertyList.groupBy { it.category }.forEach { (t, u) ->
-                polymerizeGroupList.add(PolymerizeGroupModel(PropertyManager.getPropertyCategoryName(t), u.sumBy { it.amount }.toString(),
+                polymerizeGroupList.add(PolymerizeGroupModel(TranslateUtil.translatePropertyCategory(t), u.sumBy { it.amount }.toString(),
                         mutableListOf<PolymerizeChildModel>().apply {
                             u.forEach { propertyModel ->
                                 add(PolymerizeChildModel(PropertyManager.getPropertyIcon(propertyModel.type),
-                                        PropertyManager.getPropertyNameByType(propertyModel.type), propertyModel.amount.toString(), propertyModel))
+                                        TranslateUtil.translatePropertyType(propertyModel.type), propertyModel.amount.toString(), propertyModel))
                             }
                         }))
             }

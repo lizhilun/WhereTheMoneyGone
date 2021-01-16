@@ -17,6 +17,13 @@
 
     <string name="pleas_input_amount">请输入金额</string>
 
+    <string name="meals">三餐</string>
+    <string name="snacks">零食</string>
+    <string name="clothes">衣服</string>
+    <string name="rent">房租</string>
+    <string name="game">游戏</string>
+    <string name="necessary">日用品</string>
+
     <string name="dark_mode_config">暗黑模式</string>
     <string name="on">开</string>
     <string name="off">关</string>
