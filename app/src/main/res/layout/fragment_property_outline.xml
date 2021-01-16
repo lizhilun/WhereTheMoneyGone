@@ -10,17 +10,48 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.lizl.wtmg.custom.view.titlebar.CustomTitleBar
-            android:id="@+id/ctb_title"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:backBtnSrc="@drawable/ic_baseline_menu_24"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_main_pic"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/pic_main_default"
+                    app:layout_constraintDimensionRatio="W,9:16"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/view_cover"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@color/trans_black_50"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_main_pic"
+                    app:layout_constraintEnd_toEndOf="@+id/iv_main_pic"
+                    app:layout_constraintStart_toStartOf="@+id/iv_main_pic"
+                    app:layout_constraintTop_toTopOf="@+id/iv_main_pic" />
+
+                <com.lizl.wtmg.custom.view.titlebar.CustomTitleBar
+                    android:id="@+id/ctb_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:backBtnSrc="@drawable/ic_baseline_menu_24"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_add"
             style="@style/GlobalFABStyle"
             app:srcCompat="@drawable/ic_baseline_add_24" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
