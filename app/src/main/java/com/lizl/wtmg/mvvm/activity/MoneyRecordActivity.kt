@@ -84,7 +84,7 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
 
         tv_account.setOnClickListener(true) {
             PopupUtil.showBottomListPopup(mutableListOf<BottomModel>().apply {
-                AppDatabase.getInstance().getPropertyAccountDao().queryAllAccount().forEach {
+                AppDatabase.getInstance().getCapitalAccountDao().queryAllAccount().forEach {
                     add(BottomModel(AccountManager.getAccountIcon(it.type), TranslateUtil.translateAccountType(it.type), it.type))
                 }
                 AppDatabase.getInstance().getCreditAccountDao().queryAllAccount().forEach {

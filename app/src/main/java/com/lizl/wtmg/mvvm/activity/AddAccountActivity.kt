@@ -23,9 +23,48 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
     private var accountCategory = AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL
     private var accountType = AppConstant.ACCOUNT_TYPE_BACK_CARD
 
-    override fun initView()
+    companion object
     {
-        showAccountCategory(accountCategory)
+        const val DATA_ACCOUNT_TYPE = "DATA_ACCOUNT_TYPE"
+        const val DATA_ACCOUNT_ID = "DATA_ACCOUNT_ID"
+    }
+
+    override fun initData()
+    {
+        val accountId = intent?.extras?.getLong(DATA_ACCOUNT_ID, -1L)
+        val accountType = intent?.extras?.getString(DATA_ACCOUNT_TYPE)
+
+        if (accountId != -1L && accountType?.isNotBlank() == true)
+        {
+            ctb_title.setTitle(getString(R.string.modify_account))
+
+            this.accountType = accountType
+
+            when (AccountManager.getAccountCategoryByType(accountType))
+            {
+                AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL ->
+                {
+                    showAccountCategory(AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL)
+                    showAccountType(accountType)
+                    AppDatabase.getInstance().getCapitalAccountDao().queryAccountByType(accountType)?.let {
+                        layout_account_amount.setEditText(it.amount.toInt().toString())
+                    }
+                }
+                AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT  ->
+                {
+                    showAccountCategory(AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT)
+                    showAccountType(accountType)
+                    AppDatabase.getInstance().getCreditAccountDao().queryAccountByType(accountType)?.let {
+                        layout_total_quota.setEditText(it.totalQuota.toInt().toString())
+                        layout_used_quota.setEditText(it.usedQuota.toInt().toString())
+                    }
+                }
+            }
+        }
+        else
+        {
+            showAccountCategory(accountCategory)
+        }
     }
 
     override fun initListener()
@@ -107,7 +146,7 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
         }
 
         GlobalScope.launch {
-            var propertyModel = AppDatabase.getInstance().getPropertyAccountDao().queryAccountByType(accountType)
+            var propertyModel = AppDatabase.getInstance().getCapitalAccountDao().queryAccountByType(accountType)
             if (propertyModel == null)
             {
                 propertyModel = CapitalAccountModel(type = accountType, name = TranslateUtil.translateAccountType(accountType), amount = amount.toFloat(),
@@ -117,7 +156,7 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
             {
                 propertyModel.amount = amount.toFloat()
             }
-            AppDatabase.getInstance().getPropertyAccountDao().insert(propertyModel)
+            AppDatabase.getInstance().getCapitalAccountDao().insert(propertyModel)
 
             GlobalScope.ui { onBackPressed() }
         }

@@ -38,6 +38,8 @@
     <string name="net_property">净资产</string>
     <string name="total_liabilities">总负债</string>
 
+    <string name="add_account">添加账户</string>
+    <string name="modify_account">修改账户</string>
     <string name="account_category">账户分类</string>
     <string name="account_type">账户类型</string>
     <string name="account_amount">账户金额</string>

@@ -14,9 +14,9 @@ object AccountDataManager
         {
             AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL ->
             {
-                AppDatabase.getInstance().getPropertyAccountDao().queryAccountByType(expenditureModel.accountType)?.let {
+                AppDatabase.getInstance().getCapitalAccountDao().queryAccountByType(expenditureModel.accountType)?.let {
                     it.amount -= expenditureModel.amonunt
-                    AppDatabase.getInstance().getPropertyAccountDao().insert(it)
+                    AppDatabase.getInstance().getCapitalAccountDao().insert(it)
                 }
             }
             AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT  ->
@@ -37,9 +37,9 @@ object AccountDataManager
         {
             AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL ->
             {
-                AppDatabase.getInstance().getPropertyAccountDao().queryAccountByType(expenditureModel.accountType)?.let {
+                AppDatabase.getInstance().getCapitalAccountDao().queryAccountByType(expenditureModel.accountType)?.let {
                     it.amount += expenditureModel.amonunt
-                    AppDatabase.getInstance().getPropertyAccountDao().insert(it)
+                    AppDatabase.getInstance().getCapitalAccountDao().insert(it)
                 }
             }
             AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT  ->

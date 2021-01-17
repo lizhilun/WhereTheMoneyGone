@@ -14,6 +14,6 @@ interface CapitalAccountDao : BaseDao<CapitalAccountModel>
     @Query("select * from CapitalAccount")
     fun queryAllAccount(): MutableList<CapitalAccountModel>
 
-    @Query("select * from CapitalAccount where type == :propertyType")
-    fun queryAccountByType(propertyType: String): CapitalAccountModel?
+    @Query("select * from CapitalAccount where type == :accountType")
+    fun queryAccountByType(accountType: String): CapitalAccountModel?
 }

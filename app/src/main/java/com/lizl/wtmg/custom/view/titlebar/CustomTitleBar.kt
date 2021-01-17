@@ -41,6 +41,11 @@ class CustomTitleBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
         }
     }
 
+    fun setTitle(text: String)
+    {
+        tv_title.text = text
+    }
+
     fun setActionList(btnList: List<TitleBarBtnBean.BaseBtnBean>)
     {
         rv_action_list.adapter = TitleBarBtnListAdapter(btnList)

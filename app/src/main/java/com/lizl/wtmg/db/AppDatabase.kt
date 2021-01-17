@@ -27,7 +27,7 @@ abstract class AppDatabase : RoomDatabase()
 
     abstract fun getExpenditureDao(): ExpenditureDao
 
-    abstract fun getPropertyAccountDao(): CapitalAccountDao
+    abstract fun getCapitalAccountDao(): CapitalAccountDao
 
     abstract fun getCreditAccountDao(): CreditAccountDao
 }
