@@ -83,7 +83,7 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
 
         tv_account.setOnClickListener(true) {
             PopupUtil.showBottomListPopup(mutableListOf<BottomModel>().apply {
-                AppDatabase.getInstance().getPropertyDao().queryAllProperty().forEach {
+                AppDatabase.getInstance().getPropertyAccountDao().queryAllProperty().forEach {
                     add(BottomModel(PropertyManager.getPropertyIcon(it.type), TranslateUtil.translatePropertyType(it.type), it.type))
                 }
                 add(BottomModel(R.drawable.ic_baseline_add_colourful_24, getString(R.string.add), "A"))
@@ -196,7 +196,7 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
             return false
         }
 
-        val propertyModel = AppDatabase.getInstance().getPropertyDao().queryPropertyByType(accountType)
+        val propertyModel = AppDatabase.getInstance().getPropertyAccountDao().queryPropertyByType(accountType)
         if (propertyModel == null)
         {
             ToastUtils.showShort(R.string.please_select_account)
@@ -205,7 +205,7 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
 
         propertyModel.amount = propertyModel.amount - amount
 
-        AppDatabase.getInstance().getPropertyDao().insert(propertyModel)
+        AppDatabase.getInstance().getPropertyAccountDao().insert(propertyModel)
 
         val expenditureModel = ExpenditureModel(amonunt = amount.toFloat(), expenditureType = expenditureType, accountType = accountType, recordTime = selectTime.time,
                     recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)

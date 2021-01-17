@@ -5,7 +5,7 @@ import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.function.ui
 import com.lizl.wtmg.databinding.ActivityAddPropertyBinding
 import com.lizl.wtmg.db.AppDatabase
-import com.lizl.wtmg.db.model.PropertyModel
+import com.lizl.wtmg.db.model.PropertyAccountModel
 import com.lizl.wtmg.module.property.PropertyManager
 import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.mvvm.model.BottomModel
@@ -46,17 +46,17 @@ class AddPropertyActivity : BaseActivity<ActivityAddPropertyBinding>(R.layout.ac
         val amount = et_amount.text.toString().toIntOrNull() ?: return
 
         GlobalScope.launch {
-            var propertyModel = AppDatabase.getInstance().getPropertyDao().queryPropertyByType(propertyType)
+            var propertyModel = AppDatabase.getInstance().getPropertyAccountDao().queryPropertyByType(propertyType)
             if (propertyModel == null)
             {
-                propertyModel = PropertyModel(type = propertyType, name = TranslateUtil.translatePropertyType(propertyType),
-                        category = PropertyManager.getPropertyCategoryByType(propertyType), amount = amount.toFloat(), showInTotal = true)
+                propertyModel = PropertyAccountModel(type = propertyType, name = TranslateUtil.translatePropertyType(propertyType), amount = amount.toFloat(),
+                        showInTotal = true)
             }
             else
             {
                 propertyModel.amount += amount
             }
-            AppDatabase.getInstance().getPropertyDao().insert(propertyModel)
+            AppDatabase.getInstance().getPropertyAccountDao().insert(propertyModel)
 
             GlobalScope.ui { onBackPressed() }
         }

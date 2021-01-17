@@ -4,10 +4,13 @@ import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.R.dimen
+import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.function.setOnClickListener
 import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.databinding.FragmentPropertyManagerBinding
 import com.lizl.wtmg.db.AppDatabase
+import com.lizl.wtmg.db.model.CreditAccountModel
+import com.lizl.wtmg.db.model.PropertyAccountModel
 import com.lizl.wtmg.module.property.PropertyManager
 import com.lizl.wtmg.mvvm.activity.AddPropertyActivity
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
@@ -21,6 +24,9 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
 {
     private lateinit var polymerizeGroupAdapter: PolymerizeGroupAdapter
 
+    private val propertyLiveData = AppDatabase.getInstance().getPropertyAccountDao().obAllAccount()
+    private val creditLiveData = AppDatabase.getInstance().getCreditAccountDao().obAllAccount()
+
     override fun initView()
     {
         polymerizeGroupAdapter = PolymerizeGroupAdapter()
@@ -30,28 +36,56 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
 
     override fun initData()
     {
-        AppDatabase.getInstance().getPropertyDao().obAllProperty().observe(this, Observer { propertyList ->
-            tv_total_property.text = propertyList.sumBy { it.amount.toInt() }.toString()
-            tv_net_property.text = propertyList.sumBy { it.amount.toInt() }.toString()
-            tv_total_liabilities.text = 0.toString()
+        propertyLiveData.observe(this, Observer { onAccountDataUpdate() })
 
-            val polymerizeGroupList = mutableListOf<PolymerizeGroupModel>()
-
-            propertyList.groupBy { it.category }.forEach { (t, u) ->
-                polymerizeGroupList.add(PolymerizeGroupModel(TranslateUtil.translatePropertyCategory(t), u.sumBy { it.amount.toInt() }.toString(),
-                        mutableListOf<PolymerizeChildModel>().apply {
-                            u.forEach { propertyModel ->
-                                add(PolymerizeChildModel(PropertyManager.getPropertyIcon(propertyModel.type),
-                                        TranslateUtil.translatePropertyType(propertyModel.type), propertyModel.amount.toInt().toString(), propertyModel))
-                            }
-                        }))
-            }
-            polymerizeGroupAdapter.replaceData(polymerizeGroupList)
-        })
+        creditLiveData.observe(this, Observer { onAccountDataUpdate() })
     }
 
     override fun initListener()
     {
         fab_add.setOnClickListener(true) { ActivityUtils.startActivity(AddPropertyActivity::class.java) }
+    }
+
+    private fun onAccountDataUpdate()
+    {
+        val propertyList = propertyLiveData.value ?: mutableListOf()
+        val creditList = creditLiveData.value ?: mutableListOf()
+
+        tv_total_property.text = propertyList.sumBy { it.amount.toInt() }.toString()
+        tv_net_property.text = propertyList.sumBy { it.amount.toInt() }.toString()
+        tv_total_liabilities.text = creditList.sumBy { it.usedQuota.toInt() }.toString()
+
+        val polymerizeGroupList = mutableListOf<PolymerizeGroupModel>()
+        if (creditList.isNotEmpty())
+        {
+            polymerizeGroupList.add(creditListToPolymerizeGroup(creditList))
+        }
+        if (propertyList.isNotEmpty())
+        {
+            polymerizeGroupList.add(propertyListToPolymerizeGroup(propertyList))
+        }
+        polymerizeGroupAdapter.replaceData(polymerizeGroupList)
+    }
+
+    private fun propertyListToPolymerizeGroup(propertyList: List<PropertyAccountModel>): PolymerizeGroupModel
+    {
+        return PolymerizeGroupModel(TranslateUtil.translatePropertyCategory(AppConstant.PROPERTY_CATEGORY_TYPE_CAPITAL),
+                propertyList.sumBy { it.amount.toInt() }.toString(), mutableListOf<PolymerizeChildModel>().apply {
+            propertyList.forEach { propertyModel ->
+                add(PolymerizeChildModel(PropertyManager.getPropertyIcon(propertyModel.type), TranslateUtil.translatePropertyType(propertyModel.type),
+                        propertyModel.amount.toInt().toString(), propertyModel))
+            }
+        })
+    }
+
+    private fun creditListToPolymerizeGroup(creditList: List<CreditAccountModel>): PolymerizeGroupModel
+    {
+        return PolymerizeGroupModel(TranslateUtil.translatePropertyCategory(AppConstant.PROPERTY_CATEGORY_TYPE_CREDIT),
+                creditList.sumBy { it.usedQuota.toInt() }.toString(), mutableListOf<PolymerizeChildModel>().apply {
+            creditList.forEach { propertyModel ->
+                add(PolymerizeChildModel(PropertyManager.getPropertyIcon(propertyModel.type), TranslateUtil.translatePropertyType(propertyModel.type),
+                        propertyModel.usedQuota.toInt().toString(), propertyModel))
+            }
+        })
     }
 }

@@ -94,9 +94,9 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
     private fun deleteExpenditure(expenditureModel: ExpenditureModel)
     {
         AppDatabase.getInstance().getExpenditureDao().delete(expenditureModel)
-        AppDatabase.getInstance().getPropertyDao().queryPropertyByType(expenditureModel.accountType)?.let {
+        AppDatabase.getInstance().getPropertyAccountDao().queryPropertyByType(expenditureModel.accountType)?.let {
             it.amount = it.amount + expenditureModel.amonunt
-            AppDatabase.getInstance().getPropertyDao().update(it)
+            AppDatabase.getInstance().getPropertyAccountDao().update(it)
         }
     }
 
