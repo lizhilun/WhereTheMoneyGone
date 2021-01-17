@@ -10,8 +10,8 @@ import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.databinding.FragmentPropertyManagerBinding
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.CreditAccountModel
-import com.lizl.wtmg.db.model.PropertyAccountModel
-import com.lizl.wtmg.module.property.PropertyManager
+import com.lizl.wtmg.db.model.CapitalAccountModel
+import com.lizl.wtmg.module.account.AccountManager
 import com.lizl.wtmg.mvvm.activity.AddAccountActivity
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseFragment
@@ -67,12 +67,12 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
         polymerizeGroupAdapter.replaceData(polymerizeGroupList)
     }
 
-    private fun propertyListToPolymerizeGroup(propertyList: List<PropertyAccountModel>): PolymerizeGroupModel
+    private fun propertyListToPolymerizeGroup(propertyList: List<CapitalAccountModel>): PolymerizeGroupModel
     {
         return PolymerizeGroupModel(TranslateUtil.translateAccountCategory(AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL),
                 propertyList.sumBy { it.amount.toInt() }.toString(), mutableListOf<PolymerizeChildModel>().apply {
             propertyList.forEach { propertyModel ->
-                add(PolymerizeChildModel(PropertyManager.getAccountIcon(propertyModel.type), TranslateUtil.translateAccountType(propertyModel.type),
+                add(PolymerizeChildModel(AccountManager.getAccountIcon(propertyModel.type), TranslateUtil.translateAccountType(propertyModel.type),
                         propertyModel.amount.toInt().toString(), propertyModel))
             }
         })
@@ -83,7 +83,7 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
         return PolymerizeGroupModel(TranslateUtil.translateAccountCategory(AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT),
                 creditList.sumBy { it.usedQuota.toInt() }.toString(), mutableListOf<PolymerizeChildModel>().apply {
             creditList.forEach { propertyModel ->
-                add(PolymerizeChildModel(PropertyManager.getAccountIcon(propertyModel.type), TranslateUtil.translateAccountType(propertyModel.type),
+                add(PolymerizeChildModel(AccountManager.getAccountIcon(propertyModel.type), TranslateUtil.translateAccountType(propertyModel.type),
                         propertyModel.usedQuota.toInt().toString(), propertyModel))
             }
         })

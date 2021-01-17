@@ -13,4 +13,7 @@ interface CreditAccountDao : BaseDao<CreditAccountModel>
 
     @Query("select * from CreditAccount where type == :type")
     fun queryAccountByType(type: String): CreditAccountModel?
+
+    @Query("select * from CreditAccount")
+    fun queryAllAccount(): MutableList<CreditAccountModel>
 }

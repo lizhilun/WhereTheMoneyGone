@@ -6,13 +6,13 @@ import androidx.room.RoomDatabase
 import com.blankj.utilcode.util.Utils
 import com.lizl.wtmg.db.dao.CreditAccountDao
 import com.lizl.wtmg.db.dao.ExpenditureDao
-import com.lizl.wtmg.db.dao.PropertyAccountDao
+import com.lizl.wtmg.db.dao.CapitalAccountDao
 import com.lizl.wtmg.db.model.CreditAccountModel
 import com.lizl.wtmg.db.model.ExpenditureModel
 import com.lizl.wtmg.db.model.IncomeModel
-import com.lizl.wtmg.db.model.PropertyAccountModel
+import com.lizl.wtmg.db.model.CapitalAccountModel
 
-@Database(entities = [ExpenditureModel::class, IncomeModel::class, PropertyAccountModel::class, CreditAccountModel::class], version = 1, exportSchema = false)
+@Database(entities = [ExpenditureModel::class, IncomeModel::class, CapitalAccountModel::class, CreditAccountModel::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase()
 {
     private object Singleton
@@ -27,7 +27,7 @@ abstract class AppDatabase : RoomDatabase()
 
     abstract fun getExpenditureDao(): ExpenditureDao
 
-    abstract fun getPropertyAccountDao(): PropertyAccountDao
+    abstract fun getPropertyAccountDao(): CapitalAccountDao
 
     abstract fun getCreditAccountDao(): CreditAccountDao
 }

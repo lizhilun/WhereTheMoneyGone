@@ -11,6 +11,7 @@ import com.lizl.wtmg.custom.view.MenuDrawLayout
 import com.lizl.wtmg.databinding.FragmentPropertyOutlineBinding
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.ExpenditureModel
+import com.lizl.wtmg.module.account.AccountDataManager
 import com.lizl.wtmg.mvvm.activity.MoneyRecordActivity
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseFragment
@@ -69,7 +70,7 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
 
     override fun initListener()
     {
-        fab_add.setOnClickListener { ActivityUtils.startActivity(MoneyRecordActivity::class.java) }
+        fab_add.setOnClickListener(true) { ActivityUtils.startActivity(MoneyRecordActivity::class.java) }
 
         iv_menu.setOnClickListener {
             XPopup.Builder(requireContext()).popupPosition(PopupPosition.Left).hasStatusBarShadow(false).asCustom(menuDrawLayout).show()
@@ -85,18 +86,9 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
             }) {
                 when (it.tag)
                 {
-                    "D" -> deleteExpenditure(polymerizeChildModel.tag as ExpenditureModel)
+                    "D" -> AccountDataManager.deleteExpenditure(polymerizeChildModel.tag as ExpenditureModel)
                 }
             }
-        }
-    }
-
-    private fun deleteExpenditure(expenditureModel: ExpenditureModel)
-    {
-        AppDatabase.getInstance().getExpenditureDao().delete(expenditureModel)
-        AppDatabase.getInstance().getPropertyAccountDao().queryPropertyByType(expenditureModel.accountType)?.let {
-            it.amount = it.amount + expenditureModel.amonunt
-            AppDatabase.getInstance().getPropertyAccountDao().update(it)
         }
     }
 

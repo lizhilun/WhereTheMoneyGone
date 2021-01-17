@@ -8,8 +8,8 @@ import com.lizl.wtmg.custom.function.ui
 import com.lizl.wtmg.databinding.ActivityAddAccountBinding
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.CreditAccountModel
-import com.lizl.wtmg.db.model.PropertyAccountModel
-import com.lizl.wtmg.module.property.PropertyManager
+import com.lizl.wtmg.db.model.CapitalAccountModel
+import com.lizl.wtmg.module.account.AccountManager
 import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.mvvm.model.BottomModel
 import com.lizl.wtmg.util.PopupUtil
@@ -35,8 +35,8 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
 
         layout_account_category.setOnClickListener {
             PopupUtil.showBottomListPopup(mutableListOf<BottomModel>().apply {
-                PropertyManager.getAccountCategoryList().forEach {
-                    add(BottomModel(PropertyManager.getAccountCategoryIcon(it), TranslateUtil.translateAccountCategory(it), it))
+                AccountManager.getAccountCategoryList().forEach {
+                    add(BottomModel(AccountManager.getAccountCategoryIcon(it), TranslateUtil.translateAccountCategory(it), it))
                 }
             }) {
                 showAccountCategory(it.tag as String)
@@ -45,8 +45,8 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
 
         layout_account_type.setOnClickListener {
             PopupUtil.showBottomListPopup(mutableListOf<BottomModel>().apply {
-                PropertyManager.getAccountListByCategory(accountCategory).forEach {
-                    add(BottomModel(PropertyManager.getAccountIcon(it), TranslateUtil.translateAccountType(it), it))
+                AccountManager.getAccountListByCategory(accountCategory).forEach {
+                    add(BottomModel(AccountManager.getAccountIcon(it), TranslateUtil.translateAccountType(it), it))
                 }
             }) {
                 showAccountType(it.tag as String)
@@ -107,10 +107,10 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
         }
 
         GlobalScope.launch {
-            var propertyModel = AppDatabase.getInstance().getPropertyAccountDao().queryPropertyByType(accountType)
+            var propertyModel = AppDatabase.getInstance().getPropertyAccountDao().queryAccountByType(accountType)
             if (propertyModel == null)
             {
-                propertyModel = PropertyAccountModel(type = accountType, name = TranslateUtil.translateAccountType(accountType), amount = amount.toFloat(),
+                propertyModel = CapitalAccountModel(type = accountType, name = TranslateUtil.translateAccountType(accountType), amount = amount.toFloat(),
                         showInTotal = true)
             }
             else

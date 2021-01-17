@@ -12,7 +12,8 @@ import com.lizl.wtmg.custom.function.update
 import com.lizl.wtmg.databinding.ActivityMoneyRecordBinding
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.ExpenditureModel
-import com.lizl.wtmg.module.property.PropertyManager
+import com.lizl.wtmg.module.account.AccountDataManager
+import com.lizl.wtmg.module.account.AccountManager
 import com.lizl.wtmg.mvvm.adapter.ExpenditureTypeAdapter
 import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.mvvm.model.BottomModel
@@ -44,7 +45,7 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
         rv_expenditure_type.adapter = expenditureTypeAdapter
 
         val expenditureTypeList = mutableListOf<ExpenditureTypeModel>()
-        PropertyManager.getExpenditureTypeList().forEach {
+        AccountManager.getExpenditureTypeList().forEach {
             expenditureTypeList.add(ExpenditureTypeModel(it, it == expenditureType))
         }
         expenditureTypeAdapter.setNewData(expenditureTypeList)
@@ -83,8 +84,11 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
 
         tv_account.setOnClickListener(true) {
             PopupUtil.showBottomListPopup(mutableListOf<BottomModel>().apply {
-                AppDatabase.getInstance().getPropertyAccountDao().queryAllProperty().forEach {
-                    add(BottomModel(PropertyManager.getAccountIcon(it.type), TranslateUtil.translateAccountType(it.type), it.type))
+                AppDatabase.getInstance().getPropertyAccountDao().queryAllAccount().forEach {
+                    add(BottomModel(AccountManager.getAccountIcon(it.type), TranslateUtil.translateAccountType(it.type), it.type))
+                }
+                AppDatabase.getInstance().getCreditAccountDao().queryAllAccount().forEach {
+                    add(BottomModel(AccountManager.getAccountIcon(it.type), TranslateUtil.translateAccountType(it.type), it.type))
                 }
                 add(BottomModel(R.drawable.ic_baseline_add_colourful_24, getString(R.string.add), "A"))
             }) {
@@ -196,21 +200,17 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
             return false
         }
 
-        val propertyModel = AppDatabase.getInstance().getPropertyAccountDao().queryPropertyByType(accountType)
-        if (propertyModel == null)
+        if (accountType.isBlank())
         {
             ToastUtils.showShort(R.string.please_select_account)
             return false
         }
 
-        propertyModel.amount = propertyModel.amount - amount
+        val expenditureModel = ExpenditureModel(amonunt = amount.toFloat(), expenditureType = expenditureType, accountType = accountType,
+                recordTime = selectTime.time, recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)
 
-        AppDatabase.getInstance().getPropertyAccountDao().insert(propertyModel)
+        AccountDataManager.addExpenditure(expenditureModel)
 
-        val expenditureModel = ExpenditureModel(amonunt = amount.toFloat(), expenditureType = expenditureType, accountType = accountType, recordTime = selectTime.time,
-                    recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)
-
-        AppDatabase.getInstance().getExpenditureDao().insert(expenditureModel)
 
         return true
     }

@@ -1,14 +1,14 @@
-package com.lizl.wtmg.module.property
+package com.lizl.wtmg.module.account
 
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
 
-object PropertyManager
+object AccountManager
 {
-    fun getCapitalAccountList() =
+    val capitalAccountList =
         listOf(AppConstant.ACCOUNT_TYPE_CASH, AppConstant.ACCOUNT_TYPE_ALI_PAY, AppConstant.ACCOUNT_TYPE_WE_CHAT, AppConstant.ACCOUNT_TYPE_BACK_CARD)
 
-    fun getCreditAccountList() = listOf(AppConstant.ACCOUNT_TYPE_ANT_CREDIT_PAY, AppConstant.ACCOUNT_TYPE_JD_BT, AppConstant.ACCOUNT_TYPE_CREDIT_CARD_CMB,
+    val creditAccountList = listOf(AppConstant.ACCOUNT_TYPE_ANT_CREDIT_PAY, AppConstant.ACCOUNT_TYPE_JD_BT, AppConstant.ACCOUNT_TYPE_CREDIT_CARD_CMB,
             AppConstant.ACCOUNT_TYPE_CREDIT_CARD_CMBC)
 
     fun getAccountCategoryList() = listOf(AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL, AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT)
@@ -37,10 +37,20 @@ object PropertyManager
     {
         return when (accountCategory)
         {
-            AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL    -> getCapitalAccountList()
-            AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT     -> getCreditAccountList()
+            AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL    -> capitalAccountList
+            AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT     -> creditAccountList
             AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT -> mutableListOf()
-            else                                         -> getCapitalAccountList()
+            else                                         -> capitalAccountList
+        }
+    }
+
+    fun getAccountCategoryByType(accountType: String): String
+    {
+        return when
+        {
+            capitalAccountList.contains(accountType) -> AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL
+            creditAccountList.contains(accountType)  -> AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT
+            else                                     -> AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL
         }
     }
 
@@ -52,18 +62,6 @@ object PropertyManager
             AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT     -> R.drawable.ic_baseline_credit_24
             AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT -> R.drawable.ic_baseline_investment_24
             else                                         -> R.drawable.ic_baseline_cash_24
-        }
-    }
-
-    fun getPropertyCategoryByType(propertyType: String): String
-    {
-        return when (propertyType)
-        {
-            AppConstant.ACCOUNT_TYPE_CASH      -> AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL
-            AppConstant.ACCOUNT_TYPE_ALI_PAY   -> AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL
-            AppConstant.ACCOUNT_TYPE_WE_CHAT   -> AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL
-            AppConstant.ACCOUNT_TYPE_BACK_CARD -> AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL
-            else                               -> AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL
         }
     }
 
