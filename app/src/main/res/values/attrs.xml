@@ -12,4 +12,14 @@
         <attr name="android:tint" />
         <attr name="srcCompat" />
     </declare-styleable>
+
+    <declare-styleable name="InputItemEditView">
+        <attr name="decText" format="string|reference" />
+        <attr name="hint" format="string|reference" />
+        <attr name="hintTextSize" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="InputItemTextView">
+        <attr name="tvDecText" format="string|reference" />
+    </declare-styleable>
 </resources>

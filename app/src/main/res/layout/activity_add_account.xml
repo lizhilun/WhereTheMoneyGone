@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.lizl.wtmg.util.DimensionUtils" />
+
+        <import type="com.lizl.wtmg.R" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.lizl.wtmg.custom.view.titlebar.CustomTitleBar
+            android:id="@+id/ctb_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.lizl.wtmg.custom.view.inputitem.InputItemTextView
+            android:id="@+id/layout_account_category"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/global_content_padding_content"
+            app:layout_constraintTop_toBottomOf="@+id/ctb_title"
+            app:tvDecText="@string/account_category" />
+
+        <com.lizl.wtmg.custom.view.inputitem.InputItemTextView
+            android:id="@+id/layout_account_type"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/global_content_padding_content"
+            app:layout_constraintTop_toBottomOf="@+id/layout_account_category"
+            app:tvDecText="@string/account_type" />
+
+        <com.lizl.wtmg.custom.view.inputitem.InputItemEditView
+            android:id="@+id/layout_account_amount"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/global_content_padding_content"
+            app:decText="@string/account_amount"
+            app:hint="@string/please_input"
+            app:layout_constraintTop_toBottomOf="@+id/layout_account_type" />
+
+        <com.lizl.wtmg.custom.view.inputitem.InputItemEditView
+            android:id="@+id/layout_total_quota"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/global_content_padding_content"
+            app:decText="@string/total_quota"
+            app:hint="@string/please_input"
+            app:layout_constraintTop_toBottomOf="@+id/layout_account_type" />
+
+        <com.lizl.wtmg.custom.view.inputitem.InputItemEditView
+            android:id="@+id/layout_used_quota"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/global_content_padding_content"
+            app:decText="@string/used_quota"
+            app:hint="@string/please_input"
+            app:layout_constraintTop_toBottomOf="@+id/layout_total_quota" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="layout_account_amount, layout_used_quota" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_save"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/global_content_padding_content"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:textSize="@dimen/global_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/barrier_info"
+            app:layout_constraintWidth_percent="0.9" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

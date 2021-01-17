@@ -12,7 +12,7 @@ import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.CreditAccountModel
 import com.lizl.wtmg.db.model.PropertyAccountModel
 import com.lizl.wtmg.module.property.PropertyManager
-import com.lizl.wtmg.mvvm.activity.AddPropertyActivity
+import com.lizl.wtmg.mvvm.activity.AddAccountActivity
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseFragment
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
@@ -43,7 +43,7 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
 
     override fun initListener()
     {
-        fab_add.setOnClickListener(true) { ActivityUtils.startActivity(AddPropertyActivity::class.java) }
+        fab_add.setOnClickListener(true) { ActivityUtils.startActivity(AddAccountActivity::class.java) }
     }
 
     private fun onAccountDataUpdate()
@@ -69,10 +69,10 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
 
     private fun propertyListToPolymerizeGroup(propertyList: List<PropertyAccountModel>): PolymerizeGroupModel
     {
-        return PolymerizeGroupModel(TranslateUtil.translatePropertyCategory(AppConstant.PROPERTY_CATEGORY_TYPE_CAPITAL),
+        return PolymerizeGroupModel(TranslateUtil.translateAccountCategory(AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL),
                 propertyList.sumBy { it.amount.toInt() }.toString(), mutableListOf<PolymerizeChildModel>().apply {
             propertyList.forEach { propertyModel ->
-                add(PolymerizeChildModel(PropertyManager.getPropertyIcon(propertyModel.type), TranslateUtil.translatePropertyType(propertyModel.type),
+                add(PolymerizeChildModel(PropertyManager.getAccountIcon(propertyModel.type), TranslateUtil.translateAccountType(propertyModel.type),
                         propertyModel.amount.toInt().toString(), propertyModel))
             }
         })
@@ -80,10 +80,10 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
 
     private fun creditListToPolymerizeGroup(creditList: List<CreditAccountModel>): PolymerizeGroupModel
     {
-        return PolymerizeGroupModel(TranslateUtil.translatePropertyCategory(AppConstant.PROPERTY_CATEGORY_TYPE_CREDIT),
+        return PolymerizeGroupModel(TranslateUtil.translateAccountCategory(AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT),
                 creditList.sumBy { it.usedQuota.toInt() }.toString(), mutableListOf<PolymerizeChildModel>().apply {
             creditList.forEach { propertyModel ->
-                add(PolymerizeChildModel(PropertyManager.getPropertyIcon(propertyModel.type), TranslateUtil.translatePropertyType(propertyModel.type),
+                add(PolymerizeChildModel(PropertyManager.getAccountIcon(propertyModel.type), TranslateUtil.translateAccountType(propertyModel.type),
                         propertyModel.usedQuota.toInt().toString(), propertyModel))
             }
         })

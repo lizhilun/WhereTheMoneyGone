@@ -20,11 +20,11 @@ class PopupInput(context: Context, private val title: String, private val onInpu
         tv_cancel.setOnClickListener { dismiss() }
 
         tv_confirm.setOnClickListener {
-            if (et_input.text.toString().isBlank())
+            if (et_edit.text.toString().isBlank())
             {
                 return@setOnClickListener
             }
-            onInputFinish.invoke(et_input.text.toString())
+            onInputFinish.invoke(et_edit.text.toString())
             dismiss()
         }
     }

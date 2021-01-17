@@ -9,17 +9,17 @@ object AppConstant
     const val EXPENDITURE_TYPE_GAME = "game"
     const val EXPENDITURE_TYPE_NECESSARY = "necessary"
 
-    const val PAY_TYPE_CASH = "cash"
-    const val PAY_TYPE_CREDIT_CARD = "credit card"
-    const val PAY_TYPE_HUA_BEI = "hua bei"
-    const val PAY_TYPE_BAI_TIAO = "bai tiao"
+    const val ACCOUNT_TYPE_CASH = "cash"
+    const val ACCOUNT_TYPE_ALI_PAY = "ali pay"
+    const val ACCOUNT_TYPE_WE_CHAT = "we chat"
+    const val ACCOUNT_TYPE_BACK_CARD = "bank card"
 
-    const val PROPERTY_TYPE_CASH = "cash"
-    const val PROPERTY_TYPE_ALI_PAY = "ali pay"
-    const val PROPERTY_TYPE_WE_CHAT = "we chat"
-    const val PROPERTY_TYPE_BACK_CARD = "bank card"
+    const val ACCOUNT_TYPE_ANT_CREDIT_PAY = "ant credit pay"
+    const val ACCOUNT_TYPE_CREDIT_CARD_CMB = "cmb"
+    const val ACCOUNT_TYPE_CREDIT_CARD_CMBC = "cmbc"
+    const val ACCOUNT_TYPE_JD_BT = "jdbt"
 
-    const val PROPERTY_CATEGORY_TYPE_CAPITAL = "capital"
-    const val PROPERTY_CATEGORY_TYPE_CREDIT = "credit"
-    const val PROPERTY_CATEGORY_TYPE_INVESTMENT = "investment"
+    const val ACCOUNT_CATEGORY_TYPE_CAPITAL = "capital"
+    const val ACCOUNT_CATEGORY_TYPE_CREDIT = "credit"
+    const val ACCOUNT_CATEGORY_TYPE_INVESTMENT = "investment"
 }

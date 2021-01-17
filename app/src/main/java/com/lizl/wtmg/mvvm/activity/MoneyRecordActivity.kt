@@ -49,7 +49,7 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
         }
         expenditureTypeAdapter.setNewData(expenditureTypeList)
 
-        tv_account.text = "${getString(R.string.account)}：${TranslateUtil.translatePropertyType(accountType)}"
+        tv_account.text = "${getString(R.string.account)}：${TranslateUtil.translateAccountType(accountType)}"
         tv_time.text = String.format("%d-%02d-%02d %02d:%2d", selectTime.year, selectTime.month, selectTime.day, selectTime.hour, selectTime.minute)
     }
 
@@ -84,17 +84,17 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
         tv_account.setOnClickListener(true) {
             PopupUtil.showBottomListPopup(mutableListOf<BottomModel>().apply {
                 AppDatabase.getInstance().getPropertyAccountDao().queryAllProperty().forEach {
-                    add(BottomModel(PropertyManager.getPropertyIcon(it.type), TranslateUtil.translatePropertyType(it.type), it.type))
+                    add(BottomModel(PropertyManager.getAccountIcon(it.type), TranslateUtil.translateAccountType(it.type), it.type))
                 }
                 add(BottomModel(R.drawable.ic_baseline_add_colourful_24, getString(R.string.add), "A"))
             }) {
                 if (it.tag == "A")
                 {
-                    ActivityUtils.startActivity(AddPropertyActivity::class.java)
+                    ActivityUtils.startActivity(AddAccountActivity::class.java)
                     return@showBottomListPopup
                 }
                 accountType = it.tag as String
-                tv_account.text = "${getString(R.string.account)}：${TranslateUtil.translatePropertyType(accountType)}"
+                tv_account.text = "${getString(R.string.account)}：${TranslateUtil.translateAccountType(accountType)}"
             }
         }
 
