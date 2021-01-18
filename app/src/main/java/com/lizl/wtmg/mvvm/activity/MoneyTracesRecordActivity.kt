@@ -107,7 +107,7 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
                 AppDatabase.getInstance().getAccountDao().queryAllAccount().groupBy { it.category }.forEach { (category, accountList) ->
 
                     val childList = mutableListOf<PolymerizeChildModel>()
-                    accountList.forEach { childList.add(PolymerizeChildModel(it.type.getIcon(), it.type.translate(), "", it)) }
+                    accountList.forEach { childList.add(PolymerizeChildModel(it.type.getIcon(), it.type.translate(), "", it.type)) }
                     add(PolymerizeGroupModel(category.translate(), "", childList))
                 }
                 add(PolymerizeChildModel(R.drawable.ic_baseline_add_colourful_24, getString(R.string.add), "", "A"))

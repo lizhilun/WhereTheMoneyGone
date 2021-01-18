@@ -52,9 +52,10 @@ class BottomListAdapter(bottomList: MutableList<PolymerizeModel>) : BaseDelegate
                     tv_group_name.text = item.name
                     tv_group_info.text = item.info
 
-                    rv_child_list.adapter = BottomListAdapter(item.childList as MutableList<PolymerizeModel>).apply {
-                        setOnChildItemClickListener { onChildItemClickListener?.invoke(it) }
-                    }
+                    val childListAdapter = BottomListAdapter(item.childList as MutableList<PolymerizeModel>)
+                    rv_child_list.adapter = childListAdapter
+
+                    childListAdapter.setOnChildItemClickListener { onChildItemClickListener?.invoke(it) }
                 }
                 is PolymerizeChildModel ->
                 {
