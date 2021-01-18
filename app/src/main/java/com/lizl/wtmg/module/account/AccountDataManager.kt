@@ -77,6 +77,10 @@ object AccountDataManager
         {
             accountModel.usedQuota += amount
         }
+        else if (accountModel.category == AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT)
+        {
+            accountModel.amount -= amount
+        }
     }
 
     private fun handleMoneyIn(accountModel: AccountModel, amount: Float)

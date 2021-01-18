@@ -50,17 +50,19 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
         val expenditureTypeSelectionView = SingleSelectionView(this).apply {
             val expenditureTypeList = mutableListOf<SingleSelectionModel>()
             AccountManager.expenditureTypeList.forEach {
-                expenditureTypeList.add(SingleSelectionModel(it.getIcon(), it.translate(), it == expenditureType))
+                expenditureTypeList.add(SingleSelectionModel(it.getIcon(), it.translate(), it == expenditureType, it))
             }
             setData(expenditureTypeList)
+            setOnSelectionChangedListener { expenditureType = it.tag as String }
         }
 
         val incomeTypeSelectionView = SingleSelectionView(this).apply {
             val expenditureTypeList = mutableListOf<SingleSelectionModel>()
             AccountManager.incomeTypeList.forEach {
-                expenditureTypeList.add(SingleSelectionModel(it.getIcon(), it.translate(), it == incomeType))
+                expenditureTypeList.add(SingleSelectionModel(it.getIcon(), it.translate(), it == incomeType, it))
             }
             setData(expenditureTypeList)
+            setOnSelectionChangedListener { incomeType = it.tag as String }
         }
 
         accountTransferView = AccountTransferView(this)

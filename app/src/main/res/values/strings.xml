@@ -11,6 +11,8 @@
     <string name="income">收入</string>
     <string name="transfer">转账</string>
 
+    <string name="record_one">记一笔</string>
+
     <string name="month_expenditure">月支出</string>
     <string name="month_income">月收入</string>
     <string name="month_balance">月结余</string>
