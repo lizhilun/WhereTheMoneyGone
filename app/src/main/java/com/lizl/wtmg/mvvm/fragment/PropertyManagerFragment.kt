@@ -35,7 +35,13 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
         AppDatabase.getInstance().getAccountDao().obAllAccount().observe(this, Observer { allAccountList ->
 
             dataBinding.totalProperty = allAccountList.sumBy { it.amount.toInt() }
-            dataBinding.netProperty = allAccountList.sumBy { it.amount.toInt() }
+            dataBinding.netProperty = allAccountList.sumBy {
+                when (it.category)
+                {
+                    AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> 0 - it.usedQuota.toInt()
+                    else                                     -> it.amount.toInt()
+                }
+            }
             dataBinding.totalLiabilities = allAccountList.sumBy { it.usedQuota.toInt() }
 
             val polymerizeGroupList = mutableListOf<PolymerizeGroupModel>()

@@ -59,6 +59,9 @@
     <string name="we_chat">微信</string>
     <string name="bank_card">银行卡</string>
 
+    <string name="ali_pay_fund">支付宝基金</string>
+    <string name="tiantian_fund">天天基金</string>
+
     <string name="ant_credit_pay">花呗</string>
     <string name="jdbt">京东白条</string>
     <string name="cmb">招商银行</string>

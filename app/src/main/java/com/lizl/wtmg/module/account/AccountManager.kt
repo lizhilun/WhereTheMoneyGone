@@ -10,13 +10,16 @@ object AccountManager
     val creditAccountList = listOf(AppConstant.ACCOUNT_TYPE_ANT_CREDIT_PAY, AppConstant.ACCOUNT_TYPE_JD_BT, AppConstant.ACCOUNT_TYPE_CREDIT_CARD_CMB,
             AppConstant.ACCOUNT_TYPE_CREDIT_CARD_CMBC)
 
+    val investmentAccountList = listOf(AppConstant.ACCOUNT_TYPE_ALI_PAY_FUND, AppConstant.ACCOUNT_TYPE_TIANTIAN_FUND)
+
     val expenditureTypeList = listOf(AppConstant.EXPENDITURE_TYPE_MEALS, AppConstant.EXPENDITURE_TYPE_SNACKS, AppConstant.EXPENDITURE_TYPE_CLOTHES,
             AppConstant.EXPENDITURE_TYPE_GAME, AppConstant.EXPENDITURE_TYPE_RENT, AppConstant.EXPENDITURE_TYPE_NECESSARY)
 
     val incomeTypeList = listOf(AppConstant.INCOME_TYPE_WAGES, AppConstant.INCOME_TYPE_RED_ENVELOPES, AppConstant.INCOME_TYPE_SECOND_HAND,
             AppConstant.INCOME_TYPE_FINANCIAL_TRANSACTIONS)
 
-    val accountCategoryList = listOf(AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL, AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT)
+    val accountCategoryList =
+            listOf(AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL, AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT, AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT)
 
     fun getAccountListByCategory(accountCategory: String): List<String>
     {
@@ -24,18 +27,8 @@ object AccountManager
         {
             AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL -> capitalAccountList
             AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> creditAccountList
-            AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT -> mutableListOf()
+            AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT -> investmentAccountList
             else                                         -> capitalAccountList
-        }
-    }
-
-    fun getAccountCategoryByType(accountType: String): String
-    {
-        return when
-        {
-            capitalAccountList.contains(accountType) -> AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL
-            creditAccountList.contains(accountType)  -> AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT
-            else                                     -> AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL
         }
     }
 }

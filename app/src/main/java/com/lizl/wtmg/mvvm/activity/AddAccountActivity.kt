@@ -94,7 +94,7 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
 
         when (accountCategory)
         {
-            AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL ->
+            AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL, AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT ->
             {
                 layout_account_amount.isVisible = true
                 layout_total_quota.isVisible = false
@@ -124,7 +124,7 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
     private fun onSaveBtnClick()
     {
         val amount = layout_account_amount.getEditText().toIntOrNull()
-        if (accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL && amount == null)
+        if ((accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL || accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT) && amount == null)
         {
             ToastUtils.showShort(R.string.please_input_amount)
             return
@@ -151,7 +151,7 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
                 accountModel = AccountModel(type = accountType, category = accountCategory, name = accountType.translate(), showInTotal = true)
             }
 
-            if (accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL)
+            if (accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL || accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT)
             {
                 accountModel.amount = amount?.toFloat() ?: 0F
             }

@@ -237,7 +237,6 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
                     tracesCategory = traceCategory, accountType = accountTransferView.getOutAccountType(), recordTime = selectTime.time,
                     recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day,
                     transferToAccount = accountTransferView.getInAccountType())
-
         }
 
         AccountDataManager.addMoneyTraces(moneyTracesModel)
