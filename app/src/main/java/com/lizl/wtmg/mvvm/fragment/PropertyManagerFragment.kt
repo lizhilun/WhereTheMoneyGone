@@ -34,21 +34,21 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
     {
         AppDatabase.getInstance().getAccountDao().obAllAccount().observe(this, Observer { allAccountList ->
 
-            tv_total_property.text = allAccountList.sumBy { it.amount.toInt() }.toString()
-            tv_net_property.text = allAccountList.sumBy { it.amount.toInt() }.toString()
-            tv_total_liabilities.text = allAccountList.sumBy { it.usedQuota.toInt() }.toString()
+            dataBinding.totalProperty = allAccountList.sumBy { it.amount.toInt() }
+            dataBinding.netProperty = allAccountList.sumBy { it.amount.toInt() }
+            dataBinding.totalLiabilities = allAccountList.sumBy { it.usedQuota.toInt() }
 
             val polymerizeGroupList = mutableListOf<PolymerizeGroupModel>()
             allAccountList.groupBy { it.category }.forEach { (category, accountList) ->
                 polymerizeGroupList.add(PolymerizeGroupModel(category.translate(), when (category)
                 {
-                    AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> accountList.sumBy { it.usedQuota.toInt() }.toString()
+                    AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> "${accountList.sumBy { it.usedQuota.toInt() }}/${accountList.sumBy { it.totalQuota.toInt() }}"
                     else                                     -> accountList.sumBy { it.amount.toInt() }.toString()
                 }, mutableListOf<PolymerizeChildModel>().apply {
                     accountList.forEach { accountModel ->
                         add(PolymerizeChildModel(accountModel.type.getIcon(), accountModel.type.translate(), when (category)
                         {
-                            AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> accountModel.usedQuota.toInt().toString()
+                            AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> "${accountModel.usedQuota.toInt()}/${accountModel.totalQuota.toInt()}"
                             else                                     -> accountModel.amount.toInt().toString()
                         }, accountModel))
                     }

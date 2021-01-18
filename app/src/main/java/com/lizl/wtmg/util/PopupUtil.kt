@@ -11,6 +11,8 @@ import com.lizl.wtmg.custom.popup.PopupConfirm
 import com.lizl.wtmg.custom.popup.PopupInput
 import com.lizl.wtmg.custom.popup.PopupRadioGroup
 import com.lizl.wtmg.mvvm.model.BottomModel
+import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
+import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeModel
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import kotlinx.coroutines.*
@@ -27,7 +29,7 @@ object PopupUtil
         showPopup(XPopup.Builder(context).asCustom(PopupRadioGroup(context, title, radioList, checkedRadio, onSelectFinishListener)))
     }
 
-    fun showBottomListPopup(bottomList: MutableList<BottomModel>, onSelectFinishListener: (BottomModel) -> Unit)
+    fun showBottomListPopup(bottomList: MutableList<PolymerizeModel>, onSelectFinishListener: (PolymerizeChildModel) -> Unit)
     {
         val context = ActivityUtils.getTopActivity() ?: return
         showPopup(XPopup.Builder(context).asCustom(PopupBottomList(context, bottomList, onSelectFinishListener)))

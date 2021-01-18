@@ -1,20 +1,76 @@
 package com.lizl.wtmg.mvvm.adapter
 
 import androidx.core.view.isVisible
-import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.BaseDelegateMultiAdapter
+import com.chad.library.adapter.base.delegate.BaseMultiTypeDelegate
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.lizl.wtmg.R
-import com.lizl.wtmg.mvvm.model.BottomModel
-import kotlinx.android.synthetic.main.item_bottom_list.view.*
+import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
+import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
+import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeModel
+import kotlinx.android.synthetic.main.item_bottom_polymerize_child.view.*
+import kotlinx.android.synthetic.main.item_bottom_polymerize_group.view.*
 
-class BottomListAdapter(bottomList: MutableList<BottomModel>) : BaseQuickAdapter<BottomModel, BaseViewHolder>(R.layout.item_bottom_list, bottomList)
+class BottomListAdapter(bottomList: MutableList<PolymerizeModel>) : BaseDelegateMultiAdapter<PolymerizeModel, BaseViewHolder>(bottomList)
 {
-    override fun convert(helper: BaseViewHolder, item: BottomModel)
+    companion object
+    {
+        private const val ITEM_TYPE_GROUP = 1
+        private const val ITEM_TYPE_CHILD = 2
+    }
+
+    private var onChildItemClickListener: ((PolymerizeChildModel) -> Unit)? = null
+
+    init
+    {
+        setMultiTypeDelegate(object : BaseMultiTypeDelegate<PolymerizeModel>()
+        {
+            override fun getItemType(data: List<PolymerizeModel>, position: Int): Int
+            {
+                return when (data[position])
+                {
+                    is PolymerizeGroupModel -> ITEM_TYPE_GROUP
+                    is PolymerizeChildModel -> ITEM_TYPE_CHILD
+                    else                    -> ITEM_TYPE_CHILD
+                }
+            }
+        })
+
+        getMultiTypeDelegate()?.let {
+            it.addItemType(ITEM_TYPE_GROUP, R.layout.item_bottom_polymerize_group)
+            it.addItemType(ITEM_TYPE_CHILD, R.layout.item_bottom_polymerize_child)
+        }
+    }
+
+    override fun convert(helper: BaseViewHolder, item: PolymerizeModel)
     {
         with(helper.itemView) {
-            tv_name.text = item.name
-            iv_icon.isVisible = item.icon != null
-            iv_icon.setImageResource(item.icon ?: R.color.transparent)
+            when (item)
+            {
+                is PolymerizeGroupModel ->
+                {
+                    tv_group_name.text = item.name
+                    tv_group_info.text = item.info
+
+                    rv_child_list.adapter = BottomListAdapter(item.childList as MutableList<PolymerizeModel>).apply {
+                        setOnChildItemClickListener { onChildItemClickListener?.invoke(it) }
+                    }
+                }
+                is PolymerizeChildModel ->
+                {
+                    iv_child_icon.isVisible = item.icon != null
+                    item.icon?.let { iv_child_icon.setImageResource(it) }
+
+                    tv_child_name.text = item.name
+
+                    setOnClickListener { onChildItemClickListener?.invoke(item) }
+                }
+            }
         }
+    }
+
+    fun setOnChildItemClickListener(onChildItemClickListener: (PolymerizeChildModel) -> Unit)
+    {
+        this.onChildItemClickListener = onChildItemClickListener
     }
 }

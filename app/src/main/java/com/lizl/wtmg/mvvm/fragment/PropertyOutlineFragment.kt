@@ -20,6 +20,7 @@ import com.lizl.wtmg.mvvm.base.BaseFragment
 import com.lizl.wtmg.mvvm.model.BottomModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
+import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeModel
 import com.lizl.wtmg.util.DateUtil
 import com.lizl.wtmg.util.PopupUtil
 import com.lxj.xpopup.XPopup
@@ -88,8 +89,8 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
         polymerizeGroupAdapter.setOnChildItemClickListener { }
 
         polymerizeGroupAdapter.setOnChildItemLongClickListener { polymerizeChildModel ->
-            PopupUtil.showBottomListPopup(mutableListOf<BottomModel>().apply {
-                add(BottomModel(name = getString(R.string.delete), tag = "D"))
+            PopupUtil.showBottomListPopup(mutableListOf<PolymerizeModel>().apply {
+                add(PolymerizeChildModel(name = getString(R.string.delete), tag = "D"))
             }) {
                 when (it.tag)
                 {

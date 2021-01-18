@@ -13,6 +13,8 @@ import com.lizl.wtmg.db.model.AccountModel
 import com.lizl.wtmg.module.account.AccountManager
 import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.mvvm.model.BottomModel
+import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
+import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeModel
 import com.lizl.wtmg.util.PopupUtil
 import kotlinx.android.synthetic.main.activity_add_account.*
 import kotlinx.coroutines.GlobalScope
@@ -66,9 +68,9 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
         tv_save.setOnClickListener { onSaveBtnClick() }
 
         layout_account_category.setOnClickListener {
-            PopupUtil.showBottomListPopup(mutableListOf<BottomModel>().apply {
+            PopupUtil.showBottomListPopup(mutableListOf<PolymerizeModel>().apply {
                 AccountManager.accountCategoryList.forEach {
-                    add(BottomModel(it.getIcon(), it.translate(), it))
+                    add(PolymerizeChildModel(it.getIcon(), it.translate(), "", it))
                 }
             }) {
                 showAccountCategory(it.tag as String)
@@ -76,9 +78,9 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
         }
 
         layout_account_type.setOnClickListener {
-            PopupUtil.showBottomListPopup(mutableListOf<BottomModel>().apply {
+            PopupUtil.showBottomListPopup(mutableListOf<PolymerizeModel>().apply {
                 AccountManager.getAccountListByCategory(accountCategory).forEach {
-                    add(BottomModel(it.getIcon(), it.translate(), it))
+                    add(PolymerizeChildModel(it.getIcon(), it.translate(), "", it))
                 }
             }) {
                 showAccountType(it.tag as String)
@@ -146,8 +148,7 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
             var accountModel = AppDatabase.getInstance().getAccountDao().queryAccountByType(accountType)
             if (accountModel == null)
             {
-                accountModel = AccountModel(type = accountType, category = accountCategory, name = accountType.translate(),
-                        showInTotal = true)
+                accountModel = AccountModel(type = accountType, category = accountCategory, name = accountType.translate(), showInTotal = true)
             }
 
             if (accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL)

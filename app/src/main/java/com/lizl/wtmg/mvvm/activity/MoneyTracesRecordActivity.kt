@@ -19,7 +19,9 @@ import com.lizl.wtmg.custom.view.selection.SingleSelectionView
 import com.lizl.wtmg.databinding.ActivityMoneyRecordTracesBinding
 import com.lizl.wtmg.mvvm.adapter.ViewPagerAdapter
 import com.lizl.wtmg.mvvm.base.BaseActivity
-import com.lizl.wtmg.mvvm.model.BottomModel
+import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
+import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
+import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeModel
 import com.lizl.wtmg.util.DateUtil
 import com.lizl.wtmg.util.PopupUtil
 import kotlinx.android.synthetic.main.activity_money_record_traces.*
@@ -69,7 +71,7 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
         }).attach()
 
         tv_account.text = "${getString(R.string.account)}：${accountType.translate()}"
-        tv_time.text = String.format("%d-%02d-%02d %02d:%2d", selectTime.year, selectTime.month, selectTime.day, selectTime.hour, selectTime.minute)
+        tv_time.text = String.format("%d-%02d-%02d %02d:%02d", selectTime.year, selectTime.month, selectTime.day, selectTime.hour, selectTime.minute)
     }
 
     override fun initListener()
@@ -101,11 +103,14 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
         }
 
         tv_account.setOnClickListener(true) {
-            PopupUtil.showBottomListPopup(mutableListOf<BottomModel>().apply {
-                AppDatabase.getInstance().getAccountDao().queryAllAccount().forEach {
-                    add(BottomModel(it.type.getIcon(), it.type.translate(), it.type))
+            PopupUtil.showBottomListPopup(mutableListOf<PolymerizeModel>().apply {
+                AppDatabase.getInstance().getAccountDao().queryAllAccount().groupBy { it.category }.forEach { (category, accountList) ->
+
+                    val childList = mutableListOf<PolymerizeChildModel>()
+                    accountList.forEach { childList.add(PolymerizeChildModel(it.type.getIcon(), it.type.translate(), "", it)) }
+                    add(PolymerizeGroupModel(category.translate(), "", childList))
                 }
-                add(BottomModel(R.drawable.ic_baseline_add_colourful_24, getString(R.string.add), "A"))
+                add(PolymerizeChildModel(R.drawable.ic_baseline_add_colourful_24, getString(R.string.add), "", "A"))
             }) {
                 if (it.tag == "A")
                 {
@@ -127,7 +132,7 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
                             selectTime.day = dayOfMonth
                             selectTime.hour = hourOfDay
                             selectTime.minute = minute
-                            tv_time.text = String.format("%d-%02d-%02d %02d:%2d", selectTime.year, selectTime.month, selectTime.day, selectTime.hour,
+                            tv_time.text = String.format("%d-%02d-%02d %02d:%02d", selectTime.year, selectTime.month, selectTime.day, selectTime.hour,
                                     selectTime.minute)
                         }
                     }

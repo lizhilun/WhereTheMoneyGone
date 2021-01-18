@@ -4,6 +4,17 @@
 
     <data>
 
+        <variable
+            name="totalProperty"
+            type="Integer" />
+
+        <variable
+            name="netProperty"
+            type="Integer" />
+
+        <variable
+            name="totalLiabilities"
+            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -43,6 +54,7 @@
                         android:id="@+id/tv_total_property"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@{String.valueOf(totalProperty)}"
                         android:textColor="@color/colorTextColor"
                         android:textSize="@dimen/global_text_size"
                         app:layout_constraintEnd_toEndOf="@+id/tv_total_property_des"
@@ -72,6 +84,7 @@
                         android:id="@+id/tv_net_property"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@{String.valueOf(netProperty)}"
                         android:textColor="@color/colorTextColor"
                         android:textSize="@dimen/global_text_size"
                         app:layout_constraintEnd_toEndOf="@+id/tv_net_property_des"
@@ -93,6 +106,7 @@
                         android:id="@+id/tv_total_liabilities"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@{String.valueOf(totalLiabilities)}"
                         android:textColor="@color/colorTextColor"
                         android:textSize="@dimen/global_text_size"
                         app:layout_constraintEnd_toEndOf="@+id/tv_total_liabilities_des"
