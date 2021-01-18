@@ -6,15 +6,11 @@
 
         <variable
             name="monthExpenditure"
-            type="String" />
+            type="Integer" />
 
         <variable
             name="monthIncome"
-            type="String" />
-
-        <variable
-            name="monthBalance"
-            type="String" />
+            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -65,7 +61,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/global_content_padding_content"
-                    android:text="@{monthExpenditure}"
+                    android:text="@{String.valueOf(monthExpenditure)}"
                     android:textColor="@color/colorTextColor_dark"
                     android:textSize="@dimen/global_text_size_bigger"
                     android:textStyle="bold"
@@ -89,7 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/global_text_size"
-                    android:text="@{monthIncome}"
+                    android:text="@{String.valueOf(monthIncome)}"
                     android:textColor="@color/colorTextColor_dark"
                     android:textSize="@dimen/global_text_size_smaller"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_month_income_des"
@@ -113,7 +109,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/global_text_size"
-                    android:text="@{monthBalance}"
+                    android:text="@{String.valueOf(monthIncome - monthExpenditure)}"
                     android:textColor="@color/colorTextColor_dark"
                     android:textSize="@dimen/global_text_size_smaller"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_month_income_des"

@@ -27,4 +27,8 @@ object AppConstant
     const val INCOME_TYPE_SECOND_HAND = "second hand"
     const val INCOME_TYPE_RED_ENVELOPES = "red envelopes"
     const val INCOME_TYPE_FINANCIAL_TRANSACTIONS = "financial transactions"
+
+    const val MONEY_TRACES_CATEGORY_EXPENDITURE = "expenditure"
+    const val MONEY_TRACES_CATEGORY_INCOME = "income"
+    const val MONEY_TRACES_CATEGORY_TRANSFER = "transfer"
 }

@@ -4,8 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "ExpenditureModel")
-data class ExpenditureModel(
+@Entity(tableName = "MoneyTraces")
+data class MoneyTracesModel(
+
         @PrimaryKey(autoGenerate = true)
         var id: Long = 0L,
 
@@ -13,7 +14,10 @@ data class ExpenditureModel(
         var amonunt: Float,
 
         @ColumnInfo
-        var expenditureType: String,
+        var tracesType: String,
+
+        @ColumnInfo
+        var tracesCategory: String,
 
         @ColumnInfo
         var accountType: String,
@@ -31,5 +35,4 @@ data class ExpenditureModel(
         var recordTime: Long,
 
         @ColumnInfo
-        var remarks: String = ""
-)
+        var remarks: String = "")

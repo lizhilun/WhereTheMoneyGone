@@ -2,50 +2,50 @@ package com.lizl.wtmg.module.account
 
 import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.db.AppDatabase
-import com.lizl.wtmg.db.model.ExpenditureModel
+import com.lizl.wtmg.db.model.MoneyTracesModel
 
 object AccountDataManager
 {
-    fun addExpenditure(expenditureModel: ExpenditureModel)
+    fun addExpenditure(moneyTracesModel: MoneyTracesModel)
     {
-        AppDatabase.getInstance().getExpenditureDao().insert(expenditureModel)
+        AppDatabase.getInstance().getMoneyTracesDao().insert(moneyTracesModel)
 
-        when (AccountManager.getAccountCategoryByType(expenditureModel.accountType))
+        when (AccountManager.getAccountCategoryByType(moneyTracesModel.accountType))
         {
             AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL ->
             {
-                AppDatabase.getInstance().getAccountDao().queryAccountByType(expenditureModel.accountType)?.let {
-                    it.amount -= expenditureModel.amonunt
+                AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.accountType)?.let {
+                    it.amount -= moneyTracesModel.amonunt
                     AppDatabase.getInstance().getAccountDao().insert(it)
                 }
             }
             AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT  ->
             {
-                AppDatabase.getInstance().getAccountDao().queryAccountByType(expenditureModel.accountType)?.let {
-                    it.usedQuota += expenditureModel.amonunt
+                AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.accountType)?.let {
+                    it.usedQuota += moneyTracesModel.amonunt
                     AppDatabase.getInstance().getAccountDao().insert(it)
                 }
             }
         }
     }
 
-    fun deleteExpenditure(expenditureModel: ExpenditureModel)
+    fun deleteExpenditure(moneyTracesModel: MoneyTracesModel)
     {
-        AppDatabase.getInstance().getExpenditureDao().delete(expenditureModel)
+        AppDatabase.getInstance().getMoneyTracesDao().delete(moneyTracesModel)
 
-        when (AccountManager.getAccountCategoryByType(expenditureModel.accountType))
+        when (AccountManager.getAccountCategoryByType(moneyTracesModel.accountType))
         {
             AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL ->
             {
-                AppDatabase.getInstance().getAccountDao().queryAccountByType(expenditureModel.accountType)?.let {
-                    it.amount += expenditureModel.amonunt
+                AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.accountType)?.let {
+                    it.amount += moneyTracesModel.amonunt
                     AppDatabase.getInstance().getAccountDao().insert(it)
                 }
             }
             AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT  ->
             {
-                AppDatabase.getInstance().getAccountDao().queryAccountByType(expenditureModel.accountType)?.let {
-                    it.usedQuota -= expenditureModel.amonunt
+                AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.accountType)?.let {
+                    it.usedQuota -= moneyTracesModel.amonunt
                     AppDatabase.getInstance().getAccountDao().insert(it)
                 }
             }

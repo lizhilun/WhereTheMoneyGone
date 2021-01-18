@@ -10,24 +10,24 @@ import com.lizl.wtmg.custom.function.backspace
 import com.lizl.wtmg.custom.function.getIcon
 import com.lizl.wtmg.custom.function.setOnClickListener
 import com.lizl.wtmg.custom.function.translate
-import com.lizl.wtmg.databinding.ActivityMoneyRecordBinding
 import com.lizl.wtmg.db.AppDatabase
-import com.lizl.wtmg.db.model.ExpenditureModel
+import com.lizl.wtmg.db.model.MoneyTracesModel
 import com.lizl.wtmg.module.account.AccountDataManager
 import com.lizl.wtmg.module.account.AccountManager
 import com.lizl.wtmg.custom.view.selection.SingleSelectionModel
 import com.lizl.wtmg.custom.view.selection.SingleSelectionView
+import com.lizl.wtmg.databinding.ActivityMoneyRecordTracesBinding
 import com.lizl.wtmg.mvvm.adapter.ViewPagerAdapter
 import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.mvvm.model.BottomModel
 import com.lizl.wtmg.util.DateUtil
 import com.lizl.wtmg.util.PopupUtil
-import kotlinx.android.synthetic.main.activity_money_record.*
+import kotlinx.android.synthetic.main.activity_money_record_traces.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.activity_money_record)
+class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>(R.layout.activity_money_record_traces)
 {
     private var inputTemp = ""
 
@@ -189,24 +189,6 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
         }
     }
 
-    private fun saveExpenditure(amount: Int)
-    {
-        val expenditureModel =
-                ExpenditureModel(amonunt = amount.toFloat(), expenditureType = expenditureType, accountType = accountType, recordTime = selectTime.time,
-                        recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)
-
-        AccountDataManager.addExpenditure(expenditureModel)
-    }
-
-    private fun saveIncome(amount: Int)
-    {
-        val expenditureModel =
-                ExpenditureModel(amonunt = amount.toFloat(), expenditureType = expenditureType, accountType = accountType, recordTime = selectTime.time,
-                        recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)
-
-        AccountDataManager.addExpenditure(expenditureModel)
-    }
-
     private fun saveInput(): Boolean
     {
         cluInput()
@@ -225,14 +207,14 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
             return false
         }
 
-        if (vp_type.currentItem == 0)
-        {
-            saveExpenditure(amount)
-        }
-        else
-        {
-            saveIncome(amount)
-        }
+        val traceCategory = if (vp_type.currentItem == 0) AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE
+        else AppConstant.MONEY_TRACES_CATEGORY_INCOME
+
+        val expenditureModel =
+                MoneyTracesModel(amonunt = amount.toFloat(), tracesType = expenditureType, tracesCategory = traceCategory, accountType = accountType,
+                        recordTime = selectTime.time, recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)
+
+        AccountDataManager.addExpenditure(expenditureModel)
 
         return true
     }

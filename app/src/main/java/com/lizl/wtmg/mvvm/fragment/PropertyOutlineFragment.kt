@@ -4,15 +4,17 @@ import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.lizl.wtmg.R
+import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.constant.EventConstant
+import com.lizl.wtmg.custom.function.getIcon
 import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.custom.view.MenuDrawLayout
 import com.lizl.wtmg.databinding.FragmentPropertyOutlineBinding
 import com.lizl.wtmg.db.AppDatabase
-import com.lizl.wtmg.db.model.ExpenditureModel
+import com.lizl.wtmg.db.model.MoneyTracesModel
 import com.lizl.wtmg.module.account.AccountDataManager
-import com.lizl.wtmg.mvvm.activity.MoneyRecordActivity
+import com.lizl.wtmg.mvvm.activity.MoneyTracesRecordActivity
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseFragment
 import com.lizl.wtmg.mvvm.model.BottomModel
@@ -28,9 +30,6 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
 {
     private val menuDrawLayout: MenuDrawLayout by lazy { MenuDrawLayout(requireContext()) }
 
-    private var monthExpenditure = 0
-    private var monthIncome = 0
-
     private lateinit var polymerizeGroupAdapter: PolymerizeGroupAdapter
 
     override fun initView()
@@ -44,20 +43,29 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
     {
         val date = DateUtil.Date()
 
-        AppDatabase.getInstance().getExpenditureDao().queryExpenditureByMonth(date.month).observe(this, Observer { expenditureLis ->
-            monthExpenditure = expenditureLis.sumBy { it.amonunt.toInt() }
-            updateMonthOutline()
+        AppDatabase.getInstance().getMoneyTracesDao().queryTracesByMonth(date.month).observe(this, Observer { tracesList ->
+
+            dataBinding.monthExpenditure = tracesList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE }.sumBy { it.amonunt.toInt() }
+            dataBinding.monthIncome = tracesList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME }.sumBy { it.amonunt.toInt() }
 
             val polymerizeGroupList = mutableListOf<PolymerizeGroupModel>()
 
-            expenditureLis.groupBy { it.recordDay }.forEach { (t, u) ->
+            tracesList.groupBy { it.recordDay }.forEach { (t, u) ->
 
                 val dateInfo = String.format("%02d-%02d", date.month, t)
-                val amountInfo = u.sumBy { it.amonunt.toInt() }.toString()
+
+                val amountInfo = u.sumBy {
+                    when (it.tracesCategory)
+                    {
+                        AppConstant.MONEY_TRACES_CATEGORY_INCOME -> it.amonunt.toInt()
+                        else                                     -> 0 - it.amonunt.toInt()
+                    }
+                }.toString()
+
                 val childList = mutableListOf<PolymerizeChildModel>().apply {
-                    u.forEach { expenditureModel ->
-                        add(PolymerizeChildModel(R.drawable.ic_spot_red, expenditureModel.expenditureType.translate(),
-                                expenditureModel.amonunt.toInt().toString(), expenditureModel))
+                    u.forEach { tracesModel ->
+                        add(PolymerizeChildModel(tracesModel.tracesCategory.getIcon(), tracesModel.tracesType.translate(),
+                                tracesModel.amonunt.toInt().toString(), tracesModel))
                     }
                 }
 
@@ -69,7 +77,7 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
 
     override fun initListener()
     {
-        fab_add.setOnClickListener { ActivityUtils.startActivity(MoneyRecordActivity::class.java) }
+        fab_add.setOnClickListener { ActivityUtils.startActivity(MoneyTracesRecordActivity::class.java) }
 
         iv_menu.setOnClickListener {
             XPopup.Builder(requireContext()).popupPosition(PopupPosition.Left).hasStatusBarShadow(false).asCustom(menuDrawLayout).show()
@@ -85,16 +93,9 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
             }) {
                 when (it.tag)
                 {
-                    "D" -> AccountDataManager.deleteExpenditure(polymerizeChildModel.tag as ExpenditureModel)
+                    "D" -> AccountDataManager.deleteExpenditure(polymerizeChildModel.tag as MoneyTracesModel)
                 }
             }
         }
-    }
-
-    private fun updateMonthOutline()
-    {
-        dataBinding.monthExpenditure = monthExpenditure.toString()
-        dataBinding.monthIncome = monthIncome.toString()
-        dataBinding.monthBalance = (monthIncome - monthExpenditure).toString()
     }
 }

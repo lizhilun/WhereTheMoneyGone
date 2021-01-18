@@ -6,8 +6,6 @@
 
         <import type="com.lizl.wtmg.module.account.AccountManager" />
 
-        <import type="com.lizl.wtmg.util.TranslateUtil" />
-
         <variable
             name="singleSelectionModel"
             type="com.lizl.wtmg.custom.view.selection.SingleSelectionModel" />

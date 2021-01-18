@@ -22,7 +22,7 @@
         </activity>
 
         <activity
-            android:name=".mvvm.activity.MoneyRecordActivity"
+            android:name=".mvvm.activity.MoneyTracesRecordActivity"
             android:configChanges="uiMode" />
 
         <activity
