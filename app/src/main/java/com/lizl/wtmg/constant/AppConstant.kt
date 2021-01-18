@@ -13,6 +13,7 @@ object AppConstant
     const val ACCOUNT_TYPE_JD_BT = "jdbt"
 
     const val ACCOUNT_TYPE_ALI_PAY_FUND = "ali pay fund"
+    const val ACCOUNT_TYPE_JD_FINANCE = "jd finance"
     const val ACCOUNT_TYPE_TIANTIAN_FUND = "tiantian fund"
 
     const val ACCOUNT_CATEGORY_TYPE_CAPITAL = "capital"

@@ -12,7 +12,6 @@ import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.AccountModel
 import com.lizl.wtmg.module.account.AccountManager
 import com.lizl.wtmg.mvvm.base.BaseActivity
-import com.lizl.wtmg.mvvm.model.BottomModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeModel
 import com.lizl.wtmg.util.PopupUtil

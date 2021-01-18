@@ -63,8 +63,9 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
                 val amountInfo = u.sumBy {
                     when (it.tracesCategory)
                     {
-                        AppConstant.MONEY_TRACES_CATEGORY_INCOME -> it.amonunt.toInt()
-                        else                                     -> 0 - it.amonunt.toInt()
+                        AppConstant.MONEY_TRACES_CATEGORY_INCOME      -> it.amonunt.toInt()
+                        AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> 0 - it.amonunt.toInt()
+                        else                                          -> 0
                     }
                 }.toString()
 

@@ -10,7 +10,7 @@ object AccountManager
     val creditAccountList = listOf(AppConstant.ACCOUNT_TYPE_ANT_CREDIT_PAY, AppConstant.ACCOUNT_TYPE_JD_BT, AppConstant.ACCOUNT_TYPE_CREDIT_CARD_CMB,
             AppConstant.ACCOUNT_TYPE_CREDIT_CARD_CMBC)
 
-    val investmentAccountList = listOf(AppConstant.ACCOUNT_TYPE_ALI_PAY_FUND, AppConstant.ACCOUNT_TYPE_TIANTIAN_FUND)
+    val investmentAccountList = listOf(AppConstant.ACCOUNT_TYPE_ALI_PAY_FUND, AppConstant.ACCOUNT_TYPE_JD_FINANCE, AppConstant.ACCOUNT_TYPE_TIANTIAN_FUND)
 
     val expenditureTypeList = listOf(AppConstant.EXPENDITURE_TYPE_MEALS, AppConstant.EXPENDITURE_TYPE_SNACKS, AppConstant.EXPENDITURE_TYPE_CLOTHES,
             AppConstant.EXPENDITURE_TYPE_GAME, AppConstant.EXPENDITURE_TYPE_RENT, AppConstant.EXPENDITURE_TYPE_NECESSARY)

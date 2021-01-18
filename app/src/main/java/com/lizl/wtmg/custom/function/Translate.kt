@@ -21,7 +21,8 @@ fun String.translate(): String
         AppConstant.ACCOUNT_TYPE_CREDIT_CARD_CMB -> StringUtils.getString(R.string.cmb)
         AppConstant.ACCOUNT_TYPE_CREDIT_CARD_CMBC -> StringUtils.getString(R.string.cmbc)
 
-        AppConstant.ACCOUNT_TYPE_ALI_PAY_FUND -> StringUtils.getString(R.string.ali_pay_fund)
+        AppConstant.ACCOUNT_TYPE_ALI_PAY_FUND  -> StringUtils.getString(R.string.ali_pay_fund)
+        AppConstant.ACCOUNT_TYPE_JD_FINANCE    -> StringUtils.getString(R.string.jd_finance)
         AppConstant.ACCOUNT_TYPE_TIANTIAN_FUND -> StringUtils.getString(R.string.tiantian_fund)
 
         AppConstant.EXPENDITURE_TYPE_MEALS -> StringUtils.getString(R.string.meals)

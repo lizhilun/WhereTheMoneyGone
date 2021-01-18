@@ -62,6 +62,7 @@
     <string name="bank_card">银行卡</string>
 
     <string name="ali_pay_fund">支付宝基金</string>
+    <string name="jd_finance">京东金融</string>
     <string name="tiantian_fund">天天基金</string>
 
     <string name="ant_credit_pay">花呗</string>
@@ -78,4 +79,6 @@
     <string name="in_and_out_account_cannot_same">转出与转入账号不能相同</string>
     <string name="please_select_in_account">请选择转入账号</string>
     <string name="please_select_out_account">请选择转出账号</string>
+
+    <string name="sure_to_delete_account">确认删除账户？</string>
 </resources>
