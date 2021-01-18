@@ -9,8 +9,8 @@
         <import type="com.lizl.wtmg.util.TranslateUtil" />
 
         <variable
-            name="expenditureTypeModel"
-            type="com.lizl.wtmg.mvvm.model.ExpenditureTypeModel" />
+            name="singleSelectionModel"
+            type="com.lizl.wtmg.custom.view.selection.SingleSelectionModel" />
     </data>
 
     <skin.support.constraint.SkinCompatConstraintLayout
@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_expenditure_type"
                 android:padding="5dp"
-                app:isSelected="@{expenditureTypeModel.selected}"
+                app:isSelected="@{singleSelectionModel.selected}"
                 app:layout_constraintBottom_toTopOf="@+id/tv_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -40,14 +40,14 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:tint="@drawable/color_expenditure_type_tint"
-                    app:image="@{AccountManager.INSTANCE.getExpenditureTypeIcon(expenditureTypeModel.type)}" />
+                    app:image="@{singleSelectionModel.icon}" />
             </skin.support.widget.SkinCompatFrameLayout>
 
             <skin.support.widget.SkinCompatTextView
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{TranslateUtil.INSTANCE.translateExpenditureType(expenditureTypeModel.type)}"
+                android:text="@{singleSelectionModel.name}"
                 android:textColor="@color/colorTextColor"
                 android:textSize="@dimen/global_text_size_smaller"
                 app:layout_constraintBottom_toBottomOf="parent"

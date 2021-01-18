@@ -1,8 +1,10 @@
 package com.lizl.wtmg.mvvm.activity
 
+import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.lizl.wtmg.util.TranslateUtil
 import com.blankj.utilcode.util.ToastUtils
+import com.google.android.material.tabs.TabLayoutMediator
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.function.backspace
@@ -14,15 +16,16 @@ import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.ExpenditureModel
 import com.lizl.wtmg.module.account.AccountDataManager
 import com.lizl.wtmg.module.account.AccountManager
-import com.lizl.wtmg.mvvm.adapter.ExpenditureTypeAdapter
+import com.lizl.wtmg.custom.view.selection.SingleSelectionAdapter
+import com.lizl.wtmg.custom.view.selection.SingleSelectionModel
+import com.lizl.wtmg.custom.view.selection.SingleSelectionView
+import com.lizl.wtmg.mvvm.adapter.ViewPagerAdapter
 import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.mvvm.model.BottomModel
 import com.lizl.wtmg.mvvm.model.ExpenditureTypeModel
 import com.lizl.wtmg.util.DateUtil
 import com.lizl.wtmg.util.PopupUtil
 import kotlinx.android.synthetic.main.activity_money_record.*
-import kotlinx.android.synthetic.main.activity_money_record.ctb_title
-import kotlinx.android.synthetic.main.activity_money_record.tv_save
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -34,21 +37,40 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
     private var accountType = ""
     private var selectTime = DateUtil.Date()
     private var expenditureType = AppConstant.EXPENDITURE_TYPE_MEALS
-
-    private lateinit var expenditureTypeAdapter: ExpenditureTypeAdapter
+    private var incomeType = AppConstant.INCOME_TYPE_WAGES
 
     override fun initView()
     {
         clearInput()
 
-        expenditureTypeAdapter = ExpenditureTypeAdapter()
-        rv_expenditure_type.adapter = expenditureTypeAdapter
-
-        val expenditureTypeList = mutableListOf<ExpenditureTypeModel>()
-        AccountManager.getExpenditureTypeList().forEach {
-            expenditureTypeList.add(ExpenditureTypeModel(it, it == expenditureType))
+        val expenditureTypeSelectionView = SingleSelectionView(this).apply {
+            val expenditureTypeList = mutableListOf<SingleSelectionModel>()
+            AccountManager.expenditureTypeList.forEach {
+                expenditureTypeList.add(
+                        SingleSelectionModel(AccountManager.getExpenditureTypeIcon(it), TranslateUtil.translateExpenditureType(it), it == expenditureType))
+            }
+            setData(expenditureTypeList)
         }
-        expenditureTypeAdapter.setNewData(expenditureTypeList)
+
+        val incomeTypeSelectionView = SingleSelectionView(this).apply {
+            val expenditureTypeList = mutableListOf<SingleSelectionModel>()
+            AccountManager.incomeTypeList.forEach {
+                expenditureTypeList.add(SingleSelectionModel(AccountManager.getIncomeTypeIcon(it), TranslateUtil.translateIncomeType(it), it == incomeType))
+            }
+            setData(expenditureTypeList)
+        }
+
+        vp_type.adapter = ViewPagerAdapter(mutableListOf<View>().apply {
+            add(expenditureTypeSelectionView)
+            add(incomeTypeSelectionView)
+        })
+        vp_type.offscreenPageLimit = 3
+
+        val titleList = listOf(getString(R.string.expenditure), getString(R.string.income))
+        TabLayoutMediator(tl_title, vp_type, TabLayoutMediator.TabConfigurationStrategy { tab, position ->
+            if (position >= titleList.size) return@TabConfigurationStrategy
+            tab.text = titleList[position]
+        }).attach()
 
         tv_account.text = "${getString(R.string.account)}：${TranslateUtil.translateAccountType(accountType)}"
         tv_time.text = String.format("%d-%02d-%02d %02d:%2d", selectTime.year, selectTime.month, selectTime.day, selectTime.hour, selectTime.minute)
@@ -56,7 +78,7 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
 
     override fun initListener()
     {
-        ctb_title.setOnBackBtnClickListener { onBackPressed() }
+        iv_back.setOnClickListener { onBackPressed() }
 
         view_input_key.setOnKeyClickListener { onNewKeyInput(it) }
 
@@ -112,26 +134,12 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
                             selectTime.day = dayOfMonth
                             selectTime.hour = hourOfDay
                             selectTime.minute = minute
-                            tv_time.text =
-                                String.format("%d-%02d-%02d %02d:%2d", selectTime.year, selectTime.month, selectTime.day, selectTime.hour, selectTime.minute)
+                            tv_time.text = String.format("%d-%02d-%02d %02d:%2d", selectTime.year, selectTime.month, selectTime.day, selectTime.hour,
+                                    selectTime.minute)
                         }
                     }
                 }
             }
-        }
-
-        expenditureTypeAdapter.setOnItemClickListener(true) { expenditureTypeModel ->
-            if (expenditureTypeModel.isSelected) return@setOnItemClickListener
-            expenditureTypeAdapter.data.forEach {
-                if (it.isSelected)
-                {
-                    it.isSelected = false
-                    expenditureTypeAdapter.update(it)
-                }
-            }
-            expenditureTypeModel.isSelected = true
-            expenditureTypeAdapter.update(expenditureTypeModel)
-            expenditureType = expenditureTypeModel.type
         }
     }
 
@@ -147,7 +155,7 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
     {
         when (key)
         {
-            "D"      -> inputTemp = inputTemp.backspace()
+            "D" -> inputTemp = inputTemp.backspace()
             "-", "+" ->
             {
                 cluInput()
@@ -188,6 +196,24 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
         }
     }
 
+    private fun saveExpenditure(amount: Int)
+    {
+        val expenditureModel =
+                ExpenditureModel(amonunt = amount.toFloat(), expenditureType = expenditureType, accountType = accountType, recordTime = selectTime.time,
+                        recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)
+
+        AccountDataManager.addExpenditure(expenditureModel)
+    }
+
+    private fun saveIncome(amount: Int)
+    {
+        val expenditureModel =
+                ExpenditureModel(amonunt = amount.toFloat(), expenditureType = expenditureType, accountType = accountType, recordTime = selectTime.time,
+                        recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)
+
+        AccountDataManager.addExpenditure(expenditureModel)
+    }
+
     private fun saveInput(): Boolean
     {
         cluInput()
@@ -206,11 +232,14 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
             return false
         }
 
-        val expenditureModel = ExpenditureModel(amonunt = amount.toFloat(), expenditureType = expenditureType, accountType = accountType,
-                recordTime = selectTime.time, recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)
-
-        AccountDataManager.addExpenditure(expenditureModel)
-
+        if (vp_type.currentItem == 0)
+        {
+            saveExpenditure(amount)
+        }
+        else
+        {
+            saveIncome(amount)
+        }
 
         return true
     }

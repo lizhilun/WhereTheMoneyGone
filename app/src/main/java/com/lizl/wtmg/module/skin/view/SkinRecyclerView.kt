@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import skin.support.widget.SkinCompatBackgroundHelper
 import skin.support.widget.SkinCompatSupportable
 
-class SkinRecyclerView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : RecyclerView(context, attrs, defStyleAttr), SkinCompatSupportable
+open class SkinRecyclerView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : RecyclerView(context, attrs, defStyleAttr), SkinCompatSupportable
 {
     constructor(context: Context) : this(context, null, 0)
 

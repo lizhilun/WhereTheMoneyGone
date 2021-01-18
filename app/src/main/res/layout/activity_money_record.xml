@@ -4,6 +4,7 @@
 
     <data>
 
+        <import type="android.view.View" />
     </data>
 
     <skin.support.constraint.SkinCompatConstraintLayout
@@ -11,122 +12,153 @@
         android:layout_height="match_parent"
         android:background="@color/colorWindowBg">
 
-        <com.lizl.wtmg.custom.view.titlebar.CustomTitleBar
-            android:id="@+id/ctb_title"
+        <com.lizl.wtmg.custom.view.StatusBarPlaceholder
+            android:id="@+id/view_status_holder"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="wrap_content" />
 
-        <com.lizl.wtmg.module.skin.view.SkinRecyclerView
-            android:id="@+id/rv_expenditure_type"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_tool_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorContentBg"
-            android:overScrollMode="never"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintTop_toBottomOf="@+id/ctb_title"
-            app:spanCount="5" />
+            android:layout_height="@dimen/global_toolbar_height"
+            app:layout_constraintTop_toBottomOf="@+id/view_status_holder">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_input_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="54dp"
-            android:layout_marginEnd="@dimen/global_content_padding_edge"
-            android:gravity="center"
-            android:maxLength="8"
-            android:textColor="@color/colorEmphasize"
-            android:textSize="@dimen/global_text_size_bigger"
-            app:layout_constraintBottom_toTopOf="@+id/cl_record_info"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <skin.support.constraint.SkinCompatConstraintLayout
-            android:id="@+id/cl_record_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorContentBg"
-            android:paddingTop="@dimen/global_content_padding_edge_half"
-            android:paddingBottom="@dimen/global_content_padding_edge_half"
-            app:layout_constraintBottom_toTopOf="@+id/view_input_key">
-
-            <skin.support.widget.SkinCompatTextView
-                android:id="@+id/tv_account"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/global_content_padding_edge"
-                android:background="@drawable/bg_click_secondary_content_ripple"
-                android:padding="@dimen/global_content_padding_edge_half"
-                android:textColor="@color/colorTextColor"
-                android:textSize="@dimen/global_text_size_smaller"
+            <com.lizl.wtmg.module.skin.view.SkinImageView
+                android:id="@+id/iv_back"
+                style="@style/ToolbarLayoutBackButtonStyle"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                android:tint="@color/colorSvgTint"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <skin.support.widget.SkinCompatTextView
-                android:id="@+id/tv_time"
+            <skin.support.design.widget.SkinMaterialTabLayout
+                android:id="@+id/tl_title"
                 android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:tabIndicatorFullWidth="false"
+                app:tabMode="auto"
+                app:tabTextAppearance="@style/GlobalTextStyle" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <skin.support.constraint.SkinCompatConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/colorContentBg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_tool_bar">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp_type"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/tv_input_amount"
+                app:layout_constraintTop_toTopOf="parent"
+                app:overScrollMode="@{View.OVER_SCROLL_NEVER}" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_input_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="54dp"
+                android:layout_marginEnd="@dimen/global_content_padding_edge"
+                android:gravity="center"
+                android:maxLength="8"
+                android:textColor="@color/colorEmphasize"
+                android:textSize="@dimen/global_text_size_bigger"
+                app:layout_constraintBottom_toTopOf="@+id/cl_record_info"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <skin.support.constraint.SkinCompatConstraintLayout
+                android:id="@+id/cl_record_info"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/global_content_padding_edge"
-                android:background="@drawable/bg_click_secondary_content_ripple"
-                android:padding="@dimen/global_content_padding_edge_half"
-                android:textColor="@color/colorTextColor"
-                android:textSize="@dimen/global_text_size_smaller"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_account"
-                app:layout_constraintStart_toEndOf="@+id/tv_account"
-                app:layout_constraintTop_toTopOf="@+id/tv_account"
-                app:layout_goneMarginStart="@dimen/global_content_padding_edge_half" />
+                android:paddingTop="@dimen/global_content_padding_edge_half"
+                android:paddingBottom="@dimen/global_content_padding_edge_half"
+                app:layout_constraintBottom_toTopOf="@+id/view_input_key">
+
+                <skin.support.widget.SkinCompatTextView
+                    android:id="@+id/tv_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/global_content_padding_edge"
+                    android:background="@drawable/bg_click_secondary_content_ripple"
+                    android:padding="@dimen/global_content_padding_edge_half"
+                    android:textColor="@color/colorTextColor"
+                    android:textSize="@dimen/global_text_size_smaller"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <skin.support.widget.SkinCompatTextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/global_content_padding_edge"
+                    android:background="@drawable/bg_click_secondary_content_ripple"
+                    android:padding="@dimen/global_content_padding_edge_half"
+                    android:textColor="@color/colorTextColor"
+                    android:textSize="@dimen/global_text_size_smaller"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_account"
+                    app:layout_constraintStart_toEndOf="@+id/tv_account"
+                    app:layout_constraintTop_toTopOf="@+id/tv_account"
+                    app:layout_goneMarginStart="@dimen/global_content_padding_edge_half" />
+            </skin.support.constraint.SkinCompatConstraintLayout>
+
+            <com.lizl.wtmg.custom.view.InputKeyView
+                android:id="@+id/view_input_key"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_percent="0.75" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@+id/view_input_key"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/view_input_key"
+                app:layout_constraintTop_toTopOf="@+id/view_input_key">
+
+                <com.lizl.wtmg.module.skin.view.SkinImageView
+                    android:id="@+id/iv_backspace"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="@drawable/bg_click_ripple"
+                    android:paddingTop="25dp"
+                    android:paddingBottom="15dp"
+                    android:src="@drawable/ic_baseline_backspace_24"
+                    android:tint="@color/colorSvgTint"
+                    app:layout_constraintHeight_percent="0.25"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <skin.support.widget.SkinCompatTextView
+                    android:id="@+id/tv_record_one_more"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="@drawable/bg_click_ripple"
+                    android:gravity="center"
+                    android:text="@string/record_once_more"
+                    android:textColor="@color/colorTextColor"
+                    android:textSize="@dimen/global_text_size_bigger"
+                    app:layout_constraintHeight_percent="0.375"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_backspace" />
+
+                <skin.support.widget.SkinCompatTextView
+                    android:id="@+id/tv_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="@drawable/bg_click_ripple_emphasize"
+                    android:gravity="center"
+                    android:text="@string/save"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/global_text_size_bigger"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_record_one_more" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </skin.support.constraint.SkinCompatConstraintLayout>
 
-        <com.lizl.wtmg.custom.view.InputKeyView
-            android:id="@+id/view_input_key"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="0.75" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/view_input_key"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/view_input_key"
-            app:layout_constraintTop_toTopOf="@+id/view_input_key">
-
-            <com.lizl.wtmg.module.skin.view.SkinImageView
-                android:id="@+id/iv_backspace"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@drawable/bg_click_ripple"
-                android:paddingTop="25dp"
-                android:paddingBottom="15dp"
-                android:src="@drawable/ic_baseline_backspace_24"
-                android:tint="@color/colorSvgTint"
-                app:layout_constraintHeight_percent="0.25"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <skin.support.widget.SkinCompatTextView
-                android:id="@+id/tv_record_one_more"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@drawable/bg_click_ripple"
-                android:gravity="center"
-                android:text="@string/record_once_more"
-                android:textColor="@color/colorTextColor"
-                android:textSize="@dimen/global_text_size_bigger"
-                app:layout_constraintHeight_percent="0.375"
-                app:layout_constraintTop_toBottomOf="@+id/iv_backspace" />
-
-            <skin.support.widget.SkinCompatTextView
-                android:id="@+id/tv_save"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@drawable/bg_click_ripple_emphasize"
-                android:gravity="center"
-                android:text="@string/save"
-                android:textColor="@color/white"
-                android:textSize="@dimen/global_text_size_bigger"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_record_one_more" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </skin.support.constraint.SkinCompatConstraintLayout>
 </layout>

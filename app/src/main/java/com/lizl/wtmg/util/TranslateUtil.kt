@@ -46,4 +46,16 @@ object TranslateUtil
             else                                   -> ""
         }
     }
+
+    fun translateIncomeType(expenditureType: String): String
+    {
+        return when (expenditureType)
+        {
+            AppConstant.INCOME_TYPE_FINANCIAL_TRANSACTIONS -> StringUtils.getString(R.string.financial_transactions)
+            AppConstant.INCOME_TYPE_RED_ENVELOPES -> StringUtils.getString(R.string.red_envelopes)
+            AppConstant.INCOME_TYPE_WAGES -> StringUtils.getString(R.string.wages)
+            AppConstant.INCOME_TYPE_SECOND_HAND -> StringUtils.getString(R.string.second_hand)
+            else                                           -> ""
+        }
+    }
 }

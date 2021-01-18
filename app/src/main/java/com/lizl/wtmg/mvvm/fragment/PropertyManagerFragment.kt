@@ -1,16 +1,13 @@
 package com.lizl.wtmg.mvvm.fragment
 
-import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.R.dimen
 import com.lizl.wtmg.constant.AppConstant
-import com.lizl.wtmg.custom.function.setOnClickListener
 import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.databinding.FragmentPropertyManagerBinding
 import com.lizl.wtmg.db.AppDatabase
-import com.lizl.wtmg.db.dao.CreditAccountDao
 import com.lizl.wtmg.db.model.CreditAccountModel
 import com.lizl.wtmg.db.model.CapitalAccountModel
 import com.lizl.wtmg.module.account.AccountManager
@@ -46,7 +43,7 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
 
     override fun initListener()
     {
-        fab_add.setOnClickListener(true) { ActivityUtils.startActivity(AddAccountActivity::class.java) }
+        fab_add.setOnClickListener { ActivityUtils.startActivity(AddAccountActivity::class.java) }
 
         polymerizeGroupAdapter.setOnChildItemClickListener {
             when (it.tag)
@@ -56,7 +53,7 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
                     ActivityUtil.turnToActivity(AddAccountActivity::class.java, Pair(AddAccountActivity.DATA_ACCOUNT_TYPE, it.tag.type),
                             Pair(AddAccountActivity.DATA_ACCOUNT_ID, it.tag.id))
                 }
-                is CreditAccountModel  ->
+                is CreditAccountModel ->
                 {
                     ActivityUtil.turnToActivity(AddAccountActivity::class.java, Pair(AddAccountActivity.DATA_ACCOUNT_TYPE, it.tag.type),
                             Pair(AddAccountActivity.DATA_ACCOUNT_ID, it.tag.id))

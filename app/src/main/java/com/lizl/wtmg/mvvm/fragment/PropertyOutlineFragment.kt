@@ -70,13 +70,13 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
 
     override fun initListener()
     {
-        fab_add.setOnClickListener(true) { ActivityUtils.startActivity(MoneyRecordActivity::class.java) }
+        fab_add.setOnClickListener { ActivityUtils.startActivity(MoneyRecordActivity::class.java) }
 
         iv_menu.setOnClickListener {
             XPopup.Builder(requireContext()).popupPosition(PopupPosition.Left).hasStatusBarShadow(false).asCustom(menuDrawLayout).show()
         }
 
-        iv_property_manager.setOnClickListener(true) { LiveEventBus.get(EventConstant.EVENT_GO_TO_PROPERTY_MANAGER_VIEW).post(true) }
+        iv_property_manager.setOnClickListener { LiveEventBus.get(EventConstant.EVENT_GO_TO_PROPERTY_MANAGER_VIEW).post(true) }
 
         polymerizeGroupAdapter.setOnChildItemClickListener { }
 
