@@ -4,6 +4,7 @@ import androidx.core.view.isVisible
 import com.blankj.utilcode.util.ToastUtils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
+import com.lizl.wtmg.custom.function.getIcon
 import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.custom.function.ui
 import com.lizl.wtmg.databinding.ActivityAddAccountBinding
@@ -66,8 +67,8 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
 
         layout_account_category.setOnClickListener {
             PopupUtil.showBottomListPopup(mutableListOf<BottomModel>().apply {
-                AccountManager.getAccountCategoryList().forEach {
-                    add(BottomModel(AccountManager.getAccountCategoryIcon(it), it.translate(), it))
+                AccountManager.accountCategoryList.forEach {
+                    add(BottomModel(it.getIcon(), it.translate(), it))
                 }
             }) {
                 showAccountCategory(it.tag as String)
@@ -77,7 +78,7 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
         layout_account_type.setOnClickListener {
             PopupUtil.showBottomListPopup(mutableListOf<BottomModel>().apply {
                 AccountManager.getAccountListByCategory(accountCategory).forEach {
-                    add(BottomModel(AccountManager.getAccountIcon(it), it.translate(), it))
+                    add(BottomModel(it.getIcon(), it.translate(), it))
                 }
             }) {
                 showAccountType(it.tag as String)

@@ -5,19 +5,18 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.R.dimen
 import com.lizl.wtmg.constant.AppConstant
+import com.lizl.wtmg.custom.function.getIcon
 import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.databinding.FragmentPropertyManagerBinding
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.AccountModel
-import com.lizl.wtmg.module.account.AccountManager
 import com.lizl.wtmg.mvvm.activity.AddAccountActivity
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseFragment
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
 import com.lizl.wtmg.util.ActivityUtil
-import com.lizl.wtmg.util.TranslateUtil
 import kotlinx.android.synthetic.main.fragment_property_manager.*
 
 class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.layout.fragment_property_manager)
@@ -47,7 +46,7 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
                     else                                     -> accountList.sumBy { it.amount.toInt() }.toString()
                 }, mutableListOf<PolymerizeChildModel>().apply {
                     accountList.forEach { accountModel ->
-                        add(PolymerizeChildModel(AccountManager.getAccountIcon(accountModel.type), accountModel.type.translate(), when (category)
+                        add(PolymerizeChildModel(accountModel.type.getIcon(), accountModel.type.translate(), when (category)
                         {
                             AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> accountModel.usedQuota.toInt().toString()
                             else                                     -> accountModel.amount.toInt().toString()

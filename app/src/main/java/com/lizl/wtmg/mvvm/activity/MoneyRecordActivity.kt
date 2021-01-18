@@ -2,12 +2,12 @@ package com.lizl.wtmg.mvvm.activity
 
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
-import com.lizl.wtmg.util.TranslateUtil
 import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.function.backspace
+import com.lizl.wtmg.custom.function.getIcon
 import com.lizl.wtmg.custom.function.setOnClickListener
 import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.databinding.ActivityMoneyRecordBinding
@@ -43,7 +43,7 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
         val expenditureTypeSelectionView = SingleSelectionView(this).apply {
             val expenditureTypeList = mutableListOf<SingleSelectionModel>()
             AccountManager.expenditureTypeList.forEach {
-                expenditureTypeList.add(SingleSelectionModel(AccountManager.getExpenditureTypeIcon(it), it.translate(), it == expenditureType))
+                expenditureTypeList.add(SingleSelectionModel(it.getIcon(), it.translate(), it == expenditureType))
             }
             setData(expenditureTypeList)
         }
@@ -51,7 +51,7 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
         val incomeTypeSelectionView = SingleSelectionView(this).apply {
             val expenditureTypeList = mutableListOf<SingleSelectionModel>()
             AccountManager.incomeTypeList.forEach {
-                expenditureTypeList.add(SingleSelectionModel(AccountManager.getIncomeTypeIcon(it), it.translate(), it == incomeType))
+                expenditureTypeList.add(SingleSelectionModel(it.getIcon(), it.translate(), it == incomeType))
             }
             setData(expenditureTypeList)
         }
@@ -103,7 +103,7 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
         tv_account.setOnClickListener(true) {
             PopupUtil.showBottomListPopup(mutableListOf<BottomModel>().apply {
                 AppDatabase.getInstance().getAccountDao().queryAllAccount().forEach {
-                    add(BottomModel(AccountManager.getAccountIcon(it.type), it.type.translate(), it.type))
+                    add(BottomModel(it.type.getIcon(), it.type.translate(), it.type))
                 }
                 add(BottomModel(R.drawable.ic_baseline_add_colourful_24, getString(R.string.add), "A"))
             }) {
