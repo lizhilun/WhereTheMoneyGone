@@ -28,6 +28,8 @@ fun String.translate(): String
         AppConstant.EXPENDITURE_TYPE_GAME -> StringUtils.getString(R.string.game)
         AppConstant.EXPENDITURE_TYPE_NECESSARY -> StringUtils.getString(R.string.necessary)
 
+        AppConstant.TRANSFER_TYPE_TRANSFER -> StringUtils.getString(R.string.transfer)
+
         AppConstant.INCOME_TYPE_FINANCIAL_TRANSACTIONS -> StringUtils.getString(R.string.financial_transactions)
         AppConstant.INCOME_TYPE_RED_ENVELOPES -> StringUtils.getString(R.string.red_envelopes)
         AppConstant.INCOME_TYPE_WAGES -> StringUtils.getString(R.string.wages)

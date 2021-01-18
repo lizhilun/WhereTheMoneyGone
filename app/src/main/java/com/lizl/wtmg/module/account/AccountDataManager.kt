@@ -2,53 +2,85 @@ package com.lizl.wtmg.module.account
 
 import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.db.AppDatabase
+import com.lizl.wtmg.db.model.AccountModel
 import com.lizl.wtmg.db.model.MoneyTracesModel
 
 object AccountDataManager
 {
-    fun addExpenditure(moneyTracesModel: MoneyTracesModel)
+    fun addMoneyTraces(moneyTracesModel: MoneyTracesModel)
     {
         AppDatabase.getInstance().getMoneyTracesDao().insert(moneyTracesModel)
 
-        when (AccountManager.getAccountCategoryByType(moneyTracesModel.accountType))
+        val payAccountModel = AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.accountType) ?: return
+
+        when (moneyTracesModel.tracesCategory)
         {
-            AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL ->
+            AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE ->
             {
-                AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.accountType)?.let {
-                    it.amount -= moneyTracesModel.amonunt
-                    AppDatabase.getInstance().getAccountDao().insert(it)
-                }
+                handleMoneyOut(payAccountModel, moneyTracesModel.amonunt)
             }
-            AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT  ->
+            AppConstant.MONEY_TRACES_CATEGORY_INCOME ->
             {
-                AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.accountType)?.let {
-                    it.usedQuota += moneyTracesModel.amonunt
-                    AppDatabase.getInstance().getAccountDao().insert(it)
+                handleMoneyIn(payAccountModel, moneyTracesModel.amonunt)
+            }
+            AppConstant.MONEY_TRACES_CATEGORY_TRANSFER ->
+            {
+                handleMoneyOut(payAccountModel, moneyTracesModel.amonunt)
+
+                AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.transferToAccount)?.let { inAccountModel ->
+                    handleMoneyIn(inAccountModel, moneyTracesModel.amonunt)
+                    AppDatabase.getInstance().getAccountDao().insert(inAccountModel)
                 }
             }
         }
+
+        AppDatabase.getInstance().getAccountDao().insert(payAccountModel)
     }
 
     fun deleteExpenditure(moneyTracesModel: MoneyTracesModel)
     {
         AppDatabase.getInstance().getMoneyTracesDao().delete(moneyTracesModel)
 
-        when (AccountManager.getAccountCategoryByType(moneyTracesModel.accountType))
+        val payAccountModel = AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.accountType) ?: return
+
+        when (moneyTracesModel.tracesCategory)
         {
-            AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL ->
+            AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE ->
             {
-                AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.accountType)?.let {
-                    it.amount += moneyTracesModel.amonunt
-                    AppDatabase.getInstance().getAccountDao().insert(it)
-                }
+                handleMoneyIn(payAccountModel, moneyTracesModel.amonunt)
             }
-            AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT  ->
+            AppConstant.MONEY_TRACES_CATEGORY_INCOME ->
             {
-                AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.accountType)?.let {
-                    it.usedQuota -= moneyTracesModel.amonunt
-                    AppDatabase.getInstance().getAccountDao().insert(it)
+                handleMoneyOut(payAccountModel, moneyTracesModel.amonunt)
+            }
+            AppConstant.MONEY_TRACES_CATEGORY_TRANSFER ->
+            {
+                handleMoneyIn(payAccountModel, moneyTracesModel.amonunt)
+
+                AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.transferToAccount)?.let { inAccountModel ->
+                    handleMoneyOut(inAccountModel, moneyTracesModel.amonunt)
+                    AppDatabase.getInstance().getAccountDao().insert(inAccountModel)
                 }
             }
         }
+
+        AppDatabase.getInstance().getAccountDao().insert(payAccountModel)
+    }
+
+    private fun handleMoneyOut(accountModel: AccountModel, amount: Float)
+    {
+        if (accountModel.category == AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL)
+        {
+            accountModel.amount -= amount
+        }
+        else if (accountModel.category == AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT)
+        {
+            accountModel.usedQuota += amount
+        }
+    }
+
+    private fun handleMoneyIn(accountModel: AccountModel, amount: Float)
+    {
+        handleMoneyOut(accountModel, 0 - amount)
     }
 }

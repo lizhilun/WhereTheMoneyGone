@@ -46,8 +46,13 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
 
         AppDatabase.getInstance().getMoneyTracesDao().queryTracesByMonth(date.month).observe(this, Observer { tracesList ->
 
-            dataBinding.monthExpenditure = tracesList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE }.sumBy { it.amonunt.toInt() }
-            dataBinding.monthIncome = tracesList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME }.sumBy { it.amonunt.toInt() }
+            dataBinding.monthExpenditure = tracesList.filter {
+                it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
+            }.sumBy { it.amonunt.toInt() }
+
+            dataBinding.monthIncome = tracesList.filter {
+                it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
+            }.sumBy { it.amonunt.toInt() }
 
             val polymerizeGroupList = mutableListOf<PolymerizeGroupModel>()
 

@@ -30,10 +30,11 @@ fun String.getIcon(default: Int = R.drawable.ic_baseline_others_24): Int
         AppConstant.INCOME_TYPE_FINANCIAL_TRANSACTIONS -> R.drawable.ic_baseline_financial_transactions_24
         AppConstant.INCOME_TYPE_RED_ENVELOPES -> R.drawable.ic_baseline_red_envelopes_24
         AppConstant.INCOME_TYPE_WAGES -> R.drawable.ic_baseline_wages_24
-        AppConstant.INCOME_TYPE_SECOND_HAND -> R.drawable.ic_ic_baseline_second_hand_24
+        AppConstant.INCOME_TYPE_SECOND_HAND -> R.drawable.ic_baseline_second_hand_24
 
         AppConstant.MONEY_TRACES_CATEGORY_INCOME -> R.drawable.ic_spot_green
         AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> R.drawable.ic_spot_red
+        AppConstant.MONEY_TRACES_CATEGORY_TRANSFER -> R.drawable.ic_spot_gray
 
         else                                           -> default
     }

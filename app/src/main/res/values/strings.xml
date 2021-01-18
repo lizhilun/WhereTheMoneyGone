@@ -9,6 +9,7 @@
     <string name="add">添加</string>
     <string name="expenditure">支出</string>
     <string name="income">收入</string>
+    <string name="transfer">转账</string>
 
     <string name="month_expenditure">月支出</string>
     <string name="month_income">月收入</string>
@@ -66,4 +67,10 @@
     <string name="capital_account">资金</string>
     <string name="credit_account">信用</string>
     <string name="investment_account">投资账户</string>
+
+    <string name="transfer_in_account">转入账户</string>
+    <string name="transfer_out_account">转出账户</string>
+    <string name="in_and_out_account_cannot_same">转出与转入账号不能相同</string>
+    <string name="please_select_in_account">请选择转入账号</string>
+    <string name="please_select_out_account">请选择转出账号</string>
 </resources>

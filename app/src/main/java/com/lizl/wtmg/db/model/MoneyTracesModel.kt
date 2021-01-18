@@ -35,4 +35,7 @@ data class MoneyTracesModel(
         var recordTime: Long,
 
         @ColumnInfo
-        var remarks: String = "")
+        var remarks: String = "",
+
+        @ColumnInfo
+        var transferToAccount: String = "")

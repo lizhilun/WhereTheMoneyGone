@@ -6,15 +6,23 @@ import android.app.TimePickerDialog
 import android.widget.DatePicker
 import android.widget.TimePicker
 import com.blankj.utilcode.util.ActivityUtils
+import com.lizl.wtmg.R
+import com.lizl.wtmg.custom.function.getIcon
+import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.custom.popup.PopupBottomList
 import com.lizl.wtmg.custom.popup.PopupConfirm
 import com.lizl.wtmg.custom.popup.PopupInput
 import com.lizl.wtmg.custom.popup.PopupRadioGroup
+import com.lizl.wtmg.db.AppDatabase
+import com.lizl.wtmg.db.model.AccountModel
+import com.lizl.wtmg.mvvm.activity.AddAccountActivity
 import com.lizl.wtmg.mvvm.model.BottomModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
+import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeModel
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
+import kotlinx.android.synthetic.main.activity_money_record_traces.*
 import kotlinx.coroutines.*
 
 object PopupUtil
@@ -33,6 +41,27 @@ object PopupUtil
     {
         val context = ActivityUtils.getTopActivity() ?: return
         showPopup(XPopup.Builder(context).asCustom(PopupBottomList(context, bottomList, onSelectFinishListener)))
+    }
+
+    fun showBottomAccountList(onSelectFinishListener: (AccountModel) -> Unit)
+    {
+        val context = ActivityUtils.getTopActivity() ?: return
+        showBottomListPopup(mutableListOf<PolymerizeModel>().apply {
+            AppDatabase.getInstance().getAccountDao().queryAllAccount().groupBy { it.category }.forEach { (category, accountList) ->
+
+                val childList = mutableListOf<PolymerizeChildModel>()
+                accountList.forEach { childList.add(PolymerizeChildModel(it.type.getIcon(), it.type.translate(), "", it)) }
+                add(PolymerizeGroupModel(category.translate(), "", childList))
+            }
+            add(PolymerizeChildModel(R.drawable.ic_baseline_add_colourful_24, context.getString(R.string.add), "", "A"))
+        }) {
+            if (it.tag == "A")
+            {
+                ActivityUtils.startActivity(AddAccountActivity::class.java)
+                return@showBottomListPopup
+            }
+            onSelectFinishListener.invoke(it.tag as AccountModel)
+        }
     }
 
     fun showInputPopup(title: String, onInputFinish: (String) -> Unit)
