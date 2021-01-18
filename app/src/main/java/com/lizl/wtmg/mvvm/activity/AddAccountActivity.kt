@@ -4,6 +4,7 @@ import androidx.core.view.isVisible
 import com.blankj.utilcode.util.ToastUtils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
+import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.custom.function.ui
 import com.lizl.wtmg.databinding.ActivityAddAccountBinding
 import com.lizl.wtmg.db.AppDatabase
@@ -12,7 +13,6 @@ import com.lizl.wtmg.module.account.AccountManager
 import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.mvvm.model.BottomModel
 import com.lizl.wtmg.util.PopupUtil
-import com.lizl.wtmg.util.TranslateUtil
 import kotlinx.android.synthetic.main.activity_add_account.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -67,7 +67,7 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
         layout_account_category.setOnClickListener {
             PopupUtil.showBottomListPopup(mutableListOf<BottomModel>().apply {
                 AccountManager.getAccountCategoryList().forEach {
-                    add(BottomModel(AccountManager.getAccountCategoryIcon(it), TranslateUtil.translateAccountCategory(it), it))
+                    add(BottomModel(AccountManager.getAccountCategoryIcon(it), it.translate(), it))
                 }
             }) {
                 showAccountCategory(it.tag as String)
@@ -77,7 +77,7 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
         layout_account_type.setOnClickListener {
             PopupUtil.showBottomListPopup(mutableListOf<BottomModel>().apply {
                 AccountManager.getAccountListByCategory(accountCategory).forEach {
-                    add(BottomModel(AccountManager.getAccountIcon(it), TranslateUtil.translateAccountType(it), it))
+                    add(BottomModel(AccountManager.getAccountIcon(it), it.translate(), it))
                 }
             }) {
                 showAccountType(it.tag as String)
@@ -109,13 +109,13 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
             }
         }
 
-        layout_account_category.setText(TranslateUtil.translateAccountCategory(accountCategory))
+        layout_account_category.setText(accountCategory.translate())
     }
 
     private fun showAccountType(accountType: String)
     {
         this.accountType = accountType
-        layout_account_type.setText(TranslateUtil.translateAccountType(accountType))
+        layout_account_type.setText(accountType.translate())
     }
 
     private fun onSaveBtnClick()
@@ -145,7 +145,7 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
             var accountModel = AppDatabase.getInstance().getAccountDao().queryAccountByType(accountType)
             if (accountModel == null)
             {
-                accountModel = AccountModel(type = accountType, category = accountCategory, name = TranslateUtil.translateAccountType(accountType),
+                accountModel = AccountModel(type = accountType, category = accountCategory, name = accountType.translate(),
                         showInTotal = true)
             }
 

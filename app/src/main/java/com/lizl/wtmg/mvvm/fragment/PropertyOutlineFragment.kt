@@ -5,7 +5,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.EventConstant
-import com.lizl.wtmg.custom.function.setOnClickListener
+import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.custom.view.MenuDrawLayout
 import com.lizl.wtmg.databinding.FragmentPropertyOutlineBinding
@@ -20,7 +20,6 @@ import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
 import com.lizl.wtmg.util.DateUtil
 import com.lizl.wtmg.util.PopupUtil
-import com.lizl.wtmg.util.TranslateUtil
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.enums.PopupPosition
 import kotlinx.android.synthetic.main.fragment_property_outline.*
@@ -57,7 +56,7 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
                 val amountInfo = u.sumBy { it.amonunt.toInt() }.toString()
                 val childList = mutableListOf<PolymerizeChildModel>().apply {
                     u.forEach { expenditureModel ->
-                        add(PolymerizeChildModel(R.drawable.ic_spot_red, TranslateUtil.translateExpenditureType(expenditureModel.expenditureType),
+                        add(PolymerizeChildModel(R.drawable.ic_spot_red, expenditureModel.expenditureType.translate(),
                                 expenditureModel.amonunt.toInt().toString(), expenditureModel))
                     }
                 }
