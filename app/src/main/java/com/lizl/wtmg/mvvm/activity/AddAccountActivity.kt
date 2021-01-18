@@ -7,8 +7,7 @@ import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.function.ui
 import com.lizl.wtmg.databinding.ActivityAddAccountBinding
 import com.lizl.wtmg.db.AppDatabase
-import com.lizl.wtmg.db.model.CreditAccountModel
-import com.lizl.wtmg.db.model.CapitalAccountModel
+import com.lizl.wtmg.db.model.AccountModel
 import com.lizl.wtmg.module.account.AccountManager
 import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.mvvm.model.BottomModel
@@ -34,32 +33,25 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
         val accountId = intent?.extras?.getLong(DATA_ACCOUNT_ID, -1L)
         val accountType = intent?.extras?.getString(DATA_ACCOUNT_TYPE)
 
+        var accountModel: AccountModel? = null
+
         if (accountId != -1L && accountType?.isNotBlank() == true)
         {
             ctb_title.setTitle(getString(R.string.modify_account))
 
             this.accountType = accountType
 
-            when (AccountManager.getAccountCategoryByType(accountType))
-            {
-                AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL ->
-                {
-                    showAccountCategory(AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL)
-                    showAccountType(accountType)
-                    AppDatabase.getInstance().getCapitalAccountDao().queryAccountByType(accountType)?.let {
-                        layout_account_amount.setEditText(it.amount.toInt().toString())
-                    }
-                }
-                AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT  ->
-                {
-                    showAccountCategory(AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT)
-                    showAccountType(accountType)
-                    AppDatabase.getInstance().getCreditAccountDao().queryAccountByType(accountType)?.let {
-                        layout_total_quota.setEditText(it.totalQuota.toInt().toString())
-                        layout_used_quota.setEditText(it.usedQuota.toInt().toString())
-                    }
-                }
-            }
+            accountModel = AppDatabase.getInstance().getAccountDao().queryAccountByType(accountType)
+        }
+
+        if (accountModel != null)
+        {
+            layout_account_amount.setEditText(accountModel.amount.toInt().toString())
+            layout_total_quota.setEditText(accountModel.totalQuota.toInt().toString())
+            layout_used_quota.setEditText(accountModel.usedQuota.toInt().toString())
+
+            showAccountCategory(accountModel.category)
+            showAccountType(accountModel.type)
         }
         else
         {
@@ -107,7 +99,7 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
 
                 showAccountType(AppConstant.ACCOUNT_TYPE_BACK_CARD)
             }
-            AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT  ->
+            AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT ->
             {
                 layout_account_amount.isVisible = false
                 layout_total_quota.isVisible = true
@@ -128,69 +120,46 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
 
     private fun onSaveBtnClick()
     {
-        when (accountCategory)
-        {
-            AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL -> saveCapitalAccount()
-            AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT  -> saveCreditAccount()
-        }
-    }
-
-    private fun saveCapitalAccount()
-    {
         val amount = layout_account_amount.getEditText().toIntOrNull()
-
-        if (amount == null)
+        if (accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL && amount == null)
         {
             ToastUtils.showShort(R.string.please_input_amount)
             return
         }
 
-        GlobalScope.launch {
-            var propertyModel = AppDatabase.getInstance().getCapitalAccountDao().queryAccountByType(accountType)
-            if (propertyModel == null)
-            {
-                propertyModel = CapitalAccountModel(type = accountType, name = TranslateUtil.translateAccountType(accountType), amount = amount.toFloat(),
-                        showInTotal = true)
-            }
-            else
-            {
-                propertyModel.amount = amount.toFloat()
-            }
-            AppDatabase.getInstance().getCapitalAccountDao().insert(propertyModel)
-
-            GlobalScope.ui { onBackPressed() }
-        }
-    }
-
-    private fun saveCreditAccount()
-    {
         val totalQuota = layout_total_quota.getEditText().toIntOrNull()
-        if (totalQuota == null)
+        if (accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT && totalQuota == null)
         {
             ToastUtils.showShort(R.string.please_input_total_quota)
             return
         }
 
         val usedQuota = layout_used_quota.getEditText().toIntOrNull()
-        if (usedQuota == null)
+        if (accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT && usedQuota == null)
         {
             ToastUtils.showShort(R.string.please_input_used_quota)
             return
         }
 
         GlobalScope.launch {
-            var creditModel = AppDatabase.getInstance().getCreditAccountDao().queryAccountByType(accountType)
-            if (creditModel == null)
+            var accountModel = AppDatabase.getInstance().getAccountDao().queryAccountByType(accountType)
+            if (accountModel == null)
             {
-                creditModel = CreditAccountModel(type = accountType, name = TranslateUtil.translateAccountType(accountType), totalQuota = totalQuota.toFloat(),
-                        usedQuota = usedQuota.toFloat(), showInTotal = true)
+                accountModel = AccountModel(type = accountType, category = accountCategory, name = TranslateUtil.translateAccountType(accountType),
+                        showInTotal = true)
             }
-            else
+
+            if (accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL)
             {
-                creditModel.totalQuota = totalQuota.toFloat()
-                creditModel.usedQuota = usedQuota.toFloat()
+                accountModel.amount = amount?.toFloat() ?: 0F
             }
-            AppDatabase.getInstance().getCreditAccountDao().insert(creditModel)
+            else if (accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT)
+            {
+                accountModel.totalQuota = totalQuota?.toFloat() ?: 0F
+                accountModel.usedQuota = usedQuota?.toFloat() ?: 0F
+            }
+
+            AppDatabase.getInstance().getAccountDao().insert(accountModel)
 
             GlobalScope.ui { onBackPressed() }
         }

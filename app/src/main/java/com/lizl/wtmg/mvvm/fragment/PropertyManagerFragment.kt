@@ -8,8 +8,7 @@ import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.databinding.FragmentPropertyManagerBinding
 import com.lizl.wtmg.db.AppDatabase
-import com.lizl.wtmg.db.model.CreditAccountModel
-import com.lizl.wtmg.db.model.CapitalAccountModel
+import com.lizl.wtmg.db.model.AccountModel
 import com.lizl.wtmg.module.account.AccountManager
 import com.lizl.wtmg.mvvm.activity.AddAccountActivity
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
@@ -24,9 +23,6 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
 {
     private lateinit var polymerizeGroupAdapter: PolymerizeGroupAdapter
 
-    private val propertyLiveData = AppDatabase.getInstance().getCapitalAccountDao().obAllAccount()
-    private val creditLiveData = AppDatabase.getInstance().getCreditAccountDao().obAllAccount()
-
     override fun initView()
     {
         polymerizeGroupAdapter = PolymerizeGroupAdapter()
@@ -36,9 +32,32 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
 
     override fun initData()
     {
-        propertyLiveData.observe(this, Observer { onAccountDataUpdate() })
+        AppDatabase.getInstance().getAccountDao().obAllAccount().observe(this, Observer { allAccountList ->
 
-        creditLiveData.observe(this, Observer { onAccountDataUpdate() })
+            tv_total_property.text = allAccountList.sumBy { it.amount.toInt() }.toString()
+            tv_net_property.text = allAccountList.sumBy { it.amount.toInt() }.toString()
+            tv_total_liabilities.text = allAccountList.sumBy { it.usedQuota.toInt() }.toString()
+
+            val polymerizeGroupList = mutableListOf<PolymerizeGroupModel>()
+            allAccountList.groupBy { it.category }.forEach { (category, accountList) ->
+                polymerizeGroupList.add(PolymerizeGroupModel(TranslateUtil.translateAccountCategory(category), when (category)
+                {
+                    AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> accountList.sumBy { it.usedQuota.toInt() }.toString()
+                    else                                     -> accountList.sumBy { it.amount.toInt() }.toString()
+                }, mutableListOf<PolymerizeChildModel>().apply {
+                    accountList.forEach { accountModel ->
+                        add(PolymerizeChildModel(AccountManager.getAccountIcon(accountModel.type), TranslateUtil.translateAccountType(accountModel.type),
+                                when (category)
+                                {
+                                    AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> accountModel.usedQuota.toInt().toString()
+                                    else                                     -> accountModel.amount.toInt().toString()
+                                }, accountModel))
+                    }
+                }))
+            }
+
+            polymerizeGroupAdapter.replaceData(polymerizeGroupList)
+        })
     }
 
     override fun initListener()
@@ -48,60 +67,12 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
         polymerizeGroupAdapter.setOnChildItemClickListener {
             when (it.tag)
             {
-                is CapitalAccountModel ->
-                {
-                    ActivityUtil.turnToActivity(AddAccountActivity::class.java, Pair(AddAccountActivity.DATA_ACCOUNT_TYPE, it.tag.type),
-                            Pair(AddAccountActivity.DATA_ACCOUNT_ID, it.tag.id))
-                }
-                is CreditAccountModel ->
+                is AccountModel ->
                 {
                     ActivityUtil.turnToActivity(AddAccountActivity::class.java, Pair(AddAccountActivity.DATA_ACCOUNT_TYPE, it.tag.type),
                             Pair(AddAccountActivity.DATA_ACCOUNT_ID, it.tag.id))
                 }
             }
         }
-    }
-
-    private fun onAccountDataUpdate()
-    {
-        val propertyList = propertyLiveData.value ?: mutableListOf()
-        val creditList = creditLiveData.value ?: mutableListOf()
-
-        tv_total_property.text = propertyList.sumBy { it.amount.toInt() }.toString()
-        tv_net_property.text = propertyList.sumBy { it.amount.toInt() }.toString()
-        tv_total_liabilities.text = creditList.sumBy { it.usedQuota.toInt() }.toString()
-
-        val polymerizeGroupList = mutableListOf<PolymerizeGroupModel>()
-        if (creditList.isNotEmpty())
-        {
-            polymerizeGroupList.add(creditListToPolymerizeGroup(creditList))
-        }
-        if (propertyList.isNotEmpty())
-        {
-            polymerizeGroupList.add(propertyListToPolymerizeGroup(propertyList))
-        }
-        polymerizeGroupAdapter.replaceData(polymerizeGroupList)
-    }
-
-    private fun propertyListToPolymerizeGroup(propertyList: List<CapitalAccountModel>): PolymerizeGroupModel
-    {
-        return PolymerizeGroupModel(TranslateUtil.translateAccountCategory(AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL),
-                propertyList.sumBy { it.amount.toInt() }.toString(), mutableListOf<PolymerizeChildModel>().apply {
-            propertyList.forEach { propertyModel ->
-                add(PolymerizeChildModel(AccountManager.getAccountIcon(propertyModel.type), TranslateUtil.translateAccountType(propertyModel.type),
-                        propertyModel.amount.toInt().toString(), propertyModel))
-            }
-        })
-    }
-
-    private fun creditListToPolymerizeGroup(creditList: List<CreditAccountModel>): PolymerizeGroupModel
-    {
-        return PolymerizeGroupModel(TranslateUtil.translateAccountCategory(AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT),
-                creditList.sumBy { it.usedQuota.toInt() }.toString(), mutableListOf<PolymerizeChildModel>().apply {
-            creditList.forEach { propertyModel ->
-                add(PolymerizeChildModel(AccountManager.getAccountIcon(propertyModel.type), TranslateUtil.translateAccountType(propertyModel.type),
-                        propertyModel.usedQuota.toInt().toString(), propertyModel))
-            }
-        })
     }
 }

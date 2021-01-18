@@ -9,20 +9,16 @@ import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.function.backspace
 import com.lizl.wtmg.custom.function.setOnClickListener
-import com.lizl.wtmg.custom.function.setOnItemClickListener
-import com.lizl.wtmg.custom.function.update
 import com.lizl.wtmg.databinding.ActivityMoneyRecordBinding
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.ExpenditureModel
 import com.lizl.wtmg.module.account.AccountDataManager
 import com.lizl.wtmg.module.account.AccountManager
-import com.lizl.wtmg.custom.view.selection.SingleSelectionAdapter
 import com.lizl.wtmg.custom.view.selection.SingleSelectionModel
 import com.lizl.wtmg.custom.view.selection.SingleSelectionView
 import com.lizl.wtmg.mvvm.adapter.ViewPagerAdapter
 import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.mvvm.model.BottomModel
-import com.lizl.wtmg.mvvm.model.ExpenditureTypeModel
 import com.lizl.wtmg.util.DateUtil
 import com.lizl.wtmg.util.PopupUtil
 import kotlinx.android.synthetic.main.activity_money_record.*
@@ -106,10 +102,7 @@ class MoneyRecordActivity : BaseActivity<ActivityMoneyRecordBinding>(R.layout.ac
 
         tv_account.setOnClickListener(true) {
             PopupUtil.showBottomListPopup(mutableListOf<BottomModel>().apply {
-                AppDatabase.getInstance().getCapitalAccountDao().queryAllAccount().forEach {
-                    add(BottomModel(AccountManager.getAccountIcon(it.type), TranslateUtil.translateAccountType(it.type), it.type))
-                }
-                AppDatabase.getInstance().getCreditAccountDao().queryAllAccount().forEach {
+                AppDatabase.getInstance().getAccountDao().queryAllAccount().forEach {
                     add(BottomModel(AccountManager.getAccountIcon(it.type), TranslateUtil.translateAccountType(it.type), it.type))
                 }
                 add(BottomModel(R.drawable.ic_baseline_add_colourful_24, getString(R.string.add), "A"))

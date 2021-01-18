@@ -3,17 +3,17 @@ package com.lizl.wtmg.db.dao
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
-import com.lizl.wtmg.db.model.CapitalAccountModel
+import com.lizl.wtmg.db.model.AccountModel
 
 @Dao
-interface CapitalAccountDao : BaseDao<CapitalAccountModel>
+interface CapitalAccountDao : BaseDao<AccountModel>
 {
-    @Query("select * from CapitalAccount")
-    fun obAllAccount(): LiveData<MutableList<CapitalAccountModel>>
+    @Query("select * from Account")
+    fun obAllAccount(): LiveData<MutableList<AccountModel>>
 
-    @Query("select * from CapitalAccount")
-    fun queryAllAccount(): MutableList<CapitalAccountModel>
+    @Query("select * from Account")
+    fun queryAllAccount(): MutableList<AccountModel>
 
-    @Query("select * from CapitalAccount where type == :accountType")
-    fun queryAccountByType(accountType: String): CapitalAccountModel?
+    @Query("select * from Account where type == :accountType")
+    fun queryAccountByType(accountType: String): AccountModel?
 }

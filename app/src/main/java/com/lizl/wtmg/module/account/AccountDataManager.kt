@@ -14,16 +14,16 @@ object AccountDataManager
         {
             AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL ->
             {
-                AppDatabase.getInstance().getCapitalAccountDao().queryAccountByType(expenditureModel.accountType)?.let {
+                AppDatabase.getInstance().getAccountDao().queryAccountByType(expenditureModel.accountType)?.let {
                     it.amount -= expenditureModel.amonunt
-                    AppDatabase.getInstance().getCapitalAccountDao().insert(it)
+                    AppDatabase.getInstance().getAccountDao().insert(it)
                 }
             }
             AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT  ->
             {
-                AppDatabase.getInstance().getCreditAccountDao().queryAccountByType(expenditureModel.accountType)?.let {
+                AppDatabase.getInstance().getAccountDao().queryAccountByType(expenditureModel.accountType)?.let {
                     it.usedQuota += expenditureModel.amonunt
-                    AppDatabase.getInstance().getCreditAccountDao().insert(it)
+                    AppDatabase.getInstance().getAccountDao().insert(it)
                 }
             }
         }
@@ -37,16 +37,16 @@ object AccountDataManager
         {
             AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL ->
             {
-                AppDatabase.getInstance().getCapitalAccountDao().queryAccountByType(expenditureModel.accountType)?.let {
+                AppDatabase.getInstance().getAccountDao().queryAccountByType(expenditureModel.accountType)?.let {
                     it.amount += expenditureModel.amonunt
-                    AppDatabase.getInstance().getCapitalAccountDao().insert(it)
+                    AppDatabase.getInstance().getAccountDao().insert(it)
                 }
             }
             AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT  ->
             {
-                AppDatabase.getInstance().getCreditAccountDao().queryAccountByType(expenditureModel.accountType)?.let {
+                AppDatabase.getInstance().getAccountDao().queryAccountByType(expenditureModel.accountType)?.let {
                     it.usedQuota -= expenditureModel.amonunt
-                    AppDatabase.getInstance().getCreditAccountDao().insert(it)
+                    AppDatabase.getInstance().getAccountDao().insert(it)
                 }
             }
         }
