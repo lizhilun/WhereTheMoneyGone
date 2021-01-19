@@ -8,6 +8,11 @@ object DateUtil
     {
         constructor() : this(System.currentTimeMillis())
 
+        init
+        {
+            set(timeInMills)
+        }
+
         private val calendar = Calendar.getInstance()
 
         var year = 0
@@ -41,11 +46,6 @@ object DateUtil
             hour = calendar.get(Calendar.HOUR_OF_DAY)
             minute = calendar.get(Calendar.MINUTE)
             second = calendar.get(Calendar.SECOND)
-        }
-
-        init
-        {
-            set(timeInMills)
         }
     }
 }

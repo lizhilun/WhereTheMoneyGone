@@ -21,8 +21,8 @@ fun String.translate(): String
         AppConstant.ACCOUNT_TYPE_CREDIT_CARD_CMB -> StringUtils.getString(R.string.cmb)
         AppConstant.ACCOUNT_TYPE_CREDIT_CARD_CMBC -> StringUtils.getString(R.string.cmbc)
 
-        AppConstant.ACCOUNT_TYPE_ALI_PAY_FUND  -> StringUtils.getString(R.string.ali_pay_fund)
-        AppConstant.ACCOUNT_TYPE_JD_FINANCE    -> StringUtils.getString(R.string.jd_finance)
+        AppConstant.ACCOUNT_TYPE_ALI_PAY_FUND -> StringUtils.getString(R.string.ali_pay_fund)
+        AppConstant.ACCOUNT_TYPE_JD_FINANCE -> StringUtils.getString(R.string.jd_finance)
         AppConstant.ACCOUNT_TYPE_TIANTIAN_FUND -> StringUtils.getString(R.string.tiantian_fund)
 
         AppConstant.EXPENDITURE_TYPE_MEALS -> StringUtils.getString(R.string.meals)
@@ -31,6 +31,8 @@ fun String.translate(): String
         AppConstant.EXPENDITURE_TYPE_RENT -> StringUtils.getString(R.string.rent)
         AppConstant.EXPENDITURE_TYPE_GAME -> StringUtils.getString(R.string.game)
         AppConstant.EXPENDITURE_TYPE_NECESSARY -> StringUtils.getString(R.string.necessary)
+        AppConstant.EXPENDITURE_TYPE_HOUSING_LOAN -> StringUtils.getString(R.string.housing_loan)
+        AppConstant.EXPENDITURE_TYPE_LIVE_PAYMENT -> StringUtils.getString(R.string.live_payment)
 
         AppConstant.TRANSFER_TYPE_TRANSFER -> StringUtils.getString(R.string.transfer)
 

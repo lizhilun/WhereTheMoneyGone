@@ -17,8 +17,8 @@ fun String.getIcon(default: Int = R.drawable.ic_baseline_others_24): Int
         AppConstant.ACCOUNT_TYPE_CREDIT_CARD_CMB -> R.drawable.ic_baseline_cmb_24
         AppConstant.ACCOUNT_TYPE_CREDIT_CARD_CMBC -> R.drawable.ic_baseline_cmbc_24
 
-        AppConstant.ACCOUNT_TYPE_ALI_PAY_FUND  -> R.drawable.ic_baseline_ali_pay_24
-        AppConstant.ACCOUNT_TYPE_JD_FINANCE    -> R.drawable.ic_baseline_jd_24
+        AppConstant.ACCOUNT_TYPE_ALI_PAY_FUND -> R.drawable.ic_baseline_ali_pay_24
+        AppConstant.ACCOUNT_TYPE_JD_FINANCE -> R.drawable.ic_baseline_jd_24
         AppConstant.ACCOUNT_TYPE_TIANTIAN_FUND -> R.drawable.ic_baseline_tiantian_fund_24
 
         AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL -> R.drawable.ic_baseline_cash_24
@@ -31,6 +31,8 @@ fun String.getIcon(default: Int = R.drawable.ic_baseline_others_24): Int
         AppConstant.EXPENDITURE_TYPE_GAME -> R.drawable.ic_baseline_game_24
         AppConstant.EXPENDITURE_TYPE_RENT -> R.drawable.ic_baseline_rent_24
         AppConstant.EXPENDITURE_TYPE_NECESSARY -> R.drawable.ic_baseline_necessary_24
+        AppConstant.EXPENDITURE_TYPE_HOUSING_LOAN -> R.drawable.ic_baseline_housing_loan_24
+        AppConstant.EXPENDITURE_TYPE_LIVE_PAYMENT -> R.drawable.ic_baseline_live_payment_24
 
         AppConstant.INCOME_TYPE_FINANCIAL_TRANSACTIONS -> R.drawable.ic_baseline_financial_transactions_24
         AppConstant.INCOME_TYPE_RED_ENVELOPES -> R.drawable.ic_baseline_red_envelopes_24
