@@ -124,11 +124,7 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
                 run {
                     PopupUtil.showTimePickerDialog(selectTime.hour, selectTime.minute) { _, hourOfDay, minute ->
                         run {
-                            selectTime.year = year
-                            selectTime.month = month + 1
-                            selectTime.day = dayOfMonth
-                            selectTime.hour = hourOfDay
-                            selectTime.minute = minute
+                            selectTime.set(year, month + 1, dayOfMonth, hourOfDay, minute, 0)
                             tv_time.text = String.format("%d-%02d-%02d %02d:%02d", selectTime.year, selectTime.month, selectTime.day, selectTime.hour,
                                     selectTime.minute)
                         }
@@ -229,14 +225,14 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
         val moneyTracesModel = when (curPageType)
         {
             PAGE_TYPE_EXPENDITURE -> MoneyTracesModel(amonunt = amount.toFloat(), tracesType = expenditureType, tracesCategory = traceCategory,
-                    accountType = accountType, recordTime = selectTime.time, recordYear = selectTime.year, recordMonth = selectTime.month,
+                    accountType = accountType, recordTime = selectTime.timeInMills, recordYear = selectTime.year, recordMonth = selectTime.month,
                     recordDay = selectTime.day)
 
             PAGE_TYPE_INCOME -> MoneyTracesModel(amonunt = amount.toFloat(), tracesType = incomeType, tracesCategory = traceCategory, accountType = accountType,
-                    recordTime = selectTime.time, recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)
+                    recordTime = selectTime.timeInMills, recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)
 
             else                  -> MoneyTracesModel(amonunt = amount.toFloat(), tracesType = AppConstant.TRANSFER_TYPE_TRANSFER,
-                    tracesCategory = traceCategory, accountType = accountTransferView.getOutAccountType(), recordTime = selectTime.time,
+                    tracesCategory = traceCategory, accountType = accountTransferView.getOutAccountType(), recordTime = selectTime.timeInMills,
                     recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day,
                     transferToAccount = accountTransferView.getInAccountType())
         }

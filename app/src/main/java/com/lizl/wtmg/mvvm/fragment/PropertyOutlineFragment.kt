@@ -8,6 +8,7 @@ import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.constant.EventConstant
 import com.lizl.wtmg.custom.function.getIcon
 import com.lizl.wtmg.custom.function.translate
+import com.lizl.wtmg.custom.function.ui
 import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.custom.view.MenuDrawLayout
 import com.lizl.wtmg.databinding.FragmentPropertyOutlineBinding
@@ -17,7 +18,6 @@ import com.lizl.wtmg.module.account.AccountDataManager
 import com.lizl.wtmg.mvvm.activity.MoneyTracesRecordActivity
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseFragment
-import com.lizl.wtmg.mvvm.model.BottomModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeModel
@@ -26,6 +26,8 @@ import com.lizl.wtmg.util.PopupUtil
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.enums.PopupPosition
 import kotlinx.android.synthetic.main.fragment_property_outline.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.layout.fragment_property_outline)
 {
@@ -46,39 +48,45 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
 
         AppDatabase.getInstance().getMoneyTracesDao().queryTracesByMonth(date.month).observe(this, Observer { tracesList ->
 
-            dataBinding.monthExpenditure = tracesList.filter {
-                it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
-            }.sumBy { it.amonunt.toInt() }
+            GlobalScope.launch {
 
-            dataBinding.monthIncome = tracesList.filter {
-                it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
-            }.sumBy { it.amonunt.toInt() }
+                tracesList.sortByDescending { it.recordTime }
 
-            val polymerizeGroupList = mutableListOf<PolymerizeGroupModel>()
+                dataBinding.monthExpenditure = tracesList.filter {
+                    it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
+                }.sumBy { it.amonunt.toInt() }
 
-            tracesList.groupBy { it.recordDay }.forEach { (t, u) ->
+                dataBinding.monthIncome = tracesList.filter {
+                    it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
+                }.sumBy { it.amonunt.toInt() }
 
-                val dateInfo = String.format("%02d-%02d", date.month, t)
+                val polymerizeGroupList = mutableListOf<PolymerizeGroupModel>()
 
-                val amountInfo = u.sumBy {
-                    when (it.tracesCategory)
-                    {
-                        AppConstant.MONEY_TRACES_CATEGORY_INCOME      -> it.amonunt.toInt()
-                        AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> 0 - it.amonunt.toInt()
-                        else                                          -> 0
+                tracesList.groupBy { it.recordDay }.forEach { (t, u) ->
+
+                    val dateInfo = String.format("%02d-%02d", date.month, t)
+
+                    val amountInfo = u.sumBy {
+                        when (it.tracesCategory)
+                        {
+                            AppConstant.MONEY_TRACES_CATEGORY_INCOME      -> it.amonunt.toInt()
+                            AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> 0 - it.amonunt.toInt()
+                            else                                          -> 0
+                        }
+                    }.toString()
+
+                    val childList = mutableListOf<PolymerizeChildModel>().apply {
+                        u.forEach { tracesModel ->
+                            add(PolymerizeChildModel(tracesModel.tracesCategory.getIcon(), tracesModel.tracesType.translate(),
+                                    tracesModel.amonunt.toInt().toString(), tracesModel))
+                        }
                     }
-                }.toString()
 
-                val childList = mutableListOf<PolymerizeChildModel>().apply {
-                    u.forEach { tracesModel ->
-                        add(PolymerizeChildModel(tracesModel.tracesCategory.getIcon(), tracesModel.tracesType.translate(),
-                                tracesModel.amonunt.toInt().toString(), tracesModel))
-                    }
+                    polymerizeGroupList.add(PolymerizeGroupModel(dateInfo, amountInfo, childList))
                 }
 
-                polymerizeGroupList.add(PolymerizeGroupModel(dateInfo, amountInfo, childList))
+                GlobalScope.ui { polymerizeGroupAdapter.replaceData(polymerizeGroupList) }
             }
-            polymerizeGroupAdapter.replaceData(polymerizeGroupList)
         })
     }
 

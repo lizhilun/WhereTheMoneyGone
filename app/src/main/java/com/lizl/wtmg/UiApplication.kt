@@ -10,7 +10,6 @@ import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.FileIOUtils
 import com.blankj.utilcode.util.PathUtils
 import com.blankj.utilcode.util.Utils
-import com.lizl.wtmg.db.model.AccountModel
 import com.lizl.wtmg.module.config.util.ConfigUtil
 import com.lizl.wtmg.module.skin.util.SkinUtil
 import com.lizl.wtmg.mvvm.activity.MoneyTracesRecordActivity
