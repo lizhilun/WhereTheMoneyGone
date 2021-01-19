@@ -33,6 +33,7 @@ object AppConstant
     const val EXPENDITURE_TYPE_MEMBERSHIP = "membership"
     const val EXPENDITURE_TYPE_DIGITAL = "digital"
     const val EXPENDITURE_TYPE_TRANSFER_OUT = "transfer out"
+    const val EXPENDITURE_TYPE_ENTERTAINMENT = "entertainment"
 
     const val INCOME_TYPE_WAGES = "wages"
     const val INCOME_TYPE_SECOND_HAND = "second hand"

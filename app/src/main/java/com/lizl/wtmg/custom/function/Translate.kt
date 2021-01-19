@@ -38,6 +38,7 @@ fun String.translate(): String
         AppConstant.EXPENDITURE_TYPE_MEMBERSHIP        -> StringUtils.getString(R.string.membership)
         AppConstant.EXPENDITURE_TYPE_DIGITAL           -> StringUtils.getString(R.string.digital)
         AppConstant.EXPENDITURE_TYPE_TRANSFER_OUT      -> StringUtils.getString(R.string.transfer_out)
+        AppConstant.EXPENDITURE_TYPE_ENTERTAINMENT     -> StringUtils.getString(R.string.entertainment)
 
         AppConstant.TRANSFER_TYPE_TRANSFER             -> StringUtils.getString(R.string.transfer)
 
