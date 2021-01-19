@@ -33,6 +33,7 @@ fun String.getIcon(default: Int = R.drawable.ic_baseline_others_24): Int
         AppConstant.EXPENDITURE_TYPE_NECESSARY -> R.drawable.ic_baseline_necessary_24
         AppConstant.EXPENDITURE_TYPE_HOUSING_LOAN -> R.drawable.ic_baseline_housing_loan_24
         AppConstant.EXPENDITURE_TYPE_LIVE_PAYMENT -> R.drawable.ic_baseline_live_payment_24
+        AppConstant.EXPENDITURE_TYPE_BROKERAGE    -> R.drawable.ic_baseline_live_payment_24
 
         AppConstant.INCOME_TYPE_FINANCIAL_TRANSACTIONS -> R.drawable.ic_baseline_financial_transactions_24
         AppConstant.INCOME_TYPE_RED_ENVELOPES -> R.drawable.ic_baseline_red_envelopes_24

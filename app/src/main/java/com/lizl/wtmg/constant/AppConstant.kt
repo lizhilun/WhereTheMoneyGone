@@ -28,6 +28,7 @@ object AppConstant
     const val EXPENDITURE_TYPE_NECESSARY = "necessary"
     const val EXPENDITURE_TYPE_HOUSING_LOAN = "housing loan"
     const val EXPENDITURE_TYPE_LIVE_PAYMENT = "live payment"
+    const val EXPENDITURE_TYPE_BROKERAGE = "brokerage"
 
     const val INCOME_TYPE_WAGES = "wages"
     const val INCOME_TYPE_SECOND_HAND = "second hand"

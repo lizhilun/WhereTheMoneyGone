@@ -33,6 +33,7 @@ fun String.translate(): String
         AppConstant.EXPENDITURE_TYPE_NECESSARY -> StringUtils.getString(R.string.necessary)
         AppConstant.EXPENDITURE_TYPE_HOUSING_LOAN -> StringUtils.getString(R.string.housing_loan)
         AppConstant.EXPENDITURE_TYPE_LIVE_PAYMENT -> StringUtils.getString(R.string.live_payment)
+        AppConstant.EXPENDITURE_TYPE_BROKERAGE -> StringUtils.getString(R.string.brokerage)
 
         AppConstant.TRANSFER_TYPE_TRANSFER -> StringUtils.getString(R.string.transfer)
 
