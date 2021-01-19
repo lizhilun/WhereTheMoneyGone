@@ -1,9 +1,7 @@
 package com.lizl.wtmg.mvvm.fragment
 
-import android.accounts.Account
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.R.dimen
 import com.lizl.wtmg.constant.AppConstant
@@ -13,8 +11,6 @@ import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.databinding.FragmentPropertyManagerBinding
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.AccountModel
-import com.lizl.wtmg.db.model.MoneyTracesModel
-import com.lizl.wtmg.module.account.AccountDataManager
 import com.lizl.wtmg.mvvm.activity.AddAccountActivity
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseFragment

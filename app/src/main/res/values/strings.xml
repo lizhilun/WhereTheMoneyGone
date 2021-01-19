@@ -37,11 +37,15 @@
     <string name="live_payment">生活缴费</string>
     <string name="brokerage">手续费</string>
     <string name="traffic">出行交通</string>
+    <string name="membership">会员</string>
+    <string name="digital">数码</string>
+    <string name="transfer_out">转出</string>
 
     <string name="wages">工资</string>
     <string name="second_hand">二手</string>
     <string name="red_envelopes">红包</string>
     <string name="financial_transactions">理财</string>
+    <string name="transfer_in">转入</string>
 
     <string name="dark_mode_config">暗黑模式</string>
     <string name="on">开</string>

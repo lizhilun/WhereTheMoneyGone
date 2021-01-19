@@ -16,13 +16,11 @@ import com.lizl.wtmg.custom.popup.PopupRadioGroup
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.AccountModel
 import com.lizl.wtmg.mvvm.activity.AddAccountActivity
-import com.lizl.wtmg.mvvm.model.BottomModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeModel
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
-import kotlinx.android.synthetic.main.activity_money_record_traces.*
 import kotlinx.coroutines.*
 
 object PopupUtil

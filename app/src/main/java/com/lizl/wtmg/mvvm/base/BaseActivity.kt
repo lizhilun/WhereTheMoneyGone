@@ -1,7 +1,6 @@
 package com.lizl.wtmg.mvvm.base
 
 import android.content.res.Configuration
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View

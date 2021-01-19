@@ -1,25 +1,17 @@
 package com.lizl.wtmg.module.skin.util
 
-import android.app.Activity
 import android.app.Application
-import android.content.Context
 import android.content.res.Configuration
-import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.Utils
 import com.lizl.wtmg.module.config.util.ConfigUtil
 import com.lizl.wtmg.module.config.constant.ConfigConstant
-import com.lizl.wtmg.R
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import skin.support.SkinCompatManager
-import skin.support.SkinCompatManager.SkinLoaderListener
 import skin.support.app.SkinAppCompatViewInflater
 import skin.support.app.SkinCardViewInflater
 import skin.support.constraint.app.SkinConstraintViewInflater
-import skin.support.content.res.SkinCompatResources
 import skin.support.design.app.SkinMaterialViewInflater
 
 object SkinUtil
