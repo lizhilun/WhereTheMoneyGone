@@ -39,6 +39,7 @@ fun String.getIcon(default: Int = R.drawable.ic_baseline_others_24): Int
         AppConstant.EXPENDITURE_TYPE_DIGITAL           -> R.drawable.ic_baseline_digital_24
         AppConstant.EXPENDITURE_TYPE_TRANSFER_OUT      -> R.drawable.ic_baseline_transfer_out_24
         AppConstant.EXPENDITURE_TYPE_ENTERTAINMENT     -> R.drawable.ic_baseline_entertainment_24
+        AppConstant.EXPENDITURE_TYPE_RED_ENVELOPES     -> R.drawable.ic_baseline_red_envelopes_24
 
         AppConstant.INCOME_TYPE_FINANCIAL_TRANSACTIONS -> R.drawable.ic_baseline_financial_transactions_24
         AppConstant.INCOME_TYPE_RED_ENVELOPES          -> R.drawable.ic_baseline_red_envelopes_24

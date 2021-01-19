@@ -39,6 +39,7 @@ fun String.translate(): String
         AppConstant.EXPENDITURE_TYPE_DIGITAL           -> StringUtils.getString(R.string.digital)
         AppConstant.EXPENDITURE_TYPE_TRANSFER_OUT      -> StringUtils.getString(R.string.transfer_out)
         AppConstant.EXPENDITURE_TYPE_ENTERTAINMENT     -> StringUtils.getString(R.string.entertainment)
+        AppConstant.EXPENDITURE_TYPE_RED_ENVELOPES     -> StringUtils.getString(R.string.red_envelopes)
 
         AppConstant.TRANSFER_TYPE_TRANSFER             -> StringUtils.getString(R.string.transfer)
 
