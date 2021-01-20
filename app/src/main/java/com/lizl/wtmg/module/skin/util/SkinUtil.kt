@@ -2,13 +2,17 @@ package com.lizl.wtmg.module.skin.util
 
 import android.app.Application
 import android.content.res.Configuration
+import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.Utils
+import com.lizl.wtmg.custom.function.ui
 import com.lizl.wtmg.module.config.util.ConfigUtil
 import com.lizl.wtmg.module.config.constant.ConfigConstant
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import skin.support.SkinCompatManager
+import skin.support.SkinCompatManager.SkinLoaderListener
 import skin.support.app.SkinAppCompatViewInflater
 import skin.support.app.SkinCardViewInflater
 import skin.support.constraint.app.SkinConstraintViewInflater
@@ -35,13 +39,31 @@ object SkinUtil
 
     suspend fun loadSkin()
     {
+        val skinLoadListener = object : SkinLoaderListener
+        {
+            override fun onSuccess()
+            {
+                val topActivity = ActivityUtils.getTopActivity() ?: return
+                val isDarkMode = isSystemDarkMode()
+                GlobalScope.ui { BarUtils.setStatusBarLightMode(topActivity, !isDarkMode) }
+            }
+
+            override fun onFailed(errMsg: String?)
+            {
+            }
+
+            override fun onStart()
+            {
+            }
+        }
+
         if (isNightModeOn())
         {
-            SkinCompatManager.getInstance().loadSkin(SKIN_DARK, SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN)
+            SkinCompatManager.getInstance().loadSkin(SKIN_DARK, skinLoadListener, SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN)
         }
         else
         {
-            SkinCompatManager.getInstance().loadSkin("", SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN)
+            SkinCompatManager.getInstance().loadSkin("", skinLoadListener, SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN)
         }
     }
 
