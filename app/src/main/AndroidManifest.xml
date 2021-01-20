@@ -28,6 +28,10 @@
         <activity
             android:name=".mvvm.activity.AddAccountActivity"
             android:configChanges="uiMode" />
+
+        <activity
+            android:name=".mvvm.activity.AccountDetailActivity"
+            android:configChanges="uiMode" />
     </application>
 
 </manifest>

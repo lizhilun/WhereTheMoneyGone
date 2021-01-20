@@ -22,4 +22,10 @@
     <declare-styleable name="InputItemTextView">
         <attr name="tvDecText" format="string|reference" />
     </declare-styleable>
+
+    <declare-styleable name="TextViewWithDes">
+        <attr name="decTextStr" format="string|reference" />
+        <attr name="decTextAppearance" format="reference" />
+        <attr name="mainTextAppearance" format="reference" />
+    </declare-styleable>
 </resources>

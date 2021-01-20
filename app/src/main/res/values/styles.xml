@@ -22,6 +22,11 @@
         <item name="android:textColor">@color/colorTextColor</item>
     </style>
 
+    <style name="GlobalBiggestTextStyle">
+        <item name="android:textSize">@dimen/global_text_size_biggest</item>
+        <item name="android:textColor">@color/colorTextColor</item>
+    </style>
+
     <style name="GlobalSmallTextStyle">
         <item name="android:textSize">@dimen/global_text_size_smaller</item>
         <item name="android:textColor">@color/colorTextColor</item>

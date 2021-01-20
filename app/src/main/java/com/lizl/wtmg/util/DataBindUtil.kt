@@ -10,6 +10,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.blankj.utilcode.util.SizeUtils
+import com.lizl.wtmg.custom.view.withdes.TextViewWithDes
 
 object DataBindUtil
 {
@@ -54,5 +55,12 @@ object DataBindUtil
     fun bindSelected(view: View, isSelected: Boolean)
     {
         view.isSelected = isSelected
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:text")
+    fun bindText(textView: TextViewWithDes, text: Any?)
+    {
+        textView.setMainText(text?.toString() ?: "")
     }
 }

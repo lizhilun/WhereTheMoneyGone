@@ -13,14 +13,17 @@ import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.custom.view.MenuDrawLayout
 import com.lizl.wtmg.databinding.FragmentPropertyOutlineBinding
 import com.lizl.wtmg.db.AppDatabase
+import com.lizl.wtmg.db.model.AccountModel
 import com.lizl.wtmg.db.model.MoneyTracesModel
 import com.lizl.wtmg.module.account.AccountDataManager
+import com.lizl.wtmg.module.account.AccountManager
+import com.lizl.wtmg.mvvm.activity.AccountDetailActivity
 import com.lizl.wtmg.mvvm.activity.MoneyTracesRecordActivity
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseFragment
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
-import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeModel
+import com.lizl.wtmg.util.ActivityUtil
 import com.lizl.wtmg.util.DateUtil
 import com.lizl.wtmg.util.PopupUtil
 import com.lxj.xpopup.XPopup
@@ -60,30 +63,7 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
                     it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
                 }.sumBy { it.amonunt.toInt() }
 
-                val polymerizeGroupList = mutableListOf<PolymerizeGroupModel>()
-
-                tracesList.groupBy { it.recordDay }.forEach { (t, u) ->
-
-                    val dateInfo = String.format("%02d-%02d", date.month, t)
-
-                    val amountInfo = u.sumBy {
-                        when (it.tracesCategory)
-                        {
-                            AppConstant.MONEY_TRACES_CATEGORY_INCOME      -> it.amonunt.toInt()
-                            AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> 0 - it.amonunt.toInt()
-                            else                                          -> 0
-                        }
-                    }.toString()
-
-                    val childList = mutableListOf<PolymerizeChildModel>().apply {
-                        u.forEach { tracesModel ->
-                            add(PolymerizeChildModel(tracesModel.tracesCategory.getIcon(), tracesModel.tracesType.translate(),
-                                    tracesModel.amonunt.toInt().toString(), tracesModel))
-                        }
-                    }
-
-                    polymerizeGroupList.add(PolymerizeGroupModel(dateInfo, amountInfo, childList))
-                }
+                val polymerizeGroupList = AccountManager.polymerizeTrancesList(tracesList)
 
                 GlobalScope.ui { polymerizeGroupAdapter.replaceData(polymerizeGroupList) }
             }
@@ -100,7 +80,7 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
 
         iv_property_manager.setOnClickListener { LiveEventBus.get(EventConstant.EVENT_GO_TO_PROPERTY_MANAGER_VIEW).post(true) }
 
-        polymerizeGroupAdapter.setOnChildItemClickListener { }
+        polymerizeGroupAdapter.setOnChildItemClickListener {}
 
         polymerizeGroupAdapter.setOnChildItemLongClickListener { polymerizeChildModel ->
             PopupUtil.showBottomListPopup(mutableListOf<PolymerizeModel>().apply {

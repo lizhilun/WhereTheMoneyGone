@@ -11,6 +11,7 @@ import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.databinding.FragmentPropertyManagerBinding
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.AccountModel
+import com.lizl.wtmg.mvvm.activity.AccountDetailActivity
 import com.lizl.wtmg.mvvm.activity.AddAccountActivity
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseFragment
@@ -72,25 +73,24 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
         fab_add.setOnClickListener { ActivityUtils.startActivity(AddAccountActivity::class.java) }
 
         polymerizeGroupAdapter.setOnChildItemClickListener {
-            when (it.tag)
-            {
-                is AccountModel ->
-                {
-                    ActivityUtil.turnToActivity(AddAccountActivity::class.java, Pair(AddAccountActivity.DATA_ACCOUNT_TYPE, it.tag.type),
-                            Pair(AddAccountActivity.DATA_ACCOUNT_ID, it.tag.id))
-                }
-            }
+            ActivityUtil.turnToActivity(AccountDetailActivity::class.java, Pair(AccountDetailActivity.DATA_ACCOUNT_TYPE, (it.tag as AccountModel).type))
         }
 
         polymerizeGroupAdapter.setOnChildItemLongClickListener { polymerizeChildModel ->
             PopupUtil.showBottomListPopup(mutableListOf<PolymerizeModel>().apply {
+                add(PolymerizeChildModel(name = getString(R.string.modify), tag = "M"))
                 add(PolymerizeChildModel(name = getString(R.string.delete), tag = "D"))
             }) {
+                val accountModel = polymerizeChildModel.tag as AccountModel
                 when (it.tag)
                 {
+                    "M" ->
+                    {
+                        ActivityUtil.turnToActivity(AddAccountActivity::class.java, Pair(AddAccountActivity.DATA_ACCOUNT_TYPE, accountModel.type),
+                                Pair(AddAccountActivity.DATA_ACCOUNT_ID, accountModel.id))
+                    }
                     "D" ->
                     {
-                        val accountModel = polymerizeChildModel.tag as AccountModel
                         PopupUtil.showConfirmPopup(getString(R.string.sure_to_delete_account)) {
                             AppDatabase.getInstance().getAccountDao().delete(accountModel)
                         }
