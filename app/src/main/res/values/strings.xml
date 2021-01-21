@@ -94,4 +94,7 @@
 
     <string name="account_quota">账户额度</string>
     <string name="account_balance">账户余额</string>
+    <string name="total_profit">总收益</string>
+    <string name="profit_rate">收益率</string>
+    <string name="used_quota_rate">使用率</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.lizl.wtmg.mvvm.activity
 
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.lizl.wtmg.R
 import com.lizl.wtmg.R.dimen
@@ -46,13 +47,36 @@ class AccountDetailActivity : BaseActivity<ActivityAccountDetailBinding>(R.layou
                 {
                     AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT ->
                     {
-                        tv_account_outline.setDecText(getString(R.string.account_quota))
-                        tv_account_outline.setMainText("${accountModel.usedQuota.toInt()}/${accountModel.totalQuota.toInt()}")
+                        tv_account_outline.setDecText(getString(R.string.used_quota))
+                        tv_account_outline.setMainText(accountModel.usedQuota.toInt().toString())
+
+                        tv_account_info_1.setDecText(getString(R.string.used_quota))
+                        tv_account_info_1.setMainText(accountModel.totalQuota.toInt().toString())
+
+                        tv_account_info_2.setDecText(getString(R.string.used_quota_rate))
+                        tv_account_info_2.setMainText(String.format("%.2f%%", accountModel.usedQuota * 100 / accountModel.totalQuota))
                     }
-                    else                                     ->
+                    AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT ->
                     {
                         tv_account_outline.setDecText(getString(R.string.account_balance))
                         tv_account_outline.setMainText("${accountModel.amount.toInt()}")
+
+                        AppDatabase.getInstance().getMoneyTracesDao().queryTracesByAccount(accountModel.type).observe(this, Observer { tracesList ->
+                            val totalProfit = tracesList.filter { it.tracesType == AppConstant.INCOME_TYPE_FINANCIAL_TRANSACTIONS }.sumBy { it.amonunt.toInt() }
+                            tv_account_info_1.setDecText(getString(R.string.total_profit))
+                            tv_account_info_1.setMainText(totalProfit.toString())
+
+                            tv_account_info_2.setDecText(getString(R.string.profit_rate))
+                            tv_account_info_2.setMainText(String.format("%.2f%%", totalProfit * 100 / (accountModel.amount - totalProfit)))
+                        })
+                    }
+                    else                                         ->
+                    {
+                        tv_account_outline.setDecText(getString(R.string.account_balance))
+                        tv_account_outline.setMainText("${accountModel.amount.toInt()}")
+
+                        tv_account_info_1.isVisible = false
+                        tv_account_info_2.isVisible = false
                     }
                 }
 
