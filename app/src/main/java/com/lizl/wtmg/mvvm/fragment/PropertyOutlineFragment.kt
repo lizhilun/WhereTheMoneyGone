@@ -2,6 +2,9 @@ package com.lizl.wtmg.mvvm.fragment
 
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.FileUtils
+import com.blankj.utilcode.util.ImageUtils
+import com.blankj.utilcode.util.PathUtils
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
@@ -17,6 +20,7 @@ import com.lizl.wtmg.db.model.AccountModel
 import com.lizl.wtmg.db.model.MoneyTracesModel
 import com.lizl.wtmg.module.account.AccountDataManager
 import com.lizl.wtmg.module.account.AccountManager
+import com.lizl.wtmg.module.mainpic.MainPicHandler
 import com.lizl.wtmg.mvvm.activity.AccountDetailActivity
 import com.lizl.wtmg.mvvm.activity.MoneyTracesRecordActivity
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
@@ -43,6 +47,8 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
         polymerizeGroupAdapter = PolymerizeGroupAdapter()
         rv_daily_outline.adapter = polymerizeGroupAdapter
         rv_daily_outline.addItemDecoration(ListDividerItemDecoration(resources.getDimensionPixelSize(R.dimen.global_content_padding_content)))
+
+        initCoverImage()
     }
 
     override fun initData()
@@ -68,6 +74,8 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
                 GlobalScope.ui { polymerizeGroupAdapter.replaceData(polymerizeGroupList) }
             }
         })
+
+        LiveEventBus.get(EventConstant.EVENT_COVER_IMAGE_UPDATE).observe(this, Observer { initCoverImage() })
     }
 
     override fun initListener()
@@ -91,6 +99,19 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
                     "D" -> AccountDataManager.deleteExpenditure(polymerizeChildModel.tag as MoneyTracesModel)
                 }
             }
+        }
+    }
+
+    private fun initCoverImage()
+    {
+        val mainPicBitmap = MainPicHandler.getMainImageBitmap()
+        if (mainPicBitmap != null)
+        {
+            iv_main_pic.setImageBitmap(mainPicBitmap)
+        }
+        else
+        {
+            iv_main_pic.setImageResource(R.mipmap.pic_main_default)
         }
     }
 }

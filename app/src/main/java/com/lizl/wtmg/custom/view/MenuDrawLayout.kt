@@ -1,7 +1,9 @@
 package com.lizl.wtmg.custom.view
 
 import android.content.Context
+import com.jeremyliao.liveeventbus.LiveEventBus
 import com.lizl.wtmg.R
+import com.lizl.wtmg.constant.EventConstant
 import com.lizl.wtmg.module.config.constant.ConfigConstant
 import com.lizl.wtmg.mvvm.adapter.SettingListAdapter
 import com.lizl.wtmg.mvvm.model.setting.*
@@ -24,6 +26,10 @@ class MenuDrawLayout(context: Context) : DrawerPopupView(context)
     private fun getSettingList(): MutableList<BaseSettingModel>
     {
         return mutableListOf<BaseSettingModel>().apply {
+
+            add(NormalSettingModel(context.getString(R.string.main_image_config), R.drawable.ic_baseline_main_pic_24) {
+                LiveEventBus.get(EventConstant.EVENT_GO_TO_COVER_IMAGE_SELECTION).post(true)
+            })
 
             val darkModeMap = mapOf(ConfigConstant.APP_NIGHT_MODE_ON to context.getString(R.string.on),
                     ConfigConstant.APP_NIGHT_MODE_OFF to context.getString(R.string.off),

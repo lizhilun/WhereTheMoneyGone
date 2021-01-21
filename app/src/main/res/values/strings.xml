@@ -50,9 +50,14 @@
     <string name="transfer_in">收款</string>
 
     <string name="dark_mode_config">暗黑模式</string>
+    <string name="main_image_config">主图设置</string>
+
     <string name="on">开</string>
     <string name="off">关</string>
     <string name="follow_system">跟随系统</string>
+
+    <string name="image_error_please_reselect">图片错误，请重新选择</string>
+    <string name="image_crop_error_please_reselect">图片裁切错误，请重试进行选择</string>
 
     <string name="total_property">总资产</string>
     <string name="net_property">净资产</string>
@@ -80,8 +85,8 @@
     <string name="cmb">招商银行</string>
     <string name="cmbc">民生银行</string>
 
-    <string name="capital_account">资金</string>
-    <string name="credit_account">信用</string>
+    <string name="capital_account">资金账户</string>
+    <string name="credit_account">信用账户</string>
     <string name="investment_account">投资账户</string>
 
     <string name="transfer_in_account">转入账户</string>
@@ -97,4 +102,5 @@
     <string name="total_profit">总收益</string>
     <string name="profit_rate">收益率</string>
     <string name="used_quota_rate">使用率</string>
+
 </resources>

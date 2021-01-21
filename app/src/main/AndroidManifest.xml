@@ -13,7 +13,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".mvvm.activity.MainActivity"
-            android:configChanges="uiMode">
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,15 +24,33 @@
 
         <activity
             android:name=".mvvm.activity.MoneyTracesRecordActivity"
-            android:configChanges="uiMode" />
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".mvvm.activity.AddAccountActivity"
-            android:configChanges="uiMode" />
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".mvvm.activity.AccountDetailActivity"
-            android:configChanges="uiMode" />
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <provider
+            android:name=".custom.other.CustomFileProvider"
+            android:authorities="com.lizl.wtmg.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/util_code_provider_paths" />
+        </provider>
     </application>
 
 </manifest>

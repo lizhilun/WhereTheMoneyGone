@@ -1,6 +1,7 @@
 package com.lizl.wtmg.module.skin.util
 
 import android.app.Application
+import android.content.Context
 import android.content.res.Configuration
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.BarUtils
@@ -16,6 +17,7 @@ import skin.support.SkinCompatManager.SkinLoaderListener
 import skin.support.app.SkinAppCompatViewInflater
 import skin.support.app.SkinCardViewInflater
 import skin.support.constraint.app.SkinConstraintViewInflater
+import skin.support.content.res.SkinCompatResources
 import skin.support.design.app.SkinMaterialViewInflater
 
 object SkinUtil
@@ -66,6 +68,8 @@ object SkinUtil
             SkinCompatManager.getInstance().loadSkin("", skinLoadListener, SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN)
         }
     }
+
+    fun getColor(context: Context, colorResId: Int) = SkinCompatResources.getColor(context, colorResId)
 
     private suspend fun isNightModeOn(): Boolean
     {
