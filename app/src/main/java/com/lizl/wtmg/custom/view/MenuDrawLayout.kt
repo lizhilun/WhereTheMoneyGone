@@ -1,6 +1,5 @@
 package com.lizl.wtmg.custom.view
 
-import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.jeremyliao.liveeventbus.LiveEventBus
@@ -10,12 +9,12 @@ import com.lizl.wtmg.module.config.constant.ConfigConstant
 import com.lizl.wtmg.module.config.util.ConfigUtil
 import com.lizl.wtmg.mvvm.adapter.SettingListAdapter
 import com.lizl.wtmg.mvvm.model.setting.*
+import com.lizl.wtmg.util.BiometricAuthenticationUtil
 import com.lizl.wtmg.util.PopupUtil
 import com.lxj.xpopup.core.DrawerPopupView
 import kotlinx.android.synthetic.main.layout_drawer_menu.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class MenuDrawLayout(private val fragment: Fragment) : DrawerPopupView(fragment.requireContext())
 {
@@ -50,7 +49,7 @@ class MenuDrawLayout(private val fragment: Fragment) : DrawerPopupView(fragment.
     }
 
     private val modifyPasswordItem by lazy {
-        NormalSettingModel(context.getString(R.string.modify_app_lock_password), R.drawable.ic_baseline_main_pic_24) {
+        NormalSettingModel(context.getString(R.string.modify_app_lock_password), R.drawable.ic_baseline_modify_password_24) {
             val password = ConfigUtil.getStringBlocking(ConfigConstant.CONFIG_APP_LOCK_PASSWORD)
             PopupUtil.showModifyPasswordPopup(password) {
                 GlobalScope.launch { ConfigUtil.set(ConfigConstant.CONFIG_APP_LOCK_PASSWORD, it) }
@@ -75,9 +74,12 @@ class MenuDrawLayout(private val fragment: Fragment) : DrawerPopupView(fragment.
 
             if (it)
             {
-                val index = settingAdapter.data.indexOf(appLockItem)
-                settingAdapter.addData(index + 1, modifyPasswordItem)
-                settingAdapter.addData(index + 2, fingerprintUnlockItem)
+                var index = settingAdapter.data.indexOf(appLockItem)
+                settingAdapter.addData(++index, modifyPasswordItem)
+                if (BiometricAuthenticationUtil.isFingerprintSupport())
+                {
+                    settingAdapter.addData(++index, fingerprintUnlockItem)
+                }
             }
             else
             {
@@ -102,7 +104,10 @@ class MenuDrawLayout(private val fragment: Fragment) : DrawerPopupView(fragment.
             if (ConfigUtil.getBooleanBlocking(ConfigConstant.CONFIG_APP_LOCK_ENABLE))
             {
                 add(modifyPasswordItem)
-                add(fingerprintUnlockItem)
+                if (BiometricAuthenticationUtil.isFingerprintSupport())
+                {
+                    add(fingerprintUnlockItem)
+                }
             }
 
             add(DividerSettingModel())

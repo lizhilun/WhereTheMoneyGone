@@ -4,9 +4,6 @@
 
     <data>
 
-        <import type="com.lizl.wtmg.util.DimensionUtils" />
-
-        <import type="com.lizl.wtmg.R" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
