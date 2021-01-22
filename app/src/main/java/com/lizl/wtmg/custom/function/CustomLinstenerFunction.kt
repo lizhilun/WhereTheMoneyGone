@@ -4,6 +4,7 @@ import android.view.View
 import androidx.viewpager2.widget.ViewPager2
 import com.blankj.utilcode.util.VibrateUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.jungly.gridpasswordview.GridPasswordView
 
 fun ViewPager2.registerOnPageChangeCallback(onPageSelectedListener: (position: Int) -> Unit)
 {
@@ -38,4 +39,20 @@ fun View.setOnClickListener(vibrate: Boolean, listener: (View) -> Unit)
         if (vibrate) VibrateUtils.vibrate(30)
         listener.invoke(it)
     }
+}
+
+fun GridPasswordView.setOnPasswordChangedListener(onPasswordChangedListener: (password: String) -> Unit)
+{
+    this.setOnPasswordChangedListener(object : GridPasswordView.OnPasswordChangedListener
+    {
+        override fun onInputFinish(psw: String)
+        {
+            onPasswordChangedListener.invoke(psw)
+        }
+
+        override fun onTextChanged(psw: String)
+        {
+
+        }
+    })
 }

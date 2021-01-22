@@ -14,6 +14,7 @@ import com.lizl.wtmg.module.config.annotation.LongConfig
 import com.lizl.wtmg.module.config.annotation.StringConfig
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 
 object ConfigUtil
 {
@@ -53,9 +54,15 @@ object ConfigUtil
 
     suspend fun getBoolean(configKey: String): Boolean = getValue(configKey, false)
 
+    fun getBooleanBlocking(configKey: String): Boolean = runBlocking { getBoolean(configKey) }
+
     suspend fun getLong(configKey: String): Long = getValue(configKey, 0L)
 
+    fun getLongBlocking(configKey: String): Long = runBlocking { getLong(configKey) }
+
     suspend fun getString(configKey: String): String = getValue(configKey, "")
+
+    fun getStringBlocking(configKey: String): String = runBlocking { getString(configKey) }
 
     suspend fun set(configKey: String, value: Any)
     {
@@ -67,6 +74,11 @@ object ConfigUtil
         }
 
         configObserverMap[configKey]?.postValue(value)
+    }
+
+    fun setBlocking(configKey: String, value: Any)
+    {
+        runBlocking { set(configKey, value) }
     }
 
     private suspend inline fun <reified T : Any> getValue(configKey: String, valueIfNotFind: T): T

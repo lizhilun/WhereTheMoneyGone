@@ -85,4 +85,5 @@ dependencies {
     implementation "androidx.datastore:datastore-preferences:1.0.0-alpha04"
     implementation 'com.jeremyliao:live-event-bus-x:1.7.3'
     implementation 'com.github.yalantis:ucrop:2.2.6'
+    implementation 'com.jungly:gridPasswordView:0.3'
 }

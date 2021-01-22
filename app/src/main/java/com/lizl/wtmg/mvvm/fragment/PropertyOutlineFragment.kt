@@ -2,32 +2,24 @@ package com.lizl.wtmg.mvvm.fragment
 
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.FileUtils
-import com.blankj.utilcode.util.ImageUtils
-import com.blankj.utilcode.util.PathUtils
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.constant.EventConstant
-import com.lizl.wtmg.custom.function.getIcon
-import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.custom.function.ui
 import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.custom.view.MenuDrawLayout
 import com.lizl.wtmg.databinding.FragmentPropertyOutlineBinding
 import com.lizl.wtmg.db.AppDatabase
-import com.lizl.wtmg.db.model.AccountModel
 import com.lizl.wtmg.db.model.MoneyTracesModel
 import com.lizl.wtmg.module.account.AccountDataManager
 import com.lizl.wtmg.module.account.AccountManager
 import com.lizl.wtmg.module.mainpic.MainPicHandler
-import com.lizl.wtmg.mvvm.activity.AccountDetailActivity
 import com.lizl.wtmg.mvvm.activity.MoneyTracesRecordActivity
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseFragment
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeModel
-import com.lizl.wtmg.util.ActivityUtil
 import com.lizl.wtmg.util.DateUtil
 import com.lizl.wtmg.util.PopupUtil
 import com.lxj.xpopup.XPopup
@@ -38,7 +30,7 @@ import kotlinx.coroutines.launch
 
 class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.layout.fragment_property_outline)
 {
-    private val menuDrawLayout: MenuDrawLayout by lazy { MenuDrawLayout(requireContext()) }
+    private val menuDrawLayout: MenuDrawLayout by lazy { MenuDrawLayout(this) }
 
     private lateinit var polymerizeGroupAdapter: PolymerizeGroupAdapter
 

@@ -11,9 +11,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
-            android:name=".mvvm.activity.MainActivity"
+            android:name=".mvvm.activity.LockActivity"
             android:configChanges="uiMode"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".mvvm.activity.MainActivity"
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".mvvm.activity.MoneyTracesRecordActivity"

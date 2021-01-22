@@ -78,10 +78,16 @@ class SettingListAdapter(settingList: MutableList<BaseSettingModel>) : BaseDeleg
                 setOnClickListener {
                     GlobalScope.launch {
                         val isChecked = settingModel.getValue()
-                        settingModel.saveValue(!isChecked)
+                        if (settingModel.autoSave)
+                        {
+                            settingModel.saveValue(!isChecked)
+                        }
                         GlobalScope.launch(Dispatchers.Main) {
-                            iv_boolean_setting_checked.isSelected = !isChecked
-                            settingModel.callback?.invoke(settingModel)
+                            if (settingModel.autoSave)
+                            {
+                                iv_boolean_setting_checked.isSelected = !isChecked
+                            }
+                            settingModel.callback?.invoke(!isChecked)
                         }
                     }
                 }

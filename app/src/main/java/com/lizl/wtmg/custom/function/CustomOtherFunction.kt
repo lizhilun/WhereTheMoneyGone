@@ -4,6 +4,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.lang.StringBuilder
 
 fun String.backspace(): String
 {
@@ -29,4 +30,9 @@ fun <T> BaseQuickAdapter<T, *>.update(model: T)
         if (it < 0) return
         setData(it, model)
     }
+}
+
+fun StringBuilder.clear()
+{
+    this.delete(0, length)
 }

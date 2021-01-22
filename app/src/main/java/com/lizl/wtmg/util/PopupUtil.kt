@@ -9,10 +9,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.custom.function.getIcon
 import com.lizl.wtmg.custom.function.translate
-import com.lizl.wtmg.custom.popup.PopupBottomList
-import com.lizl.wtmg.custom.popup.PopupConfirm
-import com.lizl.wtmg.custom.popup.PopupInput
-import com.lizl.wtmg.custom.popup.PopupRadioGroup
+import com.lizl.wtmg.custom.popup.*
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.AccountModel
 import com.lizl.wtmg.mvvm.activity.AddAccountActivity
@@ -39,6 +36,18 @@ object PopupUtil
     {
         val context = ActivityUtils.getTopActivity() ?: return
         showPopup(XPopup.Builder(context).asCustom(PopupBottomList(context, bottomList, onSelectFinishListener)))
+    }
+
+    fun showSetPasswordPopup(onInputFinishListener: (String) -> Unit)
+    {
+        val context = ActivityUtils.getTopActivity() ?: return
+        showPopup(XPopup.Builder(context).asCustom(PopupPassword(context, PopupPassword.PASSWORD_OPERATION_NEW, null, onInputFinishListener)))
+    }
+
+    fun showModifyPasswordPopup(oldPassword: String, onInputFinishListener: (String) -> Unit)
+    {
+        val context = ActivityUtils.getTopActivity() ?: return
+        showPopup(XPopup.Builder(context).asCustom(PopupPassword(context, PopupPassword.PASSWORD_OPERATION_MODIFY, oldPassword, onInputFinishListener)))
     }
 
     fun showBottomAccountList(onSelectFinishListener: (AccountModel) -> Unit)
