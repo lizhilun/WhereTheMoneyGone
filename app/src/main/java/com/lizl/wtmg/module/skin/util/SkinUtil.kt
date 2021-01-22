@@ -1,5 +1,6 @@
 package com.lizl.wtmg.module.skin.util
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
@@ -46,8 +47,7 @@ object SkinUtil
             override fun onSuccess()
             {
                 val topActivity = ActivityUtils.getTopActivity() ?: return
-                val isDarkMode = isSystemDarkMode()
-                GlobalScope.ui { BarUtils.setStatusBarLightMode(topActivity, !isDarkMode) }
+                GlobalScope.launch { updateStatusBarLightMode(topActivity) }
             }
 
             override fun onFailed(errMsg: String?)
@@ -70,6 +70,12 @@ object SkinUtil
     }
 
     fun getColor(context: Context, colorResId: Int) = SkinCompatResources.getColor(context, colorResId)
+
+    suspend fun updateStatusBarLightMode(activity: Activity)
+    {
+        val isDarkMode = isNightModeOn()
+        GlobalScope.ui { BarUtils.setStatusBarLightMode(activity, !isDarkMode) }
+    }
 
     private suspend fun isNightModeOn(): Boolean
     {
