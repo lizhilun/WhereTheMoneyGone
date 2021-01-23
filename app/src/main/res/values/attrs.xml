@@ -19,13 +19,15 @@
         <attr name="hintTextSize" format="dimension" />
     </declare-styleable>
 
-    <declare-styleable name="InputItemTextView">
-        <attr name="tvDecText" format="string|reference" />
-    </declare-styleable>
-
     <declare-styleable name="TextViewWithDes">
         <attr name="decTextStr" format="string|reference" />
         <attr name="decTextAppearance" format="reference" />
         <attr name="mainTextAppearance" format="reference" />
+        <attr name="rightArrowVisible" format="boolean" />
+        <attr name="viewType" format="enum">
+            <enum name="top_bottom" value="1" />
+            <enum name="start_end" value="2" />
+        </attr>
     </declare-styleable>
+
 </resources>

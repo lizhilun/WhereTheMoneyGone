@@ -6,16 +6,12 @@ import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.graphics.drawable.Icon
 import android.util.Log
-import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.FileIOUtils
 import com.blankj.utilcode.util.PathUtils
 import com.blankj.utilcode.util.Utils
 import com.lizl.wtmg.custom.other.CustomActivityLifecycle
 import com.lizl.wtmg.module.config.util.ConfigUtil
 import com.lizl.wtmg.module.skin.util.SkinUtil
 import com.lizl.wtmg.mvvm.activity.MoneyTracesRecordActivity
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class UiApplication : Application(), Thread.UncaughtExceptionHandler
 {
@@ -44,10 +40,10 @@ class UiApplication : Application(), Thread.UncaughtExceptionHandler
     {
         val exceptionInfo = Log.getStackTraceString(e)
         Log.d(TAG, "uncaughtException() called with: t = [$t], e = [$exceptionInfo]")
-        GlobalScope.launch {
-            FileIOUtils.writeFileFromString(exceptionLogFilePath, exceptionInfo, true)
-            AppUtils.relaunchApp(true)
-        }
+//        GlobalScope.launch {
+//            FileIOUtils.writeFileFromString(exceptionLogFilePath, exceptionInfo, true)
+//            AppUtils.relaunchApp(true)
+//        }
     }
 
     private fun setupShortcuts()

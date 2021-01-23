@@ -1,14 +1,14 @@
-package com.lizl.wtmg.custom.view.inputitem
+package com.lizl.wtmg.custom.view.withdes
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import com.lizl.wtmg.R
 import com.lizl.wtmg.custom.function.setHintTextSize
-import kotlinx.android.synthetic.main.layout_input_item_edit_view.view.*
+import kotlinx.android.synthetic.main.layout_editext_with_des.view.*
 import skin.support.widget.SkinCompatFrameLayout
 
-class InputItemEditView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : SkinCompatFrameLayout(context, attrs, defStyleAttr)
+class EditTextWithDes(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : SkinCompatFrameLayout(context, attrs, defStyleAttr)
 {
     constructor(context: Context) : this(context, null)
 
@@ -21,7 +21,7 @@ class InputItemEditView(context: Context, attrs: AttributeSet?, defStyleAttr: In
 
     private fun initView(context: Context, attrs: AttributeSet?)
     {
-        LayoutInflater.from(context).inflate(R.layout.layout_input_item_edit_view, null).apply {
+        LayoutInflater.from(context).inflate(R.layout.layout_editext_with_des, null).apply {
 
             addView(this)
 

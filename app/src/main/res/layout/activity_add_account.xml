@@ -17,23 +17,35 @@
             app:layout_constraintTop_toTopOf="parent"
             app:titleText="@string/add_account" />
 
-        <com.lizl.wtmg.custom.view.inputitem.InputItemTextView
+        <com.lizl.wtmg.custom.view.withdes.TextViewWithDes
             android:id="@+id/layout_account_category"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="@dimen/global_content_padding_content"
+            android:paddingStart="@dimen/global_content_padding_edge"
+            android:paddingEnd="@dimen/global_content_padding_edge"
+            app:decTextAppearance="@style/GlobalTextStyle"
+            app:decTextStr="@string/account_category"
             app:layout_constraintTop_toBottomOf="@+id/ctb_title"
-            app:tvDecText="@string/account_category" />
+            app:mainTextAppearance="@style/GlobalPrimaryTextStyle"
+            app:rightArrowVisible="true"
+            app:viewType="start_end" />
 
-        <com.lizl.wtmg.custom.view.inputitem.InputItemTextView
+        <com.lizl.wtmg.custom.view.withdes.TextViewWithDes
             android:id="@+id/layout_account_type"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="@dimen/global_content_padding_content"
+            android:paddingStart="@dimen/global_content_padding_edge"
+            android:paddingEnd="@dimen/global_content_padding_edge"
+            app:decTextAppearance="@style/GlobalTextStyle"
+            app:decTextStr="@string/account_type"
             app:layout_constraintTop_toBottomOf="@+id/layout_account_category"
-            app:tvDecText="@string/account_type" />
+            app:mainTextAppearance="@style/GlobalPrimaryTextStyle"
+            app:rightArrowVisible="true"
+            app:viewType="start_end" />
 
-        <com.lizl.wtmg.custom.view.inputitem.InputItemEditView
+        <com.lizl.wtmg.custom.view.withdes.EditTextWithDes
             android:id="@+id/layout_account_amount"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -42,7 +54,7 @@
             app:hint="@string/please_input"
             app:layout_constraintTop_toBottomOf="@+id/layout_account_type" />
 
-        <com.lizl.wtmg.custom.view.inputitem.InputItemEditView
+        <com.lizl.wtmg.custom.view.withdes.EditTextWithDes
             android:id="@+id/layout_total_quota"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -51,7 +63,7 @@
             app:hint="@string/please_input"
             app:layout_constraintTop_toBottomOf="@+id/layout_account_type" />
 
-        <com.lizl.wtmg.custom.view.inputitem.InputItemEditView
+        <com.lizl.wtmg.custom.view.withdes.EditTextWithDes
             android:id="@+id/layout_used_quota"
             android:layout_width="match_parent"
             android:layout_height="48dp"

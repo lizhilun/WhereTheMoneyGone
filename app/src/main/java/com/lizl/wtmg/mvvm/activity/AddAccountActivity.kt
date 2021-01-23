@@ -111,13 +111,13 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
             }
         }
 
-        layout_account_category.setText(accountCategory.translate())
+        layout_account_category.setMainText(accountCategory.translate())
     }
 
     private fun showAccountType(accountType: String)
     {
         this.accountType = accountType
-        layout_account_type.setText(accountType.translate())
+        layout_account_type.setMainText(accountType.translate())
     }
 
     private fun onSaveBtnClick()
