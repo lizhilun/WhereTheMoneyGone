@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.view.isVisible
 import com.lizl.wtmg.R
 import com.lizl.wtmg.module.skin.view.SkinImageView
 import skin.support.constraint.SkinCompatConstraintLayout
@@ -41,17 +42,13 @@ class TextViewWithDes(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
 
         ivRight.setImageResource(R.drawable.ic_baseline_keyboard_arrow_right_24)
         ivRight.id = View.generateViewId()
+        addView(ivRight)
 
         val typeArray = context.obtainStyledAttributes(attrs, R.styleable.TextViewWithDes)
 
         tvDec.text = typeArray.getString(R.styleable.TextViewWithDes_decTextStr)
         tvMain.setTextAppearance(typeArray.getResourceId(R.styleable.TextViewWithDes_decTextAppearance, R.style.GlobalSecondaryTextStyle))
         tvMain.setTextAppearance(typeArray.getResourceId(R.styleable.TextViewWithDes_mainTextAppearance, R.style.GlobalTextStyle))
-
-        if (typeArray.getBoolean(R.styleable.TextViewWithDes_rightArrowVisible, false))
-        {
-            addView(ivRight)
-        }
 
         val constraintSet = ConstraintSet()
 
@@ -96,6 +93,8 @@ class TextViewWithDes(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
         }
 
         constraintSet.applyTo(this)
+
+        ivRight.isVisible = typeArray.getBoolean(R.styleable.TextViewWithDes_rightArrowVisible, false)
 
         typeArray.recycle()
     }

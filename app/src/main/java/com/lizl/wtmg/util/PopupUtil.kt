@@ -12,6 +12,7 @@ import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.custom.popup.*
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.AccountModel
+import com.lizl.wtmg.db.model.MoneyTracesModel
 import com.lizl.wtmg.mvvm.activity.AddAccountActivity
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
@@ -69,6 +70,12 @@ object PopupUtil
             }
             onSelectFinishListener.invoke(it.tag as AccountModel)
         }
+    }
+
+    fun showTracesDetailPopup(tracesModel: MoneyTracesModel)
+    {
+        val context = ActivityUtils.getTopActivity() ?: return
+        showPopup(XPopup.Builder(context).asCustom(PopupTracesDetail(context, tracesModel)))
     }
 
     fun showInputPopup(title: String, onInputFinish: (String) -> Unit)

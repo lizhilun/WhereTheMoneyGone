@@ -12,14 +12,11 @@ import com.lizl.wtmg.custom.view.MenuDrawLayout
 import com.lizl.wtmg.databinding.FragmentPropertyOutlineBinding
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.MoneyTracesModel
-import com.lizl.wtmg.module.account.AccountDataManager
 import com.lizl.wtmg.module.account.AccountManager
 import com.lizl.wtmg.module.mainpic.MainPicHandler
 import com.lizl.wtmg.mvvm.activity.MoneyTracesRecordActivity
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseFragment
-import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
-import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeModel
 import com.lizl.wtmg.util.DateUtil
 import com.lizl.wtmg.util.PopupUtil
 import com.lxj.xpopup.XPopup
@@ -78,17 +75,8 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
 
         iv_property_manager.setOnClickListener { LiveEventBus.get(EventConstant.EVENT_GO_TO_PROPERTY_MANAGER_VIEW).post(true) }
 
-        polymerizeGroupAdapter.setOnChildItemClickListener {}
-
-        polymerizeGroupAdapter.setOnChildItemLongClickListener { polymerizeChildModel ->
-            PopupUtil.showBottomListPopup(mutableListOf<PolymerizeModel>().apply {
-                add(PolymerizeChildModel(name = getString(R.string.delete), tag = "D"))
-            }) {
-                when (it.tag)
-                {
-                    "D" -> AccountDataManager.deleteExpenditure(polymerizeChildModel.tag as MoneyTracesModel)
-                }
-            }
+        polymerizeGroupAdapter.setOnChildItemClickListener {
+            PopupUtil.showTracesDetailPopup(it.tag as MoneyTracesModel)
         }
     }
 

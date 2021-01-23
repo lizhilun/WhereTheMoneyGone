@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<skin.support.constraint.SkinCompatConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_content">
+
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_account_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/account_detail"
+        android:textColor="@color/colorTextColor"
+        android:textSize="@dimen/global_text_size"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/global_content_padding_edge"
+        android:text="@string/delete"
+        android:textColor="@color/colorEmphasize"
+        android:textSize="@dimen/global_text_size"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_account_detail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_account_detail" />
+
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_modify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/global_content_padding_edge"
+        android:text="@string/modify"
+        android:textColor="@color/colorTextColor"
+        android:textSize="@dimen/global_text_size"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_delete"
+        app:layout_constraintEnd_toStartOf="@+id/tv_delete"
+        app:layout_constraintTop_toTopOf="@+id/tv_delete" />
+
+    <com.lizl.wtmg.custom.view.withdes.TextViewWithDes
+        android:id="@+id/layout_account_amount"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="@dimen/global_content_padding_edge"
+        android:layout_marginEnd="@dimen/global_content_padding_edge"
+        app:decTextAppearance="@style/GlobalTextStyle"
+        app:decTextStr="@string/amount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_account_detail"
+        app:viewType="start_end" />
+
+    <com.lizl.wtmg.custom.view.withdes.TextViewWithDes
+        android:id="@+id/layout_traces_type"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:decTextAppearance="@style/GlobalTextStyle"
+        app:decTextStr="@string/category"
+        app:layout_constraintEnd_toEndOf="@+id/layout_account_amount"
+        app:layout_constraintStart_toStartOf="@+id/layout_account_amount"
+        app:layout_constraintTop_toBottomOf="@+id/layout_account_amount"
+        app:viewType="start_end" />
+
+    <com.lizl.wtmg.custom.view.withdes.TextViewWithDes
+        android:id="@+id/layout_account_type"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:decTextAppearance="@style/GlobalTextStyle"
+        app:decTextStr="@string/account"
+        app:layout_constraintEnd_toEndOf="@+id/layout_account_amount"
+        app:layout_constraintStart_toStartOf="@+id/layout_account_amount"
+        app:layout_constraintTop_toBottomOf="@+id/layout_traces_type"
+        app:viewType="start_end" />
+
+    <com.lizl.wtmg.custom.view.withdes.TextViewWithDes
+        android:id="@+id/layout_traces_time"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:decTextAppearance="@style/GlobalTextStyle"
+        app:decTextStr="@string/time"
+        app:layout_constraintEnd_toEndOf="@+id/layout_account_amount"
+        app:layout_constraintStart_toStartOf="@+id/layout_account_amount"
+        app:layout_constraintTop_toBottomOf="@+id/layout_account_type"
+        app:viewType="start_end" />
+
+</skin.support.constraint.SkinCompatConstraintLayout>
