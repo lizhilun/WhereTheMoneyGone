@@ -82,7 +82,6 @@ class AccountDetailActivity : BaseActivity<ActivityAccountDetailBinding>(R.layou
 
                 AppDatabase.getInstance().getMoneyTracesDao().queryTracesByAccount(accountModel.type).observe(this, Observer { tracesList ->
                     GlobalScope.launch {
-                        tracesList.sortByDescending { it.recordTime }
                         val polymerizeGroupList = AccountManager.polymerizeTrancesList(tracesList)
                         GlobalScope.ui { polymerizeGroupAdapter.replaceData(polymerizeGroupList) }
                     }

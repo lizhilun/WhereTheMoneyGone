@@ -51,8 +51,6 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
 
             GlobalScope.launch {
 
-                tracesList.sortByDescending { it.recordTime }
-
                 dataBinding.monthExpenditure = tracesList.filter {
                     it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
                 }.sumBy { it.amonunt.toInt() }
