@@ -88,7 +88,7 @@ class TextViewWithDes(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
                 constraintSet.connect(tvMain.id, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
                 constraintSet.connect(tvMain.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
                 constraintSet.connect(tvMain.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
-                constraintSet.connect(tvMain.id, ConstraintSet.TOP, tvMain.id, ConstraintSet.BOTTOM)
+                constraintSet.connect(tvMain.id, ConstraintSet.TOP, tvDec.id, ConstraintSet.BOTTOM)
             }
         }
 
