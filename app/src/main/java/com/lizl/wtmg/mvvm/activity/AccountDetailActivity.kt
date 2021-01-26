@@ -50,7 +50,7 @@ class AccountDetailActivity : BaseActivity<ActivityAccountDetailBinding>(R.layou
                         tv_account_outline.setDecText(getString(R.string.used_quota))
                         tv_account_outline.setMainText(accountModel.usedQuota.toInt().toString())
 
-                        tv_account_info_1.setDecText(getString(R.string.used_quota))
+                        tv_account_info_1.setDecText(getString(R.string.total_quota))
                         tv_account_info_1.setMainText(accountModel.totalQuota.toInt().toString())
 
                         tv_account_info_2.setDecText(getString(R.string.used_quota_rate))

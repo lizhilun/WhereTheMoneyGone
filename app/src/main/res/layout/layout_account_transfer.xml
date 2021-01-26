@@ -21,7 +21,7 @@
             android:id="@+id/tv_out_account_des"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/transfer_in_account"
+            android:text="@string/transfer_out_account"
             android:textColor="@color/colorSecondaryTextColor"
             android:textSize="@dimen/global_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
