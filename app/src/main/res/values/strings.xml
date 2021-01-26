@@ -57,6 +57,8 @@
     <string name="app_lock_config">应用锁</string>
     <string name="modify_app_lock_password">修改密码</string>
     <string name="fingerprint_unlock_config">指纹解锁</string>
+    <string name="data_backup">数据备份</string>
+    <string name="data_restore">数据还原</string>
 
     <string name="on">开</string>
     <string name="off">关</string>
@@ -119,5 +121,35 @@
     <string name="fingerprint_authentication_dialog_description"> </string>
 
     <string name="account_detail">账单详情</string>
+
+    <string name="in_finding_backup_file">查找备份文件中</string>
+    <string name="select_backup_file">选择备份文件</string>
+    <string name="import_backup_file">导入备份文件</string>
+    <string name="delete_backup_file">删除备份文件</string>
+    <string name="rename_backup_file">重命名备份文件</string>
+    <string name="share_backup_file">发送备份文件</string>
+    <string name="notify_backup_data">确认备份数据到文件？</string>
+    <string name="hint_rename_backup_file">请输入新的文件名</string>
+    <string name="in_doing">%s中</string>
+    <string name="backup_data">备份数据</string>
+    <string name="restore_data">还原数据</string>
+    <string name="auto_backup_data">自动备份</string>
+    <string name="clear_backup_data">备份文件清理</string>
+    <string name="notify_clear_backup_data">备份文件清理将只保留最新的备份文件，其余的会被删除，是否继续？</string>
+    <string name="notify_restore_data_failed_wrong_password">文件还原失败，请输入备份文件时的加密密码</string>
+    <string name="success_to_backup_data">数据备份成功</string>
+    <string name="failed_to_backup_data">数据备份失败</string>
+    <string name="notify_wrong_backup_file">不是有效的备份文件</string>
+    <string name="import_backup_file_overlay">覆盖导入备份文件</string>
+    <string name="import_backup_file_merge">合并导入备份文件</string>
+    <string name="notify_restore_data_overlay">覆盖导入将清空原有数据，是否继续操作？</string>
+    <string name="notify_restore_data_merge">合并导入将在合并现有数据和导入数据，是否继续操作？</string>
+    <string name="notify_delete_backup_file">是否删除该备份文件？</string>
+    <string name="notify_share_backup_file">是否分享该备份文件？</string>
+    <string name="input_encrypt_password">密码错误，输入备份数据时使用的密码</string>
+    <string name="hint_input_encrypt_password">请输入备份数据时使用的密码</string>
+    <string name="notify_success_to_backup">数据备份成功</string>
+    <string name="notify_success_to_restore">数据还原成功</string>
+    <string name="notify_no_data_to_backup">没有数据需要备份</string>
 
 </resources>

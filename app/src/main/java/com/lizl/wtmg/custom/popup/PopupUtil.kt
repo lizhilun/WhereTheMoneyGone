@@ -1,4 +1,4 @@
-package com.lizl.wtmg.util
+package com.lizl.wtmg.custom.popup
 
 import android.app.DatePickerDialog
 import android.app.Dialog
@@ -6,10 +6,13 @@ import android.app.TimePickerDialog
 import android.widget.DatePicker
 import android.widget.TimePicker
 import com.blankj.utilcode.util.ActivityUtils
-import com.lizl.wtmg.R
+import com.lizl.wtmg.R.drawable
+import com.lizl.wtmg.R.string
 import com.lizl.wtmg.custom.function.getIcon
 import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.custom.popup.*
+import com.lizl.wtmg.custom.popup.operaion.OperationModel
+import com.lizl.wtmg.custom.popup.operaion.PopupOperationList
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.AccountModel
 import com.lizl.wtmg.db.model.MoneyTracesModel
@@ -51,6 +54,18 @@ object PopupUtil
         showPopup(XPopup.Builder(context).asCustom(PopupPassword(context, PopupPassword.PASSWORD_OPERATION_MODIFY, oldPassword, onInputFinishListener)))
     }
 
+    fun showConfirmPasswordPopup(rightPassword: String, onInputFinishListener: (String) -> Unit)
+    {
+        val context = ActivityUtils.getTopActivity() ?: return
+        showPopup(XPopup.Builder(context).asCustom(PopupPassword(context, PopupPassword.PASSWORD_OPERATION_CHECK, rightPassword, onInputFinishListener)))
+    }
+
+    fun showInputPasswordPopup(onInputFinishListener: (String) -> Unit)
+    {
+        val context = ActivityUtils.getTopActivity() ?: return
+        showPopup(XPopup.Builder(context).asCustom(PopupPassword(context, PopupPassword.PASSWORD_OPERATION_INPUT, null, onInputFinishListener)))
+    }
+
     fun showBottomAccountList(onSelectFinishListener: (AccountModel) -> Unit)
     {
         val context = ActivityUtils.getTopActivity() ?: return
@@ -61,7 +76,7 @@ object PopupUtil
                 accountList.forEach { childList.add(PolymerizeChildModel(it.type.getIcon(), it.type.translate(), "", it)) }
                 add(PolymerizeGroupModel(category.translate(), "", childList))
             }
-            add(PolymerizeChildModel(R.drawable.ic_baseline_add_colourful_24, context.getString(R.string.add), "", "A"))
+            add(PolymerizeChildModel(drawable.ic_baseline_add_colourful_24, context.getString(string.add), "", "A"))
         }) {
             if (it.tag == "A")
             {
@@ -76,6 +91,12 @@ object PopupUtil
     {
         val context = ActivityUtils.getTopActivity() ?: return
         showPopup(XPopup.Builder(context).asCustom(PopupTracesDetail(context, tracesModel)))
+    }
+
+    fun showOperationPopup(operationList: MutableList<OperationModel>)
+    {
+        val context = ActivityUtils.getTopActivity() ?: return
+        showPopup(XPopup.Builder(context).asCustom(PopupOperationList(context, operationList)))
     }
 
     fun showInputPopup(title: String, onInputFinish: (String) -> Unit)

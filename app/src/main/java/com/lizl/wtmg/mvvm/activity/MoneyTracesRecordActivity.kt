@@ -17,7 +17,7 @@ import com.lizl.wtmg.databinding.ActivityMoneyRecordTracesBinding
 import com.lizl.wtmg.mvvm.adapter.ViewPagerAdapter
 import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.util.DateUtil
-import com.lizl.wtmg.util.PopupUtil
+import com.lizl.wtmg.custom.popup.PopupUtil
 import kotlinx.android.synthetic.main.activity_money_record_traces.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

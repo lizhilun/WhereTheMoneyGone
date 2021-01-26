@@ -3,6 +3,7 @@ package com.lizl.wtmg.util
 import android.app.Activity
 import android.content.Intent
 import com.blankj.utilcode.util.ActivityUtils
+import com.lizl.wtmg.custom.other.CustomActivityLifecycle
 import java.io.Serializable
 
 object ActivityUtil
@@ -16,9 +17,9 @@ object ActivityUtil
         extraList.forEach {
             when (it.second)
             {
-                is Int          -> intent.putExtra(it.first, it.second as Int)
-                is String       -> intent.putExtra(it.first, it.second as String)
-                is Boolean      -> intent.putExtra(it.first, it.second as Boolean)
+                is Int -> intent.putExtra(it.first, it.second as Int)
+                is String -> intent.putExtra(it.first, it.second as String)
+                is Boolean -> intent.putExtra(it.first, it.second as Boolean)
                 is ArrayList<*> -> intent.putExtra(it.first, it.second as ArrayList<*>)
                 is Serializable -> intent.putExtra(it.first, it.second as Serializable)
             }

@@ -1,5 +1,8 @@
 package com.lizl.wtmg.custom.function
 
+import android.content.Context
+import android.net.Uri
+import android.provider.OpenableColumns
 import com.chad.library.adapter.base.BaseQuickAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -35,4 +38,18 @@ fun <T> BaseQuickAdapter<T, *>.update(model: T)
 fun StringBuilder.clear()
 {
     this.delete(0, length)
+}
+
+fun Uri.getFileName(context: Context): String?
+{
+    val cursor = context.contentResolver.query(this, null, null, null, null, null)
+
+    var fileName: String? = null
+    cursor?.use {
+        if (it.moveToFirst())
+        {
+            fileName = it.getString(it.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+        }
+    }
+    return fileName
 }

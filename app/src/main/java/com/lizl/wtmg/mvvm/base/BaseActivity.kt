@@ -1,5 +1,6 @@
 package com.lizl.wtmg.mvvm.base
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.SkinAppCompatDelegateImpl
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.lizl.wtmg.custom.other.CustomActivityLifecycle
 import com.lizl.wtmg.module.skin.util.SkinUtil
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -82,6 +84,12 @@ open class BaseActivity<DB : ViewDataBinding>(private val layoutId: Int) : AppCo
     {
         super.onConfigurationChanged(newConfig)
         GlobalScope.launch { SkinUtil.loadSkin() }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+    {
+        CustomActivityLifecycle.isFromActivityResult = true
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     open fun initView()

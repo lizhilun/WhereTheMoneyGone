@@ -13,6 +13,8 @@ object CustomActivityLifecycle : Application.ActivityLifecycleCallbacks
 {
     private var startStatusActivityCount = 0
 
+    var isFromActivityResult = false
+
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?)
     {
         GlobalScope.launch { SkinUtil.updateStatusBarLightMode(activity) }
@@ -21,6 +23,11 @@ object CustomActivityLifecycle : Application.ActivityLifecycleCallbacks
     override fun onActivityStarted(activity: Activity)
     {
         startStatusActivityCount++
+        if (isFromActivityResult)
+        {
+            isFromActivityResult = false
+            return
+        }
         if (startStatusActivityCount == 1 && activity !is LockActivity)
         {
             ActivityUtil.turnToActivity(LockActivity::class.java)

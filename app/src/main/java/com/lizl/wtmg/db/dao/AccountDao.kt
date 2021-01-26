@@ -6,7 +6,7 @@ import androidx.room.Query
 import com.lizl.wtmg.db.model.AccountModel
 
 @Dao
-interface CapitalAccountDao : BaseDao<AccountModel>
+interface AccountDao : BaseDao<AccountModel>
 {
     @Query("select * from Account")
     fun obAllAccount(): LiveData<MutableList<AccountModel>>
@@ -16,4 +16,10 @@ interface CapitalAccountDao : BaseDao<AccountModel>
 
     @Query("select * from Account where type == :accountType")
     fun queryAccountByType(accountType: String): AccountModel?
+
+    @Query("select * from Account")
+    fun obAllAccountForBackup(): LiveData<MutableList<AccountModel>>
+
+    @Query("DELETE FROM Account")
+    fun deleteAll()
 }

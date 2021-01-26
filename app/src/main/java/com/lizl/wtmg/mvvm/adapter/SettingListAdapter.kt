@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.delegate.BaseMultiTypeDelegate
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.lizl.wtmg.R
 import com.lizl.wtmg.mvvm.model.setting.*
-import com.lizl.wtmg.util.PopupUtil
+import com.lizl.wtmg.custom.popup.PopupUtil
 import kotlinx.android.synthetic.main.item_setting_boolean.view.*
 import kotlinx.android.synthetic.main.item_setting_normal.view.*
 import kotlinx.android.synthetic.main.item_setting_value.view.*

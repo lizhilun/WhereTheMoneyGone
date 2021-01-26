@@ -37,7 +37,7 @@ class LockActivity : BaseActivity<ActivityLockBinding>(R.layout.activity_lock)
 
             setNewData(listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "E", "0", "R").toMutableList())
 
-            setOnItemClickListener { key ->
+            setOnItemClickListener(true) { key ->
                 when (key)
                 {
                     "E" -> onBackPressed()

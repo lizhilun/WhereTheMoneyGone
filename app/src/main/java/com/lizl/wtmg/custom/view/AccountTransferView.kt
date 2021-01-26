@@ -8,7 +8,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.custom.function.getIcon
 import com.lizl.wtmg.custom.function.translate
-import com.lizl.wtmg.util.PopupUtil
+import com.lizl.wtmg.custom.popup.PopupUtil
 import kotlinx.android.synthetic.main.layout_account_transfer.view.*
 import skin.support.widget.SkinCompatFrameLayout
 

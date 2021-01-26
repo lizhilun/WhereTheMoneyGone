@@ -6,12 +6,17 @@ import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.graphics.drawable.Icon
 import android.util.Log
+import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.FileIOUtils
 import com.blankj.utilcode.util.PathUtils
 import com.blankj.utilcode.util.Utils
 import com.lizl.wtmg.custom.other.CustomActivityLifecycle
+import com.lizl.wtmg.module.backup.BackupUtil
 import com.lizl.wtmg.module.config.util.ConfigUtil
 import com.lizl.wtmg.module.skin.util.SkinUtil
 import com.lizl.wtmg.mvvm.activity.MoneyTracesRecordActivity
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class UiApplication : Application(), Thread.UncaughtExceptionHandler
 {
@@ -32,6 +37,8 @@ class UiApplication : Application(), Thread.UncaughtExceptionHandler
         registerActivityLifecycleCallbacks(CustomActivityLifecycle)
 
         setupShortcuts()
+
+        BackupUtil.init()
 
         Thread.setDefaultUncaughtExceptionHandler(this)
     }

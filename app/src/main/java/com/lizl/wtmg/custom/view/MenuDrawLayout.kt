@@ -2,15 +2,19 @@ package com.lizl.wtmg.custom.view
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.blankj.utilcode.util.ToastUtils
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.EventConstant
+import com.lizl.wtmg.module.backup.BackupUtil
 import com.lizl.wtmg.module.config.constant.ConfigConstant
 import com.lizl.wtmg.module.config.util.ConfigUtil
+import com.lizl.wtmg.mvvm.activity.BackupFileListActivity
 import com.lizl.wtmg.mvvm.adapter.SettingListAdapter
 import com.lizl.wtmg.mvvm.model.setting.*
+import com.lizl.wtmg.util.ActivityUtil
 import com.lizl.wtmg.util.BiometricAuthenticationUtil
-import com.lizl.wtmg.util.PopupUtil
+import com.lizl.wtmg.custom.popup.PopupUtil
 import com.lxj.xpopup.core.DrawerPopupView
 import kotlinx.android.synthetic.main.layout_drawer_menu.view.*
 import kotlinx.coroutines.GlobalScope
@@ -109,6 +113,18 @@ class MenuDrawLayout(private val fragment: Fragment) : DrawerPopupView(fragment.
                     add(fingerprintUnlockItem)
                 }
             }
+
+            add(DividerSettingModel())
+
+            add(NormalSettingModel(context.getString(R.string.data_backup), R.drawable.ic_baseline_backup_24) {
+                BackupUtil.backupData {
+                    ToastUtils.showShort(if (it) context.getString(R.string.success_to_backup_data) else context.getString(R.string.failed_to_backup_data))
+                }
+            })
+
+            add(NormalSettingModel(context.getString(R.string.data_restore), R.drawable.ic_baseline_restore_24) {
+                ActivityUtil.turnToActivity(BackupFileListActivity::class.java)
+            })
 
             add(DividerSettingModel())
 

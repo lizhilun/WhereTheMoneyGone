@@ -5,7 +5,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.blankj.utilcode.util.Utils
 import com.lizl.wtmg.db.dao.MoneyTracesDao
-import com.lizl.wtmg.db.dao.CapitalAccountDao
+import com.lizl.wtmg.db.dao.AccountDao
 import com.lizl.wtmg.db.model.MoneyTracesModel
 import com.lizl.wtmg.db.model.AccountModel
 
@@ -24,5 +24,5 @@ abstract class AppDatabase : RoomDatabase()
 
     abstract fun getMoneyTracesDao(): MoneyTracesDao
 
-    abstract fun getAccountDao(): CapitalAccountDao
+    abstract fun getAccountDao(): AccountDao
 }

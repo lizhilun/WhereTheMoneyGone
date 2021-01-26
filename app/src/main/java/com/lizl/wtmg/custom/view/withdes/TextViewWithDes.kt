@@ -63,7 +63,7 @@ class TextViewWithDes(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
 
         when (typeArray.getInt(R.styleable.TextViewWithDes_viewType, VIEW_TYPE_TOP_BOTTOM))
         {
-            VIEW_TYPE_START_END  ->
+            VIEW_TYPE_START_END ->
             {
                 constraintSet.connect(tvDec.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
                 constraintSet.connect(tvDec.id, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
