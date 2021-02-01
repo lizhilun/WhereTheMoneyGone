@@ -14,11 +14,13 @@ class QuantityListAdapter : BaseQuickAdapter<QuantityModel, BaseViewHolder>(R.la
 {
     private var maxPositive = 0.0
     private var minComplex = 0.0
+    private var maxProgress = 0.0
 
     fun setData(data: MutableList<QuantityModel>)
     {
         maxPositive = data.maxOf { it.quantity }
         minComplex = data.minOf { it.quantity }
+        maxProgress = abs(maxPositive).coerceAtLeast(abs(minComplex))
         super.setNewData(data)
     }
 
@@ -35,22 +37,22 @@ class QuantityListAdapter : BaseQuickAdapter<QuantityModel, BaseViewHolder>(R.la
                 {
                     npb_complex.isInvisible = true
                     npb_positive.isVisible = true
-                    npb_positive.max = maxPositive.toInt()
+                    npb_positive.max = maxProgress.toInt()
                     npb_positive.progress = item.quantity.toInt()
                 }
                 else
                 {
                     npb_positive.isVisible = false
                     npb_complex.isVisible = true
-                    npb_complex.max = abs(minComplex).toInt()
-                    npb_complex.progress = (item.quantity - minComplex).toInt()
+                    npb_complex.max = maxProgress.toInt()
+                    npb_complex.progress = (maxProgress + item.quantity).toInt()
                 }
             }
             else
             {
                 npb_complex.isVisible = false
                 npb_positive.isVisible = true
-                npb_positive.max = maxPositive.toInt()
+                npb_positive.max = maxProgress.toInt()
                 npb_positive.progress = item.quantity.toInt()
             }
         }

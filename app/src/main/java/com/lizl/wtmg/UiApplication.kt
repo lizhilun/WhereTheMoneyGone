@@ -47,10 +47,10 @@ class UiApplication : Application(), Thread.UncaughtExceptionHandler
     {
         val exceptionInfo = Log.getStackTraceString(e)
         Log.d(TAG, "uncaughtException() called with: t = [$t], e = [$exceptionInfo]")
-        GlobalScope.launch {
-            FileIOUtils.writeFileFromString(exceptionLogFilePath, exceptionInfo, true)
-            AppUtils.relaunchApp(true)
-        }
+//        GlobalScope.launch {
+//            FileIOUtils.writeFileFromString(exceptionLogFilePath, exceptionInfo, true)
+//            AppUtils.relaunchApp(true)
+//        }
     }
 
     private fun setupShortcuts()
