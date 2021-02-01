@@ -21,10 +21,10 @@ data class AccountModel(@PrimaryKey(autoGenerate = true)
                         var showInTotal: Boolean,
 
                         @ColumnInfo
-                        var amount: Float = 0F,
+                        var amount: Double = 0.0,
 
                         @ColumnInfo
-                        var totalQuota: Float = 0F,
+                        var totalQuota: Double = 0.0,
 
                         @ColumnInfo
-                        var usedQuota: Float = 0F)
+                        var usedQuota: Double = 0.0)

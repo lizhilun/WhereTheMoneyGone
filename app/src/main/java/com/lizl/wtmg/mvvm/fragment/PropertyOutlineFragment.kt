@@ -44,7 +44,7 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
     {
         val date = DateUtil.Date()
 
-        AppDatabase.getInstance().getMoneyTracesDao().queryTracesByMonth(date.month).observe(this, Observer { tracesList ->
+        AppDatabase.getInstance().getMoneyTracesDao().obTracesByMonth(date.year, date.month).observe(this, Observer { tracesList ->
 
             GlobalScope.launch {
 

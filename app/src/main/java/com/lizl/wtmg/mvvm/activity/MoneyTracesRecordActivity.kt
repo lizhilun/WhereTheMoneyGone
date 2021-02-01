@@ -224,14 +224,14 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
 
         val moneyTracesModel = when (curPageType)
         {
-            PAGE_TYPE_EXPENDITURE -> MoneyTracesModel(amonunt = amount.toFloat(), tracesType = expenditureType, tracesCategory = traceCategory,
+            PAGE_TYPE_EXPENDITURE -> MoneyTracesModel(amonunt = amount.toDouble(), tracesType = expenditureType, tracesCategory = traceCategory,
                     accountType = accountType, recordTime = selectTime.timeInMills, recordYear = selectTime.year, recordMonth = selectTime.month,
                     recordDay = selectTime.day)
 
-            PAGE_TYPE_INCOME -> MoneyTracesModel(amonunt = amount.toFloat(), tracesType = incomeType, tracesCategory = traceCategory, accountType = accountType,
+            PAGE_TYPE_INCOME -> MoneyTracesModel(amonunt = amount.toDouble(), tracesType = incomeType, tracesCategory = traceCategory, accountType = accountType,
                     recordTime = selectTime.timeInMills, recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)
 
-            else                  -> MoneyTracesModel(amonunt = amount.toFloat(), tracesType = AppConstant.TRANSFER_TYPE_TRANSFER,
+            else                  -> MoneyTracesModel(amonunt = amount.toDouble(), tracesType = AppConstant.TRANSFER_TYPE_TRANSFER,
                     tracesCategory = traceCategory, accountType = accountTransferView.getOutAccountType(), recordTime = selectTime.timeInMills,
                     recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day,
                     transferToAccount = accountTransferView.getInAccountType())

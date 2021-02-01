@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.lizl.wtmg.custom.view.StatusBarPlaceholder
+            android:id="@+id/view_status_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/global_toolbar_height"
+            app:layout_constraintTop_toBottomOf="@+id/view_status_holder">
+
+            <com.lizl.wtmg.module.skin.view.SkinImageView
+                android:id="@+id/iv_back"
+                style="@style/ToolbarLayoutBackButtonStyle"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                android:tint="@color/colorSvgTint"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.lizl.wtmg.module.skin.view.SkinImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_baseline_arrow_drop_down_24"
+                android:tint="@color/colorSvgTint"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_statistics_month"
+                app:layout_constraintEnd_toEndOf="@+id/tv_statistics_month"
+                app:layout_constraintTop_toTopOf="@+id/tv_statistics_month" />
+
+            <skin.support.widget.SkinCompatTextView
+                android:id="@+id/tv_statistics_month"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:textColor="@color/colorTextColor"
+                android:textSize="@dimen/global_text_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_tool_bar">
+
+            <skin.support.widget.SkinCompatLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <skin.support.constraint.SkinCompatConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/global_content_padding_edge_half"
+                    android:layout_marginEnd="@dimen/global_content_padding_edge_half"
+                    android:background="@drawable/bg_content">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_expenditure_statistics"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:overScrollMode="never"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                </skin.support.constraint.SkinCompatConstraintLayout>
+            </skin.support.widget.SkinCompatLinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

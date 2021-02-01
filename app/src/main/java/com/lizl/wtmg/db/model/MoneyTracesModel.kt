@@ -11,7 +11,7 @@ data class MoneyTracesModel(
         var id: Long = 0L,
 
         @ColumnInfo
-        var amonunt: Float,
+        var amonunt: Double = 0.0,
 
         @ColumnInfo
         var tracesType: String,

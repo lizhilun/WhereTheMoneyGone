@@ -9,13 +9,16 @@ import com.lizl.wtmg.db.model.MoneyTracesModel
 interface MoneyTracesDao : BaseDao<MoneyTracesModel>
 {
     @Query("select * from MoneyTraces")
-    fun queryAllTraces(): MutableList<MoneyTracesModel>
+    fun obAllTraces(): MutableList<MoneyTracesModel>
 
-    @Query("select * from MoneyTraces where recordMonth == :month order by recordTime desc")
-    fun queryTracesByMonth(month: Int): LiveData<MutableList<MoneyTracesModel>>
+    @Query("select * from MoneyTraces where recordYear == :year and recordMonth == :month order by recordTime desc")
+    fun obTracesByMonth(year: Int, month: Int): LiveData<MutableList<MoneyTracesModel>>
+
+    @Query("select * from MoneyTraces where recordYear == :year and recordMonth == :month order by recordTime desc")
+    fun queryTracesByMonth(year: Int, month: Int): MutableList<MoneyTracesModel>
 
     @Query("select * from MoneyTraces where accountType == :accountType order by recordTime desc")
-    fun queryTracesByAccount(accountType: String): LiveData<MutableList<MoneyTracesModel>>
+    fun obTracesByAccount(accountType: String): LiveData<MutableList<MoneyTracesModel>>
 
     @Query("select * from MoneyTraces")
     fun obAllTracesForBackup(): LiveData<MutableList<MoneyTracesModel>>

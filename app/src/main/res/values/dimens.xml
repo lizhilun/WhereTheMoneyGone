@@ -42,4 +42,6 @@
     <dimen name="dialog_button_width">60dp</dimen>
     <dimen name="dialog_title_text_size">@dimen/global_text_size_biggest</dimen>
 
+    <dimen name="count_statistics_progress_bar_height">10dp</dimen>
+
 </resources>

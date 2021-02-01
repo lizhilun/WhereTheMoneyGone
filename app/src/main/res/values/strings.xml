@@ -53,6 +53,7 @@
     <string name="transfer_in">收款</string>
 
     <string name="main_image_config">主图设置</string>
+    <string name="statistics">报表统计</string>
     <string name="dark_mode_config">暗黑模式</string>
     <string name="app_lock_config">应用锁</string>
     <string name="modify_app_lock_password">修改密码</string>
@@ -135,5 +136,18 @@
     <string name="notify_share_backup_file">是否分享该备份文件？</string>
     <string name="input_encrypt_password">密码错误，输入备份数据时使用的密码</string>
     <string name="notify_success_to_restore">数据还原成功</string>
+
+    <string name="January">一月</string>
+    <string name="February">二月</string>
+    <string name="March">三月</string>
+    <string name="April">四月</string>
+    <string name="May">五月</string>
+    <string name="June">六月</string>
+    <string name="July">七月</string>
+    <string name="August">八月</string>
+    <string name="September">九月</string>
+    <string name="October">十月</string>
+    <string name="November">十一月</string>
+    <string name="December">十二月</string>
 
 </resources>

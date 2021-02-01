@@ -67,7 +67,7 @@ object AccountDataManager
         AppDatabase.getInstance().getAccountDao().insert(payAccountModel)
     }
 
-    private fun handleMoneyOut(accountModel: AccountModel, amount: Float)
+    private fun handleMoneyOut(accountModel: AccountModel, amount: Double)
     {
         if (accountModel.category == AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL)
         {
@@ -83,7 +83,7 @@ object AccountDataManager
         }
     }
 
-    private fun handleMoneyIn(accountModel: AccountModel, amount: Float)
+    private fun handleMoneyIn(accountModel: AccountModel, amount: Double)
     {
         handleMoneyOut(accountModel, 0 - amount)
     }

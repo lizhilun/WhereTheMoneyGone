@@ -89,7 +89,7 @@ object BackupUtil
     {
         val backupFileName = "${backupJob.backupFileName}$fileSuffixName"
         val accountList = AppDatabase.getInstance().getAccountDao().queryAllAccount()
-        val tracesList = AppDatabase.getInstance().getMoneyTracesDao().queryAllTraces()
+        val tracesList = AppDatabase.getInstance().getMoneyTracesDao().obAllTraces()
         val backupDataModel = BackupDataModel(accountList, tracesList)
 
         val dataString = GsonUtils.toJson(backupDataModel)

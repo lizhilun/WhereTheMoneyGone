@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<skin.support.widget.SkinCompatLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_dialog_bg"
+    android:orientation="vertical">
+
+    <skin.support.design.widget.SkinMaterialTabLayout
+        android:id="@+id/tl_year"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        app:tabIndicatorFullWidth="false"
+        app:tabMode="scrollable"
+        app:tabTextAppearance="@style/GlobalTextStyle" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_month"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="4" />
+
+</skin.support.widget.SkinCompatLinearLayout>

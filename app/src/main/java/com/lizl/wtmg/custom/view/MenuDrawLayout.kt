@@ -15,6 +15,7 @@ import com.lizl.wtmg.mvvm.model.setting.*
 import com.lizl.wtmg.util.ActivityUtil
 import com.lizl.wtmg.util.BiometricAuthenticationUtil
 import com.lizl.wtmg.custom.popup.PopupUtil
+import com.lizl.wtmg.mvvm.activity.StatisticsActivity
 import com.lxj.xpopup.core.DrawerPopupView
 import kotlinx.android.synthetic.main.layout_drawer_menu.view.*
 import kotlinx.coroutines.GlobalScope
@@ -99,6 +100,10 @@ class MenuDrawLayout(private val fragment: Fragment) : DrawerPopupView(fragment.
 
             add(NormalSettingModel(context.getString(R.string.main_image_config), R.drawable.ic_baseline_main_pic_24) {
                 LiveEventBus.get(EventConstant.EVENT_GO_TO_COVER_IMAGE_SELECTION).post(true)
+            })
+
+            add(NormalSettingModel(context.getString(R.string.statistics), R.drawable.ic_baseline_statistics_24) {
+                ActivityUtil.turnToActivity(StatisticsActivity::class.java)
             })
 
             add(DividerSettingModel())

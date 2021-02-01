@@ -123,6 +123,12 @@ object PopupUtil
         showDialog(TimePickerDialog(context, timeSetListener, hour, minute, true))
     }
 
+    fun showMonthSelectPopup(listener: (year: Int, month: Int) -> Unit)
+    {
+        val context = ActivityUtils.getTopActivity() ?: return
+        showPopup(XPopup.Builder(context).asCustom(MonthSelectPopup(context, listener)))
+    }
+
     fun dismissAll()
     {
         GlobalScope.launch(Dispatchers.Main) {

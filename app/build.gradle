@@ -86,4 +86,5 @@ dependencies {
     implementation 'com.jeremyliao:live-event-bus-x:1.7.3'
     implementation 'com.github.yalantis:ucrop:2.2.6'
     implementation 'com.jungly:gridPasswordView:0.3'
+    implementation 'com.daimajia.numberprogressbar:library:1.4@aar'
 }

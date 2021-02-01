@@ -152,12 +152,12 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
 
             if (accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL || accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT)
             {
-                accountModel.amount = amount?.toFloat() ?: 0F
+                accountModel.amount = amount?.toDouble() ?: 0.0
             }
             else if (accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT)
             {
-                accountModel.totalQuota = totalQuota?.toFloat() ?: 0F
-                accountModel.usedQuota = usedQuota?.toFloat() ?: 0F
+                accountModel.totalQuota = totalQuota?.toDouble() ?: 0.0
+                accountModel.usedQuota = usedQuota?.toDouble() ?: 0.0
             }
 
             AppDatabase.getInstance().getAccountDao().insert(accountModel)
