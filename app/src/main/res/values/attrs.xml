@@ -30,4 +30,8 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="QuantityStatisticsView">
+        <attr name="title" format="string|reference" />
+    </declare-styleable>
+
 </resources>

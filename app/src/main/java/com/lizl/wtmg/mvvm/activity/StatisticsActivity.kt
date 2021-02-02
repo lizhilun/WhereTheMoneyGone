@@ -7,7 +7,6 @@ import com.lizl.wtmg.custom.popup.PopupUtil
 import com.lizl.wtmg.databinding.ActivityStatisticsBinding
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.MoneyTracesModel
-import com.lizl.wtmg.mvvm.adapter.QuantityListAdapter
 import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.mvvm.model.statistics.QuantityModel
 import com.lizl.wtmg.util.DateUtil.Date
@@ -17,14 +16,9 @@ import kotlinx.coroutines.launch
 
 class StatisticsActivity : BaseActivity<ActivityStatisticsBinding>(R.layout.activity_statistics)
 {
-    private val expenditureTypeAdapter = QuantityListAdapter()
-    private val financialTransactionsTypeAdapter = QuantityListAdapter()
 
     override fun initView()
     {
-        rv_expenditure_statistics.adapter = expenditureTypeAdapter
-        rv_financial_transactions_statistics.adapter = financialTransactionsTypeAdapter
-
         val curDate = Date()
         tv_statistics_month.text = String.format("%d.%02d", curDate.year, curDate.month)
         showStatistics(curDate.year, curDate.month)
@@ -61,7 +55,7 @@ class StatisticsActivity : BaseActivity<ActivityStatisticsBinding>(R.layout.acti
             expenditureQuantityList.add(QuantityModel(t, u.sumByDouble { it.amonunt }))
         }
         expenditureQuantityList.sortByDescending { it.quantity }
-        GlobalScope.ui { expenditureTypeAdapter.setData(expenditureQuantityList) }
+        GlobalScope.ui { qsv_expenditure_statistics.setStatisticsData(expenditureQuantityList) }
     }
 
     private fun showFinancialTransactions(traceList: MutableList<MoneyTracesModel>)
@@ -74,6 +68,6 @@ class StatisticsActivity : BaseActivity<ActivityStatisticsBinding>(R.layout.acti
             financialTransactionsQuantityList.add(QuantityModel(t, u.sumByDouble { it.amonunt }))
         }
         financialTransactionsQuantityList.sortByDescending { it.quantity }
-        GlobalScope.ui { financialTransactionsTypeAdapter.setData(financialTransactionsQuantityList) }
+        GlobalScope.ui { qsv_financial_transactions_statistics.setStatisticsData(financialTransactionsQuantityList) }
     }
 }
