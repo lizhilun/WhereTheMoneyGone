@@ -19,7 +19,7 @@ class QuantityListAdapter : BaseQuickAdapter<QuantityModel, BaseViewHolder>(R.la
     fun setData(data: MutableList<QuantityModel>)
     {
         maxPositive = data.maxOfOrNull { it.quantity } ?: 0.0
-        minComplex = data.maxOfOrNull { it.quantity } ?: 0.0
+        minComplex = data.minOfOrNull { it.quantity } ?: 0.0
         maxProgress = abs(maxPositive).coerceAtLeast(abs(minComplex))
         super.setNewData(data)
     }

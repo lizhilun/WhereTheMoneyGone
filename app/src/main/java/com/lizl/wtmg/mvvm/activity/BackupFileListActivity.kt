@@ -1,6 +1,5 @@
 package com.lizl.wtmg.mvvm.activity
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
@@ -8,6 +7,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.function.getFileName
+import com.lizl.wtmg.custom.function.setOnItemClickListener
 import com.lizl.wtmg.custom.function.ui
 import com.lizl.wtmg.custom.popup.PopupUtil
 import com.lizl.wtmg.custom.popup.operaion.OperationModel
@@ -50,7 +50,7 @@ class BackupFileListActivity : BaseActivity<ActivityBackupFileListBinding>(R.lay
     {
         ctb_title.setOnBackBtnClickListener { onBackPressed() }
 
-        backupFileListAdapter.setOnFileItemClickListener { backupFile ->
+        backupFileListAdapter.setOnItemClickListener { backupFile ->
 
             val operationList = mutableListOf<OperationModel>().apply {
 
