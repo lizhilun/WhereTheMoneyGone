@@ -21,7 +21,7 @@
         android:background="@null"
         android:gravity="center_vertical|end"
         android:hint="@string/please_input"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:maxLength="8"
         android:maxLines="1"
         android:paddingStart="@dimen/global_content_padding_edge"

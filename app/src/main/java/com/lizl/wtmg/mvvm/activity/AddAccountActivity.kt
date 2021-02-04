@@ -122,21 +122,21 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
 
     private fun onSaveBtnClick()
     {
-        val amount = layout_account_amount.getEditText().toIntOrNull()
+        val amount = layout_account_amount.getEditText().toDoubleOrNull()
         if ((accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL || accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT) && amount == null)
         {
             ToastUtils.showShort(R.string.please_input_amount)
             return
         }
 
-        val totalQuota = layout_total_quota.getEditText().toIntOrNull()
+        val totalQuota = layout_total_quota.getEditText().toDoubleOrNull()
         if (accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT && totalQuota == null)
         {
             ToastUtils.showShort(R.string.please_input_total_quota)
             return
         }
 
-        val usedQuota = layout_used_quota.getEditText().toIntOrNull()
+        val usedQuota = layout_used_quota.getEditText().toDoubleOrNull()
         if (accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT && usedQuota == null)
         {
             ToastUtils.showShort(R.string.please_input_used_quota)
@@ -152,12 +152,12 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
 
             if (accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL || accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT)
             {
-                accountModel.amount = amount?.toDouble() ?: 0.0
+                accountModel.amount = amount ?: 0.0
             }
             else if (accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT)
             {
-                accountModel.totalQuota = totalQuota?.toDouble() ?: 0.0
-                accountModel.usedQuota = usedQuota?.toDouble() ?: 0.0
+                accountModel.totalQuota = totalQuota ?: 0.0
+                accountModel.usedQuota = usedQuota ?: 0.0
             }
 
             AppDatabase.getInstance().getAccountDao().insert(accountModel)

@@ -6,6 +6,7 @@ import com.lizl.wtmg.R
 import com.lizl.wtmg.R.dimen
 import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.function.getIcon
+import com.lizl.wtmg.custom.function.toAmountStr
 import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.databinding.FragmentPropertyManagerBinding
@@ -37,28 +38,30 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
     {
         AppDatabase.getInstance().getAccountDao().obAllAccount().observe(this, Observer { allAccountList ->
 
-            dataBinding.totalProperty = allAccountList.sumBy { it.amount.toInt() }
-            dataBinding.netProperty = allAccountList.sumBy {
+            dataBinding.totalProperty = allAccountList.sumByDouble { it.amount }
+            dataBinding.netProperty = allAccountList.sumByDouble {
                 when (it.category)
                 {
-                    AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> 0 - it.usedQuota.toInt()
-                    else                                     -> it.amount.toInt()
+                    AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> 0 - it.usedQuota
+                    else                                     -> it.amount
                 }
             }
-            dataBinding.totalLiabilities = allAccountList.sumBy { it.usedQuota.toInt() }
+            dataBinding.totalLiabilities = allAccountList.sumByDouble { it.usedQuota }
 
             val polymerizeGroupList = mutableListOf<PolymerizeGroupModel>()
             allAccountList.groupBy { it.category }.forEach { (category, accountList) ->
                 polymerizeGroupList.add(PolymerizeGroupModel(category.translate(), when (category)
                 {
-                    AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> "${accountList.sumBy { it.usedQuota.toInt() }}/${accountList.sumBy { it.totalQuota.toInt() }}"
-                    else                                     -> accountList.sumBy { it.amount.toInt() }.toString()
+                    AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> "${accountList.sumByDouble { it.usedQuota }.toAmountStr()}/${
+                        accountList.sumByDouble { it.totalQuota }.toAmountStr()
+                    }"
+                    else                                     -> accountList.sumByDouble { it.amount }.toAmountStr()
                 }, mutableListOf<PolymerizeChildModel>().apply {
                     accountList.forEach { accountModel ->
                         add(PolymerizeChildModel(accountModel.type.getIcon(), accountModel.type.translate(), when (category)
                         {
-                            AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> "${accountModel.usedQuota.toInt()}/${accountModel.totalQuota.toInt()}"
-                            else                                     -> accountModel.amount.toInt().toString()
+                            AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> "${accountModel.usedQuota.toAmountStr()}/${accountModel.totalQuota.toAmountStr()}"
+                            else                                     -> accountModel.amount.toAmountStr()
                         }, accountModel))
                     }
                 }))

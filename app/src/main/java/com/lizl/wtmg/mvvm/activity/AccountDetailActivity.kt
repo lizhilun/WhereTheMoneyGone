@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import com.lizl.wtmg.R
 import com.lizl.wtmg.R.dimen
 import com.lizl.wtmg.constant.AppConstant
+import com.lizl.wtmg.custom.function.toAmountStr
 import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.custom.function.ui
 import com.lizl.wtmg.custom.view.ListDividerItemDecoration
@@ -48,10 +49,10 @@ class AccountDetailActivity : BaseActivity<ActivityAccountDetailBinding>(R.layou
                     AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT ->
                     {
                         tv_account_outline.setDecText(getString(R.string.used_quota))
-                        tv_account_outline.setMainText(accountModel.usedQuota.toInt().toString())
+                        tv_account_outline.setMainText(accountModel.usedQuota.toAmountStr())
 
                         tv_account_info_1.setDecText(getString(R.string.total_quota))
-                        tv_account_info_1.setMainText(accountModel.totalQuota.toInt().toString())
+                        tv_account_info_1.setMainText(accountModel.totalQuota.toAmountStr())
 
                         tv_account_info_2.setDecText(getString(R.string.used_quota_rate))
                         tv_account_info_2.setMainText(String.format("%.2f%%", accountModel.usedQuota * 100 / accountModel.totalQuota))
@@ -59,12 +60,12 @@ class AccountDetailActivity : BaseActivity<ActivityAccountDetailBinding>(R.layou
                     AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT ->
                     {
                         tv_account_outline.setDecText(getString(R.string.account_balance))
-                        tv_account_outline.setMainText("${accountModel.amount.toInt()}")
+                        tv_account_outline.setMainText(accountModel.amount.toAmountStr())
 
                         AppDatabase.getInstance().getMoneyTracesDao().obTracesByAccount(accountModel.type).observe(this, Observer { tracesList ->
-                            val totalProfit = tracesList.filter { it.tracesType == AppConstant.INCOME_TYPE_FINANCIAL_TRANSACTIONS }.sumBy { it.amonunt.toInt() }
+                            val totalProfit = tracesList.filter { it.tracesType == AppConstant.INCOME_TYPE_FINANCIAL_TRANSACTIONS }.sumByDouble { it.amonunt }
                             tv_account_info_1.setDecText(getString(R.string.total_profit))
-                            tv_account_info_1.setMainText(totalProfit.toString())
+                            tv_account_info_1.setMainText(totalProfit.toAmountStr())
 
                             tv_account_info_2.setDecText(getString(R.string.profit_rate))
                             tv_account_info_2.setMainText(String.format("%.2f%%", totalProfit * 100 / (accountModel.amount - totalProfit)))
@@ -73,7 +74,7 @@ class AccountDetailActivity : BaseActivity<ActivityAccountDetailBinding>(R.layou
                     else                                         ->
                     {
                         tv_account_outline.setDecText(getString(R.string.account_balance))
-                        tv_account_outline.setMainText("${accountModel.amount.toInt()}")
+                        tv_account_outline.setMainText(accountModel.amount.toAmountStr())
 
                         tv_account_info_1.isVisible = false
                         tv_account_info_2.isVisible = false

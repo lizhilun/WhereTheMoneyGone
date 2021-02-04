@@ -72,4 +72,11 @@ object DataBindUtil
     {
         textView.text = amount.toAmountStr()
     }
+
+    @JvmStatic
+    @BindingAdapter("app:amount")
+    fun bindAmount(textView: TextViewWithDes, amount: Double)
+    {
+        textView.setMainText(amount.toAmountStr())
+    }
 }
