@@ -110,7 +110,7 @@
     <string name="account_balance">账户余额</string>
     <string name="total_profit">总收益</string>
     <string name="profit_rate">收益率</string>
-    <string name="used_quota_rate">使用率</string>
+    <string name="remaining_quota">剩余额度</string>
 
     <string name="please_input_password_to_confirm">请输入密码进行验证</string>
     <string name="please_input_old_password">请输入旧密码</string>

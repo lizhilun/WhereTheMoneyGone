@@ -46,7 +46,7 @@ class AccountDetailActivity : BaseActivity<ActivityAccountDetailBinding>(R.layou
             AppDatabase.getInstance().getAccountDao().queryAccountByType(accountType)?.let { accountModel ->
                 when (accountModel.category)
                 {
-                    AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT ->
+                    AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT     ->
                     {
                         tv_account_outline.setDecText(getString(R.string.used_quota))
                         tv_account_outline.setMainText(accountModel.usedQuota.toAmountStr())
@@ -54,8 +54,8 @@ class AccountDetailActivity : BaseActivity<ActivityAccountDetailBinding>(R.layou
                         tv_account_info_1.setDecText(getString(R.string.total_quota))
                         tv_account_info_1.setMainText(accountModel.totalQuota.toAmountStr())
 
-                        tv_account_info_2.setDecText(getString(R.string.used_quota_rate))
-                        tv_account_info_2.setMainText(String.format("%.2f%%", accountModel.usedQuota * 100 / accountModel.totalQuota))
+                        tv_account_info_2.setDecText(getString(R.string.remaining_quota))
+                        tv_account_info_2.setMainText((accountModel.totalQuota - accountModel.usedQuota).toAmountStr())
                     }
                     AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT ->
                     {

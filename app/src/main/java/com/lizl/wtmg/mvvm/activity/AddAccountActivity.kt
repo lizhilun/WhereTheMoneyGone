@@ -5,8 +5,10 @@ import com.blankj.utilcode.util.ToastUtils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.function.getIcon
+import com.lizl.wtmg.custom.function.toAmountStr
 import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.custom.function.ui
+import com.lizl.wtmg.custom.popup.PopupUtil
 import com.lizl.wtmg.databinding.ActivityAddAccountBinding
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.AccountModel
@@ -14,7 +16,6 @@ import com.lizl.wtmg.module.account.AccountManager
 import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeModel
-import com.lizl.wtmg.custom.popup.PopupUtil
 import kotlinx.android.synthetic.main.activity_add_account.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -48,9 +49,9 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
 
         if (accountModel != null)
         {
-            layout_account_amount.setEditText(accountModel.amount.toInt().toString())
-            layout_total_quota.setEditText(accountModel.totalQuota.toInt().toString())
-            layout_used_quota.setEditText(accountModel.usedQuota.toInt().toString())
+            layout_account_amount.setEditText(accountModel.amount.toAmountStr())
+            layout_total_quota.setEditText(accountModel.totalQuota.toAmountStr())
+            layout_used_quota.setEditText(accountModel.usedQuota.toAmountStr())
 
             showAccountCategory(accountModel.category)
             showAccountType(accountModel.type)
