@@ -6,10 +6,12 @@ import android.text.style.AbsoluteSizeSpan
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.blankj.utilcode.util.SizeUtils
+import com.lizl.wtmg.custom.function.toAmountStr
 import com.lizl.wtmg.custom.view.withdes.TextViewWithDes
 
 object DataBindUtil
@@ -62,5 +64,12 @@ object DataBindUtil
     fun bindText(textView: TextViewWithDes, text: Any?)
     {
         textView.setMainText(text?.toString() ?: "")
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:amount")
+    fun bindAmount(textView: TextView, amount: Double)
+    {
+        textView.text = amount.toAmountStr()
     }
 }

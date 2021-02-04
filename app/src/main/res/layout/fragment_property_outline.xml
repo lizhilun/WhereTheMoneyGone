@@ -6,11 +6,11 @@
 
         <variable
             name="monthExpenditure"
-            type="Integer" />
+            type="Double" />
 
         <variable
             name="monthIncome"
-            type="Integer" />
+            type="Double" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,10 +61,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/global_content_padding_content"
-                    android:text="@{String.valueOf(monthExpenditure)}"
                     android:textColor="@color/colorTextColor_dark"
                     android:textSize="@dimen/global_text_size_bigger"
                     android:textStyle="bold"
+                    app:amount="@{monthExpenditure}"
                     app:layout_constraintBottom_toTopOf="@+id/tv_month_income_des"
                     app:layout_constraintStart_toStartOf="@+id/tv_month_income_des" />
 
@@ -85,9 +85,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/global_text_size"
-                    android:text="@{String.valueOf(monthIncome)}"
                     android:textColor="@color/colorTextColor_dark"
                     android:textSize="@dimen/global_text_size_smaller"
+                    app:amount="@{monthIncome}"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_month_income_des"
                     app:layout_constraintStart_toEndOf="@+id/tv_month_income_des"
                     app:layout_constraintTop_toTopOf="@+id/tv_month_income_des" />
@@ -109,9 +109,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/global_text_size"
-                    android:text="@{String.valueOf(monthIncome - monthExpenditure)}"
                     android:textColor="@color/colorTextColor_dark"
                     android:textSize="@dimen/global_text_size_smaller"
+                    app:amount="@{monthIncome - monthExpenditure}"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_month_income_des"
                     app:layout_constraintStart_toEndOf="@+id/tv_month_balance_des"
                     app:layout_constraintTop_toTopOf="@+id/tv_month_income_des" />

@@ -2,6 +2,7 @@ package com.lizl.wtmg.module.account
 
 import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.function.getIcon
+import com.lizl.wtmg.custom.function.toAmountStr
 import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.db.model.MoneyTracesModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
@@ -50,18 +51,18 @@ object AccountManager
 
             val dateInfo = String.format("%02d-%02d", u.first().recordMonth, u.first().recordDay)
 
-            val amountInfo = u.sumBy {
+            val amountInfo = u.sumByDouble {
                 when (it.tracesCategory)
                 {
-                    AppConstant.MONEY_TRACES_CATEGORY_INCOME -> it.amonunt.toInt()
-                    AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> 0 - it.amonunt.toInt()
-                    else                                          -> 0
+                    AppConstant.MONEY_TRACES_CATEGORY_INCOME -> it.amonunt
+                    AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> 0 - it.amonunt
+                    else                                          -> 0.0
                 }
-            }.toString()
+            }.toAmountStr()
 
             val childList = mutableListOf<PolymerizeChildModel>().apply {
                 u.forEach { tracesModel ->
-                    add(PolymerizeChildModel(tracesModel.tracesCategory.getIcon(), tracesModel.tracesType.translate(), tracesModel.amonunt.toInt().toString(),
+                    add(PolymerizeChildModel(tracesModel.tracesCategory.getIcon(), tracesModel.tracesType.translate(), tracesModel.amonunt.toAmountStr(),
                             tracesModel))
                 }
             }

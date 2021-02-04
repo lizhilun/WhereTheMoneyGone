@@ -15,5 +15,4 @@ class NumberKeyAdapter : BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_
             tv_name.isVisible = item.isNotBlank()
         }
     }
-
 }

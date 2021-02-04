@@ -34,4 +34,9 @@
         <attr name="title" format="string|reference" />
     </declare-styleable>
 
+    <declare-styleable name="NumberInputView">
+        <attr name="mainActionText" format="string|reference" />
+        <attr name="subActionText" format="string|reference" />
+    </declare-styleable>
+
 </resources>

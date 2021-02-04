@@ -7,12 +7,30 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.lang.StringBuilder
 
-fun String.backspace(): String
+fun StringBuilder.backspace()
 {
-    return if (length <= 1) ""
-    else substring(0, length - 1)
+    if (length == 0)
+    {
+        return
+    }
+    deleteAt(length - 1)
+}
+
+fun Double.toAmountStr(): String
+{
+    val doubleStr = "%.2f".format(this)
+    val oneAfterPoint = doubleStr[doubleStr.lastIndex - 1]
+    val twoAfterPoint = doubleStr.last()
+    return if (twoAfterPoint == '0')
+    {
+        if (oneAfterPoint == '0') this.toInt().toString()
+        else  "%.1f".format(this)
+    }
+    else
+    {
+        "%.2f".format(this)
+    }
 }
 
 fun String.delete(str: String): String
@@ -33,11 +51,6 @@ fun <T> BaseQuickAdapter<T, *>.update(model: T)
         if (it < 0) return
         setData(it, model)
     }
-}
-
-fun StringBuilder.clear()
-{
-    this.delete(0, length)
 }
 
 fun Uri.getFileName(context: Context): String?

@@ -25,8 +25,6 @@ import kotlinx.coroutines.launch
 
 class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>(R.layout.activity_money_record_traces)
 {
-    private var inputTemp = ""
-
     private var accountType = ""
     private var selectTime = DateUtil.Date()
     private var expenditureType = AppConstant.EXPENDITURE_TYPE_MEALS
@@ -45,8 +43,6 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
 
     override fun initView()
     {
-        clearInput()
-
         val expenditureTypeSelectionView = SingleSelectionView(this).apply {
             val expenditureTypeList = mutableListOf<SingleSelectionModel>()
             AccountManager.expenditureTypeList.forEach {
@@ -88,26 +84,22 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
     {
         iv_back.setOnClickListener { onBackPressed() }
 
-        view_input_key.setOnKeyClickListener { onNewKeyInput(it) }
+        view_number_input.setOnTextChangedListener { tv_input_amount.text = it }
 
-        iv_backspace.setOnClickListener(true) {
-            onNewKeyInput("D")
-        }
-
-        tv_record_one_more.setOnClickListener(true) {
-            GlobalScope.launch {
-                if (saveInput())
-                {
-                    clearInput()
-                }
-            }
-        }
-
-        tv_save.setOnClickListener(true) {
+        view_number_input.setOnMainActionClickListener {
             GlobalScope.launch {
                 if (saveInput())
                 {
                     GlobalScope.launch(Dispatchers.Main) { onBackPressed() }
+                }
+            }
+        }
+
+        view_number_input.setOnSubActionClickListener {
+            GlobalScope.launch {
+                if (saveInput())
+                {
+                    view_number_input.clearInput()
                 }
             }
         }
@@ -139,66 +131,11 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
         }
     }
 
-    private fun clearInput()
-    {
-        GlobalScope.launch(Dispatchers.Main) {
-            inputTemp = ""
-            tv_input_amount.text = "0"
-        }
-    }
-
-    private fun onNewKeyInput(key: String)
-    {
-        when (key)
-        {
-            "D" -> inputTemp = inputTemp.backspace()
-            "-", "+" ->
-            {
-                cluInput()
-                inputTemp += key
-            }
-            else     -> inputTemp += key
-        }
-
-        tv_input_amount.text = if (inputTemp.isBlank()) "0" else inputTemp
-    }
-
-    private fun cluInput()
-    {
-        arrayListOf("-", "+").forEach { operator ->
-            if (!inputTemp.contains(operator)) return@forEach
-            val inputInfo = inputTemp.split(operator)
-
-            var numberOne = 0
-            var numberTwo = 0
-
-            if (inputTemp.startsWith("-"))
-            {
-                if (inputInfo.size != 3) return@forEach
-                numberOne = 1 - inputInfo[1].toInt()
-                numberTwo = inputInfo[2].toInt()
-            }
-            else
-            {
-                if (inputInfo.size != 2) return@forEach
-                numberOne = inputInfo[0].toInt()
-                numberTwo = inputInfo[1].toInt()
-            }
-            when (operator)
-            {
-                "-" -> inputTemp = (numberOne - numberTwo).toString()
-                "+" -> inputTemp = (numberOne + numberTwo).toString()
-            }
-        }
-    }
-
     private fun saveInput(): Boolean
     {
-        cluInput()
+        val amount = view_number_input.getInputNumber()
 
-        val amount = inputTemp.toIntOrNull() ?: 0
-
-        if (amount == 0)
+        if (amount == 0.0)
         {
             ToastUtils.showShort(R.string.please_input_amount)
             return false
@@ -224,17 +161,15 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
 
         val moneyTracesModel = when (curPageType)
         {
-            PAGE_TYPE_EXPENDITURE -> MoneyTracesModel(amonunt = amount.toDouble(), tracesType = expenditureType, tracesCategory = traceCategory,
-                    accountType = accountType, recordTime = selectTime.timeInMills, recordYear = selectTime.year, recordMonth = selectTime.month,
-                    recordDay = selectTime.day)
-
-            PAGE_TYPE_INCOME -> MoneyTracesModel(amonunt = amount.toDouble(), tracesType = incomeType, tracesCategory = traceCategory, accountType = accountType,
+            PAGE_TYPE_EXPENDITURE -> MoneyTracesModel(amonunt = amount, tracesType = expenditureType, tracesCategory = traceCategory, accountType = accountType,
                     recordTime = selectTime.timeInMills, recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)
 
-            else                  -> MoneyTracesModel(amonunt = amount.toDouble(), tracesType = AppConstant.TRANSFER_TYPE_TRANSFER,
-                    tracesCategory = traceCategory, accountType = accountTransferView.getOutAccountType(), recordTime = selectTime.timeInMills,
-                    recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day,
-                    transferToAccount = accountTransferView.getInAccountType())
+            PAGE_TYPE_INCOME -> MoneyTracesModel(amonunt = amount, tracesType = incomeType, tracesCategory = traceCategory, accountType = accountType,
+                    recordTime = selectTime.timeInMills, recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)
+
+            else                  -> MoneyTracesModel(amonunt = amount, tracesType = AppConstant.TRANSFER_TYPE_TRANSFER, tracesCategory = traceCategory,
+                    accountType = accountTransferView.getOutAccountType(), recordTime = selectTime.timeInMills, recordYear = selectTime.year,
+                    recordMonth = selectTime.month, recordDay = selectTime.day, transferToAccount = accountTransferView.getInAccountType())
         }
 
         AccountDataManager.addMoneyTraces(moneyTracesModel)

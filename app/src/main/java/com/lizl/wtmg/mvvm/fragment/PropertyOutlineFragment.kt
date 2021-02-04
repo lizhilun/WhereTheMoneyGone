@@ -50,11 +50,11 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
 
                 dataBinding.monthExpenditure = tracesList.filter {
                     it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
-                }.sumBy { it.amonunt.toInt() }
+                }.sumByDouble { it.amonunt }
 
                 dataBinding.monthIncome = tracesList.filter {
                     it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
-                }.sumBy { it.amonunt.toInt() }
+                }.sumByDouble { it.amonunt }
 
                 val polymerizeGroupList = AccountManager.polymerizeTrancesList(tracesList)
 
