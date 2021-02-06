@@ -30,7 +30,14 @@ class StatisticsActivity : BaseActivity<ActivityStatisticsBinding>(R.layout.acti
 
         tv_statistics_month.setOnClickListener {
             PopupUtil.showMonthSelectPopup { year, month ->
-                tv_statistics_month.text = String.format("%d.%02d", year, month)
+                if (month == 0)
+                {
+                    tv_statistics_month.text = "${year}${getString(R.string.whole_year)}"
+                }
+                else
+                {
+                    tv_statistics_month.text = String.format("%d.%02d", year, month)
+                }
                 showStatistics(year, month)
             }
         }
@@ -39,7 +46,14 @@ class StatisticsActivity : BaseActivity<ActivityStatisticsBinding>(R.layout.acti
     private fun showStatistics(year: Int, month: Int)
     {
         GlobalScope.launch {
-            val traceList = AppDatabase.getInstance().getMoneyTracesDao().queryTracesByMonth(year, month)
+            val traceList = if (month == 0)
+            {
+                AppDatabase.getInstance().getMoneyTracesDao().queryTracesByYear(year)
+            }
+            else
+            {
+                AppDatabase.getInstance().getMoneyTracesDao().queryTracesByMonth(year, month)
+            }
             showExpenditureTypeStatistics(traceList)
             showFinancialTransactions(traceList)
         }

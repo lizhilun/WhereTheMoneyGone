@@ -35,6 +35,11 @@ class MonthSelectPopup(context: Context, private val listener: (year: Int, month
                 dismiss()
             }
         }
+
+        tv_whole_year.setOnClickListener {
+            listener.invoke(curYear - tl_year.selectedTabPosition, 0)
+            dismiss()
+        }
     }
 
     class MonthGridAdapter(monthList: MutableList<String>) : BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_month, monthList)

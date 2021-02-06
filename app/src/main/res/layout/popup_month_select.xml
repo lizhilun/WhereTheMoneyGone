@@ -23,4 +23,14 @@
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="4" />
 
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_whole_year"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="@string/whole_year"
+        android:textColor="@color/colorTextColor"
+        android:textSize="@dimen/global_text_size_bigger" />
+
 </skin.support.widget.SkinCompatLinearLayout>

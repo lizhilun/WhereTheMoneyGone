@@ -149,6 +149,7 @@
     <string name="October">十月</string>
     <string name="November">十一月</string>
     <string name="December">十二月</string>
+    <string name="whole_year">全年</string>
 
     <string name="expenditure_statistics">支出统计</string>
     <string name="financial_transactions_statistics">理财统计</string>
