@@ -3,7 +3,6 @@ package com.lizl.wtmg.util
 import android.app.Activity
 import android.content.Intent
 import com.blankj.utilcode.util.ActivityUtils
-import com.lizl.wtmg.custom.other.CustomActivityLifecycle
 import java.io.Serializable
 
 object ActivityUtil

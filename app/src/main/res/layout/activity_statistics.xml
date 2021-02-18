@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <import type="java.util.ArrayList" />
+
+        <import type="com.lizl.wtmg.mvvm.model.statistics.QuantityModel" />
+
+        <variable
+            name="expenditure"
+            type="Double" />
+
+        <variable
+            name="income"
+            type="Double" />
+
+        <variable
+            name="expenditureStatistics"
+            type="ArrayList&lt;QuantityModel>" />
+
+        <variable
+            name="incomeStatistics"
+            type="ArrayList&lt;QuantityModel>" />
+
+        <variable
+            name="financialTransactionsStatistics"
+            type="ArrayList&lt;QuantityModel>" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -59,32 +83,101 @@
             android:layout_height="0dp"
             android:overScrollMode="never"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cl_tool_bar">
+            app:layout_constraintTop_toBottomOf="@+id/cl_tool_bar"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="0dp">
 
             <skin.support.widget.SkinCompatLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/global_content_padding_edge">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/global_content_padding_edge_half"
+                    android:layout_marginTop="@dimen/global_content_padding_edge_half"
+                    android:layout_marginEnd="@dimen/global_content_padding_edge_half"
+                    android:background="@drawable/bg_content"
+                    android:paddingTop="@dimen/global_content_padding_edge"
+                    android:paddingBottom="@dimen/global_content_padding_edge">
+
+                    <com.lizl.wtmg.custom.view.withdes.TextViewWithDes
+                        android:id="@+id/tv_balance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:amount="@{income - expenditure}"
+                        app:decTextStr="@string/balance"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:mainTextAppearance="@style/GlobalTextStyle" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/gl_center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.5" />
+
+                    <com.lizl.wtmg.custom.view.withdes.TextViewWithDes
+                        android:id="@+id/tv_income"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/global_content_padding_content"
+                        app:amount="@{income}"
+                        app:decTextStr="@string/income"
+                        app:layout_constraintEnd_toEndOf="@+id/gl_center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_balance"
+                        app:mainTextAppearance="@style/GlobalTextStyle" />
+
+                    <com.lizl.wtmg.custom.view.withdes.TextViewWithDes
+                        android:id="@+id/tv_expenditure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:amount="@{expenditure}"
+                        app:decTextStr="@string/expenditure"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/gl_center"
+                        app:layout_constraintTop_toTopOf="@+id/tv_income"
+                        app:mainTextAppearance="@style/GlobalTextStyle" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <com.lizl.wtmg.custom.view.QuantityStatisticsView
                     android:id="@+id/qsv_expenditure_statistics"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/global_content_padding_edge_half"
+                    android:layout_marginTop="@dimen/global_content_padding_content"
                     android:layout_marginEnd="@dimen/global_content_padding_edge_half"
                     android:background="@drawable/bg_content"
+                    app:statistics="@{expenditureStatistics}"
                     app:title="@string/expenditure_statistics" />
+
+                <com.lizl.wtmg.custom.view.QuantityStatisticsView
+                    android:id="@+id/qsv_income_statistics"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/global_content_padding_edge_half"
+                    android:layout_marginTop="@dimen/global_content_padding_content"
+                    android:layout_marginEnd="@dimen/global_content_padding_edge_half"
+                    android:background="@drawable/bg_content"
+                    app:statistics="@{incomeStatistics}"
+                    app:title="@string/income_statistics" />
 
                 <com.lizl.wtmg.custom.view.QuantityStatisticsView
                     android:id="@+id/qsv_financial_transactions_statistics"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/global_content_padding_edge_half"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/global_content_padding_content"
                     android:layout_marginEnd="@dimen/global_content_padding_edge_half"
                     android:background="@drawable/bg_content"
+                    app:statistics="@{financialTransactionsStatistics}"
                     app:title="@string/financial_transactions_statistics" />
-
             </skin.support.widget.SkinCompatLinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

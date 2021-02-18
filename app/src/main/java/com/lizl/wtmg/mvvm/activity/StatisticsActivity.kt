@@ -2,7 +2,6 @@ package com.lizl.wtmg.mvvm.activity
 
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
-import com.lizl.wtmg.custom.function.ui
 import com.lizl.wtmg.custom.popup.PopupUtil
 import com.lizl.wtmg.databinding.ActivityStatisticsBinding
 import com.lizl.wtmg.db.AppDatabase
@@ -54,34 +53,25 @@ class StatisticsActivity : BaseActivity<ActivityStatisticsBinding>(R.layout.acti
             {
                 AppDatabase.getInstance().getMoneyTracesDao().queryTracesByMonth(year, month)
             }
-            showExpenditureTypeStatistics(traceList)
-            showFinancialTransactions(traceList)
+
+            dataBinding.expenditure = traceList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE }.sumByDouble { it.amonunt }
+            dataBinding.income = traceList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME }.sumByDouble { it.amonunt }
+
+            dataBinding.expenditureStatistics =
+                    tracesToQuantities(traceList, { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE }, { it.tracesType })
+            dataBinding.incomeStatistics = tracesToQuantities(traceList, { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME }, { it.tracesType })
+            dataBinding.financialTransactionsStatistics =
+                    tracesToQuantities(traceList, { it.tracesType == AppConstant.INCOME_TYPE_FINANCIAL_TRANSACTIONS }, { it.accountType })
         }
     }
 
-    private fun showExpenditureTypeStatistics(traceList: MutableList<MoneyTracesModel>)
+    private fun tracesToQuantities(traceList: MutableList<MoneyTracesModel>, filterCondition: (MoneyTracesModel) -> Boolean,
+                                   groupCondition: (MoneyTracesModel) -> String): ArrayList<QuantityModel>
     {
-        val expenditureList = traceList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE }
-        val expenditureTypeMap = expenditureList.groupBy { it.tracesType }
-
-        val expenditureQuantityList = mutableListOf<QuantityModel>()
-        expenditureTypeMap.forEach { (t, u) ->
-            expenditureQuantityList.add(QuantityModel(t, u.sumByDouble { it.amonunt }))
-        }
-        expenditureQuantityList.sortByDescending { it.quantity }
-        GlobalScope.ui { qsv_expenditure_statistics.setStatisticsData(expenditureQuantityList) }
-    }
-
-    private fun showFinancialTransactions(traceList: MutableList<MoneyTracesModel>)
-    {
-        val financialTransactionsList = traceList.filter { it.tracesType == AppConstant.INCOME_TYPE_FINANCIAL_TRANSACTIONS }
-        val financialTransactionsTypeMap = financialTransactionsList.groupBy { it.accountType }
-
-        val financialTransactionsQuantityList = mutableListOf<QuantityModel>()
-        financialTransactionsTypeMap.forEach { (t, u) ->
-            financialTransactionsQuantityList.add(QuantityModel(t, u.sumByDouble { it.amonunt }))
-        }
-        financialTransactionsQuantityList.sortByDescending { it.quantity }
-        GlobalScope.ui { qsv_financial_transactions_statistics.setStatisticsData(financialTransactionsQuantityList) }
+        return ArrayList(mutableListOf<QuantityModel>().apply {
+            traceList.filter { filterCondition.invoke(it) }.groupBy { groupCondition.invoke(it) }
+                .forEach { (t, u) -> add(QuantityModel(t, u.sumByDouble { it.amonunt })) }
+            sortByDescending { it.quantity }
+        })
     }
 }

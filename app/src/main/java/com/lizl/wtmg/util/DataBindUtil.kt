@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.blankj.utilcode.util.SizeUtils
 import com.lizl.wtmg.custom.function.toAmountStr
+import com.lizl.wtmg.custom.view.QuantityStatisticsView
 import com.lizl.wtmg.custom.view.withdes.TextViewWithDes
+import com.lizl.wtmg.mvvm.model.statistics.QuantityModel
 
 object DataBindUtil
 {
@@ -78,5 +80,12 @@ object DataBindUtil
     fun bindAmount(textView: TextViewWithDes, amount: Double)
     {
         textView.setMainText(amount.toAmountStr())
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:statistics")
+    fun bindStatistics(view: QuantityStatisticsView, statistics: ArrayList<QuantityModel>?)
+    {
+        view.setStatisticsData(statistics.orEmpty().toMutableList())
     }
 }
