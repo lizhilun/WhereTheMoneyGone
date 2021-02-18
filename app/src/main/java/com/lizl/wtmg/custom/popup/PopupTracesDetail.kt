@@ -1,6 +1,7 @@
 package com.lizl.wtmg.custom.popup
 
 import android.content.Context
+import com.blankj.utilcode.util.StringUtils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.db.model.MoneyTracesModel
@@ -8,6 +9,8 @@ import com.lizl.wtmg.module.account.AccountDataManager
 import com.lizl.wtmg.util.DateUtil
 import com.lxj.xpopup.core.BottomPopupView
 import kotlinx.android.synthetic.main.layout_money_traces_detail.view.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class PopupTracesDetail(context: Context, private val tracesModel: MoneyTracesModel) : BottomPopupView(context)
 {
@@ -27,8 +30,16 @@ class PopupTracesDetail(context: Context, private val tracesModel: MoneyTracesMo
         layout_traces_time.setMainText(tracesTime.toFormatString())
 
         tv_delete.setOnClickListener {
-            AccountDataManager.deleteExpenditure(tracesModel)
+            AccountDataManager.deleteMoneyTraces(tracesModel)
             dismiss()
+        }
+
+        tv_modify.setOnClickListener {
+            PopupUtil.showInputPopup(StringUtils.getString(R.string.please_input_amount)) { input ->
+                GlobalScope.launch {
+                    input.toDoubleOrNull()?.let { AccountDataManager.modifyMoneyTraces(tracesModel, it) }
+                }
+            }
         }
     }
 }

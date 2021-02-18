@@ -15,14 +15,8 @@ object AccountDataManager
 
         when (moneyTracesModel.tracesCategory)
         {
-            AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE ->
-            {
-                handleMoneyOut(payAccountModel, moneyTracesModel.amonunt)
-            }
-            AppConstant.MONEY_TRACES_CATEGORY_INCOME ->
-            {
-                handleMoneyIn(payAccountModel, moneyTracesModel.amonunt)
-            }
+            AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> handleMoneyOut(payAccountModel, moneyTracesModel.amonunt)
+            AppConstant.MONEY_TRACES_CATEGORY_INCOME -> handleMoneyIn(payAccountModel, moneyTracesModel.amonunt)
             AppConstant.MONEY_TRACES_CATEGORY_TRANSFER ->
             {
                 handleMoneyOut(payAccountModel, moneyTracesModel.amonunt)
@@ -37,7 +31,7 @@ object AccountDataManager
         AppDatabase.getInstance().getAccountDao().insert(payAccountModel)
     }
 
-    fun deleteExpenditure(moneyTracesModel: MoneyTracesModel)
+    fun deleteMoneyTraces(moneyTracesModel: MoneyTracesModel)
     {
         AppDatabase.getInstance().getMoneyTracesDao().delete(moneyTracesModel)
 
@@ -45,14 +39,8 @@ object AccountDataManager
 
         when (moneyTracesModel.tracesCategory)
         {
-            AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE ->
-            {
-                handleMoneyIn(payAccountModel, moneyTracesModel.amonunt)
-            }
-            AppConstant.MONEY_TRACES_CATEGORY_INCOME ->
-            {
-                handleMoneyOut(payAccountModel, moneyTracesModel.amonunt)
-            }
+            AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> handleMoneyIn(payAccountModel, moneyTracesModel.amonunt)
+            AppConstant.MONEY_TRACES_CATEGORY_INCOME -> handleMoneyOut(payAccountModel, moneyTracesModel.amonunt)
             AppConstant.MONEY_TRACES_CATEGORY_TRANSFER ->
             {
                 handleMoneyIn(payAccountModel, moneyTracesModel.amonunt)
@@ -67,19 +55,39 @@ object AccountDataManager
         AppDatabase.getInstance().getAccountDao().insert(payAccountModel)
     }
 
+    fun modifyMoneyTraces(moneyTracesModel: MoneyTracesModel, amount: Double)
+    {
+        val modifyAmount = amount - moneyTracesModel.amonunt
+
+        val payAccountModel = AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.accountType) ?: return
+
+        when (moneyTracesModel.tracesCategory)
+        {
+            AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> handleMoneyOut(payAccountModel, modifyAmount)
+            AppConstant.MONEY_TRACES_CATEGORY_INCOME -> handleMoneyIn(payAccountModel, modifyAmount)
+            AppConstant.MONEY_TRACES_CATEGORY_TRANSFER ->
+            {
+                handleMoneyOut(payAccountModel, modifyAmount)
+
+                AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.transferToAccount)?.let { inAccountModel ->
+                    handleMoneyIn(inAccountModel, modifyAmount)
+                    AppDatabase.getInstance().getAccountDao().insert(inAccountModel)
+                }
+            }
+        }
+
+        moneyTracesModel.amonunt = amount
+        AppDatabase.getInstance().getMoneyTracesDao().insert(moneyTracesModel)
+        AppDatabase.getInstance().getAccountDao().insert(payAccountModel)
+    }
+
     private fun handleMoneyOut(accountModel: AccountModel, amount: Double)
     {
-        if (accountModel.category == AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL)
+        when (accountModel.category)
         {
-            accountModel.amount -= amount
-        }
-        else if (accountModel.category == AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT)
-        {
-            accountModel.usedQuota += amount
-        }
-        else if (accountModel.category == AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT)
-        {
-            accountModel.amount -= amount
+            AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL -> accountModel.amount -= amount
+            AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> accountModel.usedQuota += amount
+            AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT -> accountModel.amount -= amount
         }
     }
 
