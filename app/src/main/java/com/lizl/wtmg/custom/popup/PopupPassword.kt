@@ -110,6 +110,13 @@ class PopupPassword(context: Context, private val passwordOperation: Int, privat
         gpv_password.postDelayed({ gpv_password.clearPassword() }, if (needDelay) 100L else 0)
     }
 
+    override fun doAfterDismiss()
+    {
+        super.doAfterDismiss()
+
+        KeyboardUtils.hideSoftInput(gpv_password)
+    }
+
     enum class OperationState
     {
         CheckState

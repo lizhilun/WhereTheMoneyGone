@@ -6,14 +6,14 @@ object DateUtil
 {
     class Date(var timeInMills: Long)
     {
+        private val calendar = Calendar.getInstance()
+
         constructor() : this(System.currentTimeMillis())
 
         init
         {
             set(timeInMills)
         }
-
-        private val calendar = Calendar.getInstance()
 
         var year = 0
         var month = 0
@@ -38,7 +38,6 @@ object DateUtil
         fun set(timeInMills: Long)
         {
             this.timeInMills = timeInMills
-            val calendar = Calendar.getInstance()
             calendar.timeInMillis = timeInMills
             year = calendar.get(Calendar.YEAR)
             month = calendar.get(Calendar.MONTH) + 1
@@ -46,6 +45,18 @@ object DateUtil
             hour = calendar.get(Calendar.HOUR_OF_DAY)
             minute = calendar.get(Calendar.MINUTE)
             second = calendar.get(Calendar.SECOND)
+        }
+
+        fun toFormatString(showSecond: Boolean = false): String
+        {
+            return if (showSecond)
+            {
+                "%d-%02d-%02d %02d:%02d:%02d".format(year, month, day, hour, minute, second)
+            }
+            else
+            {
+                "%d-%02d-%02d %02d:%02d".format(year, month, day, hour, minute)
+            }
         }
     }
 }

@@ -49,7 +49,7 @@ object AccountManager
 
         tracesList.groupBy { it.recordDay }.forEach { (_, u) ->
 
-            val dateInfo = String.format("%02d-%02d", u.first().recordMonth, u.first().recordDay)
+            val dateInfo = "%02d-%02d".format(u.first().recordMonth, u.first().recordDay)
 
             val amountInfo = u.sumByDouble {
                 when (it.tracesCategory)

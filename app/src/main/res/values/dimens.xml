@@ -13,6 +13,7 @@
     <dimen name="global_content_padding_edge">20dp</dimen>
     <dimen name="global_content_padding_edge_half">10dp</dimen>
     <dimen name="global_content_padding_content">20dp</dimen>
+    <dimen name="global_content_padding_bottom_fab">80dp</dimen>
     <dimen name="global_text_line_spacing">5dp</dimen>
     <dimen name="global_divider_line_size">1px</dimen>
     <dimen name="global_frame_line_size">1px</dimen>

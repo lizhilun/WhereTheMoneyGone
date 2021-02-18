@@ -77,7 +77,7 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
         }).attach()
 
         tv_account.text = "${getString(R.string.account)}：${accountType.translate()}"
-        tv_time.text = String.format("%d-%02d-%02d %02d:%02d", selectTime.year, selectTime.month, selectTime.day, selectTime.hour, selectTime.minute)
+        tv_time.text = selectTime.toFormatString()
     }
 
     override fun initListener()
@@ -117,8 +117,7 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
                     PopupUtil.showTimePickerDialog(selectTime.hour, selectTime.minute) { _, hourOfDay, minute ->
                         run {
                             selectTime.set(year, month + 1, dayOfMonth, hourOfDay, minute, 0)
-                            tv_time.text = String.format("%d-%02d-%02d %02d:%02d", selectTime.year, selectTime.month, selectTime.day, selectTime.hour,
-                                    selectTime.minute)
+                            tv_time.text = selectTime.toFormatString()
                         }
                     }
                 }

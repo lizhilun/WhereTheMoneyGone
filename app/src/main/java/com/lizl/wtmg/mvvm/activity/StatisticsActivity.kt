@@ -20,7 +20,7 @@ class StatisticsActivity : BaseActivity<ActivityStatisticsBinding>(R.layout.acti
     override fun initView()
     {
         val curDate = Date()
-        tv_statistics_month.text = String.format("%d.%02d", curDate.year, curDate.month)
+        tv_statistics_month.text = "%d.%02d".format(curDate.year, curDate.month)
         showStatistics(curDate.year, curDate.month)
     }
 
@@ -36,7 +36,7 @@ class StatisticsActivity : BaseActivity<ActivityStatisticsBinding>(R.layout.acti
                 }
                 else
                 {
-                    tv_statistics_month.text = String.format("%d.%02d", year, month)
+                    tv_statistics_month.text = "%d.%02d".format(year, month)
                 }
                 showStatistics(year, month)
             }

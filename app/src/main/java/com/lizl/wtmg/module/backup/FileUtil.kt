@@ -127,10 +127,10 @@ object FileUtil
         return when
         {
             len < 0                  -> "0B"
-            len < 1024               -> String.format(Locale.getDefault(), "%.1fB", len.toDouble())
-            len < 1024 * 1024        -> String.format(Locale.getDefault(), "%.1fKB", len.toDouble() / 1024)
-            len < 1024 * 1024 * 1024 -> String.format(Locale.getDefault(), "%.1fMB", len.toDouble() / (1024 * 1024))
-            else                     -> String.format(Locale.getDefault(), "%.1fGB", len.toDouble() / (1024 * 1024 * 1024))
+            len < 1024               -> "%.1fB".format(len.toDouble())
+            len < 1024 * 1024        -> "%.1fKB".format(len.toDouble() / 1024)
+            len < 1024 * 1024 * 1024 -> "%.1fMB".format(len.toDouble() / (1024 * 1024))
+            else                     -> "%.1fGB".format(len.toDouble() / (1024 * 1024 * 1024))
         }
     }
 

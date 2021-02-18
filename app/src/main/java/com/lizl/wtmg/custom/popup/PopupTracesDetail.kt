@@ -24,8 +24,7 @@ class PopupTracesDetail(context: Context, private val tracesModel: MoneyTracesMo
         layout_traces_type.setMainText(tracesModel.tracesType.translate())
 
         val tracesTime = DateUtil.Date(tracesModel.recordTime)
-        layout_traces_time.setMainText(String.format("%d-%02d-%02d %02d:%02d", tracesTime.year, tracesTime.month,
-                tracesTime.day, tracesTime.hour, tracesTime.minute))
+        layout_traces_time.setMainText(tracesTime.toFormatString())
 
         tv_delete.setOnClickListener {
             AccountDataManager.deleteExpenditure(tracesModel)
