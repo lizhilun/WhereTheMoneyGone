@@ -2,6 +2,7 @@ package com.lizl.wtmg.custom.view.selection
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.lizl.wtmg.custom.function.setOnItemClickListener
 import com.lizl.wtmg.custom.function.update
@@ -21,6 +22,7 @@ class SingleSelectionView(context: Context, attrs: AttributeSet?, defStyleAttr: 
     {
         adapter = singleSelectionAdapter
         layoutManager = GridLayoutManager(context, 5)
+        overScrollMode = View.OVER_SCROLL_NEVER
 
         singleSelectionAdapter.setOnItemClickListener(true) { model ->
             if (model.isSelected) return@setOnItemClickListener

@@ -112,15 +112,9 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
         }
 
         tv_time.setOnClickListener(true) {
-            PopupUtil.showDatePickerDialog(selectTime.year, selectTime.month - 1, selectTime.day) { _, year, month, dayOfMonth ->
-                run {
-                    PopupUtil.showTimePickerDialog(selectTime.hour, selectTime.minute) { _, hourOfDay, minute ->
-                        run {
-                            selectTime.set(year, month + 1, dayOfMonth, hourOfDay, minute, 0)
-                            tv_time.text = selectTime.toFormatString()
-                        }
-                    }
-                }
+            PopupUtil.showDataAndTimePickerDialog {
+                selectTime = it
+                tv_time.text = selectTime.toFormatString()
             }
         }
 

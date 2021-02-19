@@ -27,8 +27,8 @@ object DateUtil
             this.year = year
             this.month = month
             this.day = day
-            this.hour = day
-            this.minute = day
+            this.hour = hour
+            this.minute = minute
             this.second = second
 
             calendar.set(year, month - 1, day, hour, minute, second)
