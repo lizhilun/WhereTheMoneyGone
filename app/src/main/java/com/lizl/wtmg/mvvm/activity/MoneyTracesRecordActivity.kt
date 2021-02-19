@@ -27,7 +27,7 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
 {
     private var accountType = ""
     private var selectTime = DateUtil.Date()
-    private var expenditureType = AppConstant.EXPENDITURE_TYPE_MEALS
+    private var expenditureType = AppConstant.EXPENDITURE_TYPE_BUY_FOOD
     private var incomeType = AppConstant.INCOME_TYPE_WAGES
     private var transferCharge = 0.0
 
@@ -80,13 +80,16 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
         tv_account.text = "${getString(R.string.account)}：${accountType.translate()}"
         tv_time.text = selectTime.toFormatString()
         tv_transfer_charge.text = "${getString(R.string.brokerage)}：${transferCharge.toAmountStr()}"
+        tv_input_amount.text = "0.0"
     }
 
     override fun initListener()
     {
         iv_back.setOnClickListener { onBackPressed() }
 
-        view_number_input.setOnTextChangedListener { tv_input_amount.text = it }
+        view_number_input.setOnTextChangedListener {
+            tv_input_amount.text = if (it.isBlank()) "0.0" else it
+        }
 
         view_number_input.setOnMainActionClickListener {
             GlobalScope.launch {

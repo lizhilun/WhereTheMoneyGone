@@ -7,7 +7,6 @@ import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.db.model.MoneyTracesModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
-import java.util.concurrent.locks.*
 
 object AccountManager
 {
@@ -20,11 +19,13 @@ object AccountManager
     private val investmentAccountList =
             listOf(AppConstant.ACCOUNT_TYPE_ALI_PAY_FUND, AppConstant.ACCOUNT_TYPE_JD_FINANCE, AppConstant.ACCOUNT_TYPE_TIANTIAN_FUND)
 
-    val expenditureTypeList = listOf(AppConstant.EXPENDITURE_TYPE_MEALS, AppConstant.EXPENDITURE_TYPE_SNACKS, AppConstant.EXPENDITURE_TYPE_CLOTHES,
-            AppConstant.EXPENDITURE_TYPE_NECESSARY, AppConstant.EXPENDITURE_TYPE_RENT, AppConstant.EXPENDITURE_TYPE_GAME,
+    val expenditureTypeList = listOf(AppConstant.EXPENDITURE_TYPE_BUY_FOOD, AppConstant.EXPENDITURE_TYPE_TAKEAWAY, AppConstant.EXPENDITURE_TYPE_SNACKS,
+            AppConstant.EXPENDITURE_TYPE_CLOTHES, AppConstant.EXPENDITURE_TYPE_NECESSARY, AppConstant.EXPENDITURE_TYPE_RENT, AppConstant.EXPENDITURE_TYPE_GAME,
             AppConstant.EXPENDITURE_TYPE_HOUSING_LOAN, AppConstant.EXPENDITURE_TYPE_LIVE_PAYMENT, AppConstant.EXPENDITURE_TYPE_BROKERAGE,
             AppConstant.EXPENDITURE_TYPE_TRAFFIC, AppConstant.EXPENDITURE_TYPE_MEMBERSHIP, AppConstant.EXPENDITURE_TYPE_DIGITAL,
-            AppConstant.EXPENDITURE_TYPE_TRANSFER_OUT, AppConstant.EXPENDITURE_TYPE_ENTERTAINMENT, AppConstant.EXPENDITURE_TYPE_RED_ENVELOPES)
+            AppConstant.EXPENDITURE_TYPE_TRANSFER_OUT, AppConstant.EXPENDITURE_TYPE_ENTERTAINMENT, AppConstant.EXPENDITURE_TYPE_RED_ENVELOPES,
+            AppConstant.EXPENDITURE_TYPE_EAT_OUT, AppConstant.EXPENDITURE_TYPE_MEDICAL_CARE, AppConstant.EXPENDITURE_TYPE_HOTEL,
+            AppConstant.EXPENDITURE_TYPE_HOUSEHOLD_GOODS)
 
     val incomeTypeList = listOf(AppConstant.INCOME_TYPE_WAGES, AppConstant.INCOME_TYPE_RED_ENVELOPES, AppConstant.INCOME_TYPE_SECOND_HAND,
             AppConstant.INCOME_TYPE_FINANCIAL_TRANSACTIONS, AppConstant.INCOME_TYPE_TRANSFER_IN)

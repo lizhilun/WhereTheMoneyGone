@@ -20,7 +20,8 @@ object AppConstant
     const val ACCOUNT_CATEGORY_TYPE_CREDIT = "credit"
     const val ACCOUNT_CATEGORY_TYPE_INVESTMENT = "investment"
 
-    const val EXPENDITURE_TYPE_MEALS = "meals"
+    const val EXPENDITURE_TYPE_BUY_FOOD = "buy food"
+    const val EXPENDITURE_TYPE_TAKEAWAY = "takeaway"
     const val EXPENDITURE_TYPE_SNACKS = "snacks"
     const val EXPENDITURE_TYPE_CLOTHES = "clothes"
     const val EXPENDITURE_TYPE_RENT = "rent"
@@ -35,6 +36,10 @@ object AppConstant
     const val EXPENDITURE_TYPE_TRANSFER_OUT = "transfer out"
     const val EXPENDITURE_TYPE_ENTERTAINMENT = "entertainment"
     const val EXPENDITURE_TYPE_RED_ENVELOPES = "send red envelopes"
+    const val EXPENDITURE_TYPE_EAT_OUT = "eat out"
+    const val EXPENDITURE_TYPE_MEDICAL_CARE = "medical"
+    const val EXPENDITURE_TYPE_HOTEL = "hotel"
+    const val EXPENDITURE_TYPE_HOUSEHOLD_GOODS = "household goods"
 
     const val INCOME_TYPE_WAGES = "wages"
     const val INCOME_TYPE_SECOND_HAND = "second hand"

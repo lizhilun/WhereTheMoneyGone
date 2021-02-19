@@ -15,6 +15,7 @@
     <string name="amount">金额</string>
     <string name="category">分类</string>
     <string name="time">时间</string>
+    <string name="others">其他</string>
 
     <string name="record_one">记一笔</string>
 
@@ -32,7 +33,8 @@
     <string name="please_input_total_quota">请输入总额度</string>
     <string name="please_input_used_quota">请输入已用额度</string>
 
-    <string name="meals">三餐</string>
+    <string name="buy_food">买菜</string>
+    <string name="takeaway">外卖</string>
     <string name="snacks">零食</string>
     <string name="clothes">衣服</string>
     <string name="rent">房租</string>
@@ -46,6 +48,10 @@
     <string name="digital">数码</string>
     <string name="transfer_out">转出</string>
     <string name="entertainment">娱乐</string>
+    <string name="eat_out">下馆子</string>
+    <string name="medical_care">医疗</string>
+    <string name="hotel">酒店住宿</string>
+    <string name="household_goods">家具电器</string>
 
     <string name="wages">工资</string>
     <string name="second_hand">二手</string>
