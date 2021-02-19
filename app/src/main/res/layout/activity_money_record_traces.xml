@@ -70,6 +70,17 @@
                 app:layout_constraintBottom_toTopOf="@+id/cl_record_info"
                 app:layout_constraintEnd_toEndOf="parent" />
 
+            <skin.support.widget.SkinCompatTextView
+                android:id="@+id/tv_transfer_charge_mode"
+                style="@style/GlobalTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/global_content_padding_edge"
+                android:text="@string/brokerage"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_input_amount"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_input_amount" />
+
             <skin.support.constraint.SkinCompatConstraintLayout
                 android:id="@+id/cl_record_info"
                 android:layout_width="match_parent"
@@ -104,6 +115,21 @@
                     app:layout_constraintStart_toEndOf="@+id/tv_account"
                     app:layout_constraintTop_toTopOf="@+id/tv_account"
                     app:layout_goneMarginStart="@dimen/global_content_padding_edge_half" />
+
+                <skin.support.widget.SkinCompatTextView
+                    android:id="@+id/tv_transfer_charge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/global_content_padding_edge"
+                    android:background="@drawable/bg_click_secondary_content_ripple"
+                    android:padding="@dimen/global_content_padding_edge_half"
+                    android:textColor="@color/colorTextColor"
+                    android:textSize="@dimen/global_text_size_smaller"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_account"
+                    app:layout_constraintStart_toEndOf="@+id/tv_time"
+                    app:layout_constraintTop_toTopOf="@+id/tv_account"
+                    app:layout_goneMarginStart="@dimen/global_content_padding_edge_half" />
+
             </skin.support.constraint.SkinCompatConstraintLayout>
 
             <com.lizl.wtmg.custom.view.NumberInputView

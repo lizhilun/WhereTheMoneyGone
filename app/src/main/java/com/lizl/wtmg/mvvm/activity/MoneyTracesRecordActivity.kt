@@ -29,6 +29,7 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
     private var selectTime = DateUtil.Date()
     private var expenditureType = AppConstant.EXPENDITURE_TYPE_MEALS
     private var incomeType = AppConstant.INCOME_TYPE_WAGES
+    private var transferCharge = 0.0
 
     private var curPageType = PAGE_TYPE_EXPENDITURE
 
@@ -78,6 +79,7 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
 
         tv_account.text = "${getString(R.string.account)}：${accountType.translate()}"
         tv_time.text = selectTime.toFormatString()
+        tv_transfer_charge.text = "${getString(R.string.brokerage)}：${transferCharge.toAmountStr()}"
     }
 
     override fun initListener()
@@ -121,12 +123,30 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
         vp_type.registerOnPageChangeCallback {
             curPageType = it
             tv_account.isVisible = it != PAGE_TYPE_TRANSFER
+            tv_transfer_charge.isVisible = it == PAGE_TYPE_TRANSFER
+            tv_transfer_charge_mode.isVisible = false
+        }
+
+        tv_transfer_charge.setOnClickListener(true) {
+            tv_transfer_charge_mode.isVisible = true
+            view_number_input.clearInput()
         }
     }
 
     private fun saveInput(): Boolean
     {
         val amount = view_number_input.getInputNumber()
+
+        if (tv_transfer_charge_mode.isVisible)
+        {
+            transferCharge = amount
+            GlobalScope.ui {
+                tv_transfer_charge.text = "${getString(R.string.brokerage)}：${transferCharge.toAmountStr()}"
+                tv_transfer_charge_mode.isVisible = false
+                view_number_input.clearInput()
+            }
+            return false
+        }
 
         if (amount == 0.0)
         {
@@ -160,12 +180,21 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
             PAGE_TYPE_INCOME -> MoneyTracesModel(amonunt = amount, tracesType = incomeType, tracesCategory = traceCategory, accountType = accountType,
                     recordTime = selectTime.timeInMills, recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)
 
-            else                  -> MoneyTracesModel(amonunt = amount, tracesType = AppConstant.TRANSFER_TYPE_TRANSFER, tracesCategory = traceCategory,
-                    accountType = accountTransferView.getOutAccountType(), recordTime = selectTime.timeInMills, recordYear = selectTime.year,
-                    recordMonth = selectTime.month, recordDay = selectTime.day, transferToAccount = accountTransferView.getInAccountType())
+            else                  -> MoneyTracesModel(amonunt = amount - transferCharge, tracesType = AppConstant.TRANSFER_TYPE_TRANSFER,
+                    tracesCategory = traceCategory, accountType = accountTransferView.getOutAccountType(), recordTime = selectTime.timeInMills,
+                    recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day,
+                    transferToAccount = accountTransferView.getInAccountType())
         }
 
         AccountDataManager.addMoneyTraces(moneyTracesModel)
+
+        if (curPageType == PAGE_TYPE_TRANSFER && transferCharge > 0)
+        {
+            val chargeModel = MoneyTracesModel(amonunt = transferCharge, tracesType = AppConstant.EXPENDITURE_TYPE_BROKERAGE,
+                    tracesCategory = AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE, accountType = accountTransferView.getOutAccountType(),
+                    recordTime = selectTime.timeInMills + 1, recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)
+            AccountDataManager.addMoneyTraces(chargeModel)
+        }
 
         return true
     }
