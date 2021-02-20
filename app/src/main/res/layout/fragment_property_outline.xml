@@ -159,7 +159,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <skin.support.widget.SkinCompatTextView
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_search"
+                style="@style/ToolbarLayoutImageButtonStyle"
+                android:src="@drawable/ic_baseline_search_24"
+                android:tint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/iv_property_manager"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_month"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -171,7 +180,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <com.lizl.wtmg.module.skin.view.SkinImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/ic_baseline_arrow_drop_down_24"

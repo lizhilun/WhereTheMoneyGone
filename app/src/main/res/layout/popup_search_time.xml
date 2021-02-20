@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<skin.support.constraint.SkinCompatConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorContentBg"
+    android:padding="@dimen/global_content_padding_content">
+
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_traces_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/traces_time"
+        android:textColor="@color/colorTextColor"
+        android:textSize="@dimen/global_text_size_bigger"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_current_month"
+        style="@style/GlobalInfoTextBtnStyle"
+        android:layout_marginTop="@dimen/global_content_padding_content"
+        android:text="@string/current_month"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_traces_time" />
+
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_last_month"
+        style="@style/GlobalInfoTextBtnStyle"
+        android:layout_marginStart="@dimen/global_content_padding_content"
+        android:text="@string/last_month"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_current_month"
+        app:layout_constraintStart_toEndOf="@+id/tv_current_month"
+        app:layout_constraintTop_toTopOf="@+id/tv_current_month" />
+
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_current_year"
+        style="@style/GlobalInfoTextBtnStyle"
+        android:layout_marginStart="@dimen/global_content_padding_content"
+        android:text="@string/current_year"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_current_month"
+        app:layout_constraintStart_toEndOf="@+id/tv_last_month"
+        app:layout_constraintTop_toTopOf="@+id/tv_current_month" />
+
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_last_year"
+        style="@style/GlobalInfoTextBtnStyle"
+        android:layout_marginStart="@dimen/global_content_padding_content"
+        android:text="@string/last_year"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_current_month"
+        app:layout_constraintStart_toEndOf="@+id/tv_current_year"
+        app:layout_constraintTop_toTopOf="@+id/tv_current_month" />
+
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_all_time"
+        style="@style/GlobalInfoTextBtnStyle"
+        android:layout_marginStart="@dimen/global_content_padding_content"
+        android:text="@string/all"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_current_month"
+        app:layout_constraintStart_toEndOf="@+id/tv_last_year"
+        app:layout_constraintTop_toTopOf="@+id/tv_current_month" />
+
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_custom_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/global_content_padding_content"
+        android:text="@string/custom_time"
+        android:textColor="@color/colorTextColor"
+        android:textSize="@dimen/global_text_size_bigger"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_current_month" />
+
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_start_time"
+        style="@style/GlobalInfoTextBtnStyle"
+        android:layout_marginTop="@dimen/global_content_padding_content"
+        android:text="@string/start_time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_custom_time" />
+
+    <skin.support.widget.SkinCompatView
+        android:id="@+id/view_line"
+        android:layout_width="20dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="10dp"
+        android:background="@color/colorTextColor"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_start_time"
+        app:layout_constraintStart_toEndOf="@+id/tv_start_time"
+        app:layout_constraintTop_toTopOf="@+id/tv_start_time" />
+
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_end_time"
+        style="@style/GlobalInfoTextBtnStyle"
+        android:layout_marginStart="10dp"
+        android:text="@string/end_time"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_start_time"
+        app:layout_constraintStart_toEndOf="@+id/view_line"
+        app:layout_constraintTop_toTopOf="@+id/tv_start_time" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_confirm"
+        style="@style/GlobalInfoTextBtnStyle"
+        android:background="@drawable/bg_content_primary"
+        android:text="@string/confirm"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_start_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_start_time" />
+</skin.support.constraint.SkinCompatConstraintLayout>

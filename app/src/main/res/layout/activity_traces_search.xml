@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.lizl.wtmg.custom.view.titlebar.CustomTitleBar
+            android:id="@+id/ctb_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleText="@string/traces_search" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_time"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:background="@color/colorContentBg"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ctb_title"
+            app:layout_constraintWidth_percent="0.5">
+
+            <skin.support.widget.SkinCompatTextView
+                android:id="@+id/tv_time"
+                style="@style/GlobalTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/all"
+                app:layout_constraintEnd_toStartOf="@+id/iv_time_arrow"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <com.lizl.wtmg.module.skin.view.SkinImageView
+                android:id="@+id/iv_time_arrow"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="5dp"
+                android:src="@drawable/ic_baseline_arrow_drop_down_24"
+                android:tint="@color/colorSvgTint"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_time"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_time"
+                app:layout_constraintTop_toTopOf="@+id/tv_time" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_condition"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/colorContentBg"
+            app:layout_constraintBottom_toBottomOf="@+id/cl_time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cl_time"
+            app:layout_constraintTop_toTopOf="@+id/cl_time">
+
+            <skin.support.widget.SkinCompatTextView
+                android:id="@+id/tv_condition"
+                style="@style/GlobalTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/screen_condition"
+                app:layout_constraintEnd_toStartOf="@+id/iv_condition_arrow"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <com.lizl.wtmg.module.skin.view.SkinImageView
+                android:id="@+id/iv_condition_arrow"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="5dp"
+                android:src="@drawable/ic_baseline_arrow_drop_down_24"
+                android:tint="@color/colorSvgTint"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_condition"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_condition"
+                app:layout_constraintTop_toTopOf="@+id/tv_condition" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <skin.support.widget.SkinCompatEditText
+            android:id="@+id/et_keyword"
+            style="@style/GlobalTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/global_content_padding_edge_half"
+            android:layout_marginTop="@dimen/global_content_padding_content_half"
+            android:layout_marginEnd="@dimen/global_content_padding_edge_half"
+            android:background="@drawable/bg_content"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_time" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_result"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/global_content_padding_content"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingBottom="@dimen/global_content_padding_edge"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_keyword" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

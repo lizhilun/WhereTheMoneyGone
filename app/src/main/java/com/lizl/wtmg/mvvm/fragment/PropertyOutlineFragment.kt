@@ -1,7 +1,6 @@
 package com.lizl.wtmg.mvvm.fragment
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
 import com.jeremyliao.liveeventbus.LiveEventBus
@@ -21,6 +20,8 @@ import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseFragment
 import com.lizl.wtmg.util.DateUtil
 import com.lizl.wtmg.custom.popup.PopupUtil
+import com.lizl.wtmg.mvvm.activity.TracesSearchActivity
+import com.lizl.wtmg.util.ActivityUtil
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.enums.PopupPosition
 import kotlinx.android.synthetic.main.fragment_property_outline.*
@@ -61,6 +62,8 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
 
         iv_property_manager.setOnClickListener { LiveEventBus.get(EventConstant.EVENT_GO_TO_PROPERTY_MANAGER_VIEW).post(true) }
 
+        iv_search.setOnClickListener { ActivityUtil.turnToActivity(TracesSearchActivity::class.java) }
+
         polymerizeGroupAdapter.setOnChildItemClickListener {
             PopupUtil.showTracesDetailPopup(it.tag as MoneyTracesModel)
         }
@@ -75,7 +78,6 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
 
     private val tracesDataOb: Observer<MutableList<MoneyTracesModel>> = Observer { tracesList ->
         GlobalScope.launch {
-
             dataBinding.monthExpenditure = tracesList.filter {
                 it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
             }.sumByDouble { it.amonunt }
