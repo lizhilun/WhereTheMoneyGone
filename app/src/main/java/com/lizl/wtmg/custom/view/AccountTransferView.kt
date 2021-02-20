@@ -37,14 +37,7 @@ class AccountTransferView(context: Context, attrs: AttributeSet?, defStyleAttr: 
                     ToastUtils.showShort(R.string.in_and_out_account_cannot_same)
                     return@showBottomAccountList
                 }
-                outAccountType = accountModel.type
-
-                tv_out_account_des.isVisible = false
-                iv_out_account.isVisible = true
-                tv_out_account.isVisible = true
-
-                iv_out_account.setImageResource(accountModel.type.getIcon())
-                tv_out_account.text = accountModel.type.translate()
+                setOutAccountType(accountModel.type)
             }
         }
 
@@ -55,14 +48,7 @@ class AccountTransferView(context: Context, attrs: AttributeSet?, defStyleAttr: 
                     ToastUtils.showShort(R.string.in_and_out_account_cannot_same)
                     return@showBottomAccountList
                 }
-                inAccountType = accountModel.type
-
-                tv_in_account_des.isVisible = false
-                iv_in_account.isVisible = true
-                tv_in_account.isVisible = true
-
-                iv_in_account.setImageResource(accountModel.type.getIcon())
-                tv_in_account.text = accountModel.type.translate()
+                setInAccountType(accountModel.type)
             }
         }
     }
@@ -82,6 +68,30 @@ class AccountTransferView(context: Context, attrs: AttributeSet?, defStyleAttr: 
         }
 
         return true
+    }
+
+    fun setOutAccountType(outAccountType: String)
+    {
+        this.outAccountType = outAccountType
+
+        tv_out_account_des.isVisible = outAccountType.isEmpty()
+        iv_out_account.isVisible = outAccountType.isNotEmpty()
+        tv_out_account.isVisible = outAccountType.isNotEmpty()
+
+        iv_out_account.setImageResource(outAccountType.getIcon())
+        tv_out_account.text = outAccountType.translate()
+    }
+
+    fun setInAccountType(inAccountType: String)
+    {
+        this.inAccountType = inAccountType
+
+        tv_in_account_des.isVisible = inAccountType.isEmpty()
+        iv_in_account.isVisible = inAccountType.isNotEmpty()
+        tv_in_account.isVisible = inAccountType.isNotEmpty()
+
+        iv_in_account.setImageResource(inAccountType.getIcon())
+        tv_in_account.text = inAccountType.translate()
     }
 
     fun getOutAccountType() = outAccountType

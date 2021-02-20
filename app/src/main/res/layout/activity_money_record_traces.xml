@@ -77,6 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/global_content_padding_edge"
                 android:text="@string/brokerage"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_input_amount"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_input_amount" />
@@ -125,6 +126,7 @@
                     android:padding="@dimen/global_content_padding_edge_half"
                     android:textColor="@color/colorTextColor"
                     android:textSize="@dimen/global_text_size_smaller"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_account"
                     app:layout_constraintStart_toEndOf="@+id/tv_time"
                     app:layout_constraintTop_toTopOf="@+id/tv_account"

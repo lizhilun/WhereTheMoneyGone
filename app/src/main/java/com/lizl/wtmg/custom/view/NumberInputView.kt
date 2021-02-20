@@ -89,11 +89,18 @@ class NumberInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
 
     fun getInputNumber(): Double
     {
-        if (inputTemp.contains("-") && inputTemp.length == 1)
+        if (inputTemp.isEmpty() || (inputTemp.contains("-") && inputTemp.length == 1))
         {
             return 0.0
         }
         return inputTemp.toString().toDouble()
+    }
+
+    fun setInputNumber(input: Double)
+    {
+        inputTemp.clear()
+        inputTemp.append(input)
+        onTextChangedListener?.invoke(inputTemp.toString())
     }
 
     fun clearInput()

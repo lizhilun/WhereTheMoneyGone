@@ -18,6 +18,7 @@ import com.lizl.wtmg.mvvm.adapter.ViewPagerAdapter
 import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.util.DateUtil
 import com.lizl.wtmg.custom.popup.PopupUtil
+import com.lizl.wtmg.db.AppDatabase
 import kotlinx.android.synthetic.main.activity_money_record_traces.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -33,10 +34,14 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
 
     private var curPageType = PAGE_TYPE_EXPENDITURE
 
-    private lateinit var accountTransferView: AccountTransferView
+    private var oriTracesModel: MoneyTracesModel? = null
+
+    private val accountTransferView by lazy { AccountTransferView(this) }
 
     companion object
     {
+        const val DATA_TRACES_ID = "DATA_TRACES_ID"
+
         private const val PAGE_TYPE_EXPENDITURE = 0
         private const val PAGE_TYPE_INCOME = 1
         private const val PAGE_TYPE_TRANSFER = 2
@@ -44,6 +49,41 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
 
     override fun initView()
     {
+        val tracesId = intent?.extras?.getLong(DATA_TRACES_ID, -1L) ?: -1L
+        if (tracesId >= 0)
+        {
+            oriTracesModel = AppDatabase.getInstance().getMoneyTracesDao().queryTracesById(tracesId)
+        }
+
+        oriTracesModel?.let {
+            accountType = it.accountType
+            selectTime = DateUtil.Date(it.recordTime)
+            view_number_input.setInputNumber(it.amonunt)
+            when (it.tracesCategory)
+            {
+                AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE ->
+                {
+                    expenditureType = it.tracesType
+                    curPageType = PAGE_TYPE_EXPENDITURE
+                }
+                AppConstant.MONEY_TRACES_CATEGORY_INCOME ->
+                {
+                    incomeType = it.tracesType
+                    curPageType = PAGE_TYPE_INCOME
+                }
+                AppConstant.MONEY_TRACES_CATEGORY_TRANSFER ->
+                {
+                    tv_account.isVisible = false
+                    tv_transfer_charge.isVisible = true
+
+                    curPageType = PAGE_TYPE_TRANSFER
+                    accountTransferView.setOutAccountType(it.accountType)
+                    accountTransferView.setInAccountType(it.transferToAccount)
+                }
+                else                                          -> curPageType = PAGE_TYPE_EXPENDITURE
+            }
+        }
+
         val expenditureTypeSelectionView = SingleSelectionView(this).apply {
             val expenditureTypeList = mutableListOf<SingleSelectionModel>()
             AccountManager.expenditureTypeList.forEach {
@@ -62,25 +102,27 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
             setOnSelectionChangedListener { incomeType = it.tag as String }
         }
 
-        accountTransferView = AccountTransferView(this)
-
         vp_type.adapter = ViewPagerAdapter(mutableListOf<View>().apply {
             add(expenditureTypeSelectionView)
             add(incomeTypeSelectionView)
             add(accountTransferView)
         })
         vp_type.offscreenPageLimit = 3
+        vp_type.setCurrentItem(curPageType, false)
 
         val titleList = listOf(getString(R.string.expenditure), getString(R.string.income), getString(R.string.transfer))
         TabLayoutMediator(tl_title, vp_type, TabLayoutMediator.TabConfigurationStrategy { tab, position ->
             if (position >= titleList.size) return@TabConfigurationStrategy
             tab.text = titleList[position]
         }).attach()
+    }
 
-        tv_account.text = "${getString(R.string.account)}：${accountType.translate()}"
+    override fun initData()
+    {
+        tv_account.text = "${getString(R.string.account)}：${if (accountType.isEmpty()) "" else accountType.translate()}"
         tv_time.text = selectTime.toFormatString()
         tv_transfer_charge.text = "${getString(R.string.brokerage)}：${transferCharge.toAmountStr()}"
-        tv_input_amount.text = "0.0"
+        tv_input_amount.text = view_number_input.getInputNumber().toAmountStr()
     }
 
     override fun initListener()
@@ -167,6 +209,8 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
         {
             return false
         }
+
+        oriTracesModel?.let { AccountDataManager.deleteMoneyTraces(it) }
 
         val traceCategory = when (curPageType)
         {

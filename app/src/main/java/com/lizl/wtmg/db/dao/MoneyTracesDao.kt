@@ -20,6 +20,9 @@ interface MoneyTracesDao : BaseDao<MoneyTracesModel>
     @Query("select * from MoneyTraces where recordYear == :year order by recordTime desc")
     fun queryTracesByYear(year: Int): MutableList<MoneyTracesModel>
 
+    @Query("select * from MoneyTraces where id == :id")
+    fun queryTracesById(id: Long): MoneyTracesModel?
+
     @Query("select * from MoneyTraces where accountType == :accountType order by recordTime desc")
     fun obTracesByAccount(accountType: String): LiveData<MutableList<MoneyTracesModel>>
 

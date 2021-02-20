@@ -48,7 +48,7 @@ object AccountManager
     {
         val polymerizeGroupList = mutableListOf<PolymerizeGroupModel>()
 
-        tracesList.groupBy { it.recordDay }.forEach { (_, u) ->
+        tracesList.groupBy { "${it.recordMonth}-${it.recordDay}" }.forEach { (_, u) ->
 
             val dateInfo = "%02d-%02d".format(u.first().recordMonth, u.first().recordDay)
 
