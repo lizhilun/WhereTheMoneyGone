@@ -158,6 +158,27 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <skin.support.widget.SkinCompatTextView
+                android:id="@+id/tv_month"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:textColor="@color/colorTextColor"
+                android:textSize="@dimen/global_text_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <com.lizl.wtmg.module.skin.view.SkinImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_baseline_arrow_drop_down_24"
+                android:tint="@color/colorSvgTint"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_month"
+                app:layout_constraintEnd_toEndOf="@+id/tv_month"
+                app:layout_constraintTop_toTopOf="@+id/tv_month" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

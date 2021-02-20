@@ -135,10 +135,10 @@ object PopupUtil
         }
     }
 
-    fun showMonthSelectPopup(listener: (year: Int, month: Int) -> Unit)
+    fun showMonthSelectPopup(withAllYear: Boolean = false, listener: (year: Int, month: Int) -> Unit)
     {
         val context = ActivityUtils.getTopActivity() ?: return
-        showPopup(XPopup.Builder(context).asCustom(MonthSelectPopup(context, listener)))
+        showPopup(XPopup.Builder(context).asCustom(MonthSelectPopup(context, withAllYear, listener)))
     }
 
     fun dismissAll()

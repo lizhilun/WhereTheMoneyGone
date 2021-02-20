@@ -1,5 +1,7 @@
 package com.lizl.wtmg.mvvm.fragment
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
 import com.jeremyliao.liveeventbus.LiveEventBus
@@ -42,25 +44,9 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
 
     override fun initData()
     {
-        val date = DateUtil.Date()
-
-        AppDatabase.getInstance().getMoneyTracesDao().obTracesByMonth(date.year, date.month).observe(this, Observer { tracesList ->
-
-            GlobalScope.launch {
-
-                dataBinding.monthExpenditure = tracesList.filter {
-                    it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
-                }.sumByDouble { it.amonunt }
-
-                dataBinding.monthIncome = tracesList.filter {
-                    it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
-                }.sumByDouble { it.amonunt }
-
-                val polymerizeGroupList = AccountManager.polymerizeTrancesList(tracesList)
-
-                GlobalScope.ui { polymerizeGroupAdapter.replaceData(polymerizeGroupList) }
-            }
-        })
+        val now = DateUtil.Date()
+        tv_month.text = "%d.%02d".format(now.year, now.month)
+        showMonthOutline(now.year, now.month)
 
         LiveEventBus.get(EventConstant.EVENT_COVER_IMAGE_UPDATE).observe(this, Observer { initCoverImage() })
     }
@@ -77,6 +63,40 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
 
         polymerizeGroupAdapter.setOnChildItemClickListener {
             PopupUtil.showTracesDetailPopup(it.tag as MoneyTracesModel)
+        }
+
+        tv_month.setOnClickListener {
+            PopupUtil.showMonthSelectPopup { year, month ->
+                tv_month.text = "%d.%02d".format(year, month)
+                showMonthOutline(year, month)
+            }
+        }
+    }
+
+    private val tracesDataOb: Observer<MutableList<MoneyTracesModel>> = Observer { tracesList ->
+        GlobalScope.launch {
+
+            dataBinding.monthExpenditure = tracesList.filter {
+                it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
+            }.sumByDouble { it.amonunt }
+
+            dataBinding.monthIncome = tracesList.filter {
+                it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
+            }.sumByDouble { it.amonunt }
+
+            val polymerizeGroupList = AccountManager.polymerizeTrancesList(tracesList)
+
+            GlobalScope.ui { polymerizeGroupAdapter.replaceData(polymerizeGroupList) }
+        }
+    }
+
+    private var lastLiveData: LiveData<MutableList<MoneyTracesModel>>? = null
+
+    private fun showMonthOutline(year: Int, month: Int)
+    {
+        lastLiveData?.removeObserver(tracesDataOb)
+        lastLiveData = AppDatabase.getInstance().getMoneyTracesDao().obTracesByMonth(year, month).apply {
+            observe(this@PropertyOutlineFragment, tracesDataOb)
         }
     }
 

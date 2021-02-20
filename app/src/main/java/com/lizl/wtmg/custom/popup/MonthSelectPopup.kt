@@ -1,6 +1,7 @@
 package com.lizl.wtmg.custom.popup
 
 import android.content.Context
+import androidx.core.view.isVisible
 import com.blankj.utilcode.util.ScreenUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -11,7 +12,7 @@ import com.lxj.xpopup.core.CenterPopupView
 import kotlinx.android.synthetic.main.item_month.view.*
 import kotlinx.android.synthetic.main.popup_month_select.view.*
 
-class MonthSelectPopup(context: Context, private val listener: (year: Int, month: Int) -> Unit) : CenterPopupView(context)
+class MonthSelectPopup(context: Context, private val withAllYear: Boolean, private val listener: (year: Int, month: Int) -> Unit) : CenterPopupView(context)
 {
     override fun getImplLayoutId() = R.layout.popup_month_select
 
@@ -24,6 +25,8 @@ class MonthSelectPopup(context: Context, private val listener: (year: Int, month
         {
             tl_year.addTab(tl_year.newTab().setText(year.toString()))
         }
+
+        tv_whole_year.isVisible = withAllYear
 
         val monthList = listOf(context.getString(R.string.January), context.getString(R.string.February), context.getString(R.string.March),
                 context.getString(R.string.April), context.getString(R.string.May), context.getString(R.string.June), context.getString(R.string.July),

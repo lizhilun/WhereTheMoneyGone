@@ -28,7 +28,7 @@ class StatisticsActivity : BaseActivity<ActivityStatisticsBinding>(R.layout.acti
         iv_back.setOnClickListener { onBackPressed() }
 
         tv_statistics_month.setOnClickListener {
-            PopupUtil.showMonthSelectPopup { year, month ->
+            PopupUtil.showMonthSelectPopup(true) { year, month ->
                 if (month == 0)
                 {
                     tv_statistics_month.text = "${year}${getString(R.string.whole_year)}"
