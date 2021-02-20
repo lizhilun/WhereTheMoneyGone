@@ -2,8 +2,69 @@
 <skin.support.constraint.SkinCompatConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/colorContentBg"
     android:padding="@dimen/global_content_padding_content">
 
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_traces_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/traces_amount"
+        android:textColor="@color/colorTextColor"
+        android:textSize="@dimen/global_text_size_bigger"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <skin.support.widget.SkinCompatEditText
+        android:id="@+id/et_min_amount"
+        style="@style/GlobalSmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/global_content_padding_content"
+        android:gravity="center"
+        android:inputType="number"
+        android:maxLength="8"
+        android:minWidth="60dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_traces_amount" />
+
+    <skin.support.widget.SkinCompatView
+        android:id="@+id/view_line"
+        android:layout_width="20dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="10dp"
+        android:background="@color/colorTextColor"
+        app:layout_constraintBottom_toBottomOf="@+id/et_min_amount"
+        app:layout_constraintStart_toEndOf="@+id/et_min_amount"
+        app:layout_constraintTop_toTopOf="@+id/et_min_amount" />
+
+    <skin.support.widget.SkinCompatEditText
+        android:id="@+id/et_max_amount"
+        style="@style/GlobalSmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:gravity="center"
+        android:inputType="number"
+        android:maxLength="8"
+        android:minWidth="60dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/et_min_amount"
+        app:layout_constraintStart_toEndOf="@+id/view_line"
+        app:layout_constraintTop_toTopOf="@+id/et_min_amount" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_confirm"
+        style="@style/GlobalInfoTextBtnStyle"
+        android:background="@drawable/bg_content_primary"
+        android:text="@string/confirm"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/et_min_amount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_min_amount" />
 </skin.support.constraint.SkinCompatConstraintLayout>

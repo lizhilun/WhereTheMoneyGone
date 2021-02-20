@@ -7,6 +7,7 @@ import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.custom.function.ui
 import com.lizl.wtmg.custom.popup.search.PopupSearchTime
 import com.lizl.wtmg.custom.popup.PopupUtil
+import com.lizl.wtmg.custom.popup.search.PopupSearchCondition
 import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.databinding.ActivityTracesSearchBinding
 import com.lizl.wtmg.db.AppDatabase
@@ -20,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_traces_search.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlin.math.min
 
 class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.activity_traces_search)
 {
@@ -28,7 +30,11 @@ class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.
     private var startTime = 0L
     private var endTime = Long.MAX_VALUE
 
+    private var minAmount = Int.MIN_VALUE
+    private var maxAmount = Int.MAX_VALUE
+
     private var popupSearchTime: BasePopupView? = null
+    private var popupSearchCondition: BasePopupView? = null
 
     override fun initView()
     {
@@ -41,7 +47,7 @@ class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.
     {
         ctb_title.setOnBackBtnClickListener { onBackPressed() }
 
-        et_keyword.addTextChangedListener { search(startTime, endTime, it?.toString().orEmpty()) }
+        et_keyword.addTextChangedListener { search(keyword = it?.toString().orEmpty()) }
 
         searchResultAdapter.setOnChildItemClickListener {
             PopupUtil.showTracesDetailPopup(it.tag as MoneyTracesModel)
@@ -62,16 +68,29 @@ class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.
                     }
                     this.startTime = startTime
                     this.endTime = endTime
-                    search(startTime, endTime, et_keyword.text.toString())
+                    search()
                 })
             }
             popupSearchTime?.show()
+        }
+
+        cl_condition.setOnClickListener {
+            if (popupSearchCondition == null)
+            {
+                popupSearchCondition = XPopup.Builder(this).atView(cl_condition).asCustom(PopupSearchCondition(this) { minAmount, maxAmount ->
+                    this.minAmount = minAmount
+                    this.maxAmount = maxAmount
+                    search()
+                })
+            }
+            popupSearchCondition?.show()
         }
     }
 
     private var lastSearchJob: Job? = null
 
-    private fun search(startTime: Long, endTime: Long, keyword: String)
+    private fun search(startTime: Long = this.startTime, endTime: Long = this.endTime, keyword: String = et_keyword.text.toString(),
+                       minAmount: Int = this.minAmount, maxAmount: Int = this.maxAmount)
     {
         lastSearchJob?.cancel()
         if (keyword.isBlank())
@@ -81,7 +100,7 @@ class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.
         }
         lastSearchJob = GlobalScope.launch {
             val allTracesList = AppDatabase.getInstance().getMoneyTracesDao().queryTracesInTime(startTime, endTime).filter {
-                it.tracesType.translate().contains(keyword) || it.remarks.contains(keyword)
+                (it.tracesType.translate().contains(keyword) || it.remarks.contains(keyword)) && it.amonunt >= minAmount && it.amonunt <= maxAmount
             }.toMutableList()
             val polymerizeGroupList = AccountManager.polymerizeTrancesList(allTracesList)
             GlobalScope.ui { searchResultAdapter.replaceData(polymerizeGroupList) }
