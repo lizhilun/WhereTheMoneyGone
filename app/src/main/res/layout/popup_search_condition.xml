@@ -18,16 +18,13 @@
 
     <skin.support.widget.SkinCompatEditText
         android:id="@+id/et_min_amount"
-        style="@style/GlobalSmallTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/GlobalInfoTextBtnStyle"
         android:layout_marginTop="@dimen/global_content_padding_content"
-        android:gravity="center"
+        android:hint="@string/min_amount"
         android:inputType="number"
         android:maxLength="8"
         android:minWidth="60dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
+        android:textColorHint="@color/colorThirdTextColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_traces_amount" />
 
@@ -43,16 +40,13 @@
 
     <skin.support.widget.SkinCompatEditText
         android:id="@+id/et_max_amount"
-        style="@style/GlobalSmallTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/GlobalInfoTextBtnStyle"
         android:layout_marginStart="10dp"
-        android:gravity="center"
+        android:hint="@string/max_amount"
         android:inputType="number"
         android:maxLength="8"
         android:minWidth="60dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
+        android:textColorHint="@color/colorThirdTextColor"
         app:layout_constraintBottom_toBottomOf="@+id/et_min_amount"
         app:layout_constraintStart_toEndOf="@+id/view_line"
         app:layout_constraintTop_toTopOf="@+id/et_min_amount" />

@@ -3,6 +3,8 @@ package com.lizl.wtmg.mvvm.activity
 import androidx.core.widget.addTextChangedListener
 import com.lizl.wtmg.R
 import com.lizl.wtmg.R.dimen
+import com.lizl.wtmg.constant.AppConstant
+import com.lizl.wtmg.custom.function.toAmountStr
 import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.custom.function.ui
 import com.lizl.wtmg.custom.popup.search.PopupSearchTime
@@ -95,6 +97,7 @@ class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.
         lastSearchJob?.cancel()
         if (keyword.isBlank())
         {
+            tv_result.text = ""
             searchResultAdapter.replaceData(mutableListOf())
             return
         }
@@ -102,6 +105,20 @@ class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.
             val allTracesList = AppDatabase.getInstance().getMoneyTracesDao().queryTracesInTime(startTime, endTime).filter {
                 (it.tracesType.translate().contains(keyword) || it.remarks.contains(keyword)) && it.amonunt >= minAmount && it.amonunt <= maxAmount
             }.toMutableList()
+
+            val resultStringBuffer = StringBuffer()
+            resultStringBuffer.append(getString(R.string.search_result_count_is, allTracesList.size))
+            if (allTracesList.isNotEmpty())
+            {
+                val income = allTracesList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME }.sumByDouble { it.amonunt }.toAmountStr()
+                val expenditure =
+                        allTracesList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE }.sumByDouble { it.amonunt }.toAmountStr()
+                resultStringBuffer.append("\n").append(getString(R.string.income)).append("：").append(income).append("    ")
+                    .append(getString(R.string.expenditure)).append("：").append(expenditure)
+            }
+
+            GlobalScope.ui { tv_result.text = resultStringBuffer.toString() }
+
             val polymerizeGroupList = AccountManager.polymerizeTrancesList(allTracesList)
             GlobalScope.ui { searchResultAdapter.replaceData(polymerizeGroupList) }
         }

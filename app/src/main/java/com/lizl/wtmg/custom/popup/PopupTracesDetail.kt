@@ -3,6 +3,7 @@ package com.lizl.wtmg.custom.popup
 import android.content.Context
 import com.blankj.utilcode.util.StringUtils
 import com.lizl.wtmg.R
+import com.lizl.wtmg.custom.function.toAmountStr
 import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.db.model.MoneyTracesModel
 import com.lizl.wtmg.module.account.AccountDataManager
@@ -24,7 +25,7 @@ class PopupTracesDetail(context: Context, private val tracesModel: MoneyTracesMo
             it.hasShadowBg = true
         }
 
-        layout_account_amount.setMainText(tracesModel.amonunt.toInt().toString())
+        layout_account_amount.setMainText(tracesModel.amonunt.toAmountStr())
         layout_account_type.setMainText(tracesModel.accountType.translate())
         layout_traces_type.setMainText(tracesModel.tracesType.translate())
 

@@ -96,20 +96,34 @@
             android:layout_marginEnd="@dimen/global_content_padding_edge_half"
             android:background="@drawable/bg_content"
             android:gravity="center"
+            android:hint="@string/traces_search_hint"
+            android:textColorHint="@color/colorThirdTextColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cl_time" />
+
+        <skin.support.widget.SkinCompatTextView
+            android:id="@+id/tv_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/global_content_padding_content_half"
+            android:gravity="center"
+            android:textColor="@color/colorTextColor"
+            android:textSize="@dimen/global_text_size_smaller"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_keyword" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_result"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/global_content_padding_content"
+            android:layout_marginTop="@dimen/global_content_padding_content_half"
             android:clipToPadding="false"
             android:overScrollMode="never"
             android:paddingBottom="@dimen/global_content_padding_edge"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_keyword" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_result" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -11,6 +11,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.blankj.utilcode.util.SizeUtils
+import com.lizl.wtmg.custom.function.setHintTextSize
 import com.lizl.wtmg.custom.function.toAmountStr
 import com.lizl.wtmg.custom.view.QuantityStatisticsView
 import com.lizl.wtmg.custom.view.withdes.TextViewWithDes

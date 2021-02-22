@@ -107,6 +107,7 @@
     <style name="GlobalInfoTextBtnStyle">
         <item name="android:textColor">@color/colorTextColor</item>
         <item name="android:textSize">@dimen/global_text_size_smaller</item>
+        <item name="android:gravity">center</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/bg_click_secondary_content_ripple</item>

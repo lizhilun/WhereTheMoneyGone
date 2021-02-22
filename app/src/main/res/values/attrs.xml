@@ -13,7 +13,7 @@
         <attr name="srcCompat" />
     </declare-styleable>
 
-    <declare-styleable name="InputItemEditView">
+    <declare-styleable name="EditTextWithDes">
         <attr name="decText" format="string|reference" />
         <attr name="hint" format="string|reference" />
         <attr name="hintTextSize" format="dimension" />

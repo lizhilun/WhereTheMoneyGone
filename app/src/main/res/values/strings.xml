@@ -176,4 +176,8 @@
     <string name="end_time">结束时间</string>
     <string name="screen_condition">筛选条件</string>
     <string name="traces_amount">账单金额</string>
+    <string name="min_amount">最低</string>
+    <string name="max_amount">最高</string>
+    <string name="traces_search_hint">输入关键词进行搜索（支持账单类型和备注）</string>
+    <string name="search_result_count_is">共搜索到%d条记录</string>
 </resources>

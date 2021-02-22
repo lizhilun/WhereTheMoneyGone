@@ -25,11 +25,11 @@ class EditTextWithDes(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
 
             addView(this)
 
-            val typeArray = context.obtainStyledAttributes(attrs, R.styleable.InputItemEditView)
+            val typeArray = context.obtainStyledAttributes(attrs, R.styleable.EditTextWithDes)
 
-            tv_des.text = typeArray.getString(R.styleable.InputItemEditView_decText)
-            et_edit.hint = typeArray.getString(R.styleable.InputItemEditView_hint)
-            et_edit.setHintTextSize(typeArray.getDimension(R.styleable.InputItemEditView_hintTextSize,
+            tv_des.text = typeArray.getString(R.styleable.EditTextWithDes_decText)
+            et_edit.hint = typeArray.getString(R.styleable.EditTextWithDes_hint)
+            et_edit.setHintTextSize(typeArray.getDimension(R.styleable.EditTextWithDes_hintTextSize,
                     context.resources.getDimension(R.dimen.global_text_size_smaller)))
 
             typeArray.recycle()
