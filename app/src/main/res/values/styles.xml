@@ -112,5 +112,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/bg_click_secondary_content_ripple</item>
         <item name="android:padding">@dimen/global_content_padding_edge_half</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
     </style>
 </resources>

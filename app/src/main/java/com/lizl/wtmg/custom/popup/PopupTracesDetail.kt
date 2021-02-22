@@ -1,7 +1,7 @@
 package com.lizl.wtmg.custom.popup
 
 import android.content.Context
-import com.blankj.utilcode.util.StringUtils
+import androidx.core.view.isVisible
 import com.lizl.wtmg.R
 import com.lizl.wtmg.custom.function.toAmountStr
 import com.lizl.wtmg.custom.function.translate
@@ -12,8 +12,6 @@ import com.lizl.wtmg.util.ActivityUtil
 import com.lizl.wtmg.util.DateUtil
 import com.lxj.xpopup.core.BottomPopupView
 import kotlinx.android.synthetic.main.layout_money_traces_detail.view.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class PopupTracesDetail(context: Context, private val tracesModel: MoneyTracesModel) : BottomPopupView(context)
 {
@@ -28,6 +26,8 @@ class PopupTracesDetail(context: Context, private val tracesModel: MoneyTracesMo
         layout_account_amount.setMainText(tracesModel.amonunt.toAmountStr())
         layout_account_type.setMainText(tracesModel.accountType.translate())
         layout_traces_type.setMainText(tracesModel.tracesType.translate())
+        layout_traces_remarks.isVisible = tracesModel.remarks.isNotBlank()
+        layout_traces_remarks.setMainText(tracesModel.remarks)
 
         val tracesTime = DateUtil.Date(tracesModel.recordTime)
         layout_traces_time.setMainText(tracesTime.toFormatString())

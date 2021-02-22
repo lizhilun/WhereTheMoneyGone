@@ -46,8 +46,8 @@
         android:id="@+id/layout_account_amount"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="10dp"
         android:layout_marginStart="@dimen/global_content_padding_edge"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="@dimen/global_content_padding_edge"
         app:decTextAppearance="@style/GlobalTextStyle"
         app:decTextStr="@string/amount"
@@ -79,6 +79,17 @@
         app:viewType="start_end" />
 
     <com.lizl.wtmg.custom.view.withdes.TextViewWithDes
+        android:id="@+id/layout_traces_remarks"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:decTextAppearance="@style/GlobalTextStyle"
+        app:decTextStr="@string/remarks"
+        app:layout_constraintEnd_toEndOf="@+id/layout_account_amount"
+        app:layout_constraintStart_toStartOf="@+id/layout_account_amount"
+        app:layout_constraintTop_toBottomOf="@+id/layout_account_type"
+        app:viewType="start_end" />
+
+    <com.lizl.wtmg.custom.view.withdes.TextViewWithDes
         android:id="@+id/layout_traces_time"
         android:layout_width="0dp"
         android:layout_height="48dp"
@@ -86,7 +97,7 @@
         app:decTextStr="@string/time"
         app:layout_constraintEnd_toEndOf="@+id/layout_account_amount"
         app:layout_constraintStart_toStartOf="@+id/layout_account_amount"
-        app:layout_constraintTop_toBottomOf="@+id/layout_account_type"
+        app:layout_constraintTop_toBottomOf="@+id/layout_traces_remarks"
         app:viewType="start_end" />
 
 </skin.support.constraint.SkinCompatConstraintLayout>

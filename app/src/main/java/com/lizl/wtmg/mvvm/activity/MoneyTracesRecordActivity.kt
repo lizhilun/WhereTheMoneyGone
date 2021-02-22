@@ -58,6 +58,7 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
         oriTracesModel?.let {
             accountType = it.accountType
             selectTime = DateUtil.Date(it.recordTime)
+            et_remarks.setText(it.remarks)
             view_number_input.setInputNumber(it.amonunt)
             when (it.tracesCategory)
             {
@@ -130,6 +131,7 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
         iv_back.setOnClickListener { onBackPressed() }
 
         view_number_input.setOnTextChangedListener {
+            et_remarks.clearFocus()
             tv_input_amount.text = if (it.isBlank()) "0.0" else it
         }
 
@@ -170,9 +172,11 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
             tv_account.isVisible = it != PAGE_TYPE_TRANSFER
             tv_transfer_charge.isVisible = it == PAGE_TYPE_TRANSFER
             tv_transfer_charge_mode.isVisible = false
+            et_remarks.isVisible = true
         }
 
         tv_transfer_charge.setOnClickListener(true) {
+            et_remarks.isVisible = false
             tv_transfer_charge_mode.isVisible = true
             view_number_input.clearInput()
         }
@@ -222,14 +226,16 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
         val moneyTracesModel = when (curPageType)
         {
             PAGE_TYPE_EXPENDITURE -> MoneyTracesModel(amonunt = amount, tracesType = expenditureType, tracesCategory = traceCategory, accountType = accountType,
-                    recordTime = selectTime.timeInMills, recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)
+                    recordTime = selectTime.timeInMills, recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day,
+                    remarks = et_remarks.text.toString())
 
             PAGE_TYPE_INCOME -> MoneyTracesModel(amonunt = amount, tracesType = incomeType, tracesCategory = traceCategory, accountType = accountType,
-                    recordTime = selectTime.timeInMills, recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)
+                    recordTime = selectTime.timeInMills, recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day,
+                    remarks = et_remarks.text.toString())
 
             else                  -> MoneyTracesModel(amonunt = amount - transferCharge, tracesType = AppConstant.TRANSFER_TYPE_TRANSFER,
                     tracesCategory = traceCategory, accountType = accountTransferView.getOutAccountType(), recordTime = selectTime.timeInMills,
-                    recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day,
+                    recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day, remarks = et_remarks.text.toString(),
                     transferToAccount = accountTransferView.getInAccountType())
         }
 
