@@ -5,15 +5,19 @@ import androidx.lifecycle.Observer
 import com.lizl.wtmg.R
 import com.lizl.wtmg.R.dimen
 import com.lizl.wtmg.constant.AppConstant
+import com.lizl.wtmg.custom.function.getIcon
 import com.lizl.wtmg.custom.function.toAmountStr
 import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.custom.function.ui
+import com.lizl.wtmg.custom.popup.PopupUtil
 import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.databinding.ActivityAccountDetailBinding
 import com.lizl.wtmg.db.AppDatabase
+import com.lizl.wtmg.db.model.MoneyTracesModel
 import com.lizl.wtmg.module.account.AccountManager
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseActivity
+import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 import kotlinx.android.synthetic.main.activity_account_detail.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -37,6 +41,13 @@ class AccountDetailActivity : BaseActivity<ActivityAccountDetailBinding>(R.layou
     override fun initListener()
     {
         ctb_title.setOnBackBtnClickListener { onBackPressed() }
+
+        polymerizeGroupAdapter.setOnChildItemClickListener {
+            if (it.tag is MoneyTracesModel)
+            {
+                PopupUtil.showTracesDetailPopup(it.tag)
+            }
+        }
     }
 
     override fun initData()
@@ -83,7 +94,17 @@ class AccountDetailActivity : BaseActivity<ActivityAccountDetailBinding>(R.layou
 
                 AppDatabase.getInstance().getMoneyTracesDao().obTracesByAccount(accountModel.type).observe(this, Observer { tracesList ->
                     GlobalScope.launch {
-                        val polymerizeGroupList = AccountManager.polymerizeTrancesList(tracesList)
+                        val polymerizeGroupList = AccountManager.polymerizeTrancesList(tracesList) {
+                            PolymerizeChildModel(it.tracesCategory.getIcon(), when (it.tracesCategory)
+                            {
+                                AppConstant.MONEY_TRACES_CATEGORY_TRANSFER ->
+                                {
+                                    if (accountModel.type == it.accountType) getString(R.string.transfer_out)
+                                    else getString(R.string.transfer_in)
+                                }
+                                else                                       -> it.tracesType.translate()
+                            }, it.amonunt.toAmountStr(), it)
+                        }
                         GlobalScope.ui { polymerizeGroupAdapter.replaceData(polymerizeGroupList) }
                     }
                 })

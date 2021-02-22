@@ -52,6 +52,7 @@ object AppConstant
     const val MONEY_TRACES_CATEGORY_EXPENDITURE = "expenditure"
     const val MONEY_TRACES_CATEGORY_INCOME = "income"
     const val MONEY_TRACES_CATEGORY_TRANSFER = "transfer"
+    const val MONEY_TRACES_CATEGORY_BORROW = "borrow"
 
     const val DATA_RESTORE_FAILED_WRONG_PASSWORD = "DATA_RESTORE_FAILED_WRONG_PASSWORD" //数据还原失败：密码不对
 }

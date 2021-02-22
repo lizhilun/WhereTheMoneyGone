@@ -1,4 +1,4 @@
-package com.lizl.wtmg.custom.view
+package com.lizl.wtmg.custom.view.tracesrecord
 
 import android.content.Context
 import android.util.AttributeSet

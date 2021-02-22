@@ -7,7 +7,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.function.*
-import com.lizl.wtmg.custom.view.AccountTransferView
+import com.lizl.wtmg.custom.view.tracesrecord.AccountTransferView
 import com.lizl.wtmg.db.model.MoneyTracesModel
 import com.lizl.wtmg.module.account.AccountDataManager
 import com.lizl.wtmg.module.account.AccountManager
@@ -192,6 +192,7 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
             GlobalScope.ui {
                 tv_transfer_charge.text = "${getString(R.string.brokerage)}：${transferCharge.toAmountStr()}"
                 tv_transfer_charge_mode.isVisible = false
+                et_remarks.isVisible = true
                 view_number_input.clearInput()
             }
             return false

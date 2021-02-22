@@ -44,7 +44,9 @@ object AccountManager
         }
     }
 
-    fun polymerizeTrancesList(tracesList: MutableList<MoneyTracesModel>): MutableList<PolymerizeGroupModel>
+    fun polymerizeTrancesList(tracesList: MutableList<MoneyTracesModel>, transferFunction: (MoneyTracesModel) -> PolymerizeChildModel = {
+        PolymerizeChildModel(it.tracesCategory.getIcon(), it.tracesType.translate(), it.amonunt.toAmountStr(), it)
+    }): MutableList<PolymerizeGroupModel>
     {
         val polymerizeGroupList = mutableListOf<PolymerizeGroupModel>()
 
@@ -62,10 +64,7 @@ object AccountManager
             }.toAmountStr()
 
             val childList = mutableListOf<PolymerizeChildModel>().apply {
-                u.forEach { tracesModel ->
-                    add(PolymerizeChildModel(tracesModel.tracesCategory.getIcon(), tracesModel.tracesType.translate(), tracesModel.amonunt.toAmountStr(),
-                            tracesModel))
-                }
+                u.forEach { tracesModel -> add(transferFunction.invoke(tracesModel)) }
             }
 
             polymerizeGroupList.add(PolymerizeGroupModel(dateInfo, amountInfo, childList))

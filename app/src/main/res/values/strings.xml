@@ -58,7 +58,7 @@
     <string name="second_hand">二手</string>
     <string name="red_envelopes">红包</string>
     <string name="financial_transactions">理财</string>
-    <string name="transfer_in">收款</string>
+    <string name="transfer_in">转入</string>
 
     <string name="main_image_config">主图设置</string>
     <string name="statistics">报表统计</string>
@@ -106,11 +106,11 @@
     <string name="credit_account">信用账户</string>
     <string name="investment_account">投资账户</string>
 
-    <string name="transfer_in_account">转入账户</string>
-    <string name="transfer_out_account">转出账户</string>
-    <string name="in_and_out_account_cannot_same">转出与转入账号不能相同</string>
-    <string name="please_select_in_account">请选择转入账号</string>
-    <string name="please_select_out_account">请选择转出账号</string>
+    <string name="transfer_in_account">付款账户</string>
+    <string name="transfer_out_account">收款账户</string>
+    <string name="in_and_out_account_cannot_same">付款与收款账号不能相同</string>
+    <string name="please_select_in_account">请选择收款账号</string>
+    <string name="please_select_out_account">请选择付款账号</string>
 
     <string name="sure_to_delete_account">确认删除账户？</string>
 

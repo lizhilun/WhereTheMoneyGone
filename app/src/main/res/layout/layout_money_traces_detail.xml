@@ -79,6 +79,17 @@
         app:viewType="start_end" />
 
     <com.lizl.wtmg.custom.view.withdes.TextViewWithDes
+        android:id="@+id/layout_to_account_type"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:decTextAppearance="@style/GlobalTextStyle"
+        app:decTextStr="@string/transfer_in_account"
+        app:layout_constraintEnd_toEndOf="@+id/layout_account_amount"
+        app:layout_constraintStart_toStartOf="@+id/layout_account_amount"
+        app:layout_constraintTop_toBottomOf="@+id/layout_account_type"
+        app:viewType="start_end" />
+
+    <com.lizl.wtmg.custom.view.withdes.TextViewWithDes
         android:id="@+id/layout_traces_remarks"
         android:layout_width="0dp"
         android:layout_height="48dp"
@@ -86,7 +97,7 @@
         app:decTextStr="@string/remarks"
         app:layout_constraintEnd_toEndOf="@+id/layout_account_amount"
         app:layout_constraintStart_toStartOf="@+id/layout_account_amount"
-        app:layout_constraintTop_toBottomOf="@+id/layout_account_type"
+        app:layout_constraintTop_toBottomOf="@+id/layout_to_account_type"
         app:viewType="start_end" />
 
     <com.lizl.wtmg.custom.view.withdes.TextViewWithDes
