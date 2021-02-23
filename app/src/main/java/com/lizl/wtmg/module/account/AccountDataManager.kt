@@ -26,6 +26,15 @@ object AccountDataManager
                     AppDatabase.getInstance().getAccountDao().insert(inAccountModel)
                 }
             }
+            AppConstant.MONEY_TRACES_CATEGORY_BORROW ->
+            {
+                handleMoneyOut(payAccountModel, moneyTracesModel.amonunt)
+
+                AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.transferToAccount)?.let { inAccountModel ->
+                    handleMoneyIn(inAccountModel, moneyTracesModel.amonunt)
+                    AppDatabase.getInstance().getAccountDao().insert(inAccountModel)
+                }
+            }
         }
 
         AppDatabase.getInstance().getAccountDao().insert(payAccountModel)
@@ -50,34 +59,17 @@ object AccountDataManager
                     AppDatabase.getInstance().getAccountDao().insert(inAccountModel)
                 }
             }
-        }
-
-        AppDatabase.getInstance().getAccountDao().insert(payAccountModel)
-    }
-
-    fun modifyMoneyTraces(moneyTracesModel: MoneyTracesModel, amount: Double)
-    {
-        val modifyAmount = amount - moneyTracesModel.amonunt
-
-        val payAccountModel = AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.accountType) ?: return
-
-        when (moneyTracesModel.tracesCategory)
-        {
-            AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> handleMoneyOut(payAccountModel, modifyAmount)
-            AppConstant.MONEY_TRACES_CATEGORY_INCOME -> handleMoneyIn(payAccountModel, modifyAmount)
-            AppConstant.MONEY_TRACES_CATEGORY_TRANSFER ->
+            AppConstant.MONEY_TRACES_CATEGORY_BORROW ->
             {
-                handleMoneyOut(payAccountModel, modifyAmount)
+                handleMoneyIn(payAccountModel, moneyTracesModel.amonunt)
 
                 AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.transferToAccount)?.let { inAccountModel ->
-                    handleMoneyIn(inAccountModel, modifyAmount)
+                    handleMoneyOut(inAccountModel, moneyTracesModel.amonunt)
                     AppDatabase.getInstance().getAccountDao().insert(inAccountModel)
                 }
             }
         }
 
-        moneyTracesModel.amonunt = amount
-        AppDatabase.getInstance().getMoneyTracesDao().insert(moneyTracesModel)
         AppDatabase.getInstance().getAccountDao().insert(payAccountModel)
     }
 
@@ -88,6 +80,7 @@ object AccountDataManager
             AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL -> accountModel.amount -= amount
             AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> accountModel.usedQuota += amount
             AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT -> accountModel.amount -= amount
+            AppConstant.MONEY_TRACES_CATEGORY_BORROW -> accountModel.amount -= amount
         }
     }
 

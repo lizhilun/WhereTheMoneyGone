@@ -113,21 +113,19 @@
                 <skin.support.widget.SkinCompatTextView
                     android:id="@+id/tv_time"
                     style="@style/GlobalInfoTextBtnStyle"
-                    android:layout_marginStart="@dimen/global_content_padding_edge"
+                    android:layout_marginStart="@dimen/global_content_padding_content"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_account"
                     app:layout_constraintStart_toEndOf="@+id/tv_account"
-                    app:layout_constraintTop_toTopOf="@+id/tv_account"
-                    app:layout_goneMarginStart="@dimen/global_content_padding_edge_half" />
+                    app:layout_constraintTop_toTopOf="@+id/tv_account" />
 
                 <skin.support.widget.SkinCompatTextView
                     android:id="@+id/tv_transfer_charge"
                     style="@style/GlobalInfoTextBtnStyle"
-                    android:layout_marginStart="@dimen/global_content_padding_edge"
+                    android:layout_marginStart="@dimen/global_content_padding_content"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_account"
                     app:layout_constraintStart_toEndOf="@+id/tv_time"
-                    app:layout_constraintTop_toTopOf="@+id/tv_account"
-                    app:layout_goneMarginStart="@dimen/global_content_padding_edge_half" />
+                    app:layout_constraintTop_toTopOf="@+id/tv_account" />
 
             </skin.support.constraint.SkinCompatConstraintLayout>
 

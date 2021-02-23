@@ -46,10 +46,23 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
                     else                                     -> it.amount
                 }
             }
-            dataBinding.totalLiabilities = allAccountList.sumByDouble { it.usedQuota }
+            dataBinding.totalLiabilities = allAccountList.sumByDouble {
+                when (it.category)
+                {
+                    AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> it.usedQuota
+                    AppConstant.MONEY_TRACES_CATEGORY_BORROW -> if (it.amount < 0) 0 - it.amount else 0.0
+                    else                                     -> 0.0
+                }
+            }
+            dataBinding.totalBorrowOut = allAccountList.filter { it.category == AppConstant.MONEY_TRACES_CATEGORY_BORROW && it.amount > 0 }.sumByDouble {
+                it.amount
+            }
+            dataBinding.totalBorrowIn = 0 - allAccountList.filter { it.category == AppConstant.MONEY_TRACES_CATEGORY_BORROW && it.amount < 0 }.sumByDouble {
+                it.amount
+            }
 
             val polymerizeGroupList = mutableListOf<PolymerizeGroupModel>()
-            allAccountList.groupBy { it.category }.forEach { (category, accountList) ->
+            allAccountList.filter { it.showInTotal }.groupBy { it.category }.forEach { (category, accountList) ->
                 polymerizeGroupList.add(PolymerizeGroupModel(category.translate(), when (category)
                 {
                     AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> "${accountList.sumByDouble { it.usedQuota }.toAmountStr()}/${

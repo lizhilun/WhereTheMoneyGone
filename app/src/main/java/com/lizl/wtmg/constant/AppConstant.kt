@@ -2,6 +2,11 @@ package com.lizl.wtmg.constant
 
 object AppConstant
 {
+    const val MONEY_TRACES_CATEGORY_EXPENDITURE = "expenditure"
+    const val MONEY_TRACES_CATEGORY_INCOME = "income"
+    const val MONEY_TRACES_CATEGORY_TRANSFER = "transfer"
+    const val MONEY_TRACES_CATEGORY_BORROW = "borrow"
+
     const val ACCOUNT_TYPE_CASH = "cash"
     const val ACCOUNT_TYPE_ALI_PAY = "ali pay"
     const val ACCOUNT_TYPE_WE_CHAT = "we chat"
@@ -19,6 +24,7 @@ object AppConstant
     const val ACCOUNT_CATEGORY_TYPE_CAPITAL = "capital"
     const val ACCOUNT_CATEGORY_TYPE_CREDIT = "credit"
     const val ACCOUNT_CATEGORY_TYPE_INVESTMENT = "investment"
+    const val ACCOUNT_CATEGORY_TYPE_DEBT = "debt"
 
     const val EXPENDITURE_TYPE_BUY_FOOD = "buy food"
     const val EXPENDITURE_TYPE_TAKEAWAY = "takeaway"
@@ -49,10 +55,10 @@ object AppConstant
 
     const val TRANSFER_TYPE_TRANSFER = "transfer"
 
-    const val MONEY_TRACES_CATEGORY_EXPENDITURE = "expenditure"
-    const val MONEY_TRACES_CATEGORY_INCOME = "income"
-    const val MONEY_TRACES_CATEGORY_TRANSFER = "transfer"
-    const val MONEY_TRACES_CATEGORY_BORROW = "borrow"
+    const val BORROW_TYPE_BORROW_IN = "borrow in"
+    const val BORROW_TYPE_BORROW_OUT = "borrow out"
+    const val BORROW_TYPE_PAY_BACK_IN = "pay back in"
+    const val BORROW_TYPE_PAY_BACK_OUT = "pay back out"
 
     const val DATA_RESTORE_FAILED_WRONG_PASSWORD = "DATA_RESTORE_FAILED_WRONG_PASSWORD" //数据还原失败：密码不对
 }

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_borrow_out"
+        style="@style/GlobalInfoTextBtnStyle"
+        android:layout_marginStart="@dimen/global_content_padding_edge"
+        android:layout_marginTop="@dimen/global_content_padding_edge"
+        android:text="@string/borrow_out"
+        app:layout_constraintEnd_toStartOf="@+id/tv_borrow_in"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_borrow_in"
+        style="@style/GlobalInfoTextBtnStyle"
+        android:layout_marginStart="@dimen/global_content_padding_content"
+        android:text="@string/borrow_in"
+        app:layout_constraintEnd_toStartOf="@+id/tv_payback_out"
+        app:layout_constraintStart_toEndOf="@+id/tv_borrow_out"
+        app:layout_constraintTop_toTopOf="@+id/tv_borrow_out" />
+
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_payback_out"
+        style="@style/GlobalInfoTextBtnStyle"
+        android:layout_marginStart="@dimen/global_content_padding_content"
+        android:text="@string/payback_out"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_borrow_in"
+        app:layout_constraintEnd_toStartOf="@+id/tv_payback_in"
+        app:layout_constraintStart_toEndOf="@+id/tv_borrow_in"
+        app:layout_constraintTop_toTopOf="@+id/tv_borrow_in" />
+
+    <skin.support.widget.SkinCompatTextView
+        android:id="@+id/tv_payback_in"
+        style="@style/GlobalInfoTextBtnStyle"
+        android:layout_marginStart="@dimen/global_content_padding_content"
+        android:text="@string/payback_in"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_borrow_in"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_payback_out"
+        app:layout_constraintTop_toTopOf="@+id/tv_borrow_in" />
+
+    <com.lizl.wtmg.custom.view.tracesrecord.AccountInputView
+        android:id="@+id/layout_out_account"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="@dimen/global_content_padding_edge"
+        android:layout_marginEnd="@dimen/global_content_padding_content_half"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_transfer"
+        app:layout_constraintEnd_toStartOf="@+id/iv_transfer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_transfer"
+        app:textGravity="start" />
+
+    <com.lizl.wtmg.module.skin.view.SkinImageView
+        android:id="@+id/iv_transfer"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="@drawable/ic_baseline_account_transfer_24"
+        android:tint="@color/colorSvgTint"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.lizl.wtmg.custom.view.tracesrecord.AccountInputView
+        android:id="@+id/layout_in_account"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="@dimen/global_content_padding_content_half"
+        android:layout_marginEnd="@dimen/global_content_padding_edge"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_transfer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_transfer"
+        app:layout_constraintTop_toTopOf="@+id/iv_transfer"
+        app:textGravity="end" />
+</androidx.constraintlayout.widget.ConstraintLayout>

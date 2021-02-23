@@ -74,7 +74,7 @@ object PopupUtil
     {
         val context = ActivityUtils.getTopActivity() ?: return
         showBottomListPopup(mutableListOf<PolymerizeModel>().apply {
-            AppDatabase.getInstance().getAccountDao().queryAllAccount().groupBy { it.category }.forEach { (category, accountList) ->
+            AppDatabase.getInstance().getAccountDao().queryAllAccount().filter { it.showInTotal }.groupBy { it.category }.forEach { (category, accountList) ->
 
                 val childList = mutableListOf<PolymerizeChildModel>()
                 accountList.forEach { childList.add(PolymerizeChildModel(it.type.getIcon(), it.type.translate(), "", it)) }

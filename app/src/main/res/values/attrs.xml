@@ -39,4 +39,10 @@
         <attr name="subActionText" format="string|reference" />
     </declare-styleable>
 
+    <declare-styleable name="AccountInputView">
+        <attr name="textGravity" format="enum">
+            <enum name="start" value="1" />
+            <enum name="end" value="2" />
+        </attr>
+    </declare-styleable>
 </resources>

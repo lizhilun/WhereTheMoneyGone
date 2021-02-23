@@ -15,6 +15,14 @@
         <variable
             name="totalLiabilities"
             type="Double" />
+
+        <variable
+            name="totalBorrowOut"
+            type="Double" />
+
+        <variable
+            name="totalBorrowIn"
+            type="Double" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -80,6 +88,36 @@
 
                 </skin.support.constraint.SkinCompatConstraintLayout>
 
+                <com.lizl.wtmg.custom.view.withdes.TextViewWithDes
+                    android:id="@+id/tv_borrow_out"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/global_content_padding_edge_half"
+                    android:layout_marginTop="@dimen/global_content_padding_content_half"
+                    android:layout_marginEnd="@dimen/global_content_padding_content"
+                    android:background="@color/colorContentBg"
+                    android:padding="@dimen/global_content_padding_content_half"
+                    app:amount="@{totalBorrowOut}"
+                    app:decTextStr="@string/total_borrow_out"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_borrow_in"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cl_property_info" />
+
+                <com.lizl.wtmg.custom.view.withdes.TextViewWithDes
+                    android:id="@+id/tv_borrow_in"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="@dimen/global_content_padding_edge_half"
+                    android:background="@color/colorContentBg"
+                    android:padding="@dimen/global_content_padding_content_half"
+                    app:amount="@{totalBorrowIn}"
+                    app:decTextStr="@string/total_borrow_in"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_borrow_out"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tv_borrow_out"
+                    app:layout_constraintTop_toTopOf="@+id/tv_borrow_out" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_property_category_group"
                     android:layout_width="match_parent"
@@ -89,7 +127,7 @@
                     android:overScrollMode="never"
                     android:paddingBottom="@dimen/global_content_padding_bottom_fab"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@+id/cl_property_info" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_borrow_out" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -55,6 +55,7 @@ fun String.getIcon(default: Int = R.drawable.ic_baseline_others_24): Int
         AppConstant.MONEY_TRACES_CATEGORY_INCOME -> R.drawable.ic_spot_green
         AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> R.drawable.ic_spot_red
         AppConstant.MONEY_TRACES_CATEGORY_TRANSFER -> R.drawable.ic_spot_gray
+        AppConstant.MONEY_TRACES_CATEGORY_BORROW -> R.drawable.ic_spot_gray
 
         else                                           -> default
     }

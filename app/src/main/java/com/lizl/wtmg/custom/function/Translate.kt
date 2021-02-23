@@ -54,6 +54,11 @@ fun String.translate(): String
         AppConstant.INCOME_TYPE_SECOND_HAND -> StringUtils.getString(R.string.second_hand)
         AppConstant.INCOME_TYPE_TRANSFER_IN -> StringUtils.getString(R.string.transfer_in)
 
+        AppConstant.BORROW_TYPE_BORROW_OUT -> StringUtils.getString(R.string.borrow_out)
+        AppConstant.BORROW_TYPE_BORROW_IN -> StringUtils.getString(R.string.borrow_in)
+        AppConstant.BORROW_TYPE_PAY_BACK_OUT -> StringUtils.getString(R.string.payback_out)
+        AppConstant.BORROW_TYPE_PAY_BACK_IN -> StringUtils.getString(R.string.payback_in)
+
         else                                           -> StringUtils.getString(R.string.others)
     }
 }
