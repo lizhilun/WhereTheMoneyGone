@@ -26,7 +26,7 @@ object AccountDataManager
                     AppDatabase.getInstance().getAccountDao().insert(inAccountModel)
                 }
             }
-            AppConstant.MONEY_TRACES_CATEGORY_BORROW ->
+            AppConstant.MONEY_TRACES_CATEGORY_DEBT ->
             {
                 handleMoneyOut(payAccountModel, moneyTracesModel.amonunt)
 
@@ -59,7 +59,7 @@ object AccountDataManager
                     AppDatabase.getInstance().getAccountDao().insert(inAccountModel)
                 }
             }
-            AppConstant.MONEY_TRACES_CATEGORY_BORROW ->
+            AppConstant.MONEY_TRACES_CATEGORY_DEBT ->
             {
                 handleMoneyIn(payAccountModel, moneyTracesModel.amonunt)
 
@@ -80,7 +80,7 @@ object AccountDataManager
             AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL -> accountModel.amount -= amount
             AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> accountModel.usedQuota += amount
             AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT -> accountModel.amount -= amount
-            AppConstant.MONEY_TRACES_CATEGORY_BORROW -> accountModel.amount -= amount
+            AppConstant.ACCOUNT_CATEGORY_TYPE_DEBT -> accountModel.amount -= amount
         }
     }
 

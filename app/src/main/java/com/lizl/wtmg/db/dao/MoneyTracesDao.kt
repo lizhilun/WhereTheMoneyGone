@@ -29,6 +29,9 @@ interface MoneyTracesDao : BaseDao<MoneyTracesModel>
     @Query("select * from MoneyTraces where accountType == :accountType or transferToAccount == :accountType order by recordTime desc")
     fun obTracesByAccount(accountType: String): LiveData<MutableList<MoneyTracesModel>>
 
+    @Query("select * from MoneyTraces where accountType == :accountType or transferToAccount == :accountType order by recordTime desc")
+    fun queryTracesByAccount(accountType: String): MutableList<MoneyTracesModel>
+
     @Query("select * from MoneyTraces")
     fun obAllTracesForBackup(): LiveData<MutableList<MoneyTracesModel>>
 

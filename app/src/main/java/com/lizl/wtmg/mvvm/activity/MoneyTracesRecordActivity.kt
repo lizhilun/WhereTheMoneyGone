@@ -18,7 +18,7 @@ import com.lizl.wtmg.mvvm.adapter.ViewPagerAdapter
 import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.util.DateUtil
 import com.lizl.wtmg.custom.popup.PopupUtil
-import com.lizl.wtmg.custom.view.tracesrecord.BorrowMoneyView
+import com.lizl.wtmg.custom.view.tracesrecord.DebtInputView
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.AccountModel
 import kotlinx.android.synthetic.main.activity_money_record_traces.*
@@ -40,7 +40,7 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
 
     private val accountTransferView by lazy { AccountTransferView(this) }
 
-    private val borrowMoneyView by lazy { BorrowMoneyView(this) }
+    private val borrowMoneyView by lazy { DebtInputView(this) }
 
     companion object
     {
@@ -86,12 +86,12 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
                     accountTransferView.setOutAccountType(it.accountType)
                     accountTransferView.setInAccountType(it.transferToAccount)
                 }
-                AppConstant.MONEY_TRACES_CATEGORY_BORROW ->
+                AppConstant.MONEY_TRACES_CATEGORY_DEBT ->
                 {
                     tv_account.isVisible = false
                     curPageType = PAGE_TYPE_DEBT
 
-                    borrowMoneyView.setBorrowType(it.tracesType)
+                    borrowMoneyView.setDebtType(it.tracesType)
                     borrowMoneyView.setInAccountType(it.transferToAccount)
                     borrowMoneyView.setOutAccountType(it.accountType)
                 }
@@ -242,7 +242,7 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
         {
             PAGE_TYPE_TRANSFER -> AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
             PAGE_TYPE_INCOME -> AppConstant.MONEY_TRACES_CATEGORY_INCOME
-            PAGE_TYPE_DEBT -> AppConstant.MONEY_TRACES_CATEGORY_BORROW
+            PAGE_TYPE_DEBT -> AppConstant.MONEY_TRACES_CATEGORY_DEBT
             else               -> AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE
         }
 
@@ -272,17 +272,17 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
             }
             PAGE_TYPE_DEBT ->
             {
-                val borrowInfoModel = borrowMoneyView.getBorrowInfo()
+                val borrowInfoModel = borrowMoneyView.getDebtInfo()
 
                 listOf(borrowInfoModel.inAccountType, borrowInfoModel.outAccountType).forEach {
                     if (AppDatabase.getInstance().getAccountDao().queryAccountByType(it) == null)
                     {
-                        val accountModel = AccountModel(category = AppConstant.MONEY_TRACES_CATEGORY_BORROW, type = it, name = it, showInTotal = false)
+                        val accountModel = AccountModel(category = AppConstant.ACCOUNT_CATEGORY_TYPE_DEBT, type = it, name = it, showInTotal = false)
                         AppDatabase.getInstance().getAccountDao().insert(accountModel)
                     }
                 }
 
-                MoneyTracesModel(amonunt = amount, tracesType = borrowInfoModel.borrowType, tracesCategory = traceCategory,
+                MoneyTracesModel(amonunt = amount, tracesType = borrowInfoModel.debtType, tracesCategory = traceCategory,
                         accountType = borrowInfoModel.outAccountType, recordTime = selectTime.timeInMills, recordYear = selectTime.year,
                         recordMonth = selectTime.month, recordDay = selectTime.day, remarks = et_remarks.text.toString(),
                         transferToAccount = borrowInfoModel.inAccountType)

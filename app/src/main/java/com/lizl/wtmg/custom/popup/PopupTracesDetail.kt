@@ -31,8 +31,12 @@ class PopupTracesDetail(context: Context, private val tracesModel: MoneyTracesMo
         layout_traces_remarks.isVisible = tracesModel.remarks.isNotBlank()
         layout_traces_remarks.setMainText(tracesModel.remarks)
 
-        layout_to_account_type.isVisible = tracesModel.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
-        layout_to_account_type.setMainText(tracesModel.transferToAccount.translate())
+        layout_to_account_type.isVisible = tracesModel.transferToAccount.isNotBlank()
+        when (tracesModel.tracesCategory)
+        {
+            AppConstant.MONEY_TRACES_CATEGORY_TRANSFER -> layout_to_account_type.setMainText(tracesModel.transferToAccount.translate())
+            AppConstant.MONEY_TRACES_CATEGORY_DEBT -> layout_to_account_type.setMainText(tracesModel.transferToAccount)
+        }
 
         val tracesTime = DateUtil.Date(tracesModel.recordTime)
         layout_traces_time.setMainText(tracesTime.toFormatString())

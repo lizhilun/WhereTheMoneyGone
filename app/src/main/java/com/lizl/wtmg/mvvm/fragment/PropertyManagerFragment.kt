@@ -21,6 +21,7 @@ import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeModel
 import com.lizl.wtmg.util.ActivityUtil
 import com.lizl.wtmg.custom.popup.PopupUtil
+import com.lizl.wtmg.mvvm.activity.DebtDetailActivity
 import kotlinx.android.synthetic.main.fragment_property_manager.*
 
 class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.layout.fragment_property_manager)
@@ -50,14 +51,14 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
                 when (it.category)
                 {
                     AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> it.usedQuota
-                    AppConstant.MONEY_TRACES_CATEGORY_BORROW -> if (it.amount < 0) 0 - it.amount else 0.0
+                    AppConstant.MONEY_TRACES_CATEGORY_DEBT   -> if (it.amount < 0) 0 - it.amount else 0.0
                     else                                     -> 0.0
                 }
             }
-            dataBinding.totalBorrowOut = allAccountList.filter { it.category == AppConstant.MONEY_TRACES_CATEGORY_BORROW && it.amount > 0 }.sumByDouble {
+            dataBinding.totalBorrowOut = allAccountList.filter { it.category == AppConstant.ACCOUNT_CATEGORY_TYPE_DEBT && it.amount > 0 }.sumByDouble {
                 it.amount
             }
-            dataBinding.totalBorrowIn = 0 - allAccountList.filter { it.category == AppConstant.MONEY_TRACES_CATEGORY_BORROW && it.amount < 0 }.sumByDouble {
+            dataBinding.totalBorrowIn = 0 - allAccountList.filter { it.category == AppConstant.ACCOUNT_CATEGORY_TYPE_DEBT && it.amount < 0 }.sumByDouble {
                 it.amount
             }
 
@@ -87,6 +88,14 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
     override fun initListener()
     {
         fab_add.setOnClickListener { ActivityUtils.startActivity(AddAccountActivity::class.java) }
+
+        tv_borrow_out.setOnClickListener {
+            ActivityUtil.turnToActivity(DebtDetailActivity::class.java, Pair(DebtDetailActivity.DEBT_TYPE, DebtDetailActivity.DEBT_TYPE_TOTAL_BORROW_OUT))
+        }
+
+        tv_borrow_in.setOnClickListener {
+            ActivityUtil.turnToActivity(DebtDetailActivity::class.java, Pair(DebtDetailActivity.DEBT_TYPE, DebtDetailActivity.DEBT_TYPE_TOTAL_BORROW_IN))
+        }
 
         polymerizeGroupAdapter.setOnChildItemClickListener {
             ActivityUtil.turnToActivity(AccountDetailActivity::class.java, Pair(AccountDetailActivity.DATA_ACCOUNT_TYPE, (it.tag as AccountModel).type))

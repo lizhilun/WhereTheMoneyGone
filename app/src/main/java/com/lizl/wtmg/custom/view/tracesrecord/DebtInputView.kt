@@ -1,6 +1,5 @@
 package com.lizl.wtmg.custom.view.tracesrecord
 
-import android.accounts.Account
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -12,46 +11,46 @@ import com.lizl.wtmg.custom.function.setOnClickListener
 import com.lizl.wtmg.custom.function.ui
 import com.lizl.wtmg.custom.popup.PopupUtil
 import com.lizl.wtmg.db.AppDatabase
-import kotlinx.android.synthetic.main.layout_borrow_money.view.*
+import kotlinx.android.synthetic.main.layout_debt_input.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import skin.support.widget.SkinCompatFrameLayout
 
-class BorrowMoneyView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : SkinCompatFrameLayout(context, attrs, defStyleAttr)
+class DebtInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : SkinCompatFrameLayout(context, attrs, defStyleAttr)
 {
     constructor(context: Context) : this(context, null)
 
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
-    private var borrowType = AppConstant.BORROW_TYPE_BORROW_OUT
+    private var debtType = AppConstant.DEBT_TYPE_BORROW_OUT
 
     init
     {
         initView()
     }
 
-    private lateinit var borrowTypeBtnList: List<View>
+    private lateinit var debtTypeBtnList: List<View>
 
     private fun initView()
     {
-        LayoutInflater.from(context).inflate(R.layout.layout_borrow_money, null).apply { addView(this) }
+        LayoutInflater.from(context).inflate(R.layout.layout_debt_input, null).apply { addView(this) }
 
-        tv_borrow_out.tag = AppConstant.BORROW_TYPE_BORROW_OUT
-        tv_borrow_in.tag = AppConstant.BORROW_TYPE_BORROW_IN
-        tv_payback_out.tag = AppConstant.BORROW_TYPE_PAY_BACK_OUT
-        tv_payback_in.tag = AppConstant.BORROW_TYPE_PAY_BACK_IN
+        tv_borrow_out.tag = AppConstant.DEBT_TYPE_BORROW_OUT
+        tv_borrow_in.tag = AppConstant.DEBT_TYPE_BORROW_IN
+        tv_payback_out.tag = AppConstant.DEBT_TYPE_PAY_BACK_OUT
+        tv_payback_in.tag = AppConstant.DEBT_TYPE_PAY_BACK_IN
 
-        borrowTypeBtnList = listOf(tv_borrow_out, tv_borrow_in, tv_payback_out, tv_payback_in)
+        debtTypeBtnList = listOf(tv_borrow_out, tv_borrow_in, tv_payback_out, tv_payback_in)
 
-        val onBorrowTypeClick = { view: View ->
-            borrowTypeBtnList.forEach { it.isSelected = it == view }
-            borrowType = view.tag.toString()
+        val onDebtTypeClick = { view: View ->
+            debtTypeBtnList.forEach { it.isSelected = it == view }
+            debtType = view.tag.toString()
             updateAccountInputView()
         }
 
-        borrowTypeBtnList.forEach {
+        debtTypeBtnList.forEach {
             it.setOnClickListener(true) { view: View ->
-                onBorrowTypeClick.invoke(view)
+                onDebtTypeClick.invoke(view)
             }
         }
 
@@ -67,14 +66,14 @@ class BorrowMoneyView(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
             }
         }
 
-        setBorrowType(borrowType)
+        setDebtType(debtType)
     }
 
     private fun updateAccountInputView()
     {
-        when (borrowType)
+        when (debtType)
         {
-            AppConstant.BORROW_TYPE_BORROW_IN ->
+            AppConstant.DEBT_TYPE_BORROW_IN ->
             {
                 layout_out_account.setInputEnable(true)
                 layout_out_account.setHint(context.getString(R.string.borrower))
@@ -82,7 +81,7 @@ class BorrowMoneyView(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
                 layout_in_account.setInputEnable(false)
                 layout_in_account.setHint(context.getString(R.string.transfer_in_account))
             }
-            AppConstant.BORROW_TYPE_PAY_BACK_IN ->
+            AppConstant.DEBT_TYPE_PAY_BACK_IN ->
             {
                 layout_out_account.setInputEnable(true)
                 layout_out_account.setHint(context.getString(R.string.payer))
@@ -90,7 +89,7 @@ class BorrowMoneyView(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
                 layout_in_account.setInputEnable(false)
                 layout_in_account.setHint(context.getString(R.string.transfer_in_account))
             }
-            AppConstant.BORROW_TYPE_PAY_BACK_OUT ->
+            AppConstant.DEBT_TYPE_PAY_BACK_OUT ->
             {
                 layout_out_account.setInputEnable(false)
                 layout_out_account.setHint(context.getString(R.string.transfer_out_account))
@@ -98,7 +97,7 @@ class BorrowMoneyView(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
                 layout_in_account.setInputEnable(true)
                 layout_in_account.setHint(context.getString(R.string.payee))
             }
-            else                                 ->
+            else                               ->
             {
                 layout_out_account.setInputEnable(false)
                 layout_out_account.setHint(context.getString(R.string.transfer_out_account))
@@ -119,10 +118,10 @@ class BorrowMoneyView(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
         setAccountType(outAccountType, layout_out_account)
     }
 
-    fun setBorrowType(borrowType: String)
+    fun setDebtType(debtType: String)
     {
-        this.borrowType = borrowType
-        borrowTypeBtnList.forEach { it.isSelected = it.tag == borrowType }
+        this.debtType = debtType
+        debtTypeBtnList.forEach { it.isSelected = it.tag == debtType }
         updateAccountInputView()
     }
 
@@ -162,10 +161,10 @@ class BorrowMoneyView(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
         return true
     }
 
-    fun getBorrowInfo(): BorrowInfoModel
+    fun getDebtInfo(): DebtInfoModel
     {
-        return BorrowInfoModel(borrowType, layout_out_account.getInputAccountType(), layout_in_account.getInputAccountType())
+        return DebtInfoModel(debtType, layout_out_account.getInputAccountType(), layout_in_account.getInputAccountType())
     }
 
-    class BorrowInfoModel(val borrowType: String, val outAccountType: String, val inAccountType: String)
+    class DebtInfoModel(val debtType: String, val outAccountType: String, val inAccountType: String)
 }
