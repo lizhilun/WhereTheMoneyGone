@@ -3,6 +3,7 @@ package com.lizl.wtmg.module.skin.util
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.content.res.ColorStateList
 import android.content.res.Configuration
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.BarUtils
@@ -71,10 +72,13 @@ object SkinUtil
 
     fun getColor(context: Context, colorResId: Int) = SkinCompatResources.getColor(context, colorResId)
 
+    fun getColorStateList(context: Context, colorResId: Int): ColorStateList = SkinCompatResources.getColorStateList(context, colorResId)
+
     suspend fun updateStatusBarLightMode(activity: Activity)
     {
         val isDarkMode = isNightModeOn()
         GlobalScope.ui { BarUtils.setStatusBarLightMode(activity, !isDarkMode) }
+
     }
 
     private suspend fun isNightModeOn(): Boolean

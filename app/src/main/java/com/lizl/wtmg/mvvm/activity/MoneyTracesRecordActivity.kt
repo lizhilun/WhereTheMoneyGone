@@ -123,11 +123,10 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
             add(accountTransferView)
             add(borrowMoneyView)
         })
-        vp_type.offscreenPageLimit = 3
+        vp_type.offscreenPageLimit = 4
         vp_type.setCurrentItem(curPageType, false)
 
-        val titleList =
-                listOf(getString(R.string.expenditure), getString(R.string.income), getString(R.string.transfer), getString(R.string.borrow_and_payback))
+        val titleList = listOf(getString(R.string.expenditure), getString(R.string.income), getString(R.string.transfer), getString(R.string.borrow_and_payback))
         TabLayoutMediator(tl_title, vp_type, TabLayoutMediator.TabConfigurationStrategy { tab, position ->
             if (position >= titleList.size) return@TabConfigurationStrategy
             tab.text = titleList[position]

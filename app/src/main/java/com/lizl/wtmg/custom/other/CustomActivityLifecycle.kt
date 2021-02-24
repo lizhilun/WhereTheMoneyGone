@@ -3,6 +3,9 @@ package com.lizl.wtmg.custom.other
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.Utils
 import com.lizl.wtmg.module.skin.util.SkinUtil
 import com.lizl.wtmg.mvvm.activity.LockActivity
 import com.lizl.wtmg.util.ActivityUtil
@@ -11,9 +14,26 @@ import kotlinx.coroutines.launch
 
 object CustomActivityLifecycle : Application.ActivityLifecycleCallbacks
 {
-    private var startStatusActivityCount = 0
-
     var isFromActivityResult = false
+
+    init
+    {
+        AppUtils.registerAppStatusChangedListener(this, object : Utils.OnAppStatusChangedListener
+        {
+            override fun onForeground()
+            {
+                if (isFromActivityResult || ActivityUtils.getTopActivity() is LockActivity)
+                {
+                    return
+                }
+                ActivityUtil.turnToActivity(LockActivity::class.java)
+            }
+
+            override fun onBackground()
+            {
+            }
+        })
+    }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?)
     {
@@ -22,16 +42,6 @@ object CustomActivityLifecycle : Application.ActivityLifecycleCallbacks
 
     override fun onActivityStarted(activity: Activity)
     {
-        startStatusActivityCount++
-        if (isFromActivityResult)
-        {
-            isFromActivityResult = false
-            return
-        }
-        if (startStatusActivityCount == 1 && activity !is LockActivity)
-        {
-            ActivityUtil.turnToActivity(LockActivity::class.java)
-        }
     }
 
     override fun onActivityResumed(activity: Activity)
@@ -44,7 +54,6 @@ object CustomActivityLifecycle : Application.ActivityLifecycleCallbacks
 
     override fun onActivityStopped(activity: Activity)
     {
-        startStatusActivityCount--
     }
 
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle)

@@ -1,12 +1,15 @@
 package com.lizl.wtmg.custom.view.withdes
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.isVisible
+import com.blankj.utilcode.util.ColorUtils
 import com.lizl.wtmg.R
+import com.lizl.wtmg.module.skin.util.SkinUtil
 import com.lizl.wtmg.module.skin.view.SkinImageView
 import skin.support.constraint.SkinCompatConstraintLayout
 import skin.support.widget.SkinCompatTextView
@@ -41,6 +44,7 @@ class TextViewWithDes(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
         addView(tvMain)
 
         ivRight.setImageResource(R.drawable.ic_baseline_keyboard_arrow_right_24)
+        ivRight.imageTintList = SkinUtil.getColorStateList(context, R.color.colorSvgTint)
         ivRight.id = View.generateViewId()
         addView(ivRight)
 
