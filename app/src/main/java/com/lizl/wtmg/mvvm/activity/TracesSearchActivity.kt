@@ -1,6 +1,10 @@
 package com.lizl.wtmg.mvvm.activity
 
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.sqlite.db.SimpleSQLiteQuery
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.lizl.wtmg.R
 import com.lizl.wtmg.R.dimen
 import com.lizl.wtmg.constant.AppConstant
@@ -14,6 +18,7 @@ import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.databinding.ActivityTracesSearchBinding
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.MoneyTracesModel
+import com.lizl.wtmg.module.account.AccountDataManager
 import com.lizl.wtmg.module.account.AccountManager
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseActivity
@@ -88,38 +93,64 @@ class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.
         }
     }
 
-    private var lastSearchJob: Job? = null
+    private var lastSearchOb: LiveData<MutableList<MoneyTracesModel>>? = null
 
     private fun search(startTime: Long = this.startTime, endTime: Long = this.endTime, keyword: String = et_keyword.text.toString(),
                        minAmount: Int = this.minAmount, maxAmount: Int = this.maxAmount)
     {
-        lastSearchJob?.cancel()
+        lastSearchOb?.removeObservers(this)
         if (keyword.isBlank())
         {
             tv_result.text = ""
             searchResultAdapter.replaceData(mutableListOf())
             return
         }
-        lastSearchJob = GlobalScope.launch {
-            val allTracesList = AppDatabase.getInstance().getMoneyTracesDao().queryTracesInTime(startTime, endTime).filter {
-                (it.tracesType.translate().contains(keyword) || it.remarks.contains(keyword)) && it.amount >= minAmount && it.amount <= maxAmount
-            }.toMutableList()
 
-            val resultStringBuffer = StringBuffer()
-            resultStringBuffer.append(getString(R.string.search_result_count_is, allTracesList.size))
-            if (allTracesList.isNotEmpty())
-            {
-                val income = allTracesList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME }.sumByDouble { it.amount }.toAmountStr()
-                val expenditure =
-                        allTracesList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE }.sumByDouble { it.amount }.toAmountStr()
-                resultStringBuffer.append("\n").append(getString(R.string.income)).append("：").append(income).append("    ")
-                    .append(getString(R.string.expenditure)).append("：").append(expenditure)
+        val searchSql = SimpleSQLiteQuery(getSearchSql(keyword, startTime, endTime, minAmount, maxAmount))
+        lastSearchOb = AppDatabase.getInstance().getMoneyTracesDao().searchAndOb(searchSql).apply {
+            observe(this@TracesSearchActivity, Observer { allTracesList ->
+                val resultStringBuffer = StringBuffer()
+                resultStringBuffer.append(getString(R.string.search_result_count_is, allTracesList.size))
+                if (allTracesList.isNotEmpty())
+                {
+                    val income = allTracesList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME }.sumByDouble { it.amount }.toAmountStr()
+                    val expenditure =
+                            allTracesList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE }.sumByDouble { it.amount }.toAmountStr()
+                    resultStringBuffer.append("\n").append(getString(R.string.income)).append("：").append(income).append("    ")
+                        .append(getString(R.string.expenditure)).append("：").append(expenditure)
+                }
+
+                GlobalScope.ui { tv_result.text = resultStringBuffer.toString() }
+
+                val polymerizeGroupList = AccountManager.polymerizeTrancesList(allTracesList)
+                GlobalScope.ui { searchResultAdapter.replaceData(polymerizeGroupList) }
+            })
+        }
+    }
+
+    private fun getSearchSql(keyword: String, startTime: Long, endTime: Long, minAmount: Int, maxAmount: Int): String
+    {
+        val sqlStringBuffer = StringBuffer()
+
+        sqlStringBuffer.append("select * from MoneyTraces").append(" where ").append("recordTime >= $startTime and recordTime <= $endTime").append(" and ")
+            .append("amount >= $minAmount and amount <= $maxAmount")
+
+        if (keyword.isNotBlank())
+        {
+            sqlStringBuffer.append(" and ").append("(").append("remarks like '%$keyword%'")
+
+            val allTracesTypeList = mutableListOf<String>().apply {
+                addAll(AccountManager.expenditureTypeList)
+                addAll(AccountManager.incomeTypeList)
+                addAll(AccountManager.debtTypeList)
+            }
+            allTracesTypeList.filter { it.translate().contains(keyword) }.forEach {
+                sqlStringBuffer.append(" or ").append("tracesType == '$it'")
             }
 
-            GlobalScope.ui { tv_result.text = resultStringBuffer.toString() }
-
-            val polymerizeGroupList = AccountManager.polymerizeTrancesList(allTracesList)
-            GlobalScope.ui { searchResultAdapter.replaceData(polymerizeGroupList) }
+            sqlStringBuffer.append(")")
         }
+
+        return sqlStringBuffer.toString()
     }
 }

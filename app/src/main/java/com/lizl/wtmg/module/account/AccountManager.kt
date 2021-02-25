@@ -30,6 +30,9 @@ object AccountManager
     val incomeTypeList = listOf(AppConstant.INCOME_TYPE_WAGES, AppConstant.INCOME_TYPE_RED_ENVELOPES, AppConstant.INCOME_TYPE_SECOND_HAND,
             AppConstant.INCOME_TYPE_FINANCIAL_TRANSACTIONS, AppConstant.INCOME_TYPE_TRANSFER_IN)
 
+    val debtTypeList =
+            listOf(AppConstant.DEBT_TYPE_BORROW_OUT, AppConstant.DEBT_TYPE_BORROW_IN, AppConstant.DEBT_TYPE_PAY_BACK_OUT, AppConstant.DEBT_TYPE_BORROW_IN)
+
     val accountCategoryList =
             listOf(AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL, AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT, AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT)
 
