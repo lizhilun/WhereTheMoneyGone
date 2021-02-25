@@ -2,6 +2,7 @@ package com.lizl.wtmg.mvvm.fragment
 
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
+import com.chad.library.adapter.base.BaseQuickAdapter.AnimationType
 import com.lizl.wtmg.R
 import com.lizl.wtmg.R.dimen
 import com.lizl.wtmg.constant.AppConstant

@@ -3,6 +3,7 @@ package com.lizl.wtmg.mvvm.fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
+import com.chad.library.adapter.base.BaseQuickAdapter.AnimationType
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
@@ -36,7 +37,10 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
 
     override fun initView()
     {
-        polymerizeGroupAdapter = PolymerizeGroupAdapter()
+        polymerizeGroupAdapter = PolymerizeGroupAdapter().apply {
+            animationEnable = true
+            setAnimationWithDefault(AnimationType.SlideInLeft)
+        }
         rv_daily_outline.adapter = polymerizeGroupAdapter
         rv_daily_outline.addItemDecoration(ListDividerItemDecoration(resources.getDimensionPixelSize(R.dimen.global_content_padding_content)))
 
@@ -80,6 +84,7 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
 
     private fun showMonthOutline(year: Int, month: Int)
     {
+        var needRefresh = true
         lastTracesDataOb?.removeObservers(this)
         lastTracesDataOb = AppDatabase.getInstance().getMoneyTracesDao().obTracesByMonth(year, month).apply {
             observe(this@PropertyOutlineFragment, Observer { tracesList ->
@@ -94,7 +99,17 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
 
                     val polymerizeGroupList = AccountManager.polymerizeTrancesList(tracesList)
 
-                    GlobalScope.ui { polymerizeGroupAdapter.setDiffNewData(polymerizeGroupList) }
+                    GlobalScope.ui {
+                        if (needRefresh)
+                        {
+                            needRefresh = false
+                            polymerizeGroupAdapter.replaceData(polymerizeGroupList)
+                        }
+                        else
+                        {
+                            polymerizeGroupAdapter.setDiffNewData(polymerizeGroupList)
+                        }
+                    }
                 }
             })
         }

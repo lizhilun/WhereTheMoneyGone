@@ -44,12 +44,24 @@ class MenuDrawLayout(private val fragment: Fragment) : DrawerPopupView(fragment.
                 }
                 else
                 {
-                    GlobalScope.launch { ConfigUtil.set(ConfigConstant.CONFIG_APP_LOCK_ENABLE, true) }
+                    PopupUtil.showConfirmPasswordPopup(password) {
+                        GlobalScope.launch { ConfigUtil.set(ConfigConstant.CONFIG_APP_LOCK_ENABLE, true) }
+                    }
                 }
             }
             else
             {
-                GlobalScope.launch { ConfigUtil.set(ConfigConstant.CONFIG_APP_LOCK_ENABLE, false) }
+                val password = ConfigUtil.getStringBlocking(ConfigConstant.CONFIG_APP_LOCK_PASSWORD)
+                if (password.isNotBlank())
+                {
+                    PopupUtil.showConfirmPasswordPopup(password) {
+                        GlobalScope.launch { ConfigUtil.set(ConfigConstant.CONFIG_APP_LOCK_ENABLE, false) }
+                    }
+                }
+                else
+                {
+                    GlobalScope.launch { ConfigUtil.set(ConfigConstant.CONFIG_APP_LOCK_ENABLE, false) }
+                }
             }
         }
     }

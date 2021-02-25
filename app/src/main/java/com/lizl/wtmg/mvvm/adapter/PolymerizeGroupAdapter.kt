@@ -13,7 +13,6 @@ import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
 
 class PolymerizeGroupAdapter : BaseQuickAdapter<PolymerizeGroupModel, BaseViewHolder>(R.layout.item_polymerize_group)
 {
-
     companion object
     {
         private const val PAYLOAD_CHILD_LIST = "PAYLOAD_CHILD_LIST"

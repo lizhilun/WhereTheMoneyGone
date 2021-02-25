@@ -33,12 +33,12 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
 
     override fun initData()
     {
-        val accountId = intent?.extras?.getLong(DATA_ACCOUNT_ID, -1L)
-        val accountType = intent?.extras?.getString(DATA_ACCOUNT_TYPE)
+        val accountId = intent?.extras?.getLong(DATA_ACCOUNT_ID, -1L) ?: -1L
+        val accountType = intent?.extras?.getString(DATA_ACCOUNT_TYPE).orEmpty()
 
         var accountModel: AccountModel? = null
 
-        if (accountId != -1L && accountType?.isNotBlank() == true)
+        if (accountId != -1L && accountType.isNotBlank())
         {
             ctb_title.setTitle(getString(R.string.modify_account))
 
@@ -124,21 +124,21 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
     private fun onSaveBtnClick()
     {
         val amount = layout_account_amount.getEditText().toDoubleOrNull()
-        if ((accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL || accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT) && amount == null)
+        if (layout_account_amount.isVisible && amount == null)
         {
             ToastUtils.showShort(R.string.please_input_amount)
             return
         }
 
         val totalQuota = layout_total_quota.getEditText().toDoubleOrNull()
-        if (accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT && totalQuota == null)
+        if (layout_total_quota.isVisible && totalQuota == null)
         {
             ToastUtils.showShort(R.string.please_input_total_quota)
             return
         }
 
         val usedQuota = layout_used_quota.getEditText().toDoubleOrNull()
-        if (accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT && usedQuota == null)
+        if (layout_used_quota.isVisible && usedQuota == null)
         {
             ToastUtils.showShort(R.string.please_input_used_quota)
             return

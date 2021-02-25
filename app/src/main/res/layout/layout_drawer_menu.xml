@@ -18,24 +18,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <skin.support.widget.SkinCompatTextView
-        android:id="@+id/tv_app_introduce"
-        style="@style/GlobalSecondaryTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_introduce"
-        app:layout_constraintStart_toStartOf="@+id/tv_app_name"
-        app:layout_constraintTop_toBottomOf="@+id/tv_app_name" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_menu"
         android:layout_width="270dp"
         android:layout_height="0dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="60dp"
         android:overScrollMode="never"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_app_introduce" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_app_name" />
 
 </skin.support.constraint.SkinCompatConstraintLayout>

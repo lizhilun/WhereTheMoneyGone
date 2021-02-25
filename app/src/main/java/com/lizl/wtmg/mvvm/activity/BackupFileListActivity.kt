@@ -146,6 +146,7 @@ class BackupFileListActivity : BaseActivity<ActivityBackupFileListBinding>(R.lay
             if (result)
             {
                 ToastUtils.showShort(R.string.notify_success_to_restore)
+                onBackPressed()
             }
             else
             {
