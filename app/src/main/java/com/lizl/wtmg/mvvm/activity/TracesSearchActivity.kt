@@ -23,7 +23,6 @@ import kotlinx.android.synthetic.main.activity_traces_search.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlin.math.min
 
 class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.activity_traces_search)
 {
@@ -103,16 +102,16 @@ class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.
         }
         lastSearchJob = GlobalScope.launch {
             val allTracesList = AppDatabase.getInstance().getMoneyTracesDao().queryTracesInTime(startTime, endTime).filter {
-                (it.tracesType.translate().contains(keyword) || it.remarks.contains(keyword)) && it.amonunt >= minAmount && it.amonunt <= maxAmount
+                (it.tracesType.translate().contains(keyword) || it.remarks.contains(keyword)) && it.amount >= minAmount && it.amount <= maxAmount
             }.toMutableList()
 
             val resultStringBuffer = StringBuffer()
             resultStringBuffer.append(getString(R.string.search_result_count_is, allTracesList.size))
             if (allTracesList.isNotEmpty())
             {
-                val income = allTracesList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME }.sumByDouble { it.amonunt }.toAmountStr()
+                val income = allTracesList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME }.sumByDouble { it.amount }.toAmountStr()
                 val expenditure =
-                        allTracesList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE }.sumByDouble { it.amonunt }.toAmountStr()
+                        allTracesList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE }.sumByDouble { it.amount }.toAmountStr()
                 resultStringBuffer.append("\n").append(getString(R.string.income)).append("：").append(income).append("    ")
                     .append(getString(R.string.expenditure)).append("：").append(expenditure)
             }

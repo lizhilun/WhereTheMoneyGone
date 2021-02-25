@@ -80,11 +80,11 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
         GlobalScope.launch {
             dataBinding.monthExpenditure = tracesList.filter {
                 it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
-            }.sumByDouble { it.amonunt }
+            }.sumByDouble { it.amount }
 
             dataBinding.monthIncome = tracesList.filter {
                 it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
-            }.sumByDouble { it.amonunt }
+            }.sumByDouble { it.amount }
 
             val polymerizeGroupList = AccountManager.polymerizeTrancesList(tracesList)
 

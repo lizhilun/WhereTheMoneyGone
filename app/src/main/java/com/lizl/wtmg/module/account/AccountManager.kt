@@ -45,7 +45,7 @@ object AccountManager
     }
 
     fun polymerizeTrancesList(tracesList: MutableList<MoneyTracesModel>, transferFunction: (MoneyTracesModel) -> PolymerizeChildModel = {
-        PolymerizeChildModel(it.tracesCategory.getIcon(), it.tracesType.translate(), it.amonunt.toAmountStr(), it)
+        PolymerizeChildModel(it.tracesCategory.getIcon(), it.tracesType.translate(), it.amount.toAmountStr(), it)
     }): MutableList<PolymerizeGroupModel>
     {
         val polymerizeGroupList = mutableListOf<PolymerizeGroupModel>()
@@ -57,8 +57,8 @@ object AccountManager
             val amountInfo = u.sumByDouble {
                 when (it.tracesCategory)
                 {
-                    AppConstant.MONEY_TRACES_CATEGORY_INCOME -> it.amonunt
-                    AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> 0 - it.amonunt
+                    AppConstant.MONEY_TRACES_CATEGORY_INCOME -> it.amount
+                    AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> 0 - it.amount
                     else                                          -> 0.0
                 }
             }.toAmountStr()

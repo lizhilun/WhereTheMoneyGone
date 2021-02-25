@@ -24,7 +24,7 @@ class PopupTracesDetail(context: Context, private val tracesModel: MoneyTracesMo
             it.hasShadowBg = true
         }
 
-        layout_account_amount.setMainText(tracesModel.amonunt.toAmountStr())
+        layout_account_amount.setMainText(tracesModel.amount.toAmountStr())
         layout_account_type.setMainText(tracesModel.accountType.translate())
         layout_traces_type.setMainText(tracesModel.tracesType.translate())
 

@@ -58,7 +58,7 @@ class DebtDetailActivity : BaseActivity<ActivityDebtDetailBinding>(R.layout.acti
                     val polymerizeChildList = mutableListOf<PolymerizeChildModel>()
                     AppDatabase.getInstance().getMoneyTracesDao().queryTracesByAccount(debtAccount.type).forEach { tracesModel ->
                         polymerizeChildList.add(PolymerizeChildModel(tracesModel.tracesCategory.getIcon(), tracesModel.tracesType.translate(),
-                                tracesModel.amonunt.toAmountStr(), tracesModel))
+                                tracesModel.amount.toAmountStr(), tracesModel))
                     }
                     polymerizeGroupList.add(PolymerizeGroupModel(debtAccount.name, abs(debtAccount.amount).toAmountStr(), polymerizeChildList))
                 }

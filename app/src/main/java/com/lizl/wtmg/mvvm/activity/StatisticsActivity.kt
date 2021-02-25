@@ -54,8 +54,8 @@ class StatisticsActivity : BaseActivity<ActivityStatisticsBinding>(R.layout.acti
                 AppDatabase.getInstance().getMoneyTracesDao().queryTracesByMonth(year, month)
             }
 
-            dataBinding.expenditure = traceList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE }.sumByDouble { it.amonunt }
-            dataBinding.income = traceList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME }.sumByDouble { it.amonunt }
+            dataBinding.expenditure = traceList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE }.sumByDouble { it.amount }
+            dataBinding.income = traceList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME }.sumByDouble { it.amount }
 
             dataBinding.expenditureStatistics =
                     tracesToQuantities(traceList, { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE }, { it.tracesType })
@@ -70,7 +70,7 @@ class StatisticsActivity : BaseActivity<ActivityStatisticsBinding>(R.layout.acti
     {
         return ArrayList(mutableListOf<QuantityModel>().apply {
             traceList.filter { filterCondition.invoke(it) }.groupBy { groupCondition.invoke(it) }
-                .forEach { (t, u) -> add(QuantityModel(t, u.sumByDouble { it.amonunt })) }
+                .forEach { (t, u) -> add(QuantityModel(t, u.sumByDouble { it.amount })) }
             sortByDescending { it.quantity }
         })
     }

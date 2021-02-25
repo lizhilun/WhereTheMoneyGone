@@ -74,7 +74,7 @@ class AccountDetailActivity : BaseActivity<ActivityAccountDetailBinding>(R.layou
                         tv_account_outline.setMainText(accountModel.amount.toAmountStr())
 
                         AppDatabase.getInstance().getMoneyTracesDao().obTracesByAccount(accountModel.type).observe(this, Observer { tracesList ->
-                            val totalProfit = tracesList.filter { it.tracesType == AppConstant.INCOME_TYPE_FINANCIAL_TRANSACTIONS }.sumByDouble { it.amonunt }
+                            val totalProfit = tracesList.filter { it.tracesType == AppConstant.INCOME_TYPE_FINANCIAL_TRANSACTIONS }.sumByDouble { it.amount }
                             tv_account_info_1.setDecText(getString(R.string.total_profit))
                             tv_account_info_1.setMainText(totalProfit.toAmountStr())
 
@@ -103,7 +103,7 @@ class AccountDetailActivity : BaseActivity<ActivityAccountDetailBinding>(R.layou
                                     else getString(R.string.transfer_in)
                                 }
                                 else                                       -> it.tracesType.translate()
-                            }, it.amonunt.toAmountStr(), it)
+                            }, it.amount.toAmountStr(), it)
                         }
                         GlobalScope.ui { polymerizeGroupAdapter.replaceData(polymerizeGroupList) }
                     }

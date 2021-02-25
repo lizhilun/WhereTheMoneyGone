@@ -15,23 +15,23 @@ object AccountDataManager
 
         when (moneyTracesModel.tracesCategory)
         {
-            AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> handleMoneyOut(payAccountModel, moneyTracesModel.amonunt)
-            AppConstant.MONEY_TRACES_CATEGORY_INCOME -> handleMoneyIn(payAccountModel, moneyTracesModel.amonunt)
+            AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> handleMoneyOut(payAccountModel, moneyTracesModel.amount)
+            AppConstant.MONEY_TRACES_CATEGORY_INCOME -> handleMoneyIn(payAccountModel, moneyTracesModel.amount)
             AppConstant.MONEY_TRACES_CATEGORY_TRANSFER ->
             {
-                handleMoneyOut(payAccountModel, moneyTracesModel.amonunt)
+                handleMoneyOut(payAccountModel, moneyTracesModel.amount)
 
                 AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.transferToAccount)?.let { inAccountModel ->
-                    handleMoneyIn(inAccountModel, moneyTracesModel.amonunt)
+                    handleMoneyIn(inAccountModel, moneyTracesModel.amount)
                     AppDatabase.getInstance().getAccountDao().insert(inAccountModel)
                 }
             }
             AppConstant.MONEY_TRACES_CATEGORY_DEBT ->
             {
-                handleMoneyOut(payAccountModel, moneyTracesModel.amonunt)
+                handleMoneyOut(payAccountModel, moneyTracesModel.amount)
 
                 AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.transferToAccount)?.let { inAccountModel ->
-                    handleMoneyIn(inAccountModel, moneyTracesModel.amonunt)
+                    handleMoneyIn(inAccountModel, moneyTracesModel.amount)
                     AppDatabase.getInstance().getAccountDao().insert(inAccountModel)
                 }
             }
@@ -48,23 +48,23 @@ object AccountDataManager
 
         when (moneyTracesModel.tracesCategory)
         {
-            AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> handleMoneyIn(payAccountModel, moneyTracesModel.amonunt)
-            AppConstant.MONEY_TRACES_CATEGORY_INCOME -> handleMoneyOut(payAccountModel, moneyTracesModel.amonunt)
+            AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> handleMoneyIn(payAccountModel, moneyTracesModel.amount)
+            AppConstant.MONEY_TRACES_CATEGORY_INCOME -> handleMoneyOut(payAccountModel, moneyTracesModel.amount)
             AppConstant.MONEY_TRACES_CATEGORY_TRANSFER ->
             {
-                handleMoneyIn(payAccountModel, moneyTracesModel.amonunt)
+                handleMoneyIn(payAccountModel, moneyTracesModel.amount)
 
                 AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.transferToAccount)?.let { inAccountModel ->
-                    handleMoneyOut(inAccountModel, moneyTracesModel.amonunt)
+                    handleMoneyOut(inAccountModel, moneyTracesModel.amount)
                     AppDatabase.getInstance().getAccountDao().insert(inAccountModel)
                 }
             }
             AppConstant.MONEY_TRACES_CATEGORY_DEBT ->
             {
-                handleMoneyIn(payAccountModel, moneyTracesModel.amonunt)
+                handleMoneyIn(payAccountModel, moneyTracesModel.amount)
 
                 AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.transferToAccount)?.let { inAccountModel ->
-                    handleMoneyOut(inAccountModel, moneyTracesModel.amonunt)
+                    handleMoneyOut(inAccountModel, moneyTracesModel.amount)
                     AppDatabase.getInstance().getAccountDao().insert(inAccountModel)
                 }
             }
