@@ -69,7 +69,7 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
 
         layout_account_category.setOnClickListener {
             PopupUtil.showBottomListPopup(mutableListOf<PolymerizeModel>().apply {
-                AccountManager.accountCategoryList.forEach {
+                AccountManager.accountCategoryList.filter { it != AppConstant.MONEY_TRACES_CATEGORY_DEBT }.forEach {
                     add(PolymerizeChildModel(it.getIcon(), it.translate(), "", it))
                 }
             }) {

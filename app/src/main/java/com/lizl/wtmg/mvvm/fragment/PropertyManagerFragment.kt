@@ -81,7 +81,7 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
                 }))
             }
 
-            polymerizeGroupAdapter.replaceData(polymerizeGroupList)
+            polymerizeGroupAdapter.setDiffNewData(polymerizeGroupList)
         })
     }
 

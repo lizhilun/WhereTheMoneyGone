@@ -76,29 +76,27 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
         }
     }
 
-    private val tracesDataOb: Observer<MutableList<MoneyTracesModel>> = Observer { tracesList ->
-        GlobalScope.launch {
-            dataBinding.monthExpenditure = tracesList.filter {
-                it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
-            }.sumByDouble { it.amount }
-
-            dataBinding.monthIncome = tracesList.filter {
-                it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
-            }.sumByDouble { it.amount }
-
-            val polymerizeGroupList = AccountManager.polymerizeTrancesList(tracesList)
-
-            GlobalScope.ui { polymerizeGroupAdapter.replaceData(polymerizeGroupList) }
-        }
-    }
-
-    private var lastLiveData: LiveData<MutableList<MoneyTracesModel>>? = null
+    private var lastTracesDataOb: LiveData<MutableList<MoneyTracesModel>>? = null
 
     private fun showMonthOutline(year: Int, month: Int)
     {
-        lastLiveData?.removeObserver(tracesDataOb)
-        lastLiveData = AppDatabase.getInstance().getMoneyTracesDao().obTracesByMonth(year, month).apply {
-            observe(this@PropertyOutlineFragment, tracesDataOb)
+        lastTracesDataOb?.removeObservers(this)
+        lastTracesDataOb = AppDatabase.getInstance().getMoneyTracesDao().obTracesByMonth(year, month).apply {
+            observe(this@PropertyOutlineFragment, Observer { tracesList ->
+                GlobalScope.launch {
+                    dataBinding.monthExpenditure = tracesList.filter {
+                        it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
+                    }.sumByDouble { it.amount }
+
+                    dataBinding.monthIncome = tracesList.filter {
+                        it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
+                    }.sumByDouble { it.amount }
+
+                    val polymerizeGroupList = AccountManager.polymerizeTrancesList(tracesList)
+
+                    GlobalScope.ui { polymerizeGroupAdapter.setDiffNewData(polymerizeGroupList) }
+                }
+            })
         }
     }
 

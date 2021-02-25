@@ -34,7 +34,8 @@ object AccountManager
             listOf(AppConstant.DEBT_TYPE_BORROW_OUT, AppConstant.DEBT_TYPE_BORROW_IN, AppConstant.DEBT_TYPE_PAY_BACK_OUT, AppConstant.DEBT_TYPE_BORROW_IN)
 
     val accountCategoryList =
-            listOf(AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL, AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT, AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT)
+            listOf(AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL, AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT, AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT,
+                    AppConstant.ACCOUNT_CATEGORY_TYPE_DEBT)
 
     fun getAccountListByCategory(accountCategory: String): List<String>
     {

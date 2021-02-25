@@ -123,7 +123,7 @@ class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.
                 GlobalScope.ui { tv_result.text = resultStringBuffer.toString() }
 
                 val polymerizeGroupList = AccountManager.polymerizeTrancesList(allTracesList)
-                GlobalScope.ui { searchResultAdapter.replaceData(polymerizeGroupList) }
+                GlobalScope.ui { searchResultAdapter.setDiffNewData(polymerizeGroupList) }
             })
         }
     }
@@ -150,6 +150,8 @@ class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.
 
             sqlStringBuffer.append(")")
         }
+
+        sqlStringBuffer.append(" order by recordTime desc")
 
         return sqlStringBuffer.toString()
     }
