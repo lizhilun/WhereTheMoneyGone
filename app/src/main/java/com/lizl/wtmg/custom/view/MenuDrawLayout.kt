@@ -6,6 +6,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.EventConstant
+import com.lizl.wtmg.custom.function.update
 import com.lizl.wtmg.module.backup.BackupUtil
 import com.lizl.wtmg.module.config.constant.ConfigConstant
 import com.lizl.wtmg.module.config.util.ConfigUtil

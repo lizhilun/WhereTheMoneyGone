@@ -44,6 +44,7 @@ object AccountManager
             AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL -> capitalAccountList
             AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> creditAccountList
             AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT -> investmentAccountList
+            AppConstant.ACCOUNT_CATEGORY_TYPE_DEBT -> debtTypeList
             else                                         -> capitalAccountList
         }
     }

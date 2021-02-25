@@ -9,7 +9,7 @@ import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.function.*
 import com.lizl.wtmg.custom.view.tracesrecord.AccountTransferView
 import com.lizl.wtmg.db.model.MoneyTracesModel
-import com.lizl.wtmg.module.account.AccountDataManager
+import com.lizl.wtmg.module.account.TracesManager
 import com.lizl.wtmg.module.account.AccountManager
 import com.lizl.wtmg.custom.view.selection.SingleSelectionModel
 import com.lizl.wtmg.custom.view.selection.SingleSelectionView
@@ -235,7 +235,7 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
             return false
         }
 
-        oriTracesModel?.let { AccountDataManager.deleteMoneyTraces(it) }
+        oriTracesModel?.let { TracesManager.deleteMoneyTraces(it) }
 
         val traceCategory = when (curPageType)
         {
@@ -261,7 +261,7 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
                     val chargeModel = MoneyTracesModel(amount = transferCharge, tracesType = AppConstant.EXPENDITURE_TYPE_BROKERAGE,
                             tracesCategory = AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE, accountType = accountTransferView.getOutAccountType(),
                             recordTime = selectTime.timeInMills + 1, recordYear = selectTime.year, recordMonth = selectTime.month, recordDay = selectTime.day)
-                    AccountDataManager.addMoneyTraces(chargeModel)
+                    TracesManager.addMoneyTraces(chargeModel)
                 }
 
                 MoneyTracesModel(amount = amount - transferCharge, tracesType = AppConstant.TRANSFER_TYPE_TRANSFER, tracesCategory = traceCategory,
@@ -289,7 +289,7 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
             else                  -> return false
         }
 
-        AccountDataManager.addMoneyTraces(moneyTracesModel)
+        TracesManager.addMoneyTraces(moneyTracesModel)
 
         return true
     }

@@ -5,7 +5,7 @@ import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.AccountModel
 import com.lizl.wtmg.db.model.MoneyTracesModel
 
-object AccountDataManager
+object TracesManager
 {
     fun addMoneyTraces(moneyTracesModel: MoneyTracesModel)
     {
@@ -15,23 +15,23 @@ object AccountDataManager
 
         when (moneyTracesModel.tracesCategory)
         {
-            AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> handleMoneyOut(payAccountModel, moneyTracesModel.amount)
-            AppConstant.MONEY_TRACES_CATEGORY_INCOME -> handleMoneyIn(payAccountModel, moneyTracesModel.amount)
+            AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> handleAccountMoneyOut(payAccountModel, moneyTracesModel.amount)
+            AppConstant.MONEY_TRACES_CATEGORY_INCOME -> handleAccountMoneyIn(payAccountModel, moneyTracesModel.amount)
             AppConstant.MONEY_TRACES_CATEGORY_TRANSFER ->
             {
-                handleMoneyOut(payAccountModel, moneyTracesModel.amount)
+                handleAccountMoneyOut(payAccountModel, moneyTracesModel.amount)
 
                 AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.transferToAccount)?.let { inAccountModel ->
-                    handleMoneyIn(inAccountModel, moneyTracesModel.amount)
+                    handleAccountMoneyIn(inAccountModel, moneyTracesModel.amount)
                     AppDatabase.getInstance().getAccountDao().insert(inAccountModel)
                 }
             }
             AppConstant.MONEY_TRACES_CATEGORY_DEBT ->
             {
-                handleMoneyOut(payAccountModel, moneyTracesModel.amount)
+                handleAccountMoneyOut(payAccountModel, moneyTracesModel.amount)
 
                 AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.transferToAccount)?.let { inAccountModel ->
-                    handleMoneyIn(inAccountModel, moneyTracesModel.amount)
+                    handleAccountMoneyIn(inAccountModel, moneyTracesModel.amount)
                     AppDatabase.getInstance().getAccountDao().insert(inAccountModel)
                 }
             }
@@ -48,23 +48,23 @@ object AccountDataManager
 
         when (moneyTracesModel.tracesCategory)
         {
-            AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> handleMoneyIn(payAccountModel, moneyTracesModel.amount)
-            AppConstant.MONEY_TRACES_CATEGORY_INCOME -> handleMoneyOut(payAccountModel, moneyTracesModel.amount)
+            AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> handleAccountMoneyIn(payAccountModel, moneyTracesModel.amount)
+            AppConstant.MONEY_TRACES_CATEGORY_INCOME -> handleAccountMoneyOut(payAccountModel, moneyTracesModel.amount)
             AppConstant.MONEY_TRACES_CATEGORY_TRANSFER ->
             {
-                handleMoneyIn(payAccountModel, moneyTracesModel.amount)
+                handleAccountMoneyIn(payAccountModel, moneyTracesModel.amount)
 
                 AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.transferToAccount)?.let { inAccountModel ->
-                    handleMoneyOut(inAccountModel, moneyTracesModel.amount)
+                    handleAccountMoneyOut(inAccountModel, moneyTracesModel.amount)
                     AppDatabase.getInstance().getAccountDao().insert(inAccountModel)
                 }
             }
             AppConstant.MONEY_TRACES_CATEGORY_DEBT ->
             {
-                handleMoneyIn(payAccountModel, moneyTracesModel.amount)
+                handleAccountMoneyIn(payAccountModel, moneyTracesModel.amount)
 
                 AppDatabase.getInstance().getAccountDao().queryAccountByType(moneyTracesModel.transferToAccount)?.let { inAccountModel ->
-                    handleMoneyOut(inAccountModel, moneyTracesModel.amount)
+                    handleAccountMoneyOut(inAccountModel, moneyTracesModel.amount)
                     AppDatabase.getInstance().getAccountDao().insert(inAccountModel)
                 }
             }
@@ -73,7 +73,7 @@ object AccountDataManager
         AppDatabase.getInstance().getAccountDao().insert(payAccountModel)
     }
 
-    private fun handleMoneyOut(accountModel: AccountModel, amount: Double)
+    private fun handleAccountMoneyOut(accountModel: AccountModel, amount: Double)
     {
         when (accountModel.category)
         {
@@ -84,8 +84,8 @@ object AccountDataManager
         }
     }
 
-    private fun handleMoneyIn(accountModel: AccountModel, amount: Double)
+    private fun handleAccountMoneyIn(accountModel: AccountModel, amount: Double)
     {
-        handleMoneyOut(accountModel, 0 - amount)
+        handleAccountMoneyOut(accountModel, 0 - amount)
     }
 }

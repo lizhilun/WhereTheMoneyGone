@@ -4,7 +4,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.sqlite.db.SimpleSQLiteQuery
-import androidx.sqlite.db.SupportSQLiteQuery
 import com.lizl.wtmg.R
 import com.lizl.wtmg.R.dimen
 import com.lizl.wtmg.constant.AppConstant
@@ -18,7 +17,6 @@ import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.databinding.ActivityTracesSearchBinding
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.MoneyTracesModel
-import com.lizl.wtmg.module.account.AccountDataManager
 import com.lizl.wtmg.module.account.AccountManager
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseActivity
@@ -26,8 +24,6 @@ import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import kotlinx.android.synthetic.main.activity_traces_search.*
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.activity_traces_search)
 {

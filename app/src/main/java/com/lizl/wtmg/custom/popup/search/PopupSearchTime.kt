@@ -6,7 +6,6 @@ import com.blankj.utilcode.util.ScreenUtils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.custom.popup.PopupUtil
 import com.lizl.wtmg.util.DateUtil
-import com.lizl.wtmg.util.DateUtil.Date
 import com.lxj.xpopup.core.AttachPopupView
 import kotlinx.android.synthetic.main.popup_search_time.view.*
 
@@ -79,7 +78,7 @@ class PopupSearchTime(context: Context, private val callback: (Int, Long, Long) 
         tv_start_time.setOnClickListener {
             val now = DateUtil.Date()
             PopupUtil.showDatePickerDialog(now.year, now.month, now.day) { _, year, month, day ->
-                startTime = Date().apply { set(year, month, day, 0, 0, 0) }.timeInMills
+                startTime = DateUtil.Date().apply { set(year, month, day, 0, 0, 0) }.timeInMills
                 tv_start_time.text = "%d-%02d-%02d".format(year, month, day)
                 tv_confirm.isVisible = startTime in 1 until endTime
             }
@@ -88,7 +87,7 @@ class PopupSearchTime(context: Context, private val callback: (Int, Long, Long) 
         tv_end_time.setOnClickListener {
             val now = DateUtil.Date()
             PopupUtil.showDatePickerDialog(now.year, now.month, now.day) { _, year, month, day ->
-                endTime = Date().apply { set(year, month, day, 23, 59, 59) }.timeInMills
+                endTime = DateUtil.Date().apply { set(year, month, day, 23, 59, 59) }.timeInMills
                 tv_end_time.text = "%d-%02d-%02d".format(year, month, day)
                 tv_confirm.isVisible = startTime in 1 until endTime
             }

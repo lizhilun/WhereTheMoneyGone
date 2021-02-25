@@ -146,11 +146,4 @@ class SettingListAdapter(settingList: MutableList<BaseSettingModel>) : BaseDeleg
             }
         }
     }
-
-    fun update(item: BaseSettingModel)
-    {
-        val position = getItemPosition(item)
-        if (position < 0) return
-        notifyItemChanged(position, "")
-    }
 }

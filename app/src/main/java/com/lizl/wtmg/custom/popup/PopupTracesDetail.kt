@@ -7,7 +7,7 @@ import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.function.toAmountStr
 import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.db.model.MoneyTracesModel
-import com.lizl.wtmg.module.account.AccountDataManager
+import com.lizl.wtmg.module.account.TracesManager
 import com.lizl.wtmg.mvvm.activity.MoneyTracesRecordActivity
 import com.lizl.wtmg.util.ActivityUtil
 import com.lizl.wtmg.util.DateUtil
@@ -42,7 +42,7 @@ class PopupTracesDetail(context: Context, private val tracesModel: MoneyTracesMo
         layout_traces_time.setMainText(tracesTime.toFormatString())
 
         tv_delete.setOnClickListener {
-            AccountDataManager.deleteMoneyTraces(tracesModel)
+            TracesManager.deleteMoneyTraces(tracesModel)
             dismiss()
         }
 
