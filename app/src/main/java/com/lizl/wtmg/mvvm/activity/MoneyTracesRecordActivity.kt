@@ -126,7 +126,8 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
         vp_type.offscreenPageLimit = 4
         vp_type.setCurrentItem(curPageType, false)
 
-        val titleList = listOf(getString(R.string.expenditure), getString(R.string.income), getString(R.string.transfer), getString(R.string.borrow_and_payback))
+        val titleList =
+                listOf(getString(R.string.expenditure), getString(R.string.income), getString(R.string.transfer), getString(R.string.borrow_and_payback))
         TabLayoutMediator(tl_title, vp_type, TabLayoutMediator.TabConfigurationStrategy { tab, position ->
             if (position >= titleList.size) return@TabConfigurationStrategy
             tab.text = titleList[position]
@@ -176,7 +177,7 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
         }
 
         tv_time.setOnClickListener(true) {
-            PopupUtil.showDataAndTimePickerDialog {
+            PopupUtil.showDataAndTimePickerDialog(selectTime) {
                 selectTime = it
                 tv_time.text = selectTime.toFormatString()
             }
