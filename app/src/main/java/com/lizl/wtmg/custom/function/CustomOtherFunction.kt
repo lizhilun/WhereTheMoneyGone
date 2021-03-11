@@ -20,17 +20,14 @@ fun StringBuilder.backspace()
 fun Double.toAmountStr(): String
 {
     val doubleStr = "%.2f".format(this)
-    val oneAfterPoint = doubleStr[doubleStr.lastIndex - 1]
-    val twoAfterPoint = doubleStr.last()
-    return if (twoAfterPoint == '0')
+    val firstAfterPoint = doubleStr[doubleStr.lastIndex - 1]
+    val secondAfterPoint = doubleStr.last()
+    return if (secondAfterPoint == '0')
     {
-        if (oneAfterPoint == '0') this.toInt().toString()
-        else  "%.1f".format(this)
+        if (firstAfterPoint == '0') this.toInt().toString()
+        else "%.1f".format(this)
     }
-    else
-    {
-        "%.2f".format(this)
-    }
+    else "%.2f".format(this)
 }
 
 fun String.delete(str: String): String

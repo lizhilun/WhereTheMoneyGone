@@ -28,7 +28,7 @@ object DataBindUtil
 
     @JvmStatic
     @BindingAdapter("app:image")
-    fun bindAdapter(imageView: ImageView, imageRes: Int?)
+    fun bingImage(imageView: ImageView, imageRes: Int?)
     {
         imageRes ?: return
         imageView.setImageResource(imageRes)

@@ -87,32 +87,9 @@ class LockActivity : BaseActivity<ActivityLockBinding>(R.layout.activity_lock)
 
     private fun startFingerprintAuthentication()
     {
-        BiometricAuthenticationUtil.authenticate(object : BiometricPrompt.AuthenticationCallback()
-        {
-            override fun onAuthenticationError(errorCode: Int, errString: CharSequence?)
-            {
-                Log.d(TAG, "onAuthenticationError() called with: errorCode = [$errorCode], errString = [$errString]")
-                super.onAuthenticationError(errorCode, errString)
-            }
-
-            override fun onAuthenticationFailed()
-            {
-                Log.d(TAG, "onAuthenticationFailed")
-                super.onAuthenticationFailed()
-            }
-
-            override fun onAuthenticationHelp(helpCode: Int, helpString: CharSequence?)
-            {
-                Log.d(TAG, "onAuthenticationHelp() called with: helpCode = [$helpCode], helpString = [$helpString]")
-                super.onAuthenticationHelp(helpCode, helpString)
-            }
-
-            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult?)
-            {
-                Log.d(TAG, "onAuthenticationSucceeded() called with: result = [$result]")
-                super.onAuthenticationSucceeded(result)
-                onUnlock()
-            }
-        })
+        BiometricAuthenticationUtil.authenticate { result, error ->
+            Log.d(TAG, "startFingerprintAuthentication() called with: result = [$result], error = [$error]")
+            if (result) onUnlock()
+        }
     }
 }

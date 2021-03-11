@@ -8,6 +8,6 @@ class ListDividerItemDecoration(private val dividerSize: Int) : RecyclerView.Ite
 {
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State)
     {
-        outRect.top = if (parent.getChildLayoutPosition(view) == 0) 0 else dividerSize
+        outRect.bottom = dividerSize
     }
 }
