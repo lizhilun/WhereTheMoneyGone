@@ -35,9 +35,16 @@ fun String.delete(str: String): String
     return replace(str, "")
 }
 
-fun GlobalScope.ui(runnable: () -> Unit)
+fun ui(runnable: () -> Unit)
 {
     GlobalScope.launch(Dispatchers.Main) {
+        runnable.invoke()
+    }
+}
+
+fun io(runnable: () -> Unit)
+{
+    GlobalScope.launch(Dispatchers.IO) {
         runnable.invoke()
     }
 }

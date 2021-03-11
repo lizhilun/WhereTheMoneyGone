@@ -205,7 +205,7 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
         if (tv_transfer_charge_mode.isVisible)
         {
             transferCharge = amount
-            GlobalScope.ui {
+            ui {
                 tv_transfer_charge.text = "${getString(R.string.brokerage)}：${transferCharge.toAmountStr()}"
                 tv_transfer_charge_mode.isVisible = false
                 et_remarks.isVisible = true

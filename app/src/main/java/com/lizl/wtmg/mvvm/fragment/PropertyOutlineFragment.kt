@@ -99,7 +99,7 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
 
                     val polymerizeGroupList = AccountManager.polymerizeTrancesList(tracesList)
 
-                    GlobalScope.ui {
+                    ui {
                         if (needRefresh)
                         {
                             needRefresh = false

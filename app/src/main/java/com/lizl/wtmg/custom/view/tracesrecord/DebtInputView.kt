@@ -129,7 +129,7 @@ class DebtInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
     {
         GlobalScope.launch {
             AppDatabase.getInstance().getAccountDao().queryAccountByType(accountType)?.let {
-                GlobalScope.ui {
+                ui {
                     accountInputView.setInputEnable(!it.showInTotal)
                     if (it.showInTotal)
                     {

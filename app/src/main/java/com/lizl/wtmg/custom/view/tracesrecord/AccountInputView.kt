@@ -9,7 +9,6 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.isVisible
 import com.blankj.utilcode.util.SizeUtils
 import com.lizl.wtmg.R
-import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.function.getIcon
 import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.module.skin.view.SkinImageView
@@ -36,7 +35,6 @@ class AccountInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int
     {
         initView(attrs)
     }
-
 
     companion object
     {

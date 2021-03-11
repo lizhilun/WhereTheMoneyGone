@@ -105,7 +105,7 @@ class AccountDetailActivity : BaseActivity<ActivityAccountDetailBinding>(R.layou
                                 else                                       -> it.tracesType.translate()
                             }, it.amount.toAmountStr(), it)
                         }
-                        GlobalScope.ui { polymerizeGroupAdapter.setDiffNewData(polymerizeGroupList) }
+                        ui { polymerizeGroupAdapter.setDiffNewData(polymerizeGroupList) }
                     }
                 })
             }

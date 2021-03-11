@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.item_title_bar_image_btn.view.*
 import kotlinx.android.synthetic.main.item_title_bar_text_btn.view.*
 
 class TitleBarBtnListAdapter(btnList: List<TitleBarBtnBean.BaseBtnBean>) :
-        BaseDelegateMultiAdapter<TitleBarBtnBean.BaseBtnBean, TitleBarBtnListAdapter.ViewHolder>(btnList.toMutableList())
+    BaseDelegateMultiAdapter<TitleBarBtnBean.BaseBtnBean, TitleBarBtnListAdapter.ViewHolder>(btnList.toMutableList())
 {
 
     companion object
@@ -43,7 +43,7 @@ class TitleBarBtnListAdapter(btnList: List<TitleBarBtnBean.BaseBtnBean>) :
         when (helper.itemViewType)
         {
             ITEM_TYPE_IMAGE -> helper.bindImageHolder(item as TitleBarBtnBean.ImageBtnBean)
-            ITEM_TYPE_TEXT  -> helper.bindTextHolder(item as TitleBarBtnBean.TextBtnBean)
+            ITEM_TYPE_TEXT -> helper.bindTextHolder(item as TitleBarBtnBean.TextBtnBean)
         }
     }
 
@@ -60,10 +60,5 @@ class TitleBarBtnListAdapter(btnList: List<TitleBarBtnBean.BaseBtnBean>) :
             itemView.tv_text_btn.text = textBtnItem.text
             itemView.setOnClickListener { textBtnItem.onBtnClickListener.invoke() }
         }
-    }
-
-    fun update(item: TitleBarBtnBean.BaseBtnBean)
-    {
-        setData(getItemPosition(item), item)
     }
 }

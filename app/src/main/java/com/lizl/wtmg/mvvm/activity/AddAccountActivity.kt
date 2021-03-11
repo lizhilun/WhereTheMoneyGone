@@ -163,7 +163,7 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
 
             AppDatabase.getInstance().getAccountDao().insert(accountModel)
 
-            GlobalScope.ui { onBackPressed() }
+            ui { onBackPressed() }
         }
     }
 }

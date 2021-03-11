@@ -23,7 +23,6 @@ import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import kotlinx.android.synthetic.main.activity_traces_search.*
-import kotlinx.coroutines.GlobalScope
 
 class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.activity_traces_search)
 {
@@ -116,10 +115,10 @@ class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.
                         .append(getString(R.string.expenditure)).append("：").append(expenditure)
                 }
 
-                GlobalScope.ui { tv_result.text = resultStringBuffer.toString() }
+                ui { tv_result.text = resultStringBuffer.toString() }
 
                 val polymerizeGroupList = AccountManager.polymerizeTrancesList(allTracesList)
-                GlobalScope.ui { searchResultAdapter.setDiffNewData(polymerizeGroupList) }
+                ui { searchResultAdapter.setDiffNewData(polymerizeGroupList) }
             })
         }
     }

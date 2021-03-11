@@ -62,7 +62,7 @@ class DebtDetailActivity : BaseActivity<ActivityDebtDetailBinding>(R.layout.acti
                     }
                     polymerizeGroupList.add(PolymerizeGroupModel(debtAccount.name, abs(debtAccount.amount).toAmountStr(), polymerizeChildList))
                 }
-                GlobalScope.ui { debtListAdapter.setDiffNewData(polymerizeGroupList) }
+                ui { debtListAdapter.setDiffNewData(polymerizeGroupList) }
             }
         })
     }

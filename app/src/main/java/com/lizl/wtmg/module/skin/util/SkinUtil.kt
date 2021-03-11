@@ -77,7 +77,7 @@ object SkinUtil
     suspend fun updateStatusBarLightMode(activity: Activity)
     {
         val isDarkMode = isNightModeOn()
-        GlobalScope.ui { BarUtils.setStatusBarLightMode(activity, !isDarkMode) }
+        ui { BarUtils.setStatusBarLightMode(activity, !isDarkMode) }
 
     }
 

@@ -94,9 +94,7 @@ class BackupFileListActivity : BaseActivity<ActivityBackupFileListBinding>(R.lay
     {
         GlobalScope.launch {
             val backupFileList = BackupUtil.getBackupFileList()
-            GlobalScope.ui {
-                backupFileListAdapter.setNewData(backupFileList.toMutableList())
-            }
+            ui { backupFileListAdapter.setNewData(backupFileList.toMutableList()) }
         }
     }
 
