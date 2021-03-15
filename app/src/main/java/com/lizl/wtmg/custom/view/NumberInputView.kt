@@ -7,8 +7,10 @@ import com.lizl.wtmg.R
 import com.lizl.wtmg.custom.function.backspace
 import com.lizl.wtmg.custom.function.setOnClickListener
 import com.lizl.wtmg.custom.function.setOnItemClickListener
+import com.lizl.wtmg.custom.function.ui
 import com.lizl.wtmg.mvvm.adapter.InputKeyGridAdapter
 import kotlinx.android.synthetic.main.layout_number_input.view.*
+import kotlinx.coroutines.GlobalScope
 import skin.support.widget.SkinCompatFrameLayout
 
 class NumberInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : SkinCompatFrameLayout(context, attrs, defStyleAttr)
@@ -100,13 +102,13 @@ class NumberInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
     {
         inputTemp.clear()
         inputTemp.append(input)
-        onTextChangedListener?.invoke(inputTemp.toString())
+        ui { onTextChangedListener?.invoke(inputTemp.toString()) }
     }
 
     fun clearInput()
     {
         inputTemp.clear()
-        onTextChangedListener?.invoke("")
+        ui { onTextChangedListener?.invoke("") }
     }
 
     fun setOnTextChangedListener(onTextChangedListener: (String) -> Unit)
