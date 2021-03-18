@@ -37,11 +37,33 @@ class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.
     private var popupSearchTime: BasePopupView? = null
     private var popupSearchCondition: BasePopupView? = null
 
+    companion object
+    {
+        const val DATA_START_TIME = "DATA_START_TIME"
+        const val DATA_END_TIME = "DATA_END_TIME"
+        const val DATA_KEY_WORD = "DATA_KEY_WORD"
+    }
+
     override fun initView()
     {
         searchResultAdapter = PolymerizeGroupAdapter()
         rv_result.adapter = searchResultAdapter
         rv_result.addItemDecoration(ListDividerItemDecoration(resources.getDimensionPixelSize(dimen.global_content_padding_content)))
+    }
+
+    override fun initData()
+    {
+        intent?.extras?.let {
+            startTime = it.getLong(DATA_START_TIME, startTime)
+            endTime = it.getLong(DATA_END_TIME, endTime)
+            val keyword = it.getString(DATA_KEY_WORD)
+            if (keyword?.isNotBlank() == true)
+            {
+                et_keyword.setText(keyword)
+                search()
+            }
+            tv_time.text = timeTypeToString(PopupSearchTime.TIME_TYPE_CUSTOM)
+        }
     }
 
     override fun initListener()
@@ -58,15 +80,7 @@ class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.
             if (popupSearchTime == null)
             {
                 popupSearchTime = XPopup.Builder(this).atView(cl_time).asCustom(PopupSearchTime(this) { type, startTime, endTime ->
-                    tv_time.text = when (type)
-                    {
-                        PopupSearchTime.TIME_TYPE_CURRENT_MONTH -> getString(R.string.current_month)
-                        PopupSearchTime.TIME_TYPE_LAST_MONTH    -> getString(R.string.last_month)
-                        PopupSearchTime.TIME_TYPE_CURRENT_YEAR  -> getString(R.string.current_year)
-                        PopupSearchTime.TIME_TYPE_LAST_YEAR     -> getString(R.string.last_year)
-                        PopupSearchTime.TIME_TYPE_CUSTOM        -> getString(R.string.custom_time)
-                        else                                    -> getString(R.string.all)
-                    }
+                    tv_time.text = timeTypeToString(type)
                     this.startTime = startTime
                     this.endTime = endTime
                     search()
@@ -85,6 +99,19 @@ class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.
                 })
             }
             popupSearchCondition?.show()
+        }
+    }
+
+    private fun timeTypeToString(timeType: Int): String
+    {
+        return when (timeType)
+        {
+            PopupSearchTime.TIME_TYPE_CURRENT_MONTH -> getString(R.string.current_month)
+            PopupSearchTime.TIME_TYPE_LAST_MONTH -> getString(R.string.last_month)
+            PopupSearchTime.TIME_TYPE_CURRENT_YEAR -> getString(R.string.current_year)
+            PopupSearchTime.TIME_TYPE_LAST_YEAR -> getString(R.string.last_year)
+            PopupSearchTime.TIME_TYPE_CUSTOM -> getString(R.string.custom_time)
+            else                                    -> getString(R.string.all)
         }
     }
 

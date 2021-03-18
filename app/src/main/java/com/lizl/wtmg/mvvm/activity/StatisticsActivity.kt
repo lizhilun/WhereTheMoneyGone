@@ -2,6 +2,7 @@ package com.lizl.wtmg.mvvm.activity
 
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
+import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.custom.popup.PopupUtil
 import com.lizl.wtmg.databinding.ActivityStatisticsBinding
 import com.lizl.wtmg.db.AppDatabase
@@ -9,6 +10,8 @@ import com.lizl.wtmg.db.model.MoneyTracesModel
 import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.mvvm.model.DateModel
 import com.lizl.wtmg.mvvm.model.statistics.QuantityModel
+import com.lizl.wtmg.util.ActivityUtil
+import com.lizl.wtmg.util.DateUtil
 import kotlinx.android.synthetic.main.activity_statistics.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -53,6 +56,17 @@ class StatisticsActivity : BaseActivity<ActivityStatisticsBinding>(R.layout.acti
             {
                 AppDatabase.getInstance().getMoneyTracesDao().queryTracesByMonth(year, month)
             }
+
+            val onQuantityItemClickListener = { quantityModel: QuantityModel ->
+                val startTime = if (month == 0) DateModel().apply { set(year, 1) } else DateModel().apply { set(year, month) }
+                val endTime = if (month == 0) DateModel().apply { set(year, 12, 31, 11, 59, 59) }
+                else DateModel().apply { set(year, month, DateUtil.getDayCountInMonth(year, month), 11, 59, 59) }
+                ActivityUtil.turnToActivity(TracesSearchActivity::class.java, Pair(TracesSearchActivity.DATA_START_TIME, startTime.timeInMills),
+                        Pair(TracesSearchActivity.DATA_END_TIME, endTime.timeInMills), Pair(TracesSearchActivity.DATA_KEY_WORD, quantityModel.name.translate()))
+            }
+
+            qsv_expenditure_statistics.setOnQuantityItemClickListener(onQuantityItemClickListener)
+            qsv_income_statistics.setOnQuantityItemClickListener(onQuantityItemClickListener)
 
             dataBinding.expenditure = traceList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE }.sumByDouble { it.amount }
             dataBinding.income = traceList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME }.sumByDouble { it.amount }

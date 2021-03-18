@@ -20,7 +20,7 @@ class DateModel(var timeInMills: Long)
     var minute = 0
     var second = 0
 
-    fun set(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int)
+    fun set(year: Int, month: Int, day: Int = 1, hour: Int = 0, minute: Int = 0, second: Int = 0)
     {
         this.year = year
         this.month = month

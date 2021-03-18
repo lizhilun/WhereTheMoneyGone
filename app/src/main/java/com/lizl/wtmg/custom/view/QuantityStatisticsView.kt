@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.core.view.isVisible
 import com.lizl.wtmg.R
+import com.lizl.wtmg.custom.function.setOnItemClickListener
 import com.lizl.wtmg.mvvm.adapter.QuantityListAdapter
 import com.lizl.wtmg.mvvm.model.statistics.QuantityModel
 import kotlinx.android.synthetic.main.layout_quantity_statistics.view.*
@@ -17,6 +18,8 @@ class QuantityStatisticsView(context: Context, attrs: AttributeSet?, defStyleAtt
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
     private val quantityListAdapter = QuantityListAdapter()
+
+    private var onQuantityItemClickListener: ((QuantityModel) -> Unit)? = null
 
     init
     {
@@ -34,6 +37,10 @@ class QuantityStatisticsView(context: Context, attrs: AttributeSet?, defStyleAtt
             typeArray.recycle()
 
             rv_statistics.adapter = quantityListAdapter
+
+            quantityListAdapter.setOnItemClickListener(false) {
+                onQuantityItemClickListener?.invoke(it)
+            }
         }
     }
 
@@ -42,5 +49,10 @@ class QuantityStatisticsView(context: Context, attrs: AttributeSet?, defStyleAtt
         tv_empty_notify.isVisible = quantityList.isEmpty()
         rv_statistics.isVisible = quantityList.isNotEmpty()
         quantityListAdapter.setData(quantityList)
+    }
+
+    fun setOnQuantityItemClickListener(onQuantityItemClickListener: (QuantityModel) -> Unit)
+    {
+        this.onQuantityItemClickListener = onQuantityItemClickListener
     }
 }
