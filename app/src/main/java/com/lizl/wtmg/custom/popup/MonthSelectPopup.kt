@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.lizl.wtmg.R
 import com.lizl.wtmg.custom.function.setOnItemClickListener
-import com.lizl.wtmg.util.DateUtil.Date
+import com.lizl.wtmg.mvvm.model.DateModel
 import com.lxj.xpopup.core.CenterPopupView
 import kotlinx.android.synthetic.main.item_month.view.*
 import kotlinx.android.synthetic.main.popup_month_select.view.*
@@ -20,7 +20,7 @@ class MonthSelectPopup(context: Context, private val withAllYear: Boolean, priva
 
     override fun onCreate()
     {
-        val curYear = Date().year
+        val curYear = DateModel().year
         for (year in curYear downTo (curYear - 10))
         {
             tl_year.addTab(tl_year.newTab().setText(year.toString()))

@@ -7,8 +7,8 @@ import com.lizl.wtmg.databinding.ActivityStatisticsBinding
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.MoneyTracesModel
 import com.lizl.wtmg.mvvm.base.BaseActivity
+import com.lizl.wtmg.mvvm.model.DateModel
 import com.lizl.wtmg.mvvm.model.statistics.QuantityModel
-import com.lizl.wtmg.util.DateUtil.Date
 import kotlinx.android.synthetic.main.activity_statistics.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -18,7 +18,7 @@ class StatisticsActivity : BaseActivity<ActivityStatisticsBinding>(R.layout.acti
 
     override fun initView()
     {
-        val curDate = Date()
+        val curDate = DateModel()
         tv_statistics_month.text = "%d.%02d".format(curDate.year, curDate.month)
         showStatistics(curDate.year, curDate.month)
     }

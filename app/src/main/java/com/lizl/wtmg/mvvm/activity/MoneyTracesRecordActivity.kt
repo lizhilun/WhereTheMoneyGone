@@ -16,11 +16,11 @@ import com.lizl.wtmg.custom.view.selection.SingleSelectionView
 import com.lizl.wtmg.databinding.ActivityMoneyRecordTracesBinding
 import com.lizl.wtmg.mvvm.adapter.ViewPagerAdapter
 import com.lizl.wtmg.mvvm.base.BaseActivity
-import com.lizl.wtmg.util.DateUtil
 import com.lizl.wtmg.custom.popup.PopupUtil
 import com.lizl.wtmg.custom.view.tracesrecord.DebtInputView
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.AccountModel
+import com.lizl.wtmg.mvvm.model.DateModel
 import kotlinx.android.synthetic.main.activity_money_record_traces.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
 class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>(R.layout.activity_money_record_traces)
 {
     private var accountType = ""
-    private var selectTime = DateUtil.Date()
+    private var selectTime = DateModel()
     private var expenditureType = AppConstant.EXPENDITURE_TYPE_BUY_FOOD
     private var incomeType = AppConstant.INCOME_TYPE_WAGES
     private var transferCharge = 0.0
@@ -62,7 +62,7 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
 
         oriTracesModel?.let {
             accountType = it.accountType
-            selectTime = DateUtil.Date(it.recordTime)
+            selectTime = DateModel(it.recordTime)
             et_remarks.setText(it.remarks)
             view_number_input.setInputNumber(it.amount)
             when (it.tracesCategory)

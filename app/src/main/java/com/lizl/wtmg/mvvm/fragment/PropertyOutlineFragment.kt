@@ -19,9 +19,9 @@ import com.lizl.wtmg.module.mainpic.MainPicHandler
 import com.lizl.wtmg.mvvm.activity.MoneyTracesRecordActivity
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseFragment
-import com.lizl.wtmg.util.DateUtil
 import com.lizl.wtmg.custom.popup.PopupUtil
 import com.lizl.wtmg.mvvm.activity.TracesSearchActivity
+import com.lizl.wtmg.mvvm.model.DateModel
 import com.lizl.wtmg.util.ActivityUtil
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.enums.PopupPosition
@@ -49,7 +49,7 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
 
     override fun initData()
     {
-        val now = DateUtil.Date()
+        val now = DateModel()
         tv_month.text = "%d.%02d".format(now.year, now.month)
         showMonthOutline(now.year, now.month)
 

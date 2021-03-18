@@ -14,15 +14,14 @@ import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.custom.popup.*
 import com.lizl.wtmg.custom.popup.operaion.OperationModel
 import com.lizl.wtmg.custom.popup.operaion.PopupOperationList
-import com.lizl.wtmg.custom.popup.search.PopupSearchTime
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.AccountModel
 import com.lizl.wtmg.db.model.MoneyTracesModel
 import com.lizl.wtmg.mvvm.activity.AddAccountActivity
+import com.lizl.wtmg.mvvm.model.DateModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeModel
-import com.lizl.wtmg.util.DateUtil.Date
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import kotlinx.coroutines.*
@@ -127,11 +126,11 @@ object PopupUtil
         showDialog(TimePickerDialog(context, timeSetListener, hour, minute, true))
     }
 
-    fun showDataAndTimePickerDialog(date: Date = Date(), callback: (Date) -> Unit)
+    fun showDataAndTimePickerDialog(date: DateModel = DateModel(), callback: (DateModel) -> Unit)
     {
         showDatePickerDialog(date.year, date.month - 1, date.day) { _, year, month, dayOfMonth ->
             showTimePickerDialog(date.hour, date.minute) { _, hourOfDay, minute ->
-                val selectedDate = Date().apply { set(year, month + 1, dayOfMonth, hourOfDay, minute, 0) }
+                val selectedDate = DateModel().apply { set(year, month + 1, dayOfMonth, hourOfDay, minute, 0) }
                 callback.invoke(selectedDate)
             }
         }

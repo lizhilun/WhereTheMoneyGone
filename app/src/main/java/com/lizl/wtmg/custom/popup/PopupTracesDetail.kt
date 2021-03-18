@@ -9,8 +9,8 @@ import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.db.model.MoneyTracesModel
 import com.lizl.wtmg.module.account.TracesManager
 import com.lizl.wtmg.mvvm.activity.MoneyTracesRecordActivity
+import com.lizl.wtmg.mvvm.model.DateModel
 import com.lizl.wtmg.util.ActivityUtil
-import com.lizl.wtmg.util.DateUtil
 import com.lxj.xpopup.core.BottomPopupView
 import kotlinx.android.synthetic.main.layout_money_traces_detail.view.*
 
@@ -38,7 +38,7 @@ class PopupTracesDetail(context: Context, private val tracesModel: MoneyTracesMo
             AppConstant.MONEY_TRACES_CATEGORY_DEBT -> layout_to_account_type.setMainText(tracesModel.transferToAccount)
         }
 
-        val tracesTime = DateUtil.Date(tracesModel.recordTime)
+        val tracesTime = DateModel(tracesModel.recordTime)
         layout_traces_time.setMainText(tracesTime.toFormatString())
 
         tv_delete.setOnClickListener {
