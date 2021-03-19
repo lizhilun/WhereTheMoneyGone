@@ -50,8 +50,8 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
     override fun initData()
     {
         val now = DateModel()
-        tv_month.text = "%d.%02d".format(now.year, now.month)
-        showMonthOutline(now.year, now.month)
+        tv_month.text = "%d.%02d".format(now.getYear(), now.getMonth())
+        showMonthOutline(now.getYear(), now.getMonth())
 
         LiveEventBus.get(EventConstant.EVENT_COVER_IMAGE_UPDATE).observe(this, Observer { initCoverImage() })
     }

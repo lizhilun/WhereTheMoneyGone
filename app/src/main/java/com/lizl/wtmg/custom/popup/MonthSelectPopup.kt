@@ -20,7 +20,7 @@ class MonthSelectPopup(context: Context, private val withAllYear: Boolean, priva
 
     override fun onCreate()
     {
-        val curYear = DateModel().year
+        val curYear = DateModel().getYear()
         for (year in curYear downTo (curYear - 10))
         {
             tl_year.addTab(tl_year.newTab().setText(year.toString()))

@@ -22,8 +22,8 @@ class StatisticsActivity : BaseActivity<ActivityStatisticsBinding>(R.layout.acti
     override fun initView()
     {
         val curDate = DateModel()
-        tv_statistics_month.text = "%d.%02d".format(curDate.year, curDate.month)
-        showStatistics(curDate.year, curDate.month)
+        tv_statistics_month.text = "%d.%02d".format(curDate.getYear(), curDate.getMonth())
+        showStatistics(curDate.getYear(), curDate.getMonth())
     }
 
     override fun initListener()
@@ -58,11 +58,12 @@ class StatisticsActivity : BaseActivity<ActivityStatisticsBinding>(R.layout.acti
             }
 
             val onQuantityItemClickListener = { quantityModel: QuantityModel ->
-                val startTime = if (month == 0) DateModel().apply { set(year, 1) } else DateModel().apply { set(year, month) }
-                val endTime = if (month == 0) DateModel().apply { set(year, 12, 31, 11, 59, 59) }
-                else DateModel().apply { set(year, month, DateUtil.getDayCountInMonth(year, month), 11, 59, 59) }
-                ActivityUtil.turnToActivity(TracesSearchActivity::class.java, Pair(TracesSearchActivity.DATA_START_TIME, startTime.timeInMills),
-                        Pair(TracesSearchActivity.DATA_END_TIME, endTime.timeInMills), Pair(TracesSearchActivity.DATA_KEY_WORD, quantityModel.name.translate()))
+                val startTime = if (month == 0) DateModel(year) else DateModel(year, month)
+                val endTime = if (month == 0) DateModel(year, 12, 31, 11, 59, 59)
+                else DateModel(year, month, DateUtil.getDayCountInMonth(year, month), 23, 59, 59)
+                ActivityUtil.turnToActivity(TracesSearchActivity::class.java, Pair(TracesSearchActivity.DATA_START_TIME, startTime.getTimeInMills()),
+                        Pair(TracesSearchActivity.DATA_END_TIME, endTime.getTimeInMills()),
+                        Pair(TracesSearchActivity.DATA_KEY_WORD, quantityModel.name.translate()))
             }
 
             qsv_expenditure_statistics.setOnQuantityItemClickListener(onQuantityItemClickListener)

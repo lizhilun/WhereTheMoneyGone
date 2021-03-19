@@ -128,9 +128,9 @@ object PopupUtil
 
     fun showDataAndTimePickerDialog(date: DateModel = DateModel(), callback: (DateModel) -> Unit)
     {
-        showDatePickerDialog(date.year, date.month - 1, date.day) { _, year, month, dayOfMonth ->
-            showTimePickerDialog(date.hour, date.minute) { _, hourOfDay, minute ->
-                val selectedDate = DateModel().apply { set(year, month + 1, dayOfMonth, hourOfDay, minute, 0) }
+        showDatePickerDialog(date.getYear(), date.getMonth() - 1, date.getDay()) { _, year, month, dayOfMonth ->
+            showTimePickerDialog(date.getHour(), date.getMinute()) { _, hourOfDay, minute ->
+                val selectedDate = DateModel(year, month + 1, dayOfMonth, hourOfDay, minute, 0)
                 callback.invoke(selectedDate)
             }
         }
