@@ -1,8 +1,10 @@
 package com.lizl.wtmg.custom.popup
 
 import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
 import android.app.Dialog
 import android.app.TimePickerDialog
+import android.app.TimePickerDialog.OnTimeSetListener
 import android.view.View
 import android.widget.DatePicker
 import android.widget.TimePicker
@@ -114,23 +116,24 @@ object PopupUtil
         showPopup(XPopup.Builder(context).asCustom(PopupConfirm(context, notify, onConfirm)))
     }
 
-    fun showDatePickerDialog(year: Int, month: Int, day: Int, dateSetListener: (View: DatePicker, Int, Int, Int) -> Unit)
+    fun showDatePickerDialog(year: Int, month: Int, day: Int, callback: (year: Int, month: Int, day: Int) -> Unit)
     {
         val context = ActivityUtils.getTopActivity() ?: return
-        showDialog(DatePickerDialog(context, dateSetListener, year, month, day))
+        showDialog(DatePickerDialog(context, { _, yearResult, monthOfYear, dayOfMonth -> callback.invoke(yearResult, monthOfYear + 1, dayOfMonth) }, year,
+                month - 1, day))
     }
 
-    fun showTimePickerDialog(hour: Int, minute: Int, timeSetListener: (View: TimePicker, Int, Int) -> Unit)
+    fun showTimePickerDialog(hour: Int, minute: Int, callback: (hour: Int, minute: Int) -> Unit)
     {
         val context = ActivityUtils.getTopActivity() ?: return
-        showDialog(TimePickerDialog(context, timeSetListener, hour, minute, true))
+        showDialog(TimePickerDialog(context, { _, hourOfDay, minuteOfHour -> callback.invoke(hourOfDay, minuteOfHour) }, hour, minute, true))
     }
 
     fun showDataAndTimePickerDialog(date: DateModel = DateModel(), callback: (DateModel) -> Unit)
     {
-        showDatePickerDialog(date.getYear(), date.getMonth() - 1, date.getDay()) { _, year, month, dayOfMonth ->
-            showTimePickerDialog(date.getHour(), date.getMinute()) { _, hourOfDay, minute ->
-                val selectedDate = DateModel(year, month + 1, dayOfMonth, hourOfDay, minute, 0)
+        showDatePickerDialog(date.getYear(), date.getMonth(), date.getDay()) { year, month, dayOfMonth ->
+            showTimePickerDialog(date.getHour(), date.getMinute()) { hourOfDay, minute ->
+                val selectedDate = DateModel(year, month, dayOfMonth, hourOfDay, minute, 0)
                 callback.invoke(selectedDate)
             }
         }

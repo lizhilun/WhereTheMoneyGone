@@ -58,9 +58,8 @@ class StatisticsActivity : BaseActivity<ActivityStatisticsBinding>(R.layout.acti
             }
 
             val onQuantityItemClickListener = { quantityModel: QuantityModel ->
-                val startTime = if (month == 0) DateModel(year) else DateModel(year, month)
-                val endTime = if (month == 0) DateModel(year, 12, 31, 11, 59, 59)
-                else DateModel(year, month, DateUtil.getDayCountInMonth(year, month), 23, 59, 59)
+                val startTime = if (month == 0) DateModel.yearStart(year) else DateModel.monthStart(year, month)
+                val endTime = if (month == 0) DateModel.yearEnd(year) else DateModel.monthEnd(year, month)
                 ActivityUtil.turnToActivity(TracesSearchActivity::class.java, Pair(TracesSearchActivity.DATA_START_TIME, startTime.getTimeInMills()),
                         Pair(TracesSearchActivity.DATA_END_TIME, endTime.getTimeInMills()),
                         Pair(TracesSearchActivity.DATA_KEY_WORD, quantityModel.name.translate()))

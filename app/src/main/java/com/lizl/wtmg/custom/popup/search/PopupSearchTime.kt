@@ -6,7 +6,6 @@ import com.blankj.utilcode.util.ScreenUtils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.custom.popup.PopupUtil
 import com.lizl.wtmg.mvvm.model.DateModel
-import com.lizl.wtmg.util.DateUtil
 import com.lxj.xpopup.core.AttachPopupView
 import kotlinx.android.synthetic.main.popup_search_time.view.*
 
@@ -35,32 +34,32 @@ class PopupSearchTime(context: Context, private val callback: (Int, Long, Long) 
 
         tv_current_month.setOnClickListener {
             val now = DateModel()
-            val startTime = DateModel(now.getYear(), now.getMonth()).getTimeInMills()
-            val endTime = DateModel(now.getYear(), now.getMonth(), DateUtil.getDayCountInMonth(now.getYear(), now.getMonth()), 23, 59, 59).getTimeInMills()
+            val startTime = DateModel.dayStart(now.getYear(), now.getMonth()).getTimeInMills()
+            val endTime = DateModel.monthEnd(now.getYear(), now.getMonth()).getTimeInMills()
             callback.invoke(TIME_TYPE_CURRENT_MONTH, startTime, endTime)
             dismiss()
         }
 
         tv_last_month.setOnClickListener {
-            val now = DateModel()
-            val startTime = DateModel(if (now.getMonth() == 1) now.getYear() - 1 else now.getYear(), if (now.getMonth() == 1) 12 else now.getMonth() - 1).getTimeInMills()
-            val endTime = DateModel(now.getYear(), now.getMonth()).getTimeInMills() - 1
+            val lastMonth = DateModel().minusMonth(1)
+            val startTime = DateModel.monthStart(lastMonth.getYear(), lastMonth.getMonth()).getTimeInMills()
+            val endTime = DateModel.monthEnd(lastMonth.getYear(), lastMonth.getMonth()).getTimeInMills()
             callback.invoke(TIME_TYPE_LAST_MONTH, startTime, endTime)
             dismiss()
         }
 
         tv_current_year.setOnClickListener {
             val now = DateModel()
-            val startTime = DateModel(now.getYear()).getTimeInMills()
-            val endTime = DateModel(now.getYear(), 12, 31, 23, 59, 59).getTimeInMills()
+            val startTime = DateModel.yearStart(now.getYear()).getTimeInMills()
+            val endTime = DateModel.yearEnd(now.getYear()).getTimeInMills()
             callback.invoke(TIME_TYPE_CURRENT_YEAR, startTime, endTime)
             dismiss()
         }
 
         tv_last_year.setOnClickListener {
             val now = DateModel()
-            val startTime = DateModel(now.getYear() - 1).getTimeInMills()
-            val endTime = DateModel(now.getYear()).getTimeInMills() - 1
+            val startTime = DateModel.yearStart(now.getYear() - 1).getTimeInMills()
+            val endTime = DateModel.yearEnd(now.getYear() - 1).getTimeInMills()
             callback.invoke(TIME_TYPE_LAST_YEAR, startTime, endTime)
             dismiss()
         }
@@ -74,8 +73,8 @@ class PopupSearchTime(context: Context, private val callback: (Int, Long, Long) 
 
         tv_start_time.setOnClickListener {
             val now = DateModel()
-            PopupUtil.showDatePickerDialog(now.getYear(), now.getMonth(), now.getDay()) { _, year, month, day ->
-                startTime = DateModel(year, month, day).getTimeInMills()
+            PopupUtil.showDatePickerDialog(now.getYear(), now.getMonth(), now.getDay()) { year, month, day ->
+                startTime = DateModel.dayStart(year, month, day).getTimeInMills()
                 tv_start_time.text = "%d-%02d-%02d".format(year, month, day)
                 tv_confirm.isVisible = startTime in 1 until endTime
             }
@@ -83,8 +82,8 @@ class PopupSearchTime(context: Context, private val callback: (Int, Long, Long) 
 
         tv_end_time.setOnClickListener {
             val now = DateModel()
-            PopupUtil.showDatePickerDialog(now.getYear(), now.getMonth(), now.getDay()) { _, year, month, day ->
-                endTime = DateModel(year, month, day, 23, 59, 59).getTimeInMills()
+            PopupUtil.showDatePickerDialog(now.getYear(), now.getMonth(), now.getDay()) { year, month, day ->
+                endTime = DateModel.dayEnd(year, month, day).getTimeInMills()
                 tv_end_time.text = "%d-%02d-%02d".format(year, month, day)
                 tv_confirm.isVisible = startTime in 1 until endTime
             }
