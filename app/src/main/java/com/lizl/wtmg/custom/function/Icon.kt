@@ -25,8 +25,7 @@ fun String.getIcon(default: Int = R.drawable.ic_baseline_others_24): Int
         AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> R.drawable.ic_baseline_credit_24
         AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT -> R.drawable.ic_baseline_investment_24
 
-        AppConstant.EXPENDITURE_TYPE_BUY_FOOD -> R.drawable.ic_baseline_buy_food_24
-        AppConstant.EXPENDITURE_TYPE_TAKEAWAY -> R.drawable.ic_baseline_takeaway_24
+        AppConstant.EXPENDITURE_TYPE_MEALS -> R.drawable.ic_baseline_meals_24
         AppConstant.EXPENDITURE_TYPE_SNACKS -> R.drawable.ic_baseline_snacks_24
         AppConstant.EXPENDITURE_TYPE_CLOTHES -> R.drawable.ic_baseline_clothes_24
         AppConstant.EXPENDITURE_TYPE_GAME -> R.drawable.ic_baseline_game_24
@@ -41,7 +40,6 @@ fun String.getIcon(default: Int = R.drawable.ic_baseline_others_24): Int
         AppConstant.EXPENDITURE_TYPE_TRANSFER_OUT -> R.drawable.ic_baseline_transfer_out_24
         AppConstant.EXPENDITURE_TYPE_ENTERTAINMENT -> R.drawable.ic_baseline_entertainment_24
         AppConstant.EXPENDITURE_TYPE_RED_ENVELOPES -> R.drawable.ic_baseline_red_envelopes_24
-        AppConstant.EXPENDITURE_TYPE_EAT_OUT -> R.drawable.ic_baseline_eat_out_24
         AppConstant.EXPENDITURE_TYPE_MEDICAL_CARE -> R.drawable.ic_baseline_medical_care_24
         AppConstant.EXPENDITURE_TYPE_HOTEL -> R.drawable.ic_baseline_hotel_24
         AppConstant.EXPENDITURE_TYPE_HOUSEHOLD_GOODS -> R.drawable.ic_baseline_household_goods

@@ -83,7 +83,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main)
                 val imageUri = data.data ?: return
                 MainPicHandler.onImageSelectFinish(this, imageUri)
             }
-            UCrop.REQUEST_CROP ->
+            UCrop.REQUEST_CROP             ->
             {
                 if (resultCode == RESULT_OK)
                 {

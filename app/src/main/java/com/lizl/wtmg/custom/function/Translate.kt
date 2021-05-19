@@ -25,8 +25,7 @@ fun String.translate(): String
         AppConstant.ACCOUNT_TYPE_JD_FINANCE -> StringUtils.getString(R.string.jd_finance)
         AppConstant.ACCOUNT_TYPE_TIANTIAN_FUND -> StringUtils.getString(R.string.tiantian_fund)
 
-        AppConstant.EXPENDITURE_TYPE_BUY_FOOD -> StringUtils.getString(R.string.buy_food)
-        AppConstant.EXPENDITURE_TYPE_TAKEAWAY -> StringUtils.getString(R.string.takeaway)
+        AppConstant.EXPENDITURE_TYPE_MEALS -> StringUtils.getString(R.string.meals)
         AppConstant.EXPENDITURE_TYPE_SNACKS -> StringUtils.getString(R.string.snacks)
         AppConstant.EXPENDITURE_TYPE_CLOTHES -> StringUtils.getString(R.string.clothes)
         AppConstant.EXPENDITURE_TYPE_RENT -> StringUtils.getString(R.string.rent)
@@ -41,7 +40,6 @@ fun String.translate(): String
         AppConstant.EXPENDITURE_TYPE_TRANSFER_OUT -> StringUtils.getString(R.string.transfer_out)
         AppConstant.EXPENDITURE_TYPE_ENTERTAINMENT -> StringUtils.getString(R.string.entertainment)
         AppConstant.EXPENDITURE_TYPE_RED_ENVELOPES -> StringUtils.getString(R.string.red_envelopes)
-        AppConstant.EXPENDITURE_TYPE_EAT_OUT -> StringUtils.getString(R.string.eat_out)
         AppConstant.EXPENDITURE_TYPE_MEDICAL_CARE -> StringUtils.getString(R.string.medical_care)
         AppConstant.EXPENDITURE_TYPE_HOTEL -> StringUtils.getString(R.string.hotel)
         AppConstant.EXPENDITURE_TYPE_HOUSEHOLD_GOODS -> StringUtils.getString(R.string.household_goods)

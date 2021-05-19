@@ -33,6 +33,7 @@
     <string name="please_input_total_quota">请输入总额度</string>
     <string name="please_input_used_quota">请输入已用额度</string>
 
+    <string name="meals">三餐</string>
     <string name="buy_food">买菜</string>
     <string name="takeaway">外卖</string>
     <string name="snacks">零食</string>

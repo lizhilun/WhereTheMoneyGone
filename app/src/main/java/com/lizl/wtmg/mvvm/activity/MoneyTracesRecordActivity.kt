@@ -30,7 +30,7 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
 {
     private var accountType = ""
     private var selectTime = DateModel()
-    private var expenditureType = AppConstant.EXPENDITURE_TYPE_BUY_FOOD
+    private var expenditureType = AppConstant.EXPENDITURE_TYPE_MEALS
     private var incomeType = AppConstant.INCOME_TYPE_WAGES
     private var transferCharge = 0.0
 
