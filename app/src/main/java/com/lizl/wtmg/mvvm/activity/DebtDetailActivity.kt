@@ -8,6 +8,7 @@ import com.lizl.wtmg.custom.function.toAmountStr
 import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.custom.function.ui
 import com.lizl.wtmg.custom.popup.PopupUtil
+import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.databinding.ActivityDebtDetailBinding
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.MoneyTracesModel
@@ -35,6 +36,7 @@ class DebtDetailActivity : BaseActivity<ActivityDebtDetailBinding>(R.layout.acti
     {
         debtListAdapter = PolymerizeGroupAdapter()
         rv_debt.adapter = debtListAdapter
+        rv_debt.addItemDecoration(ListDividerItemDecoration(resources.getDimensionPixelSize(R.dimen.global_content_padding_content)))
     }
 
     override fun initData()

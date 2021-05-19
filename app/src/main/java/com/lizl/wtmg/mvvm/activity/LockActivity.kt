@@ -1,6 +1,5 @@
 package com.lizl.wtmg.mvvm.activity
 
-import android.hardware.biometrics.BiometricPrompt
 import android.util.Log
 import androidx.core.view.isVisible
 import com.blankj.utilcode.util.ActivityUtils
