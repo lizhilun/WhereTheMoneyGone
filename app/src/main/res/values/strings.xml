@@ -59,6 +59,7 @@
     <string name="red_envelopes">红包</string>
     <string name="financial_transactions">理财</string>
     <string name="transfer_in">转入</string>
+    <string name="interest">利息</string>
 
     <string name="main_image_config">主图设置</string>
     <string name="statistics">报表统计</string>
@@ -98,6 +99,7 @@
     <string name="ali_pay_fund">支付宝基金</string>
     <string name="jd_finance">京东金融</string>
     <string name="tiantian_fund">天天基金</string>
+    <string name="ZOAM">中欧财富</string>
 
     <string name="ant_credit_pay">花呗</string>
     <string name="jdbt">京东白条</string>

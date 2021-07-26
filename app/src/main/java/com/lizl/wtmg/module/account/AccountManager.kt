@@ -17,7 +17,7 @@ object AccountManager
             AppConstant.ACCOUNT_TYPE_CREDIT_CARD_CMB, AppConstant.ACCOUNT_TYPE_CREDIT_CARD_CMBC)
 
     private val investmentAccountList = listOf(AppConstant.ACCOUNT_TYPE_ALI_PAY_FUND, AppConstant.ACCOUNT_TYPE_JD_FINANCE,
-            AppConstant.ACCOUNT_TYPE_TIANTIAN_FUND)
+            AppConstant.ACCOUNT_TYPE_TIANTIAN_FUND, AppConstant.ACCOUNT_TYPE_ZOAM)
 
     val expenditureTypeList = listOf(AppConstant.EXPENDITURE_TYPE_MEALS, AppConstant.EXPENDITURE_TYPE_SNACKS,
             AppConstant.EXPENDITURE_TYPE_CLOTHES, AppConstant.EXPENDITURE_TYPE_NECESSARY,
@@ -31,7 +31,7 @@ object AccountManager
 
     val incomeTypeList = listOf(AppConstant.INCOME_TYPE_WAGES, AppConstant.INCOME_TYPE_RED_ENVELOPES,
             AppConstant.INCOME_TYPE_SECOND_HAND, AppConstant.INCOME_TYPE_FINANCIAL_TRANSACTIONS,
-            AppConstant.INCOME_TYPE_TRANSFER_IN)
+            AppConstant.INCOME_TYPE_TRANSFER_IN, AppConstant.INCOME_TYPE_INTEREST)
 
     val debtTypeList = listOf(AppConstant.DEBT_TYPE_BORROW_OUT, AppConstant.DEBT_TYPE_BORROW_IN,
             AppConstant.DEBT_TYPE_PAY_BACK_OUT, AppConstant.DEBT_TYPE_BORROW_IN)

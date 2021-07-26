@@ -20,6 +20,7 @@ object AppConstant
     const val ACCOUNT_TYPE_ALI_PAY_FUND = "ali pay fund"
     const val ACCOUNT_TYPE_JD_FINANCE = "jd finance"
     const val ACCOUNT_TYPE_TIANTIAN_FUND = "tiantian fund"
+    const val ACCOUNT_TYPE_ZOAM = "zoam"
 
     const val ACCOUNT_CATEGORY_TYPE_CAPITAL = "capital"
     const val ACCOUNT_CATEGORY_TYPE_CREDIT = "credit"
@@ -50,6 +51,7 @@ object AppConstant
     const val INCOME_TYPE_RED_ENVELOPES = "red envelopes"
     const val INCOME_TYPE_FINANCIAL_TRANSACTIONS = "financial transactions"
     const val INCOME_TYPE_TRANSFER_IN = "transfer in"
+    const val INCOME_TYPE_INTEREST = "interest"
 
     const val TRANSFER_TYPE_TRANSFER = "transfer"
 

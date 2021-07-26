@@ -20,6 +20,7 @@ fun String.getIcon(default: Int = R.drawable.ic_baseline_others_24): Int
         AppConstant.ACCOUNT_TYPE_ALI_PAY_FUND -> R.drawable.ic_baseline_ali_pay_24
         AppConstant.ACCOUNT_TYPE_JD_FINANCE -> R.drawable.ic_baseline_jd_24
         AppConstant.ACCOUNT_TYPE_TIANTIAN_FUND -> R.drawable.ic_baseline_tiantian_fund_24
+        AppConstant.ACCOUNT_TYPE_ZOAM -> R.drawable.ic_baseline_zoam_24
 
         AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL -> R.drawable.ic_baseline_cash_24
         AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> R.drawable.ic_baseline_credit_24
@@ -49,6 +50,7 @@ fun String.getIcon(default: Int = R.drawable.ic_baseline_others_24): Int
         AppConstant.INCOME_TYPE_WAGES -> R.drawable.ic_baseline_wages_24
         AppConstant.INCOME_TYPE_SECOND_HAND -> R.drawable.ic_baseline_second_hand_24
         AppConstant.INCOME_TYPE_TRANSFER_IN -> R.drawable.ic_baseline_transfer_in_24
+        AppConstant.INCOME_TYPE_INTEREST -> R.drawable.ic_baseline_interest_24
 
         AppConstant.MONEY_TRACES_CATEGORY_INCOME -> R.drawable.ic_spot_green
         AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> R.drawable.ic_spot_red
