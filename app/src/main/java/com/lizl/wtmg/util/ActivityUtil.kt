@@ -16,14 +16,19 @@ object ActivityUtil
         extraList.forEach {
             when (it.second)
             {
-                is Int -> intent.putExtra(it.first, it.second as Int)
-                is String -> intent.putExtra(it.first, it.second as String)
-                is Boolean -> intent.putExtra(it.first, it.second as Boolean)
+                is Int          -> intent.putExtra(it.first, it.second as Int)
+                is String       -> intent.putExtra(it.first, it.second as String)
+                is Boolean      -> intent.putExtra(it.first, it.second as Boolean)
                 is ArrayList<*> -> intent.putExtra(it.first, it.second as ArrayList<*>)
                 is Serializable -> intent.putExtra(it.first, it.second as Serializable)
             }
         }
 
         topActivity.startActivity(intent)
+    }
+
+    fun getLastActivity(): Activity?
+    {
+        return ActivityUtils.getActivityList().getOrNull(ActivityUtils.getActivityList().size - 2)
     }
 }

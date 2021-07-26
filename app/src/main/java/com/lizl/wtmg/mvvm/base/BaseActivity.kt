@@ -1,5 +1,6 @@
 package com.lizl.wtmg.mvvm.base
 
+import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
@@ -11,8 +12,11 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.SkinAppCompatDelegateImpl
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.blankj.utilcode.util.ActivityUtils
 import com.lizl.wtmg.custom.other.CustomActivityLifecycle
 import com.lizl.wtmg.module.skin.util.SkinUtil
+import com.lizl.wtmg.mvvm.activity.LockActivity
+import com.lizl.wtmg.util.ActivityUtil
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -73,6 +77,16 @@ open class BaseActivity<DB : ViewDataBinding>(private val layoutId: Int) : AppCo
     {
         Log.d(TAG, "onDestroy")
         super.onDestroy()
+    }
+
+    override fun onBackPressed()
+    {
+        if (ActivityUtil.getLastActivity() is LockActivity)
+        {
+            ActivityUtils.startHomeActivity()
+            return
+        }
+        super.onBackPressed()
     }
 
     override fun getDelegate(): AppCompatDelegate

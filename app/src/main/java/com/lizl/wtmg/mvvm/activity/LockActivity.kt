@@ -39,8 +39,8 @@ class LockActivity : BaseActivity<ActivityLockBinding>(R.layout.activity_lock)
             setOnItemClickListener(true) { key ->
                 when (key)
                 {
-                    "E" -> onBackPressed()
-                    "R" -> input.clear()
+                    "E"  -> onBackPressed()
+                    "R"  -> input.clear()
                     else ->
                     {
                         input.append(key)
@@ -72,11 +72,16 @@ class LockActivity : BaseActivity<ActivityLockBinding>(R.layout.activity_lock)
 
     private fun onUnlock()
     {
-        if (ActivityUtils.getActivityList().size == 1)
+        val lastActivity = ActivityUtil.getLastActivity()
+        if (lastActivity != null)
         {
+            ActivityUtils.startActivity(lastActivity.javaClass)
+        }
+        else
+        {
+
             ActivityUtil.turnToActivity(MainActivity::class.java)
         }
-        finish()
     }
 
     override fun onBackPressed()
