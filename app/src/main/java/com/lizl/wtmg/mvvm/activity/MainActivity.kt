@@ -15,7 +15,6 @@ import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.mvvm.fragment.PropertyManagerFragment
 import com.lizl.wtmg.mvvm.fragment.PropertyOutlineFragment
 import com.yalantis.ucrop.UCrop
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main)
@@ -27,9 +26,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main)
 
     override fun initView()
     {
-        vp_content.offscreenPageLimit = 2
+        dataBinding.vpContent.offscreenPageLimit = 2
 
-        vp_content.adapter = FragmentPagerAdapter(this).apply {
+        dataBinding.vpContent.adapter = FragmentPagerAdapter(this).apply {
             setFragmentList(mutableListOf<Fragment>().apply {
                 add(PropertyOutlineFragment())
                 add(PropertyManagerFragment())
@@ -40,7 +39,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main)
     override fun initData()
     {
         LiveEventBus.get(EventConstant.EVENT_GO_TO_PROPERTY_MANAGER_VIEW).observe(this, Observer {
-            vp_content.setCurrentItem(1, true)
+            dataBinding.vpContent.setCurrentItem(1, true)
         })
 
         LiveEventBus.get(EventConstant.EVENT_GO_TO_COVER_IMAGE_SELECTION).observe(this, Observer {
@@ -60,9 +59,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main)
 
     override fun onBackPressed()
     {
-        if (vp_content.currentItem == 1)
+        if (dataBinding.vpContent.currentItem == 1)
         {
-            vp_content.setCurrentItem(0, true)
+            dataBinding.vpContent.setCurrentItem(0, true)
             return
         }
         super.onBackPressed()

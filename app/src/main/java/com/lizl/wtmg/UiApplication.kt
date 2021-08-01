@@ -6,6 +6,8 @@ import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.graphics.drawable.Icon
 import android.util.Log
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelStoreOwner
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.FileIOUtils
 import com.blankj.utilcode.util.PathUtils
@@ -18,15 +20,24 @@ import com.lizl.wtmg.mvvm.activity.MoneyTracesRecordActivity
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class UiApplication : Application(), Thread.UncaughtExceptionHandler
+class UiApplication : Application(), Thread.UncaughtExceptionHandler, ViewModelStoreOwner
 {
     private val TAG = "UiApplication"
 
     private val exceptionLogFilePath: String by lazy { PathUtils.getExternalAppFilesPath() + "/exception.log" }
 
+    private lateinit var viewModelStore: ViewModelStore
+
+    companion object
+    {
+        lateinit var instance: UiApplication
+    }
+
     override fun onCreate()
     {
         super.onCreate()
+        viewModelStore = ViewModelStore()
+        instance = this
 
         Utils.init(this)
 
@@ -42,6 +53,8 @@ class UiApplication : Application(), Thread.UncaughtExceptionHandler
 
         Thread.setDefaultUncaughtExceptionHandler(this)
     }
+
+    override fun getViewModelStore() = viewModelStore
 
     override fun uncaughtException(t: Thread, e: Throwable)
     {
@@ -62,8 +75,12 @@ class UiApplication : Application(), Thread.UncaughtExceptionHandler
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
         val shortcutInfoList = mutableListOf<ShortcutInfo>().apply {
-            add(ShortcutInfo.Builder(this@UiApplication, "new add").setShortLabel(getString(R.string.record_one)).setLongLabel(getString(R.string.record_one))
-                .setIcon(Icon.createWithResource(this@UiApplication, R.drawable.ic_add_round)).setIntent(intent).build())
+            add(ShortcutInfo.Builder(this@UiApplication, "new add")
+                    .setShortLabel(getString(R.string.record_one))
+                    .setLongLabel(getString(R.string.record_one))
+                    .setIcon(Icon.createWithResource(this@UiApplication, R.drawable.ic_add_round))
+                    .setIntent(intent)
+                    .build())
         }
 
         shortcutManager.dynamicShortcuts = shortcutInfoList

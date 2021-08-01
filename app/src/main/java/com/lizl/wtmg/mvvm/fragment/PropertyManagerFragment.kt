@@ -1,14 +1,8 @@
 package com.lizl.wtmg.mvvm.fragment
 
-import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
-import com.chad.library.adapter.base.BaseQuickAdapter.AnimationType
 import com.lizl.wtmg.R
 import com.lizl.wtmg.R.dimen
-import com.lizl.wtmg.constant.AppConstant
-import com.lizl.wtmg.custom.function.getIcon
-import com.lizl.wtmg.custom.function.toAmountStr
-import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.databinding.FragmentPropertyManagerBinding
 import com.lizl.wtmg.db.AppDatabase
@@ -18,16 +12,18 @@ import com.lizl.wtmg.mvvm.activity.AddAccountActivity
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseFragment
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
-import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeModel
 import com.lizl.wtmg.util.ActivityUtil
 import com.lizl.wtmg.custom.popup.PopupUtil
 import com.lizl.wtmg.mvvm.activity.DebtDetailActivity
+import com.lizl.wtmg.mvvm.viewmodel.AccountViewModel
+import com.lizl.wtmg.util.ViewModelUtil
 import kotlinx.android.synthetic.main.fragment_property_manager.*
 
 class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.layout.fragment_property_manager)
 {
     private lateinit var polymerizeGroupAdapter: PolymerizeGroupAdapter
+    private val accountViewModel: AccountViewModel by lazy { ViewModelUtil.getSharedViewModel(AccountViewModel::class.java) }
 
     override fun initView()
     {
@@ -38,51 +34,12 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
 
     override fun initData()
     {
-        AppDatabase.getInstance().getAccountDao().obAllAccount().observe(this, Observer { allAccountList ->
+        accountViewModel.obAllAccounts().observe(this, {
+            polymerizeGroupAdapter.setDiffNewData(it)
+        })
 
-            dataBinding.totalProperty = allAccountList.sumByDouble { it.amount }
-            dataBinding.netProperty = allAccountList.sumByDouble {
-                when (it.category)
-                {
-                    AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> 0 - it.usedQuota
-                    else                                     -> it.amount
-                }
-            }
-            dataBinding.totalLiabilities = allAccountList.sumByDouble {
-                when (it.category)
-                {
-                    AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> it.usedQuota
-                    AppConstant.MONEY_TRACES_CATEGORY_DEBT   -> if (it.amount < 0) 0 - it.amount else 0.0
-                    else                                     -> 0.0
-                }
-            }
-            dataBinding.totalBorrowOut = allAccountList.filter { it.category == AppConstant.ACCOUNT_CATEGORY_TYPE_DEBT && it.amount > 0 }.sumByDouble {
-                it.amount
-            }
-            dataBinding.totalBorrowIn = 0 - allAccountList.filter { it.category == AppConstant.ACCOUNT_CATEGORY_TYPE_DEBT && it.amount < 0 }.sumByDouble {
-                it.amount
-            }
-
-            val polymerizeGroupList = mutableListOf<PolymerizeGroupModel>()
-            allAccountList.filter { it.showInTotal }.groupBy { it.category }.forEach { (category, accountList) ->
-                polymerizeGroupList.add(PolymerizeGroupModel(category.translate(), when (category)
-                {
-                    AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> "${accountList.sumByDouble { it.usedQuota }.toAmountStr()}/${
-                        accountList.sumByDouble { it.totalQuota }.toAmountStr()
-                    }"
-                    else                                     -> accountList.sumByDouble { it.amount }.toAmountStr()
-                }, mutableListOf<PolymerizeChildModel>().apply {
-                    accountList.forEach { accountModel ->
-                        add(PolymerizeChildModel(accountModel.type.getIcon(), accountModel.type.translate(), when (category)
-                        {
-                            AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> "${accountModel.usedQuota.toAmountStr()}/${accountModel.totalQuota.toAmountStr()}"
-                            else                                     -> accountModel.amount.toAmountStr()
-                        }, accountModel))
-                    }
-                }))
-            }
-
-            polymerizeGroupAdapter.setDiffNewData(polymerizeGroupList)
+        accountViewModel.obPropertyOutline().observe(this, {
+            dataBinding.propertyOutlineModel = it
         })
     }
 
@@ -112,8 +69,9 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
                 {
                     "M" ->
                     {
-                        ActivityUtil.turnToActivity(AddAccountActivity::class.java, Pair(AddAccountActivity.DATA_ACCOUNT_TYPE, accountModel.type),
-                                Pair(AddAccountActivity.DATA_ACCOUNT_ID, accountModel.id))
+                        ActivityUtil.turnToActivity(AddAccountActivity::class.java,
+                                                    Pair(AddAccountActivity.DATA_ACCOUNT_TYPE, accountModel.type),
+                                                    Pair(AddAccountActivity.DATA_ACCOUNT_ID, accountModel.id))
                     }
                     "D" ->
                     {

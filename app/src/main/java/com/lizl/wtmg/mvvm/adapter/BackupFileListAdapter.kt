@@ -1,10 +1,11 @@
 package com.lizl.wtmg.mvvm.adapter
 
+import androidx.databinding.DataBindingUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.lizl.wtmg.R
+import com.lizl.wtmg.databinding.ItemBackupFileBinding
 import com.lizl.wtmg.module.backup.FileUtil
-import kotlinx.android.synthetic.main.item_backup_file.view.*
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -14,12 +15,17 @@ class BackupFileListAdapter : BaseQuickAdapter<File, BaseViewHolder>(R.layout.it
 {
     private val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
 
+    override fun onItemViewHolderCreated(viewHolder: BaseViewHolder, viewType: Int)
+    {
+        DataBindingUtil.bind<ItemBackupFileBinding>(viewHolder.itemView)
+    }
+
     override fun convert(helper: BaseViewHolder, item: File)
     {
-        with(helper.itemView) {
-            tv_file_name.text = item.name
-            tv_file_size.text = FileUtil.getFileSize(item)
-            tv_file_time.text = formatter.format(item.lastModified())
+        helper.getBinding<ItemBackupFileBinding>()?.apply {
+            tvFileName.text = item.name
+            tvFileSize.text = FileUtil.getFileSize(item)
+            tvFileTime.text = formatter.format(item.lastModified())
         }
     }
 }

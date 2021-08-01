@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 
 open class BaseFragment<DB : ViewDataBinding>(private val layoutId: Int) : Fragment()
 {
@@ -41,6 +43,11 @@ open class BaseFragment<DB : ViewDataBinding>(private val layoutId: Int) : Fragm
         initView()
         initData()
         initListener()
+    }
+
+    protected fun <T : ViewModel> createViewModel(clazz: Class<T>): T
+    {
+        return ViewModelProvider(this).get(clazz)
     }
 
     override fun onStart()

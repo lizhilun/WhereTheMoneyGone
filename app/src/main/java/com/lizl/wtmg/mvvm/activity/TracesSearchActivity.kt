@@ -22,7 +22,6 @@ import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
-import kotlinx.android.synthetic.main.activity_traces_search.*
 
 class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.activity_traces_search)
 {
@@ -47,8 +46,8 @@ class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.
     override fun initView()
     {
         searchResultAdapter = PolymerizeGroupAdapter()
-        rv_result.adapter = searchResultAdapter
-        rv_result.addItemDecoration(ListDividerItemDecoration(resources.getDimensionPixelSize(dimen.global_content_padding_content)))
+        dataBinding.rvResult.adapter = searchResultAdapter
+        dataBinding.rvResult.addItemDecoration(ListDividerItemDecoration(resources.getDimensionPixelSize(dimen.global_content_padding_content)))
     }
 
     override fun initData()
@@ -59,28 +58,28 @@ class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.
             val keyword = it.getString(DATA_KEY_WORD)
             if (keyword?.isNotBlank() == true)
             {
-                et_keyword.setText(keyword)
+                dataBinding.etKeyword.setText(keyword)
                 search()
             }
-            tv_time.text = timeTypeToString(PopupSearchTime.TIME_TYPE_CUSTOM)
+            dataBinding.tvTime.text = timeTypeToString(PopupSearchTime.TIME_TYPE_CUSTOM)
         }
     }
 
     override fun initListener()
     {
-        ctb_title.setOnBackBtnClickListener { onBackPressed() }
+        dataBinding.ctbTitle.setOnBackBtnClickListener { onBackPressed() }
 
-        et_keyword.addTextChangedListener { search(keyword = it?.toString().orEmpty()) }
+        dataBinding.etKeyword.addTextChangedListener { search(keyword = it?.toString().orEmpty()) }
 
         searchResultAdapter.setOnChildItemClickListener {
             PopupUtil.showTracesDetailPopup(it.tag as MoneyTracesModel)
         }
 
-        cl_time.setOnClickListener {
+        dataBinding.clTime.setOnClickListener {
             if (popupSearchTime == null)
             {
-                popupSearchTime = XPopup.Builder(this).atView(cl_time).asCustom(PopupSearchTime(this) { type, startTime, endTime ->
-                    tv_time.text = timeTypeToString(type)
+                popupSearchTime = XPopup.Builder(this).atView(dataBinding.clTime).asCustom(PopupSearchTime(this) { type, startTime, endTime ->
+                    dataBinding.tvTime.text = timeTypeToString(type)
                     this.startTime = startTime
                     this.endTime = endTime
                     search()
@@ -89,10 +88,10 @@ class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.
             popupSearchTime?.show()
         }
 
-        cl_condition.setOnClickListener {
+        dataBinding.clCondition.setOnClickListener {
             if (popupSearchCondition == null)
             {
-                popupSearchCondition = XPopup.Builder(this).atView(cl_condition).asCustom(PopupSearchCondition(this) { minAmount, maxAmount ->
+                popupSearchCondition = XPopup.Builder(this).atView(dataBinding.clCondition).asCustom(PopupSearchCondition(this) { minAmount, maxAmount ->
                     this.minAmount = minAmount
                     this.maxAmount = maxAmount
                     search()
@@ -107,23 +106,26 @@ class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.
         return when (timeType)
         {
             PopupSearchTime.TIME_TYPE_CURRENT_MONTH -> getString(R.string.current_month)
-            PopupSearchTime.TIME_TYPE_LAST_MONTH -> getString(R.string.last_month)
-            PopupSearchTime.TIME_TYPE_CURRENT_YEAR -> getString(R.string.current_year)
-            PopupSearchTime.TIME_TYPE_LAST_YEAR -> getString(R.string.last_year)
-            PopupSearchTime.TIME_TYPE_CUSTOM -> getString(R.string.custom_time)
+            PopupSearchTime.TIME_TYPE_LAST_MONTH    -> getString(R.string.last_month)
+            PopupSearchTime.TIME_TYPE_CURRENT_YEAR  -> getString(R.string.current_year)
+            PopupSearchTime.TIME_TYPE_LAST_YEAR     -> getString(R.string.last_year)
+            PopupSearchTime.TIME_TYPE_CUSTOM        -> getString(R.string.custom_time)
             else                                    -> getString(R.string.all)
         }
     }
 
     private var lastSearchOb: LiveData<MutableList<MoneyTracesModel>>? = null
 
-    private fun search(startTime: Long = this.startTime, endTime: Long = this.endTime, keyword: String = et_keyword.text.toString(),
-                       minAmount: Int = this.minAmount, maxAmount: Int = this.maxAmount)
+    private fun search(startTime: Long = this.startTime,
+                       endTime: Long = this.endTime,
+                       keyword: String = dataBinding.etKeyword.text.toString(),
+                       minAmount: Int = this.minAmount,
+                       maxAmount: Int = this.maxAmount)
     {
         lastSearchOb?.removeObservers(this)
         if (keyword.isBlank())
         {
-            tv_result.text = ""
+            dataBinding.tvResult.text = ""
             searchResultAdapter.replaceData(mutableListOf())
             return
         }
@@ -138,11 +140,17 @@ class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.
                     val income = allTracesList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME }.sumByDouble { it.amount }.toAmountStr()
                     val expenditure =
                             allTracesList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE }.sumByDouble { it.amount }.toAmountStr()
-                    resultStringBuffer.append("\n").append(getString(R.string.income)).append("：").append(income).append("    ")
-                        .append(getString(R.string.expenditure)).append("：").append(expenditure)
+                    resultStringBuffer.append("\n")
+                        .append(getString(R.string.income))
+                        .append("：")
+                        .append(income)
+                        .append("    ")
+                        .append(getString(R.string.expenditure))
+                        .append("：")
+                        .append(expenditure)
                 }
 
-                ui { tv_result.text = resultStringBuffer.toString() }
+                ui { dataBinding.tvResult.text = resultStringBuffer.toString() }
 
                 val polymerizeGroupList = AccountManager.polymerizeTrancesList(allTracesList)
                 ui { searchResultAdapter.setDiffNewData(polymerizeGroupList) }
@@ -154,7 +162,10 @@ class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.
     {
         val sqlStringBuffer = StringBuffer()
 
-        sqlStringBuffer.append("select * from MoneyTraces").append(" where ").append("recordTime >= $startTime and recordTime <= $endTime").append(" and ")
+        sqlStringBuffer.append("select * from MoneyTraces")
+            .append(" where ")
+            .append("recordTime >= $startTime and recordTime <= $endTime")
+            .append(" and ")
             .append("amount >= $minAmount and amount <= $maxAmount")
 
         if (keyword.isNotBlank())

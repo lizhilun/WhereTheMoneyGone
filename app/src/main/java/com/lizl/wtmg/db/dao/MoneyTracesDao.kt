@@ -6,6 +6,7 @@ import androidx.room.Query
 import androidx.room.RawQuery
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.lizl.wtmg.db.model.MoneyTracesModel
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MoneyTracesDao : BaseDao<MoneyTracesModel>
@@ -14,7 +15,7 @@ interface MoneyTracesDao : BaseDao<MoneyTracesModel>
     fun obAllTraces(): MutableList<MoneyTracesModel>
 
     @Query("select * from MoneyTraces where recordYear == :year and recordMonth == :month order by recordTime desc")
-    fun obTracesByMonth(year: Int, month: Int): LiveData<MutableList<MoneyTracesModel>>
+    fun obTracesByMonth(year: Int, month: Int): Flow<MutableList<MoneyTracesModel>>
 
     @Query("select * from MoneyTraces where recordYear == :year and recordMonth == :month order by recordTime desc")
     fun queryTracesByMonth(year: Int, month: Int): MutableList<MoneyTracesModel>

@@ -24,17 +24,17 @@ class BottomListAdapter(bottomList: MutableList<PolymerizeModel>) : BaseDelegate
     init
     {
         setMultiTypeDelegate(object : BaseMultiTypeDelegate<PolymerizeModel>()
-        {
-            override fun getItemType(data: List<PolymerizeModel>, position: Int): Int
-            {
-                return when (data[position])
-                {
-                    is PolymerizeGroupModel -> ITEM_TYPE_GROUP
-                    is PolymerizeChildModel -> ITEM_TYPE_CHILD
-                    else                    -> ITEM_TYPE_CHILD
-                }
-            }
-        })
+                             {
+                                 override fun getItemType(data: List<PolymerizeModel>, position: Int): Int
+                                 {
+                                     return when (data[position])
+                                     {
+                                         is PolymerizeGroupModel -> ITEM_TYPE_GROUP
+                                         is PolymerizeChildModel -> ITEM_TYPE_CHILD
+                                         else                    -> ITEM_TYPE_CHILD
+                                     }
+                                 }
+                             })
 
         getMultiTypeDelegate()?.let {
             it.addItemType(ITEM_TYPE_GROUP, R.layout.item_bottom_polymerize_group)

@@ -16,7 +16,6 @@ import com.lizl.wtmg.module.account.AccountManager
 import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeModel
-import kotlinx.android.synthetic.main.activity_add_account.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -40,7 +39,7 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
 
         if (accountId != -1L && accountType.isNotBlank())
         {
-            ctb_title.setTitle(getString(R.string.modify_account))
+            dataBinding.ctbTitle.setTitle(getString(R.string.modify_account))
 
             this.accountType = accountType
 
@@ -49,9 +48,9 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
 
         if (accountModel != null)
         {
-            layout_account_amount.setEditText(accountModel.amount.toAmountStr())
-            layout_total_quota.setEditText(accountModel.totalQuota.toAmountStr())
-            layout_used_quota.setEditText(accountModel.usedQuota.toAmountStr())
+            dataBinding.layoutAccountAmount.setEditText(accountModel.amount.toAmountStr())
+            dataBinding.layoutTotalQuota.setEditText(accountModel.totalQuota.toAmountStr())
+            dataBinding.layoutUsedQuota.setEditText(accountModel.usedQuota.toAmountStr())
 
             showAccountCategory(accountModel.category)
             showAccountType(accountModel.type)
@@ -64,10 +63,10 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
 
     override fun initListener()
     {
-        ctb_title.setOnBackBtnClickListener { onBackPressed() }
-        tv_save.setOnClickListener { onSaveBtnClick() }
+        dataBinding.ctbTitle.setOnBackBtnClickListener { onBackPressed() }
+        dataBinding.tvSave.setOnClickListener { onSaveBtnClick() }
 
-        layout_account_category.setOnClickListener {
+        dataBinding.layoutAccountCategory.setOnClickListener {
             PopupUtil.showBottomListPopup(mutableListOf<PolymerizeModel>().apply {
                 AccountManager.accountCategoryList.filter { it != AppConstant.MONEY_TRACES_CATEGORY_DEBT }.forEach {
                     add(PolymerizeChildModel(it.getIcon(), it.translate(), "", it))
@@ -77,7 +76,7 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
             }
         }
 
-        layout_account_type.setOnClickListener {
+        dataBinding.layoutAccountType.setOnClickListener {
             PopupUtil.showBottomListPopup(mutableListOf<PolymerizeModel>().apply {
                 AccountManager.getAccountListByCategory(accountCategory).forEach {
                     add(PolymerizeChildModel(it.getIcon(), it.translate(), "", it))
@@ -96,49 +95,49 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
         {
             AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL, AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT ->
             {
-                layout_account_amount.isVisible = true
-                layout_total_quota.isVisible = false
-                layout_used_quota.isVisible = false
+                dataBinding.layoutAccountAmount.isVisible = true
+                dataBinding.layoutTotalQuota.isVisible = false
+                dataBinding.layoutUsedQuota.isVisible = false
 
                 showAccountType(AppConstant.ACCOUNT_TYPE_BACK_CARD)
             }
-            AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT ->
+            AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT                                                ->
             {
-                layout_account_amount.isVisible = false
-                layout_total_quota.isVisible = true
-                layout_used_quota.isVisible = true
+                dataBinding.layoutAccountAmount.isVisible = false
+                dataBinding.layoutTotalQuota.isVisible = true
+                dataBinding.layoutUsedQuota.isVisible = true
 
                 showAccountType(AppConstant.ACCOUNT_TYPE_ANT_CREDIT_PAY)
             }
         }
 
-        layout_account_category.setMainText(accountCategory.translate())
+        dataBinding.layoutAccountCategory.setMainText(accountCategory.translate())
     }
 
     private fun showAccountType(accountType: String)
     {
         this.accountType = accountType
-        layout_account_type.setMainText(accountType.translate())
+        dataBinding.layoutAccountType.setMainText(accountType.translate())
     }
 
     private fun onSaveBtnClick()
     {
-        val amount = layout_account_amount.getEditText().toDoubleOrNull()
-        if (layout_account_amount.isVisible && amount == null)
+        val amount = dataBinding.layoutAccountAmount.getEditText().toDoubleOrNull()
+        if (dataBinding.layoutAccountAmount.isVisible && amount == null)
         {
             ToastUtils.showShort(R.string.please_input_amount)
             return
         }
 
-        val totalQuota = layout_total_quota.getEditText().toDoubleOrNull()
-        if (layout_total_quota.isVisible && totalQuota == null)
+        val totalQuota = dataBinding.layoutTotalQuota.getEditText().toDoubleOrNull()
+        if (dataBinding.layoutTotalQuota.isVisible && totalQuota == null)
         {
             ToastUtils.showShort(R.string.please_input_total_quota)
             return
         }
 
-        val usedQuota = layout_used_quota.getEditText().toDoubleOrNull()
-        if (layout_used_quota.isVisible && usedQuota == null)
+        val usedQuota = dataBinding.layoutUsedQuota.getEditText().toDoubleOrNull()
+        if (dataBinding.layoutUsedQuota.isVisible && usedQuota == null)
         {
             ToastUtils.showShort(R.string.please_input_used_quota)
             return

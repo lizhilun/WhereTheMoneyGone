@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.SkinAppCompatDelegateImpl
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.blankj.utilcode.util.ActivityUtils
 import com.lizl.wtmg.custom.other.CustomActivityLifecycle
 import com.lizl.wtmg.module.skin.util.SkinUtil
@@ -41,6 +43,11 @@ open class BaseActivity<DB : ViewDataBinding>(private val layoutId: Int) : AppCo
         initView()
         initData()
         initListener()
+    }
+
+    protected fun <T : ViewModel> createViewModel(clazz: Class<T>): T
+    {
+        return ViewModelProvider(this).get(clazz)
     }
 
     override fun onResume()

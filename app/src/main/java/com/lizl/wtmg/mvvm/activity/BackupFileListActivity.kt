@@ -3,6 +3,7 @@ package com.lizl.wtmg.mvvm.activity
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.ToastUtils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
@@ -19,7 +20,6 @@ import com.lizl.wtmg.module.config.constant.ConfigConstant
 import com.lizl.wtmg.module.config.util.ConfigUtil
 import com.lizl.wtmg.mvvm.adapter.BackupFileListAdapter
 import com.lizl.wtmg.mvvm.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_backup_file_list.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -34,7 +34,7 @@ class BackupFileListActivity : BaseActivity<ActivityBackupFileListBinding>(R.lay
 
     override fun initView()
     {
-        ctb_title.setActionList(mutableListOf<TitleBarBtnBean.BaseBtnBean>().apply {
+        dataBinding.ctbTitle.setActionList(mutableListOf<TitleBarBtnBean.BaseBtnBean>().apply {
             add(TitleBarBtnBean.ImageBtnBean(R.drawable.ic_baseline_folder_open_24) {
                 val intent = Intent(Intent.ACTION_GET_CONTENT)
                 intent.type = "*/*"
@@ -43,12 +43,12 @@ class BackupFileListActivity : BaseActivity<ActivityBackupFileListBinding>(R.lay
             })
         })
 
-        rv_backup_file.adapter = backupFileListAdapter
+        dataBinding.rvBackupFile.adapter = backupFileListAdapter
     }
 
     override fun initListener()
     {
-        ctb_title.setOnBackBtnClickListener { onBackPressed() }
+        dataBinding.ctbTitle.setOnBackBtnClickListener { onBackPressed() }
 
         backupFileListAdapter.setOnItemClickListener { backupFile ->
 
@@ -92,7 +92,7 @@ class BackupFileListActivity : BaseActivity<ActivityBackupFileListBinding>(R.lay
 
     override fun initData()
     {
-        GlobalScope.launch {
+        lifecycleScope.launch {
             val backupFileList = BackupUtil.getBackupFileList()
             ui { backupFileListAdapter.setNewData(backupFileList.toMutableList()) }
         }

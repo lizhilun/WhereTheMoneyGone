@@ -5,24 +5,8 @@
     <data>
 
         <variable
-            name="totalProperty"
-            type="Double" />
-
-        <variable
-            name="netProperty"
-            type="Double" />
-
-        <variable
-            name="totalLiabilities"
-            type="Double" />
-
-        <variable
-            name="totalBorrowOut"
-            type="Double" />
-
-        <variable
-            name="totalBorrowIn"
-            type="Double" />
+            name="propertyOutlineModel"
+            type="com.lizl.wtmg.mvvm.model.PropertyOutlineModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -58,7 +42,7 @@
                         android:id="@+id/tv_total_property"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:amount="@{totalProperty}"
+                        app:amount="@{propertyOutlineModel.totalProperty}"
                         app:decTextStr="@string/total_property"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +54,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30dp"
-                        app:amount="@{netProperty}"
+                        app:amount="@{propertyOutlineModel.netProperty}"
                         app:decTextStr="@string/net_property"
                         app:layout_constraintEnd_toEndOf="@+id/gl_center"
                         app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +64,7 @@
                         android:id="@+id/tv_total_liabilities"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:amount="@{totalLiabilities}"
+                        app:amount="@{propertyOutlineModel.totalLiabilities}"
                         app:decTextStr="@string/total_liabilities"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/gl_center"
@@ -97,7 +81,7 @@
                     android:layout_marginEnd="@dimen/global_content_padding_content"
                     android:background="@color/colorContentBg"
                     android:padding="@dimen/global_content_padding_content_half"
-                    app:amount="@{totalBorrowOut}"
+                    app:amount="@{propertyOutlineModel.totalBorrowOut}"
                     app:decTextStr="@string/total_borrow_out"
                     app:layout_constraintEnd_toStartOf="@+id/tv_borrow_in"
                     app:layout_constraintHorizontal_chainStyle="packed"
@@ -111,7 +95,7 @@
                     android:layout_marginEnd="@dimen/global_content_padding_edge_half"
                     android:background="@color/colorContentBg"
                     android:padding="@dimen/global_content_padding_content_half"
-                    app:amount="@{totalBorrowIn}"
+                    app:amount="@{propertyOutlineModel.totalBorrowIn}"
                     app:decTextStr="@string/total_borrow_in"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_borrow_out"
                     app:layout_constraintEnd_toEndOf="parent"

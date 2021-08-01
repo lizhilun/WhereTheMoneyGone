@@ -4,12 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import com.lizl.wtmg.db.model.AccountModel
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AccountDao : BaseDao<AccountModel>
 {
     @Query("select * from Account")
-    fun obAllAccount(): LiveData<MutableList<AccountModel>>
+    fun obAllAccount(): Flow<MutableList<AccountModel>>
 
     @Query("select * from Account")
     fun queryAllAccount(): MutableList<AccountModel>
