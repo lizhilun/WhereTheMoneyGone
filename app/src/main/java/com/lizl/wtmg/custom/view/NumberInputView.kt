@@ -3,6 +3,7 @@ package com.lizl.wtmg.custom.view
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import com.blankj.utilcode.util.Utils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.custom.function.backspace
 import com.lizl.wtmg.custom.function.setOnClickListener
@@ -45,7 +46,7 @@ class NumberInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
                 setOnItemClickListener(true) { key: String ->
                     when (key)
                     {
-                        "-" ->
+                        "-"  ->
                         {
                             if (inputTemp.isNotEmpty())
                             {
@@ -53,7 +54,7 @@ class NumberInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
                             }
                             inputTemp.append(key)
                         }
-                        "." ->
+                        "."  ->
                         {
                             if (inputTemp.contains(key))
                             {
@@ -102,13 +103,13 @@ class NumberInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
     {
         inputTemp.clear()
         inputTemp.append(input)
-        ui { onTextChangedListener?.invoke(inputTemp.toString()) }
+        Utils.runOnUiThread { onTextChangedListener?.invoke(inputTemp.toString()) }
     }
 
     fun clearInput()
     {
         inputTemp.clear()
-        ui { onTextChangedListener?.invoke("") }
+        Utils.runOnUiThread { onTextChangedListener?.invoke("") }
     }
 
     fun setOnTextChangedListener(onTextChangedListener: (String) -> Unit)

@@ -1,6 +1,5 @@
 package com.lizl.wtmg.mvvm.base
 
-import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
@@ -35,10 +34,6 @@ open class BaseActivity<DB : ViewDataBinding>(private val layoutId: Int) : AppCo
 
         dataBinding = DataBindingUtil.setContentView(this, layoutId)
         dataBinding.lifecycleOwner = this
-
-        window.clearFlags(LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-        window.addFlags(LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
 
         initView()
         initData()

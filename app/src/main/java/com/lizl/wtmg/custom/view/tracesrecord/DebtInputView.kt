@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.Utils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.function.setOnClickListener
@@ -129,7 +130,7 @@ class DebtInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
     {
         GlobalScope.launch {
             AppDatabase.getInstance().getAccountDao().queryAccountByType(accountType)?.let {
-                ui {
+                Utils.runOnUiThread {
                     accountInputView.setInputEnable(!it.showInTotal)
                     if (it.showInTotal)
                     {

@@ -3,9 +3,13 @@ package com.lizl.wtmg.custom.function
 import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import com.chad.library.adapter.base.BaseQuickAdapter
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 fun StringBuilder.backspace()
@@ -35,18 +39,29 @@ fun String.delete(str: String): String
     return replace(str, "")
 }
 
-fun ui(runnable: () -> Unit)
+fun LifecycleOwner.ui(block: suspend CoroutineScope.() -> Unit)
 {
-    GlobalScope.launch(Dispatchers.Main) {
-        runnable.invoke()
-    }
+    lifecycleScope.launch(Dispatchers.Main, block = block)
 }
 
-fun io(runnable: () -> Unit)
+fun LifecycleOwner.io(block: suspend CoroutineScope.() -> Unit)
 {
-    GlobalScope.launch(Dispatchers.IO) {
-        runnable.invoke()
-    }
+    lifecycleScope.launch(Dispatchers.IO, block = block)
+}
+
+fun LifecycleOwner.launch(block: suspend CoroutineScope.() -> Unit)
+{
+    lifecycleScope.launch(block = block)
+}
+
+fun ViewModel.io(block: suspend CoroutineScope.() -> Unit)
+{
+    viewModelScope.launch(Dispatchers.IO, block = block)
+}
+
+fun ViewModel.launch(block: suspend CoroutineScope.() -> Unit)
+{
+    viewModelScope.launch(block = block)
 }
 
 fun <T> BaseQuickAdapter<T, *>.update(model: T)
