@@ -5,16 +5,18 @@ import android.app.Application
 import android.os.Bundle
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.TimeUtils
 import com.blankj.utilcode.util.Utils
+import com.lizl.wtmg.custom.function.launchDefault
 import com.lizl.wtmg.module.skin.util.SkinUtil
 import com.lizl.wtmg.mvvm.activity.LockActivity
 import com.lizl.wtmg.util.ActivityUtil
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 object CustomActivityLifecycle : Application.ActivityLifecycleCallbacks
 {
     var isFromActivityResult = false
+
+    private var lastAppStopTime = 0L
 
     init
     {
@@ -26,18 +28,23 @@ object CustomActivityLifecycle : Application.ActivityLifecycleCallbacks
                 {
                     return
                 }
+                if (TimeUtils.getNowMills() - lastAppStopTime <= 30_000)
+                {
+                    return
+                }
                 ActivityUtil.turnToActivity(LockActivity::class.java)
             }
 
             override fun onBackground()
             {
+                lastAppStopTime = TimeUtils.getNowMills()
             }
         })
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?)
     {
-        GlobalScope.launch { SkinUtil.updateStatusBarLightMode(activity) }
+        launchDefault { SkinUtil.updateStatusBarLightMode(activity) }
     }
 
     override fun onActivityStarted(activity: Activity)

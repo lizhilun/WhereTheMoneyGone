@@ -62,7 +62,7 @@ object AccountManager
 
             val dateInfo = "%02d-%02d".format(u.first().recordMonth, u.first().recordDay)
 
-            val amountInfo = u.sumByDouble {
+            val amountInfo = u.sumOf {
                 when (it.tracesCategory)
                 {
                     AppConstant.MONEY_TRACES_CATEGORY_INCOME      -> it.amount

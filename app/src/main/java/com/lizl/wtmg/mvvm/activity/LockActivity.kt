@@ -2,7 +2,6 @@ package com.lizl.wtmg.mvvm.activity
 
 import android.util.Log
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.ActivityUtils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.custom.function.launch
@@ -16,8 +15,6 @@ import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.util.ActivityUtil
 import com.lizl.wtmg.util.BiometricAuthenticationUtil
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import java.lang.StringBuilder
 
 class LockActivity : BaseActivity<ActivityLockBinding>(R.layout.activity_lock)
 {
@@ -72,7 +69,7 @@ class LockActivity : BaseActivity<ActivityLockBinding>(R.layout.activity_lock)
                 dataBinding.ivFingerprint.isVisible = fingerprintEnable
                 if (appLockEnable && fingerprintEnable)
                 {
-                    delay(500)
+                    delay(200)
                     startFingerprintAuthentication()
                 }
             }

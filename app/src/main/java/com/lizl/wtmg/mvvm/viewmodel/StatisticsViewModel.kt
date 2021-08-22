@@ -3,8 +3,8 @@ package com.lizl.wtmg.mvvm.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.lizl.wtmg.constant.AppConstant
+import com.lizl.wtmg.custom.function.launch
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.MoneyTracesModel
 import com.lizl.wtmg.mvvm.model.statistics.QuantityModel
@@ -12,7 +12,6 @@ import com.lizl.wtmg.mvvm.model.statistics.StatisticsOutlineModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 
 class StatisticsViewModel : ViewModel()
 {
@@ -24,7 +23,7 @@ class StatisticsViewModel : ViewModel()
 
     init
     {
-        viewModelScope.launch {
+        launch {
             channel.receiveAsFlow().flowOn(Dispatchers.IO).debounce(200).distinctUntilChanged().collectLatest { condition ->
                 val traceList = if (condition.month == 0)
                 {
@@ -73,7 +72,7 @@ class StatisticsViewModel : ViewModel()
         return ArrayList(mutableListOf<QuantityModel>().apply {
             traceList.filter { filterCondition.invoke(it) }
                 .groupBy { groupCondition.invoke(it) }
-                .forEach { (t, u) -> add(QuantityModel(t, u.sumByDouble { it.amount })) }
+                .forEach { (t, u) -> add(QuantityModel(t, u.sumOf { it.amount })) }
             sortByDescending { it.quantity }
         })
     }

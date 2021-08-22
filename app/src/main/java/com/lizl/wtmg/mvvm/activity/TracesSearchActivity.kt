@@ -10,9 +10,9 @@ import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.function.toAmountStr
 import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.custom.function.ui
-import com.lizl.wtmg.custom.popup.search.PopupSearchTime
 import com.lizl.wtmg.custom.popup.PopupUtil
 import com.lizl.wtmg.custom.popup.search.PopupSearchCondition
+import com.lizl.wtmg.custom.popup.search.PopupSearchTime
 import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.databinding.ActivityTracesSearchBinding
 import com.lizl.wtmg.db.AppDatabase
@@ -137,9 +137,9 @@ class TracesSearchActivity : BaseActivity<ActivityTracesSearchBinding>(R.layout.
                 resultStringBuffer.append(getString(R.string.search_result_count_is, allTracesList.size))
                 if (allTracesList.isNotEmpty())
                 {
-                    val income = allTracesList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME }.sumByDouble { it.amount }.toAmountStr()
+                    val income = allTracesList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME }.sumOf { it.amount }.toAmountStr()
                     val expenditure =
-                            allTracesList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE }.sumByDouble { it.amount }.toAmountStr()
+                            allTracesList.filter { it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE }.sumOf { it.amount }.toAmountStr()
                     resultStringBuffer.append("\n")
                         .append(getString(R.string.income))
                         .append("：")

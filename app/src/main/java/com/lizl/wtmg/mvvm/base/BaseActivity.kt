@@ -4,8 +4,6 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.view.WindowManager.LayoutParams
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.SkinAppCompatDelegateImpl
@@ -14,12 +12,11 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.blankj.utilcode.util.ActivityUtils
+import com.lizl.wtmg.custom.function.launchDefault
 import com.lizl.wtmg.custom.other.CustomActivityLifecycle
 import com.lizl.wtmg.module.skin.util.SkinUtil
 import com.lizl.wtmg.mvvm.activity.LockActivity
 import com.lizl.wtmg.util.ActivityUtil
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 open class BaseActivity<DB : ViewDataBinding>(private val layoutId: Int) : AppCompatActivity()
 {
@@ -99,7 +96,7 @@ open class BaseActivity<DB : ViewDataBinding>(private val layoutId: Int) : AppCo
     override fun onConfigurationChanged(newConfig: Configuration)
     {
         super.onConfigurationChanged(newConfig)
-        GlobalScope.launch { SkinUtil.loadSkin() }
+        launchDefault { SkinUtil.loadSkin() }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)

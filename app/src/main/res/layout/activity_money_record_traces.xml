@@ -76,7 +76,7 @@
                 android:layout_marginStart="@dimen/global_content_padding_edge"
                 android:hint="@string/remarks"
                 android:imeOptions="actionDone"
-                android:maxLength="8"
+                android:maxLength="16"
                 android:textColorHint="@color/colorThirdTextColor"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_input_amount"
                 app:layout_constraintStart_toStartOf="parent"

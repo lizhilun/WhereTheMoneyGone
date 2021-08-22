@@ -8,11 +8,9 @@ import android.content.res.Configuration
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.Utils
-import com.lizl.wtmg.custom.function.ui
-import com.lizl.wtmg.module.config.util.ConfigUtil
+import com.lizl.wtmg.custom.function.launchDefault
 import com.lizl.wtmg.module.config.constant.ConfigConstant
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.lizl.wtmg.module.config.util.ConfigUtil
 import kotlinx.coroutines.runBlocking
 import skin.support.SkinCompatManager
 import skin.support.SkinCompatManager.SkinLoaderListener
@@ -38,7 +36,7 @@ object SkinUtil
 
         runBlocking { loadSkin() }
 
-        ConfigUtil.obConfig(ConfigConstant.CONFIG_DARK_MODE).observeForever { GlobalScope.launch { loadSkin() } }
+        ConfigUtil.obConfig(ConfigConstant.CONFIG_DARK_MODE).observeForever { launchDefault { loadSkin() } }
     }
 
     suspend fun loadSkin()
@@ -48,7 +46,7 @@ object SkinUtil
             override fun onSuccess()
             {
                 val topActivity = ActivityUtils.getTopActivity() ?: return
-                GlobalScope.launch { updateStatusBarLightMode(topActivity) }
+                launchDefault { updateStatusBarLightMode(topActivity) }
             }
 
             override fun onFailed(errMsg: String?)

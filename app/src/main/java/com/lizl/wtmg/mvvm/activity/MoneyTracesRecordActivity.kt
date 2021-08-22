@@ -7,23 +7,20 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.function.*
-import com.lizl.wtmg.custom.view.tracesrecord.AccountTransferView
-import com.lizl.wtmg.db.model.MoneyTracesModel
-import com.lizl.wtmg.module.account.TracesManager
-import com.lizl.wtmg.module.account.AccountManager
+import com.lizl.wtmg.custom.popup.PopupUtil
 import com.lizl.wtmg.custom.view.selection.SingleSelectionModel
 import com.lizl.wtmg.custom.view.selection.SingleSelectionView
-import com.lizl.wtmg.databinding.ActivityMoneyRecordTracesBinding
-import com.lizl.wtmg.mvvm.adapter.ViewPagerAdapter
-import com.lizl.wtmg.mvvm.base.BaseActivity
-import com.lizl.wtmg.custom.popup.PopupUtil
+import com.lizl.wtmg.custom.view.tracesrecord.AccountTransferView
 import com.lizl.wtmg.custom.view.tracesrecord.DebtInputView
+import com.lizl.wtmg.databinding.ActivityMoneyRecordTracesBinding
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.AccountModel
+import com.lizl.wtmg.db.model.MoneyTracesModel
+import com.lizl.wtmg.module.account.AccountManager
+import com.lizl.wtmg.module.account.TracesManager
+import com.lizl.wtmg.mvvm.adapter.ViewPagerAdapter
+import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.mvvm.model.DateModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>(R.layout.activity_money_record_traces)
 {
@@ -151,16 +148,16 @@ class MoneyTracesRecordActivity : BaseActivity<ActivityMoneyRecordTracesBinding>
         }
 
         dataBinding.viewNumberInput.setOnMainActionClickListener {
-            GlobalScope.launch {
+            launch {
                 if (saveInput())
                 {
-                    GlobalScope.launch(Dispatchers.Main) { onBackPressed() }
+                    ui { onBackPressed() }
                 }
             }
         }
 
         dataBinding.viewNumberInput.setOnSubActionClickListener {
-            GlobalScope.launch {
+            launch {
                 if (saveInput())
                 {
                     dataBinding.viewNumberInput.clearInput()

@@ -10,12 +10,10 @@ import com.blankj.utilcode.util.*
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.EventConstant
-import com.lizl.wtmg.custom.function.ui
+import com.lizl.wtmg.custom.function.launchIO
+import com.lizl.wtmg.custom.function.launchMain
 import com.lizl.wtmg.module.skin.util.SkinUtil
 import com.yalantis.ucrop.UCrop
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.io.File
 
 object MainPicHandler
@@ -38,7 +36,7 @@ object MainPicHandler
 
     fun onImageSelectFinish(activity: Activity, imageUri: Uri)
     {
-        GlobalScope.launch(Dispatchers.IO) {
+        launchIO {
             val bitmap = try
             {
                 BitmapFactory.decodeStream(activity.contentResolver.openInputStream(imageUri))
@@ -52,7 +50,7 @@ object MainPicHandler
             if (bitmap == null)
             {
                 ToastUtils.showShort(R.string.image_error_please_reselect)
-                return@launch
+                return@launchIO
             }
 
             //TODO:先将图片保存到应用目录，再进行裁切
@@ -64,10 +62,10 @@ object MainPicHandler
             {
                 Log.e(TAG, "saveImage error:", e)
                 ToastUtils.showShort(R.string.image_error_please_reselect)
-                return@launch
+                return@launchIO
             }
 
-            GlobalScope.launch(Dispatchers.Main) {
+            launchMain {
                 val options = UCrop.Options().apply {
                     setHideBottomControls(true)
                     setToolbarColor(SkinUtil.getColor(activity, R.color.colorWindowBg))
@@ -84,7 +82,7 @@ object MainPicHandler
 
     fun onImageCropFinish(activity: Activity, imageUri: Uri)
     {
-        GlobalScope.launch(Dispatchers.IO) {
+        launchIO {
             try
             {
                 val bitmap = BitmapFactory.decodeStream(activity.contentResolver.openInputStream(imageUri))
@@ -97,7 +95,7 @@ object MainPicHandler
             {
                 Log.e(TAG, "onImageCropFinish error:", e)
                 ToastUtils.showShort(R.string.image_crop_error_please_reselect)
-                return@launch
+                return@launchIO
             }
 
             LiveEventBus.get(EventConstant.EVENT_COVER_IMAGE_UPDATE).post(true)

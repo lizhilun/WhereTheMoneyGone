@@ -3,9 +3,9 @@ package com.lizl.wtmg.mvvm.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.function.getIcon
+import com.lizl.wtmg.custom.function.launch
 import com.lizl.wtmg.custom.function.toAmountStr
 import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.db.AppDatabase
@@ -15,7 +15,6 @@ import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.launch
 import kotlin.math.abs
 
 class DebtViewModel : ViewModel()
@@ -25,7 +24,7 @@ class DebtViewModel : ViewModel()
 
     fun setDebtType(debtType: Int)
     {
-        viewModelScope.launch {
+        launch {
             AppDatabase.getInstance().getAccountDao().obAllAccount().flowOn(Dispatchers.IO).collectLatest { allAccountList ->
                 val polymerizeGroupList = mutableListOf<PolymerizeGroupModel>()
 
@@ -33,7 +32,7 @@ class DebtViewModel : ViewModel()
                     it.category == AppConstant.ACCOUNT_CATEGORY_TYPE_DEBT && ((debtType == DebtDetailActivity.DEBT_TYPE_TOTAL_BORROW_IN && it.amount < 0) || (debtType == DebtDetailActivity.DEBT_TYPE_TOTAL_BORROW_OUT && it.amount > 0))
                 }
 
-                totalDebeLd.postValue(abs(debtAccountList.sumByDouble { it.amount }))
+                totalDebeLd.postValue(abs(debtAccountList.sumOf { it.amount }))
 
                 debtAccountList.forEach { debtAccount ->
                     val polymerizeChildList = mutableListOf<PolymerizeChildModel>()

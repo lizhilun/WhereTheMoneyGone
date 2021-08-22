@@ -1,17 +1,13 @@
 package com.lizl.wtmg.custom.popup
 
 import android.app.DatePickerDialog
-import android.app.DatePickerDialog.OnDateSetListener
 import android.app.Dialog
 import android.app.TimePickerDialog
-import android.app.TimePickerDialog.OnTimeSetListener
-import android.view.View
-import android.widget.DatePicker
-import android.widget.TimePicker
 import com.blankj.utilcode.util.ActivityUtils
 import com.lizl.wtmg.R.drawable
 import com.lizl.wtmg.R.string
 import com.lizl.wtmg.custom.function.getIcon
+import com.lizl.wtmg.custom.function.launchMain
 import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.custom.popup.*
 import com.lizl.wtmg.custom.popup.operaion.OperationModel
@@ -119,8 +115,8 @@ object PopupUtil
     fun showDatePickerDialog(year: Int, month: Int, day: Int, callback: (year: Int, month: Int, day: Int) -> Unit)
     {
         val context = ActivityUtils.getTopActivity() ?: return
-        showDialog(DatePickerDialog(context, { _, yearResult, monthOfYear, dayOfMonth -> callback.invoke(yearResult, monthOfYear + 1, dayOfMonth) }, year,
-                month - 1, day))
+        showDialog(DatePickerDialog(context, { _, yearResult, monthOfYear, dayOfMonth -> callback.invoke(yearResult, monthOfYear + 1, dayOfMonth) },
+                                    year, month - 1, day))
     }
 
     fun showTimePickerDialog(hour: Int, minute: Int, callback: (hour: Int, minute: Int) -> Unit)
@@ -147,7 +143,7 @@ object PopupUtil
 
     fun dismissAll()
     {
-        GlobalScope.launch(Dispatchers.Main) {
+        launchMain {
             showPopupJob?.cancel()
             curPopup?.dismiss()
         }
@@ -155,9 +151,9 @@ object PopupUtil
 
     private fun showPopup(popup: BasePopupView)
     {
-        GlobalScope.launch(Dispatchers.Main) {
+        launchMain {
             showPopupJob?.cancel()
-            showPopupJob = GlobalScope.launch(Dispatchers.Main) {
+            showPopupJob = launchMain {
                 if (curPopup?.isShow == true)
                 {
                     curPopup?.dismiss()
@@ -171,7 +167,7 @@ object PopupUtil
 
     private fun showDialog(dialog: Dialog)
     {
-        GlobalScope.launch(Dispatchers.Main) {
+        launchMain {
             showPopupJob?.cancel()
             curPopup?.dismiss()
             curDialog?.dismiss()

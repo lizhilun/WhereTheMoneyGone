@@ -1,7 +1,5 @@
 package com.lizl.wtmg.mvvm.adapter
 
-import androidx.databinding.DataBindingUtil
-import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.lizl.wtmg.R
 import com.lizl.wtmg.custom.function.setOnItemClickListener
@@ -11,7 +9,7 @@ import com.lizl.wtmg.databinding.ItemPolymerizeGroupBinding
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
 
-class PolymerizeGroupAdapter : BaseQuickAdapter<PolymerizeGroupModel, BaseViewHolder>(R.layout.item_polymerize_group)
+class PolymerizeGroupAdapter : BaseDBAdapter<PolymerizeGroupModel, BaseViewHolder, ItemPolymerizeGroupBinding>(R.layout.item_polymerize_group)
 {
     companion object
     {
@@ -33,14 +31,9 @@ class PolymerizeGroupAdapter : BaseQuickAdapter<PolymerizeGroupModel, BaseViewHo
 
     private var onChildItemLongClickListener: ((PolymerizeChildModel) -> Unit)? = null
 
-    override fun onItemViewHolderCreated(viewHolder: BaseViewHolder, viewType: Int)
+    override fun bindViewHolder(dataBinding: ItemPolymerizeGroupBinding, item: PolymerizeGroupModel)
     {
-        DataBindingUtil.bind<ItemPolymerizeGroupBinding>(viewHolder.itemView)
-    }
-
-    override fun convert(helper: BaseViewHolder, item: PolymerizeGroupModel)
-    {
-        helper.getBinding<ItemPolymerizeGroupBinding>()?.apply {
+        with(dataBinding) {
 
             polymerizeGroupModel = item
 
@@ -50,14 +43,12 @@ class PolymerizeGroupAdapter : BaseQuickAdapter<PolymerizeGroupModel, BaseViewHo
 
                 setOnItemLongClickListener { childModel -> onChildItemLongClickListener?.invoke(childModel) }
             }
-
-            executePendingBindings()
         }
     }
 
-    override fun convert(helper: BaseViewHolder, item: PolymerizeGroupModel, payloads: List<Any>)
+    override fun bindViewHolder(dataBinding: ItemPolymerizeGroupBinding, item: PolymerizeGroupModel, payloads: List<Any>)
     {
-        helper.getBinding<ItemPolymerizeGroupBinding>()?.apply {
+        with(dataBinding) {
             payloads.forEach { payloadList ->
                 if (payloadList !is MutableList<*>)
                 {
@@ -73,12 +64,10 @@ class PolymerizeGroupAdapter : BaseQuickAdapter<PolymerizeGroupModel, BaseViewHo
                                 (rvChildList.adapter as PolymerizeChildAdapter).setDiffNewData(item.childList)
                             }
                         }
-                        PAYLOAD_INFO -> polymerizeGroupModel = item
+                        PAYLOAD_INFO       -> polymerizeGroupModel = item
                     }
                 }
             }
-
-            executePendingBindings()
         }
     }
 

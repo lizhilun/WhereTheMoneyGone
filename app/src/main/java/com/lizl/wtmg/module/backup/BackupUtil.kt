@@ -6,16 +6,16 @@ import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.PathUtils
 import com.blankj.utilcode.util.TimeUtils
 import com.lizl.wtmg.constant.AppConstant
+import com.lizl.wtmg.custom.function.launchDefault
+import com.lizl.wtmg.custom.function.launchIO
+import com.lizl.wtmg.custom.function.launchMain
 import com.lizl.wtmg.db.AppDatabase
 import com.lizl.wtmg.db.model.AccountModel
 import com.lizl.wtmg.db.model.MoneyTracesModel
 import com.lizl.wtmg.module.config.constant.ConfigConstant
 import com.lizl.wtmg.module.config.util.ConfigUtil
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.io.File
 
 /**
@@ -34,7 +34,7 @@ object BackupUtil
 
     fun init()
     {
-        GlobalScope.launch {
+        launchDefault {
             for (job in backupChannel)
             {
                 backupData(job)
@@ -42,7 +42,7 @@ object BackupUtil
         }
 
         //启动数据监听，用于自动备份
-        GlobalScope.launch(Dispatchers.Main) {
+        launchMain {
             AppDatabase.getInstance().getAccountDao().obAllAccountForBackup().observeForever {
                 if (isFirstGetAccount)
                 {
@@ -68,7 +68,7 @@ object BackupUtil
      */
     private fun autoBackupData()
     {
-        GlobalScope.launch { backupChannel.send(BackupJob(autoBackupFileName) {}) }
+        launchDefault { backupChannel.send(BackupJob(autoBackupFileName) {}) }
     }
 
     /**
@@ -76,7 +76,7 @@ object BackupUtil
      */
     fun backupData(callback: (result: Boolean) -> Unit)
     {
-        GlobalScope.launch {
+        launchDefault {
             val backupFileName = TimeUtils.millis2String(System.currentTimeMillis(), "yyyyMMdd_HHmmss")
             backupChannel.send(BackupJob(backupFileName, callback))
         }
@@ -100,7 +100,7 @@ object BackupUtil
 
         delay(200)
 
-        GlobalScope.launch(Dispatchers.Main) { backupJob.callback.invoke(true) }
+        launchMain { backupJob.callback.invoke(true) }
     }
 
     /**
@@ -108,14 +108,14 @@ object BackupUtil
      */
     fun restoreData(fileUri: Uri, password: String, clearAllData: Boolean, callback: (result: Boolean, failedReason: String) -> Unit)
     {
-        GlobalScope.launch(Dispatchers.IO) {
+        launchIO {
 
             val readResult = EncryptUtil.decrypt(FileUtil.readTxtFile(fileUri), password)
 
             if (readResult == null)
             {
-                GlobalScope.launch(Dispatchers.Main) { callback.invoke(false, AppConstant.DATA_RESTORE_FAILED_WRONG_PASSWORD) }
-                return@launch
+                launchMain { callback.invoke(false, AppConstant.DATA_RESTORE_FAILED_WRONG_PASSWORD) }
+                return@launchIO
             }
 
             // 清空之前的数据
@@ -131,7 +131,7 @@ object BackupUtil
             AppDatabase.getInstance().getAccountDao().insertList(backupDataModel.accountList)
             AppDatabase.getInstance().getMoneyTracesDao().insertList(backupDataModel.tracesList)
 
-            GlobalScope.launch(Dispatchers.Main) { callback.invoke(true, "") }
+            launchMain { callback.invoke(true, "") }
         }
     }
 

@@ -8,13 +8,11 @@ import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
+import com.lizl.wtmg.custom.function.launchDefault
 import com.lizl.wtmg.custom.function.setOnClickListener
-import com.lizl.wtmg.custom.function.ui
 import com.lizl.wtmg.custom.popup.PopupUtil
 import com.lizl.wtmg.db.AppDatabase
 import kotlinx.android.synthetic.main.layout_debt_input.view.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import skin.support.widget.SkinCompatFrameLayout
 
 class DebtInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : SkinCompatFrameLayout(context, attrs, defStyleAttr)
@@ -128,7 +126,7 @@ class DebtInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
 
     private fun setAccountType(accountType: String, accountInputView: AccountInputView)
     {
-        GlobalScope.launch {
+        launchDefault {
             AppDatabase.getInstance().getAccountDao().queryAccountByType(accountType)?.let {
                 Utils.runOnUiThread {
                     accountInputView.setInputEnable(!it.showInTotal)

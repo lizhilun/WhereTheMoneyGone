@@ -1,31 +1,23 @@
 package com.lizl.wtmg.mvvm.adapter
 
-import androidx.databinding.DataBindingUtil
-import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.lizl.wtmg.R
 import com.lizl.wtmg.custom.other.CustomDiffUtil
-import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 import com.lizl.wtmg.databinding.ItemPolymerizeChildBinding
+import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 
-class PolymerizeChildAdapter(childList: MutableList<PolymerizeChildModel>) :
-    BaseQuickAdapter<PolymerizeChildModel, BaseViewHolder>(R.layout.item_polymerize_child, childList)
+class PolymerizeChildAdapter(childList: MutableList<PolymerizeChildModel>) : BaseDBAdapter<PolymerizeChildModel, BaseViewHolder, ItemPolymerizeChildBinding>(R.layout.item_polymerize_child,
+                                                                                                                                                             childList)
 {
     init
     {
         setDiffCallback(CustomDiffUtil({ oldItem, newItem -> oldItem == newItem }, { oldItem, newItem -> oldItem == newItem }))
     }
 
-    override fun onItemViewHolderCreated(viewHolder: BaseViewHolder, viewType: Int)
+    override fun bindViewHolder(dataBinding: ItemPolymerizeChildBinding, item: PolymerizeChildModel)
     {
-        DataBindingUtil.bind<ItemPolymerizeChildBinding>(viewHolder.itemView)
-    }
-
-    override fun convert(helper: BaseViewHolder, item: PolymerizeChildModel)
-    {
-        helper.getBinding<ItemPolymerizeChildBinding>()?.apply {
+        with(dataBinding) {
             polymerizeChildModel = item
-            executePendingBindings()
         }
     }
 }

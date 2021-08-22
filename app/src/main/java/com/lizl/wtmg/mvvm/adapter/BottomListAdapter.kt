@@ -1,8 +1,6 @@
 package com.lizl.wtmg.mvvm.adapter
 
 import androidx.core.view.isVisible
-import com.chad.library.adapter.base.BaseDelegateMultiAdapter
-import com.chad.library.adapter.base.delegate.BaseMultiTypeDelegate
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.lizl.wtmg.R
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
@@ -11,7 +9,7 @@ import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeModel
 import kotlinx.android.synthetic.main.item_bottom_polymerize_child.view.*
 import kotlinx.android.synthetic.main.item_bottom_polymerize_group.view.*
 
-class BottomListAdapter(bottomList: MutableList<PolymerizeModel>) : BaseDelegateMultiAdapter<PolymerizeModel, BaseViewHolder>(bottomList)
+class BottomListAdapter(bottomList: MutableList<PolymerizeModel>) : BaseDBMultiAdapter<PolymerizeModel, BaseViewHolder>(bottomList)
 {
     companion object
     {
@@ -21,25 +19,16 @@ class BottomListAdapter(bottomList: MutableList<PolymerizeModel>) : BaseDelegate
 
     private var onChildItemClickListener: ((PolymerizeChildModel) -> Unit)? = null
 
-    init
+    override fun registerItemType(item: PolymerizeModel) = when (item)
     {
-        setMultiTypeDelegate(object : BaseMultiTypeDelegate<PolymerizeModel>()
-                             {
-                                 override fun getItemType(data: List<PolymerizeModel>, position: Int): Int
-                                 {
-                                     return when (data[position])
-                                     {
-                                         is PolymerizeGroupModel -> ITEM_TYPE_GROUP
-                                         is PolymerizeChildModel -> ITEM_TYPE_CHILD
-                                         else                    -> ITEM_TYPE_CHILD
-                                     }
-                                 }
-                             })
+        is PolymerizeGroupModel -> ITEM_TYPE_GROUP
+        is PolymerizeChildModel -> ITEM_TYPE_CHILD
+        else                    -> ITEM_TYPE_CHILD
+    }
 
-        getMultiTypeDelegate()?.let {
-            it.addItemType(ITEM_TYPE_GROUP, R.layout.item_bottom_polymerize_group)
-            it.addItemType(ITEM_TYPE_CHILD, R.layout.item_bottom_polymerize_child)
-        }
+    override fun registerItemLayout() = mutableListOf<Pair<Int, Int>>().apply {
+        add(Pair(ITEM_TYPE_GROUP, R.layout.item_bottom_polymerize_group))
+        add(Pair(ITEM_TYPE_CHILD, R.layout.item_bottom_polymerize_child))
     }
 
     override fun convert(helper: BaseViewHolder, item: PolymerizeModel)

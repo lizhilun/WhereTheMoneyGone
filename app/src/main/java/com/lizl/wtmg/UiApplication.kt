@@ -12,13 +12,12 @@ import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.FileIOUtils
 import com.blankj.utilcode.util.PathUtils
 import com.blankj.utilcode.util.Utils
+import com.lizl.wtmg.custom.function.launchDefault
 import com.lizl.wtmg.custom.other.CustomActivityLifecycle
 import com.lizl.wtmg.module.backup.BackupUtil
 import com.lizl.wtmg.module.config.util.ConfigUtil
 import com.lizl.wtmg.module.skin.util.SkinUtil
 import com.lizl.wtmg.mvvm.activity.MoneyTracesRecordActivity
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class UiApplication : Application(), Thread.UncaughtExceptionHandler, ViewModelStoreOwner
 {
@@ -60,7 +59,7 @@ class UiApplication : Application(), Thread.UncaughtExceptionHandler, ViewModelS
     {
         val exceptionInfo = Log.getStackTraceString(e)
         Log.d(TAG, "uncaughtException() called with: t = [$t], e = [$exceptionInfo]")
-        GlobalScope.launch {
+        launchDefault {
             FileIOUtils.writeFileFromString(exceptionLogFilePath, exceptionInfo, true)
             AppUtils.relaunchApp(true)
         }

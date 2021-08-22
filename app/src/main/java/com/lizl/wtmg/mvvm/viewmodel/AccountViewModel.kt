@@ -3,9 +3,9 @@ package com.lizl.wtmg.mvvm.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.function.getIcon
+import com.lizl.wtmg.custom.function.launch
 import com.lizl.wtmg.custom.function.toAmountStr
 import com.lizl.wtmg.custom.function.translate
 import com.lizl.wtmg.db.AppDatabase
@@ -16,7 +16,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.launch
 
 class AccountViewModel : ViewModel()
 {
@@ -25,18 +24,18 @@ class AccountViewModel : ViewModel()
 
     init
     {
-        viewModelScope.launch {
+        launch {
             AppDatabase.getInstance().getAccountDao().obAllAccount().flowOn(Dispatchers.IO).debounce(200).collectLatest { allAccountList ->
                 val propertyOutlineModel = PropertyOutlineModel()
-                propertyOutlineModel.totalProperty = allAccountList.sumByDouble { it.amount }
-                propertyOutlineModel.netProperty = allAccountList.sumByDouble {
+                propertyOutlineModel.totalProperty = allAccountList.sumOf { it.amount }
+                propertyOutlineModel.netProperty = allAccountList.sumOf {
                     when (it.category)
                     {
                         AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> 0 - it.usedQuota
                         else                                     -> it.amount
                     }
                 }
-                propertyOutlineModel.totalLiabilities = allAccountList.sumByDouble {
+                propertyOutlineModel.totalLiabilities = allAccountList.sumOf {
                     when (it.category)
                     {
                         AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> it.usedQuota
@@ -45,11 +44,11 @@ class AccountViewModel : ViewModel()
                     }
                 }
                 propertyOutlineModel.totalBorrowOut =
-                        allAccountList.filter { it.category == AppConstant.ACCOUNT_CATEGORY_TYPE_DEBT && it.amount > 0 }.sumByDouble {
+                        allAccountList.filter { it.category == AppConstant.ACCOUNT_CATEGORY_TYPE_DEBT && it.amount > 0 }.sumOf {
                             it.amount
                         }
                 propertyOutlineModel.totalBorrowIn =
-                        0 - allAccountList.filter { it.category == AppConstant.ACCOUNT_CATEGORY_TYPE_DEBT && it.amount < 0 }.sumByDouble {
+                        0 - allAccountList.filter { it.category == AppConstant.ACCOUNT_CATEGORY_TYPE_DEBT && it.amount < 0 }.sumOf {
                             it.amount
                         }
                 propertyOutlineLd.postValue(propertyOutlineModel)
@@ -58,10 +57,10 @@ class AccountViewModel : ViewModel()
                 allAccountList.filter { it.showInTotal }.groupBy { it.category }.forEach { (category, accountList) ->
                     polymerizeGroupList.add(PolymerizeGroupModel(category.translate(), when (category)
                     {
-                        AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> "${accountList.sumByDouble { it.usedQuota }.toAmountStr()}/${
-                            accountList.sumByDouble { it.totalQuota }.toAmountStr()
+                        AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> "${accountList.sumOf { it.usedQuota }.toAmountStr()}/${
+                            accountList.sumOf { it.totalQuota }.toAmountStr()
                         }"
-                        else                                     -> accountList.sumByDouble { it.amount }.toAmountStr()
+                        else                                     -> accountList.sumOf { it.amount }.toAmountStr()
                     }, mutableListOf<PolymerizeChildModel>().apply {
                         accountList.forEach { accountModel ->
                             add(PolymerizeChildModel(accountModel.type.getIcon(), accountModel.type.translate(), when (category)

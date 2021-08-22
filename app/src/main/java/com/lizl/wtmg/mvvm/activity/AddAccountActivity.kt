@@ -4,10 +4,7 @@ import androidx.core.view.isVisible
 import com.blankj.utilcode.util.ToastUtils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
-import com.lizl.wtmg.custom.function.getIcon
-import com.lizl.wtmg.custom.function.toAmountStr
-import com.lizl.wtmg.custom.function.translate
-import com.lizl.wtmg.custom.function.ui
+import com.lizl.wtmg.custom.function.*
 import com.lizl.wtmg.custom.popup.PopupUtil
 import com.lizl.wtmg.databinding.ActivityAddAccountBinding
 import com.lizl.wtmg.db.AppDatabase
@@ -16,8 +13,6 @@ import com.lizl.wtmg.module.account.AccountManager
 import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeModel
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.activity_add_account)
 {
@@ -143,7 +138,7 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
             return
         }
 
-        GlobalScope.launch {
+        launch {
             var accountModel = AppDatabase.getInstance().getAccountDao().queryAccountByType(accountType)
             if (accountModel == null)
             {

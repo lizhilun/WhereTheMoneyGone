@@ -5,10 +5,7 @@ import androidx.lifecycle.Observer
 import com.lizl.wtmg.R
 import com.lizl.wtmg.R.dimen
 import com.lizl.wtmg.constant.AppConstant
-import com.lizl.wtmg.custom.function.getIcon
-import com.lizl.wtmg.custom.function.toAmountStr
-import com.lizl.wtmg.custom.function.translate
-import com.lizl.wtmg.custom.function.ui
+import com.lizl.wtmg.custom.function.*
 import com.lizl.wtmg.custom.popup.PopupUtil
 import com.lizl.wtmg.custom.view.ListDividerItemDecoration
 import com.lizl.wtmg.databinding.ActivityAccountDetailBinding
@@ -18,8 +15,6 @@ import com.lizl.wtmg.module.account.AccountManager
 import com.lizl.wtmg.mvvm.adapter.PolymerizeGroupAdapter
 import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class AccountDetailActivity : BaseActivity<ActivityAccountDetailBinding>(R.layout.activity_account_detail)
 {
@@ -73,7 +68,7 @@ class AccountDetailActivity : BaseActivity<ActivityAccountDetailBinding>(R.layou
                         dataBinding.tvAccountOutline.setMainText(accountModel.amount.toAmountStr())
 
                         AppDatabase.getInstance().getMoneyTracesDao().obTracesByAccount(accountModel.type).observe(this, Observer { tracesList ->
-                            val totalProfit = tracesList.filter { it.tracesType == AppConstant.INCOME_TYPE_FINANCIAL_TRANSACTIONS }.sumByDouble { it.amount }
+                            val totalProfit = tracesList.filter { it.tracesType == AppConstant.INCOME_TYPE_FINANCIAL_TRANSACTIONS }.sumOf { it.amount }
                             dataBinding.tvAccountInfo1.setDecText(getString(R.string.total_profit))
                             dataBinding.tvAccountInfo1.setMainText(totalProfit.toAmountStr())
 
@@ -92,7 +87,7 @@ class AccountDetailActivity : BaseActivity<ActivityAccountDetailBinding>(R.layou
                 }
 
                 AppDatabase.getInstance().getMoneyTracesDao().obTracesByAccount(accountModel.type).observe(this, Observer { tracesList ->
-                    GlobalScope.launch {
+                    launch {
                         val polymerizeGroupList = AccountManager.polymerizeTrancesList(tracesList) {
                             PolymerizeChildModel(it.tracesCategory.getIcon(), when (it.tracesCategory)
                             {

@@ -3,15 +3,17 @@ package com.lizl.wtmg.mvvm.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.lizl.wtmg.constant.AppConstant
+import com.lizl.wtmg.custom.function.launch
 import com.lizl.wtmg.db.AppDatabase
-import com.lizl.wtmg.db.model.MoneyTracesModel
 import com.lizl.wtmg.module.account.AccountManager
 import com.lizl.wtmg.mvvm.model.MonthTracesOutlineModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOn
 
 class TracesViewModel : ViewModel()
 {
@@ -23,7 +25,7 @@ class TracesViewModel : ViewModel()
     fun setYearAndMonth(year: Int, month: Int)
     {
         lastJob?.cancel()
-        lastJob = viewModelScope.launch {
+        lastJob = launch {
             AppDatabase.getInstance()
                 .getMoneyTracesDao()
                 .obTracesByMonth(year, month)

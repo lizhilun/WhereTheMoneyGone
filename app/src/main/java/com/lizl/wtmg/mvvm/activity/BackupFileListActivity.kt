@@ -3,11 +3,11 @@ package com.lizl.wtmg.mvvm.activity
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
-import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.ToastUtils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
 import com.lizl.wtmg.custom.function.getFileName
+import com.lizl.wtmg.custom.function.launch
 import com.lizl.wtmg.custom.function.setOnItemClickListener
 import com.lizl.wtmg.custom.function.ui
 import com.lizl.wtmg.custom.popup.PopupUtil
@@ -20,8 +20,6 @@ import com.lizl.wtmg.module.config.constant.ConfigConstant
 import com.lizl.wtmg.module.config.util.ConfigUtil
 import com.lizl.wtmg.mvvm.adapter.BackupFileListAdapter
 import com.lizl.wtmg.mvvm.base.BaseActivity
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class BackupFileListActivity : BaseActivity<ActivityBackupFileListBinding>(R.layout.activity_backup_file_list)
 {
@@ -92,7 +90,7 @@ class BackupFileListActivity : BaseActivity<ActivityBackupFileListBinding>(R.lay
 
     override fun initData()
     {
-        lifecycleScope.launch {
+        launch {
             val backupFileList = BackupUtil.getBackupFileList()
             ui { backupFileListAdapter.setNewData(backupFileList.toMutableList()) }
         }

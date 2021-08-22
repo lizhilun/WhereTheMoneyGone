@@ -6,21 +6,20 @@ import com.blankj.utilcode.util.ToastUtils
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.EventConstant
+import com.lizl.wtmg.custom.function.launchDefault
 import com.lizl.wtmg.custom.function.update
+import com.lizl.wtmg.custom.popup.PopupUtil
 import com.lizl.wtmg.module.backup.BackupUtil
 import com.lizl.wtmg.module.config.constant.ConfigConstant
 import com.lizl.wtmg.module.config.util.ConfigUtil
 import com.lizl.wtmg.mvvm.activity.BackupFileListActivity
+import com.lizl.wtmg.mvvm.activity.StatisticsActivity
 import com.lizl.wtmg.mvvm.adapter.SettingListAdapter
 import com.lizl.wtmg.mvvm.model.setting.*
 import com.lizl.wtmg.util.ActivityUtil
 import com.lizl.wtmg.util.BiometricAuthenticationUtil
-import com.lizl.wtmg.custom.popup.PopupUtil
-import com.lizl.wtmg.mvvm.activity.StatisticsActivity
 import com.lxj.xpopup.core.DrawerPopupView
 import kotlinx.android.synthetic.main.layout_drawer_menu.view.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class MenuDrawLayout(private val fragment: Fragment) : DrawerPopupView(fragment.requireContext())
 {
@@ -36,7 +35,7 @@ class MenuDrawLayout(private val fragment: Fragment) : DrawerPopupView(fragment.
                 if (password.isBlank())
                 {
                     PopupUtil.showSetPasswordPopup {
-                        GlobalScope.launch {
+                        launchDefault {
                             ConfigUtil.set(ConfigConstant.CONFIG_APP_LOCK_ENABLE, true)
                             ConfigUtil.set(ConfigConstant.CONFIG_APP_LOCK_PASSWORD, it)
                         }
@@ -45,7 +44,7 @@ class MenuDrawLayout(private val fragment: Fragment) : DrawerPopupView(fragment.
                 else
                 {
                     PopupUtil.showConfirmPasswordPopup(password) {
-                        GlobalScope.launch { ConfigUtil.set(ConfigConstant.CONFIG_APP_LOCK_ENABLE, true) }
+                        launchDefault { ConfigUtil.set(ConfigConstant.CONFIG_APP_LOCK_ENABLE, true) }
                     }
                 }
             }
@@ -55,12 +54,12 @@ class MenuDrawLayout(private val fragment: Fragment) : DrawerPopupView(fragment.
                 if (password.isNotBlank())
                 {
                     PopupUtil.showConfirmPasswordPopup(password) {
-                        GlobalScope.launch { ConfigUtil.set(ConfigConstant.CONFIG_APP_LOCK_ENABLE, false) }
+                        launchDefault { ConfigUtil.set(ConfigConstant.CONFIG_APP_LOCK_ENABLE, false) }
                     }
                 }
                 else
                 {
-                    GlobalScope.launch { ConfigUtil.set(ConfigConstant.CONFIG_APP_LOCK_ENABLE, false) }
+                    launchDefault { ConfigUtil.set(ConfigConstant.CONFIG_APP_LOCK_ENABLE, false) }
                 }
             }
         }
@@ -70,7 +69,7 @@ class MenuDrawLayout(private val fragment: Fragment) : DrawerPopupView(fragment.
         NormalSettingModel(context.getString(R.string.modify_app_lock_password), R.drawable.ic_baseline_modify_password_24) {
             val password = ConfigUtil.getStringBlocking(ConfigConstant.CONFIG_APP_LOCK_PASSWORD)
             PopupUtil.showModifyPasswordPopup(password) {
-                GlobalScope.launch { ConfigUtil.set(ConfigConstant.CONFIG_APP_LOCK_PASSWORD, it) }
+                launchDefault { ConfigUtil.set(ConfigConstant.CONFIG_APP_LOCK_PASSWORD, it) }
             }
         }
     }
