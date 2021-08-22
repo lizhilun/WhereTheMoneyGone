@@ -82,14 +82,11 @@ class LockActivity : BaseActivity<ActivityLockBinding>(R.layout.activity_lock)
     private fun onUnlock()
     {
         val lastActivity = ActivityUtil.getLastActivity()
-        if (lastActivity != null)
-        {
-            ActivityUtils.startActivity(lastActivity.javaClass)
-        }
-        else
+        if (lastActivity == null)
         {
             ActivityUtil.turnToActivity(MainActivity::class.java)
         }
+        finish()
     }
 
     override fun onBackPressed()

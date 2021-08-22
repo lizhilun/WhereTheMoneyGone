@@ -16,7 +16,7 @@
         <activity
             android:name=".mvvm.activity.LockActivity"
             android:configChanges="uiMode"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +34,7 @@
         <activity
             android:name=".mvvm.activity.MoneyTracesRecordActivity"
             android:configChanges="uiMode"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
