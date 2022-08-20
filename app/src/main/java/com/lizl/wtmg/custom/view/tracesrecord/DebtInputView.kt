@@ -15,23 +15,20 @@ import com.lizl.wtmg.db.AppDatabase
 import kotlinx.android.synthetic.main.layout_debt_input.view.*
 import skin.support.widget.SkinCompatFrameLayout
 
-class DebtInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : SkinCompatFrameLayout(context, attrs, defStyleAttr)
-{
+class DebtInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : SkinCompatFrameLayout(context, attrs, defStyleAttr) {
     constructor(context: Context) : this(context, null)
 
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
     private var debtType = AppConstant.DEBT_TYPE_BORROW_OUT
 
-    init
-    {
+    init {
         initView()
     }
 
     private lateinit var debtTypeBtnList: List<View>
 
-    private fun initView()
-    {
+    private fun initView() {
         LayoutInflater.from(context).inflate(R.layout.layout_debt_input, null).apply { addView(this) }
 
         tv_borrow_out.tag = AppConstant.DEBT_TYPE_BORROW_OUT
@@ -68,36 +65,30 @@ class DebtInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
         setDebtType(debtType)
     }
 
-    private fun updateAccountInputView()
-    {
-        when (debtType)
-        {
-            AppConstant.DEBT_TYPE_BORROW_IN ->
-            {
+    private fun updateAccountInputView() {
+        when (debtType) {
+            AppConstant.DEBT_TYPE_BORROW_IN -> {
                 layout_out_account.setInputEnable(true)
                 layout_out_account.setHint(context.getString(R.string.borrower))
 
                 layout_in_account.setInputEnable(false)
                 layout_in_account.setHint(context.getString(R.string.transfer_in_account))
             }
-            AppConstant.DEBT_TYPE_PAY_BACK_IN ->
-            {
+            AppConstant.DEBT_TYPE_PAY_BACK_IN -> {
                 layout_out_account.setInputEnable(true)
                 layout_out_account.setHint(context.getString(R.string.payer))
 
                 layout_in_account.setInputEnable(false)
                 layout_in_account.setHint(context.getString(R.string.transfer_in_account))
             }
-            AppConstant.DEBT_TYPE_PAY_BACK_OUT ->
-            {
+            AppConstant.DEBT_TYPE_PAY_BACK_OUT -> {
                 layout_out_account.setInputEnable(false)
                 layout_out_account.setHint(context.getString(R.string.transfer_out_account))
 
                 layout_in_account.setInputEnable(true)
                 layout_in_account.setHint(context.getString(R.string.payee))
             }
-            else                               ->
-            {
+            else -> {
                 layout_out_account.setInputEnable(false)
                 layout_out_account.setHint(context.getString(R.string.transfer_out_account))
 
@@ -107,35 +98,28 @@ class DebtInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
         }
     }
 
-    fun setInAccountType(accountType: String)
-    {
+    fun setInAccountType(accountType: String) {
         setAccountType(accountType, layout_in_account)
     }
 
-    fun setOutAccountType(outAccountType: String)
-    {
+    fun setOutAccountType(outAccountType: String) {
         setAccountType(outAccountType, layout_out_account)
     }
 
-    fun setDebtType(debtType: String)
-    {
+    fun setDebtType(debtType: String) {
         this.debtType = debtType
         debtTypeBtnList.forEach { it.isSelected = it.tag == debtType }
         updateAccountInputView()
     }
 
-    private fun setAccountType(accountType: String, accountInputView: AccountInputView)
-    {
+    private fun setAccountType(accountType: String, accountInputView: AccountInputView) {
         launchDefault {
             AppDatabase.getInstance().getAccountDao().queryAccountByType(accountType)?.let {
                 Utils.runOnUiThread {
                     accountInputView.setInputEnable(!it.showInTotal)
-                    if (it.showInTotal)
-                    {
+                    if (it.showInTotal) {
                         accountInputView.setAccountType(accountType)
-                    }
-                    else
-                    {
+                    } else {
                         accountInputView.setAccountName(it.name)
                     }
                 }
@@ -143,16 +127,13 @@ class DebtInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
         }
     }
 
-    fun checkInput(): Boolean
-    {
-        if (layout_out_account.getInputAccountType().isBlank())
-        {
+    fun checkInput(): Boolean {
+        if (layout_out_account.getInputAccountType().isBlank()) {
             ToastUtils.showShort("${context.getString(R.string.please_input)}${layout_out_account.getHint()}")
             return false
         }
 
-        if (layout_in_account.getInputAccountType().isBlank())
-        {
+        if (layout_in_account.getInputAccountType().isBlank()) {
             ToastUtils.showShort("${context.getString(R.string.please_input)}${layout_in_account.getHint()}")
             return false
         }
@@ -160,8 +141,7 @@ class DebtInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
         return true
     }
 
-    fun getDebtInfo(): DebtInfoModel
-    {
+    fun getDebtInfo(): DebtInfoModel {
         return DebtInfoModel(debtType, layout_out_account.getInputAccountType(), layout_in_account.getInputAccountType())
     }
 

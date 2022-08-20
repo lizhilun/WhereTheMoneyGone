@@ -23,15 +23,13 @@ import com.lizl.wtmg.util.ActivityUtil
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.enums.PopupPosition
 
-class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.layout.fragment_property_outline)
-{
+class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.layout.fragment_property_outline) {
     private val menuDrawLayout: MenuDrawLayout by lazy { MenuDrawLayout(this) }
     private val tracesViewModel by lazy { createViewModel(TracesViewModel::class.java) }
 
     private lateinit var polymerizeGroupAdapter: PolymerizeGroupAdapter
 
-    override fun initView()
-    {
+    override fun initView() {
         polymerizeGroupAdapter = PolymerizeGroupAdapter().apply {
             animationEnable = true
             setAnimationWithDefault(AnimationType.SlideInLeft)
@@ -42,8 +40,7 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
         initCoverImage()
     }
 
-    override fun initData()
-    {
+    override fun initData() {
         val now = DateModel()
         dataBinding.tvMonth.text = "%d.%02d".format(now.getYear(), now.getMonth())
         showMonthOutline(now.getYear(), now.getMonth())
@@ -60,8 +57,7 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
         })
     }
 
-    override fun initListener()
-    {
+    override fun initListener() {
         dataBinding.fabAdd.setOnClickListener { ActivityUtils.startActivity(MoneyTracesRecordActivity::class.java) }
 
         dataBinding.ivMenu.setOnClickListener {
@@ -84,20 +80,15 @@ class PropertyOutlineFragment : BaseFragment<FragmentPropertyOutlineBinding>(R.l
         }
     }
 
-    private fun showMonthOutline(year: Int, month: Int)
-    {
+    private fun showMonthOutline(year: Int, month: Int) {
         tracesViewModel.setYearAndMonth(year, month)
     }
 
-    private fun initCoverImage()
-    {
+    private fun initCoverImage() {
         val mainPicBitmap = MainPicHandler.getMainImageBitmap()
-        if (mainPicBitmap != null)
-        {
+        if (mainPicBitmap != null) {
             dataBinding.ivMainPic.setImageBitmap(mainPicBitmap)
-        }
-        else
-        {
+        } else {
             dataBinding.ivMainPic.setImageResource(R.mipmap.pic_main_default)
         }
     }

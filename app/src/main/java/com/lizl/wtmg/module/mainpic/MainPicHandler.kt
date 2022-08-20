@@ -16,8 +16,7 @@ import com.lizl.wtmg.module.skin.util.SkinUtil
 import com.yalantis.ucrop.UCrop
 import java.io.File
 
-object MainPicHandler
-{
+object MainPicHandler {
     private const val TAG = "MainPicHandler"
 
     private val mainImagePath = PathUtils.getExternalAppFilesPath() + "/image/cover_image.jpg"
@@ -25,41 +24,30 @@ object MainPicHandler
     private val selectImageTempPath = PathUtils.getExternalAppFilesPath() + "/image/select_image_temp.jpg"
     private val cropImageTemp = PathUtils.getExternalAppFilesPath() + "/image/crop_image_temp.jpg"
 
-    fun getMainImageBitmap(): Bitmap?
-    {
-        return if (FileUtils.isFileExists(mainImagePath))
-        {
+    fun getMainImageBitmap(): Bitmap? {
+        return if (FileUtils.isFileExists(mainImagePath)) {
             ImageUtils.getBitmap(mainImagePath)
-        }
-        else null
+        } else null
     }
 
-    fun onImageSelectFinish(activity: Activity, imageUri: Uri)
-    {
+    fun onImageSelectFinish(activity: Activity, imageUri: Uri) {
         launchIO {
-            val bitmap = try
-            {
+            val bitmap = try {
                 BitmapFactory.decodeStream(activity.contentResolver.openInputStream(imageUri))
-            }
-            catch (e: Exception)
-            {
+            } catch (e: Exception) {
                 Log.e(TAG, "decodeStream error:", e)
                 null
             }
 
-            if (bitmap == null)
-            {
+            if (bitmap == null) {
                 ToastUtils.showShort(R.string.image_error_please_reselect)
                 return@launchIO
             }
 
             //TODO:先将图片保存到应用目录，再进行裁切
-            try
-            {
+            try {
                 ImageUtils.save(bitmap, selectImageTempPath, CompressFormat.JPEG)
-            }
-            catch (e: Exception)
-            {
+            } catch (e: Exception) {
                 Log.e(TAG, "saveImage error:", e)
                 ToastUtils.showShort(R.string.image_error_please_reselect)
                 return@launchIO
@@ -73,26 +61,22 @@ object MainPicHandler
                     setFreeStyleCropEnabled(false)
                 }
                 UCrop.of(Uri.fromFile(File(selectImageTempPath)), Uri.fromFile(File(cropImageTemp)))
-                    .withAspectRatio(16F, 10F)
-                    .withOptions(options)
-                    .start(activity)
+                        .withAspectRatio(16F, 10F)
+                        .withOptions(options)
+                        .start(activity)
             }
         }
     }
 
-    fun onImageCropFinish(activity: Activity, imageUri: Uri)
-    {
+    fun onImageCropFinish(activity: Activity, imageUri: Uri) {
         launchIO {
-            try
-            {
+            try {
                 val bitmap = BitmapFactory.decodeStream(activity.contentResolver.openInputStream(imageUri))
                 ImageUtils.save(bitmap, mainImagePath, CompressFormat.JPEG)
 
                 FileUtils.delete(selectImageTempPath)
                 FileUtils.delete(cropImageTemp)
-            }
-            catch (e: Exception)
-            {
+            } catch (e: Exception) {
                 Log.e(TAG, "onImageCropFinish error:", e)
                 ToastUtils.showShort(R.string.image_crop_error_please_reselect)
                 return@launchIO

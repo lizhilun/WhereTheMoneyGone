@@ -10,15 +10,12 @@ import com.lizl.wtmg.db.model.MoneyTracesModel
 import com.lizl.wtmg.db.model.AccountModel
 
 @Database(entities = [MoneyTracesModel::class, AccountModel::class], version = 1, exportSchema = false)
-abstract class AppDatabase : RoomDatabase()
-{
-    private object Singleton
-    {
+abstract class AppDatabase : RoomDatabase() {
+    private object Singleton {
         val singleton: AppDatabase = Room.databaseBuilder(Utils.getApp(), AppDatabase::class.java, "Money.db").allowMainThreadQueries().build()
     }
 
-    companion object
-    {
+    companion object {
         fun getInstance() = Singleton.singleton
     }
 

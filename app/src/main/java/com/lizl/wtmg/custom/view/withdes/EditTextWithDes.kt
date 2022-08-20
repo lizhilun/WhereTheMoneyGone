@@ -8,19 +8,16 @@ import com.lizl.wtmg.custom.function.setHintTextSize
 import kotlinx.android.synthetic.main.layout_editext_with_des.view.*
 import skin.support.widget.SkinCompatFrameLayout
 
-class EditTextWithDes(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : SkinCompatFrameLayout(context, attrs, defStyleAttr)
-{
+class EditTextWithDes(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : SkinCompatFrameLayout(context, attrs, defStyleAttr) {
     constructor(context: Context) : this(context, null)
 
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
-    init
-    {
+    init {
         initView(context, attrs)
     }
 
-    private fun initView(context: Context, attrs: AttributeSet?)
-    {
+    private fun initView(context: Context, attrs: AttributeSet?) {
         LayoutInflater.from(context).inflate(R.layout.layout_editext_with_des, null).apply {
 
             addView(this)
@@ -36,13 +33,11 @@ class EditTextWithDes(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
         }
     }
 
-    fun setEditText(text: String)
-    {
+    fun setEditText(text: String) {
         et_edit.setText(text)
     }
 
-    fun getEditText(): String
-    {
+    fun getEditText(): String {
         return et_edit.text.toString()
     }
 }

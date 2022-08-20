@@ -21,8 +21,7 @@ import java.io.File
 /**
  * 备份工具类
  */
-object BackupUtil
-{
+object BackupUtil {
     private val backupFilePath = PathUtils.getExternalAppFilesPath() + "/Backup"
     const val fileSuffixName = ".0516"
     private const val autoBackupFileName = "wmmgAutoBackup"
@@ -32,11 +31,9 @@ object BackupUtil
     private var isFirstGetAccount = true
     private var isFirstGetTraces = true
 
-    fun init()
-    {
+    fun init() {
         launchDefault {
-            for (job in backupChannel)
-            {
+            for (job in backupChannel) {
                 backupData(job)
             }
         }
@@ -44,8 +41,7 @@ object BackupUtil
         //启动数据监听，用于自动备份
         launchMain {
             AppDatabase.getInstance().getAccountDao().obAllAccountForBackup().observeForever {
-                if (isFirstGetAccount)
-                {
+                if (isFirstGetAccount) {
                     isFirstGetAccount = false
                     return@observeForever
                 }
@@ -53,8 +49,7 @@ object BackupUtil
             }
 
             AppDatabase.getInstance().getMoneyTracesDao().obAllTracesForBackup().observeForever {
-                if (isFirstGetTraces)
-                {
+                if (isFirstGetTraces) {
                     isFirstGetTraces = false
                     return@observeForever
                 }
@@ -66,16 +61,14 @@ object BackupUtil
     /**
      * 自动备份
      */
-    private fun autoBackupData()
-    {
+    private fun autoBackupData() {
         launchDefault { backupChannel.send(BackupJob(autoBackupFileName) {}) }
     }
 
     /**
      * 备份数据
      */
-    fun backupData(callback: (result: Boolean) -> Unit)
-    {
+    fun backupData(callback: (result: Boolean) -> Unit) {
         launchDefault {
             val backupFileName = TimeUtils.millis2String(System.currentTimeMillis(), "yyyyMMdd_HHmmss")
             backupChannel.send(BackupJob(backupFileName, callback))
@@ -85,8 +78,7 @@ object BackupUtil
     /**
      * 备份数据
      */
-    private suspend fun backupData(backupJob: BackupJob)
-    {
+    private suspend fun backupData(backupJob: BackupJob) {
         val backupFileName = "${backupJob.backupFileName}$fileSuffixName"
         val accountList = AppDatabase.getInstance().getAccountDao().queryAllAccount()
         val tracesList = AppDatabase.getInstance().getMoneyTracesDao().obAllTraces()
@@ -106,21 +98,18 @@ object BackupUtil
     /**
      * 还原数据
      */
-    fun restoreData(fileUri: Uri, password: String, clearAllData: Boolean, callback: (result: Boolean, failedReason: String) -> Unit)
-    {
+    fun restoreData(fileUri: Uri, password: String, clearAllData: Boolean, callback: (result: Boolean, failedReason: String) -> Unit) {
         launchIO {
 
             val readResult = EncryptUtil.decrypt(FileUtil.readTxtFile(fileUri), password)
 
-            if (readResult == null)
-            {
+            if (readResult == null) {
                 launchMain { callback.invoke(false, AppConstant.DATA_RESTORE_FAILED_WRONG_PASSWORD) }
                 return@launchIO
             }
 
             // 清空之前的数据
-            if (clearAllData)
-            {
+            if (clearAllData) {
                 AppDatabase.getInstance().getAccountDao().deleteAll()
                 AppDatabase.getInstance().getMoneyTracesDao().deleteAll()
             }
@@ -140,9 +129,9 @@ object BackupUtil
      *
      * @return 文件路径列表
      */
-    fun getBackupFileList(): List<File>
-    {
-        return File(backupFilePath).listFiles()?.filter { it.exists() && it.isFile && it.name.endsWith(fileSuffixName) } ?: emptyList()
+    fun getBackupFileList(): List<File> {
+        return File(backupFilePath).listFiles()?.filter { it.exists() && it.isFile && it.name.endsWith(fileSuffixName) }
+                ?: emptyList()
     }
 
     private class BackupJob(val backupFileName: String, val callback: (result: Boolean) -> Unit)

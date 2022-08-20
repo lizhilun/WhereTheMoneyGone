@@ -12,17 +12,14 @@ import com.lxj.xpopup.core.CenterPopupView
 import kotlinx.android.synthetic.main.item_month.view.*
 import kotlinx.android.synthetic.main.popup_month_select.view.*
 
-class MonthSelectPopup(context: Context, private val withAllYear: Boolean, private val listener: (year: Int, month: Int) -> Unit) : CenterPopupView(context)
-{
+class MonthSelectPopup(context: Context, private val withAllYear: Boolean, private val listener: (year: Int, month: Int) -> Unit) : CenterPopupView(context) {
     override fun getImplLayoutId() = R.layout.popup_month_select
 
     override fun getPopupWidth() = (ScreenUtils.getScreenWidth() * 0.9).toInt()
 
-    override fun onCreate()
-    {
+    override fun onCreate() {
         val curYear = DateModel().getYear()
-        for (year in curYear downTo (curYear - 10))
-        {
+        for (year in curYear downTo (curYear - 10)) {
             tl_year.addTab(tl_year.newTab().setText(year.toString()))
         }
 
@@ -45,10 +42,8 @@ class MonthSelectPopup(context: Context, private val withAllYear: Boolean, priva
         }
     }
 
-    class MonthGridAdapter(monthList: MutableList<String>) : BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_month, monthList)
-    {
-        override fun convert(helper: BaseViewHolder, item: String)
-        {
+    class MonthGridAdapter(monthList: MutableList<String>) : BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_month, monthList) {
+        override fun convert(helper: BaseViewHolder, item: String) {
             with(helper.itemView) {
                 tv_month.text = item
             }

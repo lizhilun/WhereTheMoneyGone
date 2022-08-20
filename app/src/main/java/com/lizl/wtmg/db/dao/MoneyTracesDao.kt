@@ -9,8 +9,7 @@ import com.lizl.wtmg.db.model.MoneyTracesModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface MoneyTracesDao : BaseDao<MoneyTracesModel>
-{
+interface MoneyTracesDao : BaseDao<MoneyTracesModel> {
     @Query("select * from MoneyTraces")
     fun obAllTraces(): MutableList<MoneyTracesModel>
 

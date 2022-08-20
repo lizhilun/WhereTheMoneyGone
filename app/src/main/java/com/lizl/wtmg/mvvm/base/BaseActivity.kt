@@ -18,14 +18,12 @@ import com.lizl.wtmg.module.skin.util.SkinUtil
 import com.lizl.wtmg.mvvm.activity.LockActivity
 import com.lizl.wtmg.util.ActivityUtil
 
-open class BaseActivity<DB : ViewDataBinding>(private val layoutId: Int) : AppCompatActivity()
-{
+open class BaseActivity<DB : ViewDataBinding>(private val layoutId: Int) : AppCompatActivity() {
     protected val TAG = this.javaClass.simpleName
 
     protected lateinit var dataBinding: DB
 
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate")
         super.onCreate(savedInstanceState)
 
@@ -37,86 +35,71 @@ open class BaseActivity<DB : ViewDataBinding>(private val layoutId: Int) : AppCo
         initListener()
     }
 
-    protected fun <T : ViewModel> createViewModel(clazz: Class<T>): T
-    {
+    protected fun <T : ViewModel> createViewModel(clazz: Class<T>): T {
         return ViewModelProvider(this).get(clazz)
     }
 
-    override fun onResume()
-    {
+    override fun onResume() {
         Log.d(TAG, "onResume")
         super.onResume()
     }
 
-    override fun onStart()
-    {
+    override fun onStart() {
         Log.d(TAG, "onStart")
         super.onStart()
     }
 
-    override fun onRestart()
-    {
+    override fun onRestart() {
         Log.d(TAG, "onRestart")
         super.onRestart()
     }
 
-    override fun onPause()
-    {
+    override fun onPause() {
         Log.d(TAG, "onPause")
         super.onPause()
     }
 
-    override fun onStop()
-    {
+    override fun onStop() {
         Log.d(TAG, "onStop")
         super.onStop()
     }
 
-    override fun onDestroy()
-    {
+    override fun onDestroy() {
         Log.d(TAG, "onDestroy")
         super.onDestroy()
     }
 
-    override fun onBackPressed()
-    {
-        if (ActivityUtil.getLastActivity() is LockActivity)
-        {
+    override fun onBackPressed() {
+        if (ActivityUtil.getLastActivity() is LockActivity) {
             ActivityUtils.startHomeActivity()
             return
         }
         super.onBackPressed()
     }
 
-    override fun getDelegate(): AppCompatDelegate
-    {
+    override fun getDelegate(): AppCompatDelegate {
         return SkinAppCompatDelegateImpl.get(this, this)
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration)
-    {
+    override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         launchDefault { SkinUtil.loadSkin() }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
-    {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         CustomActivityLifecycle.isFromActivityResult = true
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    open fun initView()
-    {
+    open fun initView() {
 
     }
 
-    open fun initData()
-    {
+    open fun initData() {
 
     }
 
-    open fun initListener()
-    {
+    open fun initListener() {
 
     }
 }

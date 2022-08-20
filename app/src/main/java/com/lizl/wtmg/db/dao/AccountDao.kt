@@ -7,8 +7,7 @@ import com.lizl.wtmg.db.model.AccountModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface AccountDao : BaseDao<AccountModel>
-{
+interface AccountDao : BaseDao<AccountModel> {
     @Query("select * from Account")
     fun obAllAccount(): Flow<MutableList<AccountModel>>
 

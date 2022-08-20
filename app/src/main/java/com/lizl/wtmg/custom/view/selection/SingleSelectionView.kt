@@ -8,8 +8,7 @@ import com.lizl.wtmg.custom.function.setOnItemClickListener
 import com.lizl.wtmg.custom.function.update
 import com.lizl.wtmg.module.skin.view.SkinRecyclerView
 
-class SingleSelectionView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : SkinRecyclerView(context, attrs, defStyleAttr)
-{
+class SingleSelectionView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : SkinRecyclerView(context, attrs, defStyleAttr) {
     constructor(context: Context) : this(context, null)
 
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -18,8 +17,7 @@ class SingleSelectionView(context: Context, attrs: AttributeSet?, defStyleAttr: 
 
     private var onSelectionChangedListener: ((SingleSelectionModel) -> Unit)? = null
 
-    init
-    {
+    init {
         adapter = singleSelectionAdapter
         layoutManager = GridLayoutManager(context, 5)
         overScrollMode = View.OVER_SCROLL_NEVER
@@ -27,8 +25,7 @@ class SingleSelectionView(context: Context, attrs: AttributeSet?, defStyleAttr: 
         singleSelectionAdapter.setOnItemClickListener(true) { model ->
             if (model.isSelected) return@setOnItemClickListener
             singleSelectionAdapter.data.forEach {
-                if (it.isSelected)
-                {
+                if (it.isSelected) {
                     it.isSelected = false
                     singleSelectionAdapter.update(it)
                 }
@@ -39,13 +36,11 @@ class SingleSelectionView(context: Context, attrs: AttributeSet?, defStyleAttr: 
         }
     }
 
-    fun setData(selectionList: MutableList<SingleSelectionModel>)
-    {
+    fun setData(selectionList: MutableList<SingleSelectionModel>) {
         singleSelectionAdapter.replaceData(selectionList)
     }
 
-    fun setOnSelectionChangedListener(onSelectionChangedListener: (SingleSelectionModel) -> Unit)
-    {
+    fun setOnSelectionChangedListener(onSelectionChangedListener: (SingleSelectionModel) -> Unit) {
         this.onSelectionChangedListener = onSelectionChangedListener
     }
 }

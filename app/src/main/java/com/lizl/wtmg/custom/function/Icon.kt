@@ -3,10 +3,8 @@ package com.lizl.wtmg.custom.function
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
 
-fun String.getIcon(default: Int = R.drawable.ic_baseline_others_24): Int
-{
-    return when (this)
-    {
+fun String.getIcon(default: Int = R.drawable.ic_baseline_others_24): Int {
+    return when (this) {
         AppConstant.ACCOUNT_TYPE_CASH -> R.drawable.ic_baseline_cash_24
         AppConstant.ACCOUNT_TYPE_WE_CHAT -> R.drawable.ic_baseline_we_chat_24
         AppConstant.ACCOUNT_TYPE_ALI_PAY -> R.drawable.ic_baseline_ali_pay_24
@@ -16,6 +14,7 @@ fun String.getIcon(default: Int = R.drawable.ic_baseline_others_24): Int
         AppConstant.ACCOUNT_TYPE_JD_BT -> R.drawable.ic_baseline_jd_24
         AppConstant.ACCOUNT_TYPE_CREDIT_CARD_CMB -> R.drawable.ic_baseline_cmb_24
         AppConstant.ACCOUNT_TYPE_CREDIT_CARD_CMBC -> R.drawable.ic_baseline_cmbc_24
+        AppConstant.ACCOUNT_TYPE_CREDIT_CARD_WRCB -> R.drawable.ic_baseline_wrcb_24
 
         AppConstant.ACCOUNT_TYPE_ALI_PAY_FUND -> R.drawable.ic_baseline_ali_pay_24
         AppConstant.ACCOUNT_TYPE_JD_FINANCE -> R.drawable.ic_baseline_jd_24
@@ -55,8 +54,8 @@ fun String.getIcon(default: Int = R.drawable.ic_baseline_others_24): Int
         AppConstant.MONEY_TRACES_CATEGORY_INCOME -> R.drawable.ic_spot_green
         AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE -> R.drawable.ic_spot_red
         AppConstant.MONEY_TRACES_CATEGORY_TRANSFER -> R.drawable.ic_spot_gray
-        AppConstant.MONEY_TRACES_CATEGORY_DEBT     -> R.drawable.ic_spot_gray
+        AppConstant.MONEY_TRACES_CATEGORY_DEBT -> R.drawable.ic_spot_gray
 
-        else                                           -> default
+        else -> default
     }
 }

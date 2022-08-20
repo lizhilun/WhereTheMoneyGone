@@ -4,10 +4,8 @@ import com.blankj.utilcode.util.StringUtils
 import com.lizl.wtmg.R
 import com.lizl.wtmg.constant.AppConstant
 
-fun String.translate(): String
-{
-    return when (this)
-    {
+fun String.translate(): String {
+    return when (this) {
         AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL -> StringUtils.getString(R.string.capital_account)
         AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> StringUtils.getString(R.string.credit_account)
         AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT -> StringUtils.getString(R.string.investment_account)
@@ -20,6 +18,7 @@ fun String.translate(): String
         AppConstant.ACCOUNT_TYPE_JD_BT -> StringUtils.getString(R.string.jdbt)
         AppConstant.ACCOUNT_TYPE_CREDIT_CARD_CMB -> StringUtils.getString(R.string.cmb)
         AppConstant.ACCOUNT_TYPE_CREDIT_CARD_CMBC -> StringUtils.getString(R.string.cmbc)
+        AppConstant.ACCOUNT_TYPE_CREDIT_CARD_WRCB -> StringUtils.getString(R.string.wrcb)
 
         AppConstant.ACCOUNT_TYPE_ALI_PAY_FUND -> StringUtils.getString(R.string.ali_pay_fund)
         AppConstant.ACCOUNT_TYPE_JD_FINANCE -> StringUtils.getString(R.string.jd_finance)
@@ -55,10 +54,10 @@ fun String.translate(): String
         AppConstant.INCOME_TYPE_INTEREST -> StringUtils.getString(R.string.interest)
 
         AppConstant.DEBT_TYPE_BORROW_OUT -> StringUtils.getString(R.string.borrow_out)
-        AppConstant.DEBT_TYPE_BORROW_IN    -> StringUtils.getString(R.string.borrow_in)
+        AppConstant.DEBT_TYPE_BORROW_IN -> StringUtils.getString(R.string.borrow_in)
         AppConstant.DEBT_TYPE_PAY_BACK_OUT -> StringUtils.getString(R.string.payback_out)
-        AppConstant.DEBT_TYPE_PAY_BACK_IN  -> StringUtils.getString(R.string.payback_in)
+        AppConstant.DEBT_TYPE_PAY_BACK_IN -> StringUtils.getString(R.string.payback_in)
 
-        else                                           -> StringUtils.getString(R.string.others)
+        else -> StringUtils.getString(R.string.others)
     }
 }

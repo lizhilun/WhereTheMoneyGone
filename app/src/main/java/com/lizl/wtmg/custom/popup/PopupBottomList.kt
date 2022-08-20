@@ -9,12 +9,10 @@ import com.lxj.xpopup.core.BottomPopupView
 import kotlinx.android.synthetic.main.popup_bottom_list.view.*
 
 class PopupBottomList(context: Context, private val bottomList: MutableList<PolymerizeModel>, private val onSelectListener: (PolymerizeChildModel) -> Unit) :
-    BottomPopupView(context)
-{
+        BottomPopupView(context) {
     override fun getImplLayoutId() = R.layout.popup_bottom_list
 
-    override fun onCreate()
-    {
+    override fun onCreate() {
         popupInfo?.let {
             it.hasShadowBg = true
         }

@@ -3,8 +3,7 @@ package com.lizl.wtmg.db.dao
 import androidx.room.*
 
 @Dao
-interface BaseDao<T>
-{
+interface BaseDao<T> {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(element: T)
 

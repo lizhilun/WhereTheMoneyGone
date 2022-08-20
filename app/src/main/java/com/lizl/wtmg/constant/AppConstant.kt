@@ -1,7 +1,6 @@
 package com.lizl.wtmg.constant
 
-object AppConstant
-{
+object AppConstant {
     const val MONEY_TRACES_CATEGORY_EXPENDITURE = "expenditure"
     const val MONEY_TRACES_CATEGORY_INCOME = "income"
     const val MONEY_TRACES_CATEGORY_TRANSFER = "transfer"
@@ -15,6 +14,7 @@ object AppConstant
     const val ACCOUNT_TYPE_ANT_CREDIT_PAY = "ant credit pay"
     const val ACCOUNT_TYPE_CREDIT_CARD_CMB = "cmb"
     const val ACCOUNT_TYPE_CREDIT_CARD_CMBC = "cmbc"
+    const val ACCOUNT_TYPE_CREDIT_CARD_WRCB = "wrcb"
     const val ACCOUNT_TYPE_JD_BT = "jdbt"
 
     const val ACCOUNT_TYPE_ALI_PAY_FUND = "ali pay fund"

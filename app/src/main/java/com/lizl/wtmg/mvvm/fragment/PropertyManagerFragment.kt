@@ -20,20 +20,17 @@ import com.lizl.wtmg.mvvm.viewmodel.AccountViewModel
 import com.lizl.wtmg.util.ViewModelUtil
 import kotlinx.android.synthetic.main.fragment_property_manager.*
 
-class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.layout.fragment_property_manager)
-{
+class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.layout.fragment_property_manager) {
     private lateinit var polymerizeGroupAdapter: PolymerizeGroupAdapter
     private val accountViewModel: AccountViewModel by lazy { ViewModelUtil.getSharedViewModel(AccountViewModel::class.java) }
 
-    override fun initView()
-    {
+    override fun initView() {
         polymerizeGroupAdapter = PolymerizeGroupAdapter()
         rv_property_category_group.adapter = polymerizeGroupAdapter
         rv_property_category_group.addItemDecoration(ListDividerItemDecoration(resources.getDimensionPixelSize(dimen.global_content_padding_content)))
     }
 
-    override fun initData()
-    {
+    override fun initData() {
         accountViewModel.obAllAccounts().observe(this, {
             polymerizeGroupAdapter.setDiffNewData(it)
         })
@@ -43,8 +40,7 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
         })
     }
 
-    override fun initListener()
-    {
+    override fun initListener() {
         fab_add.setOnClickListener { ActivityUtils.startActivity(AddAccountActivity::class.java) }
 
         tv_borrow_out.setOnClickListener {
@@ -65,16 +61,13 @@ class PropertyManagerFragment : BaseFragment<FragmentPropertyManagerBinding>(R.l
                 add(PolymerizeChildModel(name = getString(R.string.delete), tag = "D"))
             }) {
                 val accountModel = polymerizeChildModel.tag as AccountModel
-                when (it.tag)
-                {
-                    "M" ->
-                    {
+                when (it.tag) {
+                    "M" -> {
                         ActivityUtil.turnToActivity(AddAccountActivity::class.java,
-                                                    Pair(AddAccountActivity.DATA_ACCOUNT_TYPE, accountModel.type),
-                                                    Pair(AddAccountActivity.DATA_ACCOUNT_ID, accountModel.id))
+                                Pair(AddAccountActivity.DATA_ACCOUNT_TYPE, accountModel.type),
+                                Pair(AddAccountActivity.DATA_ACCOUNT_ID, accountModel.id))
                     }
-                    "D" ->
-                    {
+                    "D" -> {
                         PopupUtil.showConfirmPopup(getString(R.string.sure_to_delete_account)) {
                             AppDatabase.getInstance().getAccountDao().delete(accountModel)
                         }

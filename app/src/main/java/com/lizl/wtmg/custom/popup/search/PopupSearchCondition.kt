@@ -8,12 +8,10 @@ import com.lizl.wtmg.R
 import com.lxj.xpopup.core.AttachPopupView
 import kotlinx.android.synthetic.main.popup_search_condition.view.*
 
-class PopupSearchCondition(context: Context, private val callback: (Int, Int) -> Unit) : AttachPopupView(context)
-{
+class PopupSearchCondition(context: Context, private val callback: (Int, Int) -> Unit) : AttachPopupView(context) {
     override fun getImplLayoutId() = R.layout.popup_search_condition
 
-    override fun onCreate()
-    {
+    override fun onCreate() {
         popupInfo?.let {
             it.hasShadowBg = false
         }

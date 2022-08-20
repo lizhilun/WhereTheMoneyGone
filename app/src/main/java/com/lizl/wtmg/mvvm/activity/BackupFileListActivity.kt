@@ -21,17 +21,14 @@ import com.lizl.wtmg.module.config.util.ConfigUtil
 import com.lizl.wtmg.mvvm.adapter.BackupFileListAdapter
 import com.lizl.wtmg.mvvm.base.BaseActivity
 
-class BackupFileListActivity : BaseActivity<ActivityBackupFileListBinding>(R.layout.activity_backup_file_list)
-{
+class BackupFileListActivity : BaseActivity<ActivityBackupFileListBinding>(R.layout.activity_backup_file_list) {
     private val backupFileListAdapter = BackupFileListAdapter()
 
-    companion object
-    {
+    companion object {
         const val REQUEST_CODE_SELECT_BACKUP_FILE = 322
     }
 
-    override fun initView()
-    {
+    override fun initView() {
         dataBinding.ctbTitle.setActionList(mutableListOf<TitleBarBtnBean.BaseBtnBean>().apply {
             add(TitleBarBtnBean.ImageBtnBean(R.drawable.ic_baseline_folder_open_24) {
                 val intent = Intent(Intent.ACTION_GET_CONTENT)
@@ -44,8 +41,7 @@ class BackupFileListActivity : BaseActivity<ActivityBackupFileListBinding>(R.lay
         dataBinding.rvBackupFile.adapter = backupFileListAdapter
     }
 
-    override fun initListener()
-    {
+    override fun initListener() {
         dataBinding.ctbTitle.setOnBackBtnClickListener { onBackPressed() }
 
         backupFileListAdapter.setOnItemClickListener { backupFile ->
@@ -69,8 +65,7 @@ class BackupFileListActivity : BaseActivity<ActivityBackupFileListBinding>(R.lay
                 // 删除备份文件
                 add(OperationModel(getString(R.string.delete_backup_file)) {
                     PopupUtil.showConfirmPopup(getString(R.string.notify_delete_backup_file)) {
-                        if (FileUtil.deleteFile(backupFile.absolutePath))
-                        {
+                        if (FileUtil.deleteFile(backupFile.absolutePath)) {
                             backupFileListAdapter.remove(backupFile)
                         }
                     }
@@ -88,27 +83,22 @@ class BackupFileListActivity : BaseActivity<ActivityBackupFileListBinding>(R.lay
         }
     }
 
-    override fun initData()
-    {
+    override fun initData() {
         launch {
             val backupFileList = BackupUtil.getBackupFileList()
             ui { backupFileListAdapter.setNewData(backupFileList.toMutableList()) }
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
-    {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         Log.d(TAG, "onActivityResult() called with: requestCode = [$requestCode], resultCode = [$resultCode], data = [$data]")
-        when (requestCode)
-        {
-            REQUEST_CODE_SELECT_BACKUP_FILE ->
-            {
+        when (requestCode) {
+            REQUEST_CODE_SELECT_BACKUP_FILE -> {
                 if (resultCode != RESULT_OK) return
                 val fileUri = data?.data ?: return
 
-                if (fileUri.getFileName(this)?.endsWith(BackupUtil.fileSuffixName) != true)
-                {
+                if (fileUri.getFileName(this)?.endsWith(BackupUtil.fileSuffixName) != true) {
                     ToastUtils.showShort(R.string.notify_wrong_backup_file)
                     return
                 }
@@ -131,23 +121,17 @@ class BackupFileListActivity : BaseActivity<ActivityBackupFileListBinding>(R.lay
         }
     }
 
-    private fun restoreData(fileUri: Uri, clearOriData: Boolean)
-    {
+    private fun restoreData(fileUri: Uri, clearOriData: Boolean) {
         restoreData(fileUri, ConfigUtil.getStringBlocking(ConfigConstant.CONFIG_APP_LOCK_PASSWORD), clearOriData)
     }
 
-    private fun restoreData(fileUri: Uri, password: String, clearOriData: Boolean)
-    {
+    private fun restoreData(fileUri: Uri, password: String, clearOriData: Boolean) {
         BackupUtil.restoreData(fileUri, password, clearOriData) { result: Boolean, failedReason: String ->
-            if (result)
-            {
+            if (result) {
                 ToastUtils.showShort(R.string.notify_success_to_restore)
                 onBackPressed()
-            }
-            else
-            {
-                if (failedReason == AppConstant.DATA_RESTORE_FAILED_WRONG_PASSWORD)
-                {
+            } else {
+                if (failedReason == AppConstant.DATA_RESTORE_FAILED_WRONG_PASSWORD) {
                     PopupUtil.showInputPopup(getString(R.string.input_encrypt_password)) {
                         restoreData(fileUri, it, clearOriData)
                     }

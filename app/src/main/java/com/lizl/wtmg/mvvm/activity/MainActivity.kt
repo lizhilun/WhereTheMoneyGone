@@ -17,15 +17,12 @@ import com.lizl.wtmg.mvvm.fragment.PropertyOutlineFragment
 import com.yalantis.ucrop.UCrop
 
 
-class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main)
-{
-    companion object
-    {
+class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
+    companion object {
         private const val REQUEST_CODE_SELECT_IMAGE_FILE = 516
     }
 
-    override fun initView()
-    {
+    override fun initView() {
         dataBinding.vpContent.offscreenPageLimit = 2
 
         dataBinding.vpContent.adapter = FragmentPagerAdapter(this).apply {
@@ -36,8 +33,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main)
         }
     }
 
-    override fun initData()
-    {
+    override fun initData() {
         LiveEventBus.get(EventConstant.EVENT_GO_TO_PROPERTY_MANAGER_VIEW).observe(this, Observer {
             dataBinding.vpContent.setCurrentItem(1, true)
         })
@@ -47,8 +43,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main)
         })
     }
 
-    private fun selectImageFile()
-    {
+    private fun selectImageFile() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
 
         intent.type = "image/*"
@@ -57,40 +52,31 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main)
         startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE_FILE)
     }
 
-    override fun onBackPressed()
-    {
-        if (dataBinding.vpContent.currentItem == 1)
-        {
+    override fun onBackPressed() {
+        if (dataBinding.vpContent.currentItem == 1) {
             dataBinding.vpContent.setCurrentItem(0, true)
             return
         }
         super.onBackPressed()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
-    {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         Log.d(TAG, "onActivityResult() called with: requestCode = [$requestCode], resultCode = [$resultCode], data = [$data]")
 
         data ?: return
 
-        when (requestCode)
-        {
-            REQUEST_CODE_SELECT_IMAGE_FILE ->
-            {
+        when (requestCode) {
+            REQUEST_CODE_SELECT_IMAGE_FILE -> {
                 val imageUri = data.data ?: return
                 MainPicHandler.onImageSelectFinish(this, imageUri)
             }
-            UCrop.REQUEST_CROP             ->
-            {
-                if (resultCode == RESULT_OK)
-                {
+            UCrop.REQUEST_CROP -> {
+                if (resultCode == RESULT_OK) {
                     val imageUri = UCrop.getOutput(data) ?: return
                     MainPicHandler.onImageCropFinish(this, imageUri)
-                }
-                else if (resultCode == UCrop.RESULT_ERROR)
-                {
+                } else if (resultCode == UCrop.RESULT_ERROR) {
                     val error = UCrop.getError(data)
                     Log.e(TAG, "cropImage error:", error)
                     ToastUtils.showShort(R.string.image_crop_error_please_reselect)

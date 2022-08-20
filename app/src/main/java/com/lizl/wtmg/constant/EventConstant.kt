@@ -1,7 +1,6 @@
 package com.lizl.wtmg.constant
 
-object EventConstant
-{
+object EventConstant {
     const val EVENT_GO_TO_PROPERTY_MANAGER_VIEW = "EVENT_GO_TO_PROPERTY_MANAGER_VIEW"
     const val EVENT_GO_TO_COVER_IMAGE_SELECTION = "EVENT_GO_TO_COVER_IMAGE_SELECTION"
     const val EVENT_COVER_IMAGE_UPDATE = "EVENT_COVER_IMAGE_UPDATE"

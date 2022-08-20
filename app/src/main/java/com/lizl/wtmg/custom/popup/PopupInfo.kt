@@ -5,12 +5,10 @@ import com.lizl.wtmg.R
 import com.lxj.xpopup.core.CenterPopupView
 import kotlinx.android.synthetic.main.popup_info.view.*
 
-class PopupInfo(context: Context, private val content: String) : CenterPopupView(context)
-{
+class PopupInfo(context: Context, private val content: String) : CenterPopupView(context) {
     override fun getImplLayoutId() = R.layout.popup_info
 
-    override fun onCreate()
-    {
+    override fun onCreate() {
         popupInfo?.let {
             it.hasShadowBg = true
         }

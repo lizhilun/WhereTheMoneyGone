@@ -21,44 +21,34 @@ import com.lizl.wtmg.util.BiometricAuthenticationUtil
 import com.lxj.xpopup.core.DrawerPopupView
 import kotlinx.android.synthetic.main.layout_drawer_menu.view.*
 
-class MenuDrawLayout(private val fragment: Fragment) : DrawerPopupView(fragment.requireContext())
-{
+class MenuDrawLayout(private val fragment: Fragment) : DrawerPopupView(fragment.requireContext()) {
     override fun getImplLayoutId() = R.layout.layout_drawer_menu
 
     private val settingAdapter by lazy { SettingListAdapter(getSettingList()) }
 
     private val appLockItem by lazy {
         BooleanSettingModel(context.getString(R.string.app_lock_config), ConfigConstant.CONFIG_APP_LOCK_ENABLE, R.drawable.ic_baseline_lock_24, false) {
-            if (it)
-            {
+            if (it) {
                 val password = ConfigUtil.getStringBlocking(ConfigConstant.CONFIG_APP_LOCK_PASSWORD)
-                if (password.isBlank())
-                {
+                if (password.isBlank()) {
                     PopupUtil.showSetPasswordPopup {
                         launchDefault {
                             ConfigUtil.set(ConfigConstant.CONFIG_APP_LOCK_ENABLE, true)
                             ConfigUtil.set(ConfigConstant.CONFIG_APP_LOCK_PASSWORD, it)
                         }
                     }
-                }
-                else
-                {
+                } else {
                     PopupUtil.showConfirmPasswordPopup(password) {
                         launchDefault { ConfigUtil.set(ConfigConstant.CONFIG_APP_LOCK_ENABLE, true) }
                     }
                 }
-            }
-            else
-            {
+            } else {
                 val password = ConfigUtil.getStringBlocking(ConfigConstant.CONFIG_APP_LOCK_PASSWORD)
-                if (password.isNotBlank())
-                {
+                if (password.isNotBlank()) {
                     PopupUtil.showConfirmPasswordPopup(password) {
                         launchDefault { ConfigUtil.set(ConfigConstant.CONFIG_APP_LOCK_ENABLE, false) }
                     }
-                }
-                else
-                {
+                } else {
                     launchDefault { ConfigUtil.set(ConfigConstant.CONFIG_APP_LOCK_ENABLE, false) }
                 }
             }
@@ -79,8 +69,7 @@ class MenuDrawLayout(private val fragment: Fragment) : DrawerPopupView(fragment.
                 R.drawable.ic_baseline_fingerprint_24) {}
     }
 
-    override fun onCreate()
-    {
+    override fun onCreate() {
         super.onCreate()
 
         rv_menu.adapter = settingAdapter
@@ -89,25 +78,20 @@ class MenuDrawLayout(private val fragment: Fragment) : DrawerPopupView(fragment.
             settingAdapter.update(appLockItem)
             if (it !is Boolean) return@Observer
 
-            if (it)
-            {
+            if (it) {
                 var index = settingAdapter.data.indexOf(appLockItem)
                 settingAdapter.addData(++index, modifyPasswordItem)
-                if (BiometricAuthenticationUtil.isFingerprintSupport())
-                {
+                if (BiometricAuthenticationUtil.isFingerprintSupport()) {
                     settingAdapter.addData(++index, fingerprintUnlockItem)
                 }
-            }
-            else
-            {
+            } else {
                 settingAdapter.remove(modifyPasswordItem)
                 settingAdapter.remove(fingerprintUnlockItem)
             }
         })
     }
 
-    private fun getSettingList(): MutableList<BaseSettingModel>
-    {
+    private fun getSettingList(): MutableList<BaseSettingModel> {
         return mutableListOf<BaseSettingModel>().apply {
 
             add(NormalSettingModel(context.getString(R.string.main_image_config), R.drawable.ic_baseline_main_pic_24) {
@@ -122,11 +106,9 @@ class MenuDrawLayout(private val fragment: Fragment) : DrawerPopupView(fragment.
 
             add(appLockItem)
 
-            if (ConfigUtil.getBooleanBlocking(ConfigConstant.CONFIG_APP_LOCK_ENABLE))
-            {
+            if (ConfigUtil.getBooleanBlocking(ConfigConstant.CONFIG_APP_LOCK_ENABLE)) {
                 add(modifyPasswordItem)
-                if (BiometricAuthenticationUtil.isFingerprintSupport())
-                {
+                if (BiometricAuthenticationUtil.isFingerprintSupport()) {
                     add(fingerprintUnlockItem)
                 }
             }

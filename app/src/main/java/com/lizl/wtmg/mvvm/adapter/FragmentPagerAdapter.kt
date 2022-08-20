@@ -4,13 +4,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class FragmentPagerAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity)
-{
+class FragmentPagerAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
     private val fragmentList = mutableListOf<Fragment>()
     private val fragmentIds = mutableListOf<Long>()
 
-    fun setFragmentList(fragmentList: List<Fragment>)
-    {
+    fun setFragmentList(fragmentList: List<Fragment>) {
         this.fragmentList.clear()
         this.fragmentList.addAll(fragmentList)
         this.fragmentIds.clear()

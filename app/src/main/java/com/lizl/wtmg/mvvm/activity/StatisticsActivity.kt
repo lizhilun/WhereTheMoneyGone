@@ -10,19 +10,16 @@ import com.lizl.wtmg.mvvm.model.statistics.QuantityModel
 import com.lizl.wtmg.mvvm.viewmodel.StatisticsViewModel
 import com.lizl.wtmg.util.ActivityUtil
 
-class StatisticsActivity : BaseActivity<ActivityStatisticsBinding>(R.layout.activity_statistics)
-{
+class StatisticsActivity : BaseActivity<ActivityStatisticsBinding>(R.layout.activity_statistics) {
     private val statisticsViewModel by lazy { createViewModel(StatisticsViewModel::class.java) }
 
-    override fun initView()
-    {
+    override fun initView() {
         val curDate = DateModel()
         dataBinding.tvStatisticsMonth.text = "%d.%02d".format(curDate.getYear(), curDate.getMonth())
         showStatistics(curDate.getYear(), curDate.getMonth())
     }
 
-    override fun initData()
-    {
+    override fun initData() {
         statisticsViewModel.obExpenditureStatistics().observe(this, {
             dataBinding.expenditureStatistics = it
         })
@@ -38,18 +35,14 @@ class StatisticsActivity : BaseActivity<ActivityStatisticsBinding>(R.layout.acti
         })
     }
 
-    override fun initListener()
-    {
+    override fun initListener() {
         dataBinding.ivBack.setOnClickListener { onBackPressed() }
 
         dataBinding.tvStatisticsMonth.setOnClickListener {
             PopupUtil.showMonthSelectPopup(true) { year, month ->
-                if (month == 0)
-                {
+                if (month == 0) {
                     dataBinding.tvStatisticsMonth.text = "${year}${getString(R.string.whole_year)}"
-                }
-                else
-                {
+                } else {
                     dataBinding.tvStatisticsMonth.text = "%d.%02d".format(year, month)
                 }
                 showStatistics(year, month)
@@ -57,17 +50,16 @@ class StatisticsActivity : BaseActivity<ActivityStatisticsBinding>(R.layout.acti
         }
     }
 
-    private fun showStatistics(year: Int, month: Int)
-    {
+    private fun showStatistics(year: Int, month: Int) {
         statisticsViewModel.setYearAndMonth(year, month)
 
         val onQuantityItemClickListener = { quantityModel: QuantityModel ->
             val startTime = if (month == 0) DateModel.yearStart(year) else DateModel.monthStart(year, month)
             val endTime = if (month == 0) DateModel.yearEnd(year) else DateModel.monthEnd(year, month)
             ActivityUtil.turnToActivity(TracesSearchActivity::class.java,
-                                        Pair(TracesSearchActivity.DATA_START_TIME, startTime.getTimeInMills()),
-                                        Pair(TracesSearchActivity.DATA_END_TIME, endTime.getTimeInMills()),
-                                        Pair(TracesSearchActivity.DATA_KEY_WORD, quantityModel.name.translate()))
+                    Pair(TracesSearchActivity.DATA_START_TIME, startTime.getTimeInMills()),
+                    Pair(TracesSearchActivity.DATA_END_TIME, endTime.getTimeInMills()),
+                    Pair(TracesSearchActivity.DATA_KEY_WORD, quantityModel.name.translate()))
         }
 
         dataBinding.qsvExpenditureStatistics.setOnQuantityItemClickListener(onQuantityItemClickListener)

@@ -11,8 +11,7 @@ import com.lizl.wtmg.mvvm.model.statistics.QuantityModel
 import kotlinx.android.synthetic.main.layout_quantity_statistics.view.*
 import skin.support.widget.SkinCompatFrameLayout
 
-class QuantityStatisticsView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : SkinCompatFrameLayout(context, attrs, defStyleAttr)
-{
+class QuantityStatisticsView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : SkinCompatFrameLayout(context, attrs, defStyleAttr) {
     constructor(context: Context) : this(context, null)
 
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -21,13 +20,11 @@ class QuantityStatisticsView(context: Context, attrs: AttributeSet?, defStyleAtt
 
     private var onQuantityItemClickListener: ((QuantityModel) -> Unit)? = null
 
-    init
-    {
+    init {
         initView(attrs)
     }
 
-    private fun initView(attrs: AttributeSet?)
-    {
+    private fun initView(attrs: AttributeSet?) {
         LayoutInflater.from(context).inflate(R.layout.layout_quantity_statistics, null).apply {
 
             addView(this)
@@ -44,15 +41,13 @@ class QuantityStatisticsView(context: Context, attrs: AttributeSet?, defStyleAtt
         }
     }
 
-    fun setStatisticsData(quantityList: MutableList<QuantityModel>)
-    {
+    fun setStatisticsData(quantityList: MutableList<QuantityModel>) {
         tv_empty_notify.isVisible = quantityList.isEmpty()
         rv_statistics.isVisible = quantityList.isNotEmpty()
         quantityListAdapter.setData(quantityList)
     }
 
-    fun setOnQuantityItemClickListener(onQuantityItemClickListener: (QuantityModel) -> Unit)
-    {
+    fun setOnQuantityItemClickListener(onQuantityItemClickListener: (QuantityModel) -> Unit) {
         this.onQuantityItemClickListener = onQuantityItemClickListener
     }
 }

@@ -15,34 +15,32 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOn
 
-class TracesViewModel : ViewModel()
-{
+class TracesViewModel : ViewModel() {
     private val polymerizedTraces = MutableLiveData<MutableList<PolymerizeGroupModel>>()
     private val monthTracesOutlineLd = MutableLiveData<MonthTracesOutlineModel>()
 
     private var lastJob: Job? = null
 
-    fun setYearAndMonth(year: Int, month: Int)
-    {
+    fun setYearAndMonth(year: Int, month: Int) {
         lastJob?.cancel()
         lastJob = launch {
             AppDatabase.getInstance()
-                .getMoneyTracesDao()
-                .obTracesByMonth(year, month)
-                .distinctUntilChanged()
-                .flowOn(Dispatchers.IO)
-                .collectLatest { tracesList ->
-                    val monthTracesOutlineModel = MonthTracesOutlineModel()
-                    monthTracesOutlineModel.monthExpenditure = tracesList.filter {
-                        it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
-                    }.sumOf { it.amount }
-                    monthTracesOutlineModel.monthIncome = tracesList.filter {
-                        it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
-                    }.sumOf { it.amount }
-                    monthTracesOutlineLd.postValue(monthTracesOutlineModel)
+                    .getMoneyTracesDao()
+                    .obTracesByMonth(year, month)
+                    .distinctUntilChanged()
+                    .flowOn(Dispatchers.IO)
+                    .collectLatest { tracesList ->
+                        val monthTracesOutlineModel = MonthTracesOutlineModel()
+                        monthTracesOutlineModel.monthExpenditure = tracesList.filter {
+                            it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_EXPENDITURE && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
+                        }.sumOf { it.amount }
+                        monthTracesOutlineModel.monthIncome = tracesList.filter {
+                            it.tracesCategory == AppConstant.MONEY_TRACES_CATEGORY_INCOME && it.tracesCategory != AppConstant.MONEY_TRACES_CATEGORY_TRANSFER
+                        }.sumOf { it.amount }
+                        monthTracesOutlineLd.postValue(monthTracesOutlineModel)
 
-                    polymerizedTraces.postValue(AccountManager.polymerizeTrancesList(tracesList))
-                }
+                        polymerizedTraces.postValue(AccountManager.polymerizeTrancesList(tracesList))
+                    }
         }
     }
 

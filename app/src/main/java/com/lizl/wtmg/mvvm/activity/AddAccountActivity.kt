@@ -14,26 +14,22 @@ import com.lizl.wtmg.mvvm.base.BaseActivity
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeModel
 
-class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.activity_add_account)
-{
+class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.activity_add_account) {
     private var accountCategory = AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL
     private var accountType = AppConstant.ACCOUNT_TYPE_BACK_CARD
 
-    companion object
-    {
+    companion object {
         const val DATA_ACCOUNT_TYPE = "DATA_ACCOUNT_TYPE"
         const val DATA_ACCOUNT_ID = "DATA_ACCOUNT_ID"
     }
 
-    override fun initData()
-    {
+    override fun initData() {
         val accountId = intent?.extras?.getLong(DATA_ACCOUNT_ID, -1L) ?: -1L
         val accountType = intent?.extras?.getString(DATA_ACCOUNT_TYPE).orEmpty()
 
         var accountModel: AccountModel? = null
 
-        if (accountId != -1L && accountType.isNotBlank())
-        {
+        if (accountId != -1L && accountType.isNotBlank()) {
             dataBinding.ctbTitle.setTitle(getString(R.string.modify_account))
 
             this.accountType = accountType
@@ -41,23 +37,19 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
             accountModel = AppDatabase.getInstance().getAccountDao().queryAccountByType(accountType)
         }
 
-        if (accountModel != null)
-        {
+        if (accountModel != null) {
             dataBinding.layoutAccountAmount.setEditText(accountModel.amount.toAmountStr())
             dataBinding.layoutTotalQuota.setEditText(accountModel.totalQuota.toAmountStr())
             dataBinding.layoutUsedQuota.setEditText(accountModel.usedQuota.toAmountStr())
 
             showAccountCategory(accountModel.category)
             showAccountType(accountModel.type)
-        }
-        else
-        {
+        } else {
             showAccountCategory(accountCategory)
         }
     }
 
-    override fun initListener()
-    {
+    override fun initListener() {
         dataBinding.ctbTitle.setOnBackBtnClickListener { onBackPressed() }
         dataBinding.tvSave.setOnClickListener { onSaveBtnClick() }
 
@@ -82,22 +74,18 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
         }
     }
 
-    private fun showAccountCategory(accountCategory: String)
-    {
+    private fun showAccountCategory(accountCategory: String) {
         this.accountCategory = accountCategory
 
-        when (accountCategory)
-        {
-            AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL, AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT ->
-            {
+        when (accountCategory) {
+            AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL, AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT -> {
                 dataBinding.layoutAccountAmount.isVisible = true
                 dataBinding.layoutTotalQuota.isVisible = false
                 dataBinding.layoutUsedQuota.isVisible = false
 
                 showAccountType(AppConstant.ACCOUNT_TYPE_BACK_CARD)
             }
-            AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT                                                ->
-            {
+            AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> {
                 dataBinding.layoutAccountAmount.isVisible = false
                 dataBinding.layoutTotalQuota.isVisible = true
                 dataBinding.layoutUsedQuota.isVisible = true
@@ -109,48 +97,39 @@ class AddAccountActivity : BaseActivity<ActivityAddAccountBinding>(R.layout.acti
         dataBinding.layoutAccountCategory.setMainText(accountCategory.translate())
     }
 
-    private fun showAccountType(accountType: String)
-    {
+    private fun showAccountType(accountType: String) {
         this.accountType = accountType
         dataBinding.layoutAccountType.setMainText(accountType.translate())
     }
 
-    private fun onSaveBtnClick()
-    {
+    private fun onSaveBtnClick() {
         val amount = dataBinding.layoutAccountAmount.getEditText().toDoubleOrNull()
-        if (dataBinding.layoutAccountAmount.isVisible && amount == null)
-        {
+        if (dataBinding.layoutAccountAmount.isVisible && amount == null) {
             ToastUtils.showShort(R.string.please_input_amount)
             return
         }
 
         val totalQuota = dataBinding.layoutTotalQuota.getEditText().toDoubleOrNull()
-        if (dataBinding.layoutTotalQuota.isVisible && totalQuota == null)
-        {
+        if (dataBinding.layoutTotalQuota.isVisible && totalQuota == null) {
             ToastUtils.showShort(R.string.please_input_total_quota)
             return
         }
 
         val usedQuota = dataBinding.layoutUsedQuota.getEditText().toDoubleOrNull()
-        if (dataBinding.layoutUsedQuota.isVisible && usedQuota == null)
-        {
+        if (dataBinding.layoutUsedQuota.isVisible && usedQuota == null) {
             ToastUtils.showShort(R.string.please_input_used_quota)
             return
         }
 
         launch {
             var accountModel = AppDatabase.getInstance().getAccountDao().queryAccountByType(accountType)
-            if (accountModel == null)
-            {
+            if (accountModel == null) {
                 accountModel = AccountModel(type = accountType, category = accountCategory, name = accountType.translate(), showInTotal = true)
             }
 
-            if (accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL || accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT)
-            {
+            if (accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CAPITAL || accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_INVESTMENT) {
                 accountModel.amount = amount ?: 0.0
-            }
-            else if (accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT)
-            {
+            } else if (accountCategory == AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT) {
                 accountModel.totalQuota = totalQuota ?: 0.0
                 accountModel.usedQuota = usedQuota ?: 0.0
             }

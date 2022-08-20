@@ -14,12 +14,10 @@ import com.lizl.wtmg.util.ActivityUtil
 import com.lxj.xpopup.core.BottomPopupView
 import kotlinx.android.synthetic.main.layout_money_traces_detail.view.*
 
-class PopupTracesDetail(context: Context, private val tracesModel: MoneyTracesModel) : BottomPopupView(context)
-{
+class PopupTracesDetail(context: Context, private val tracesModel: MoneyTracesModel) : BottomPopupView(context) {
     override fun getImplLayoutId() = R.layout.layout_money_traces_detail
 
-    override fun onCreate()
-    {
+    override fun onCreate() {
         popupInfo?.let {
             it.hasShadowBg = true
         }
@@ -32,8 +30,7 @@ class PopupTracesDetail(context: Context, private val tracesModel: MoneyTracesMo
         layout_traces_remarks.setMainText(tracesModel.remarks)
 
         layout_to_account_type.isVisible = tracesModel.transferToAccount.isNotBlank()
-        when (tracesModel.tracesCategory)
-        {
+        when (tracesModel.tracesCategory) {
             AppConstant.MONEY_TRACES_CATEGORY_TRANSFER -> layout_to_account_type.setMainText(tracesModel.transferToAccount.translate())
             AppConstant.MONEY_TRACES_CATEGORY_DEBT -> layout_to_account_type.setMainText(tracesModel.transferToAccount)
         }

@@ -16,26 +16,21 @@ import com.lizl.wtmg.util.ActivityUtil
 import com.lizl.wtmg.util.BiometricAuthenticationUtil
 import kotlinx.coroutines.delay
 
-class LockActivity : BaseActivity<ActivityLockBinding>(R.layout.activity_lock)
-{
+class LockActivity : BaseActivity<ActivityLockBinding>(R.layout.activity_lock) {
     private val input = StringBuilder()
 
-    override fun initView()
-    {
+    override fun initView() {
         dataBinding.rvNumberKeyList.adapter = NumberKeyAdapter().apply {
 
             setNewData(listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "E", "0", "R").toMutableList())
 
             setOnItemClickListener(true) { key ->
-                when (key)
-                {
-                    "E"  -> onBackPressed()
-                    "R"  -> input.clear()
-                    else ->
-                    {
+                when (key) {
+                    "E" -> onBackPressed()
+                    "R" -> input.clear()
+                    else -> {
                         input.append(key)
-                        if (input.toString() == ConfigUtil.getStringBlocking(ConfigConstant.CONFIG_APP_LOCK_PASSWORD))
-                        {
+                        if (input.toString() == ConfigUtil.getStringBlocking(ConfigConstant.CONFIG_APP_LOCK_PASSWORD)) {
                             onUnlock()
                         }
                     }
@@ -44,21 +39,18 @@ class LockActivity : BaseActivity<ActivityLockBinding>(R.layout.activity_lock)
         }
     }
 
-    override fun initListener()
-    {
+    override fun initListener() {
         dataBinding.ivFingerprint.setOnClickListener { startFingerprintAuthentication() }
     }
 
-    override fun onStart()
-    {
+    override fun onStart() {
         super.onStart()
         input.clear()
 
         launch {
             val appLockEnable = ConfigUtil.getBooleanBlocking(ConfigConstant.CONFIG_APP_LOCK_ENABLE)
             ui {
-                if (!appLockEnable)
-                {
+                if (!appLockEnable) {
                     onUnlock()
                 }
             }
@@ -67,8 +59,7 @@ class LockActivity : BaseActivity<ActivityLockBinding>(R.layout.activity_lock)
                     BiometricAuthenticationUtil.isFingerprintSupport() && ConfigUtil.getBooleanBlocking(ConfigConstant.CONFIG_FINGERPRINT_LOCK_ENABLE)
             ui {
                 dataBinding.ivFingerprint.isVisible = fingerprintEnable
-                if (appLockEnable && fingerprintEnable)
-                {
+                if (appLockEnable && fingerprintEnable) {
                     delay(200)
                     startFingerprintAuthentication()
                 }
@@ -76,23 +67,19 @@ class LockActivity : BaseActivity<ActivityLockBinding>(R.layout.activity_lock)
         }
     }
 
-    private fun onUnlock()
-    {
+    private fun onUnlock() {
         val lastActivity = ActivityUtil.getLastActivity()
-        if (lastActivity == null)
-        {
+        if (lastActivity == null) {
             ActivityUtil.turnToActivity(MainActivity::class.java)
         }
         finish()
     }
 
-    override fun onBackPressed()
-    {
+    override fun onBackPressed() {
         ActivityUtils.startHomeActivity()
     }
 
-    private fun startFingerprintAuthentication()
-    {
+    private fun startFingerprintAuthentication() {
         BiometricAuthenticationUtil.authenticate { result, error ->
             Log.d(TAG, "startFingerprintAuthentication() called with: result = [$result], error = [$error]")
             if (result) onUnlock()

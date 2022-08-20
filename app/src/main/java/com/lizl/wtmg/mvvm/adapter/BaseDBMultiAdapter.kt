@@ -4,17 +4,13 @@ import com.chad.library.adapter.base.BaseDelegateMultiAdapter
 import com.chad.library.adapter.base.delegate.BaseMultiTypeDelegate
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 
-abstract class BaseDBMultiAdapter<T, VH : BaseViewHolder>(data: MutableList<T>? = null) : BaseDelegateMultiAdapter<T, VH>(data)
-{
-    init
-    {
-        setMultiTypeDelegate(object : BaseMultiTypeDelegate<T>()
-                             {
-                                 override fun getItemType(data: List<T>, position: Int): Int
-                                 {
-                                     return registerItemType(data[position])
-                                 }
-                             })
+abstract class BaseDBMultiAdapter<T, VH : BaseViewHolder>(data: MutableList<T>? = null) : BaseDelegateMultiAdapter<T, VH>(data) {
+    init {
+        setMultiTypeDelegate(object : BaseMultiTypeDelegate<T>() {
+            override fun getItemType(data: List<T>, position: Int): Int {
+                return registerItemType(data[position])
+            }
+        })
 
         getMultiTypeDelegate()?.let {
             registerItemLayout().forEach { pair ->

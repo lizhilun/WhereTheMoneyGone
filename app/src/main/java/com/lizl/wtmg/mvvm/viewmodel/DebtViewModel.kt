@@ -17,13 +17,11 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlin.math.abs
 
-class DebtViewModel : ViewModel()
-{
+class DebtViewModel : ViewModel() {
     private val allDebtsPolymerizeLd = MutableLiveData<MutableList<PolymerizeGroupModel>>()
-    private val totalDebeLd = MutableLiveData<Double>()
+    private val totalDebtLd = MutableLiveData<Double>()
 
-    fun setDebtType(debtType: Int)
-    {
+    fun setDebtType(debtType: Int) {
         launch {
             AppDatabase.getInstance().getAccountDao().obAllAccount().flowOn(Dispatchers.IO).collectLatest { allAccountList ->
                 val polymerizeGroupList = mutableListOf<PolymerizeGroupModel>()
@@ -32,17 +30,18 @@ class DebtViewModel : ViewModel()
                     it.category == AppConstant.ACCOUNT_CATEGORY_TYPE_DEBT && ((debtType == DebtDetailActivity.DEBT_TYPE_TOTAL_BORROW_IN && it.amount < 0) || (debtType == DebtDetailActivity.DEBT_TYPE_TOTAL_BORROW_OUT && it.amount > 0))
                 }
 
-                totalDebeLd.postValue(abs(debtAccountList.sumOf { it.amount }))
+                totalDebtLd.postValue(abs(debtAccountList.sumOf { it.amount }))
 
                 debtAccountList.forEach { debtAccount ->
                     val polymerizeChildList = mutableListOf<PolymerizeChildModel>()
                     AppDatabase.getInstance().getMoneyTracesDao().queryTracesByAccount(debtAccount.type).forEach { tracesModel ->
                         polymerizeChildList.add(PolymerizeChildModel(tracesModel.tracesCategory.getIcon(),
-                                                                     tracesModel.tracesType.translate(),
-                                                                     tracesModel.amount.toAmountStr(),
-                                                                     tracesModel))
+                                tracesModel.tracesType.translate(),
+                                tracesModel.amount.toAmountStr(),
+                                tracesModel))
                     }
                     polymerizeGroupList.add(PolymerizeGroupModel(debtAccount.name, abs(debtAccount.amount).toAmountStr(), polymerizeChildList))
+                    allDebtsPolymerizeLd.postValue(polymerizeGroupList)
                 }
             }
         }
@@ -50,5 +49,5 @@ class DebtViewModel : ViewModel()
 
     fun obPolymerizeDebts(): LiveData<MutableList<PolymerizeGroupModel>> = allDebtsPolymerizeLd
 
-    fun obTotalDebt(): LiveData<Double> = totalDebeLd
+    fun obTotalDebt(): LiveData<Double> = totalDebtLd
 }

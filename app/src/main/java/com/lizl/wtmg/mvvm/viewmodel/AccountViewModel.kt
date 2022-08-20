@@ -17,30 +17,26 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flowOn
 
-class AccountViewModel : ViewModel()
-{
+class AccountViewModel : ViewModel() {
     private val allAccountsPolymerizeLd = MutableLiveData<MutableList<PolymerizeGroupModel>>()
     private val propertyOutlineLd = MutableLiveData<PropertyOutlineModel>()
 
-    init
-    {
+    init {
         launch {
             AppDatabase.getInstance().getAccountDao().obAllAccount().flowOn(Dispatchers.IO).debounce(200).collectLatest { allAccountList ->
                 val propertyOutlineModel = PropertyOutlineModel()
                 propertyOutlineModel.totalProperty = allAccountList.sumOf { it.amount }
                 propertyOutlineModel.netProperty = allAccountList.sumOf {
-                    when (it.category)
-                    {
+                    when (it.category) {
                         AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> 0 - it.usedQuota
-                        else                                     -> it.amount
+                        else -> it.amount
                     }
                 }
                 propertyOutlineModel.totalLiabilities = allAccountList.sumOf {
-                    when (it.category)
-                    {
+                    when (it.category) {
                         AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> it.usedQuota
-                        AppConstant.MONEY_TRACES_CATEGORY_DEBT   -> if (it.amount < 0) 0 - it.amount else 0.0
-                        else                                     -> 0.0
+                        AppConstant.MONEY_TRACES_CATEGORY_DEBT -> if (it.amount < 0) 0 - it.amount else 0.0
+                        else -> 0.0
                     }
                 }
                 propertyOutlineModel.totalBorrowOut =
@@ -55,18 +51,16 @@ class AccountViewModel : ViewModel()
 
                 val polymerizeGroupList = mutableListOf<PolymerizeGroupModel>()
                 allAccountList.filter { it.showInTotal }.groupBy { it.category }.forEach { (category, accountList) ->
-                    polymerizeGroupList.add(PolymerizeGroupModel(category.translate(), when (category)
-                    {
+                    polymerizeGroupList.add(PolymerizeGroupModel(category.translate(), when (category) {
                         AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> "${accountList.sumOf { it.usedQuota }.toAmountStr()}/${
                             accountList.sumOf { it.totalQuota }.toAmountStr()
                         }"
-                        else                                     -> accountList.sumOf { it.amount }.toAmountStr()
+                        else -> accountList.sumOf { it.amount }.toAmountStr()
                     }, mutableListOf<PolymerizeChildModel>().apply {
                         accountList.forEach { accountModel ->
-                            add(PolymerizeChildModel(accountModel.type.getIcon(), accountModel.type.translate(), when (category)
-                            {
+                            add(PolymerizeChildModel(accountModel.type.getIcon(), accountModel.type.translate(), when (category) {
                                 AppConstant.ACCOUNT_CATEGORY_TYPE_CREDIT -> "${accountModel.usedQuota.toAmountStr()}/${accountModel.totalQuota.toAmountStr()}"
-                                else                                     -> accountModel.amount.toAmountStr()
+                                else -> accountModel.amount.toAmountStr()
                             }, accountModel))
                         }
                     }))

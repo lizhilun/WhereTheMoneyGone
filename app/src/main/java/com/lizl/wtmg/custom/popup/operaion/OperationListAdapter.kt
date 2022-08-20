@@ -6,12 +6,10 @@ import com.lizl.wtmg.R
 import kotlinx.android.synthetic.main.item_operation.view.*
 
 class OperationListAdapter(operationList: List<OperationModel>) :
-    BaseQuickAdapter<OperationModel, BaseViewHolder>(R.layout.item_operation, operationList.toMutableList())
-{
+        BaseQuickAdapter<OperationModel, BaseViewHolder>(R.layout.item_operation, operationList.toMutableList()) {
     private var onOperationItemClickListener: (() -> Unit)? = null
 
-    override fun convert(helper: BaseViewHolder, item: OperationModel)
-    {
+    override fun convert(helper: BaseViewHolder, item: OperationModel) {
         with(helper.itemView) {
             tv_operation_name.text = item.operationName
             setOnClickListener {
@@ -21,8 +19,7 @@ class OperationListAdapter(operationList: List<OperationModel>) :
         }
     }
 
-    fun setOnOperationItemClickListener(onOperationItemClickListener: () -> Unit)
-    {
+    fun setOnOperationItemClickListener(onOperationItemClickListener: () -> Unit) {
         this.onOperationItemClickListener = onOperationItemClickListener
     }
 }

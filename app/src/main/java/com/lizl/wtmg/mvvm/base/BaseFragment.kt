@@ -12,20 +12,17 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
-open class BaseFragment<DB : ViewDataBinding>(private val layoutId: Int) : Fragment()
-{
+open class BaseFragment<DB : ViewDataBinding>(private val layoutId: Int) : Fragment() {
     protected var TAG = this.javaClass.simpleName
 
     protected lateinit var dataBinding: DB
 
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate")
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
-    {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.d(TAG, "onCreateView")
 
         dataBinding = DataBindingUtil.inflate(inflater, layoutId, container, false)
@@ -34,8 +31,7 @@ open class BaseFragment<DB : ViewDataBinding>(private val layoutId: Int) : Fragm
         return dataBinding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?)
-    {
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
         Log.d(TAG, "onActivityCreated")
 
         super.onActivityCreated(savedInstanceState)
@@ -45,71 +41,59 @@ open class BaseFragment<DB : ViewDataBinding>(private val layoutId: Int) : Fragm
         initListener()
     }
 
-    protected fun <T : ViewModel> createViewModel(clazz: Class<T>): T
-    {
+    protected fun <T : ViewModel> createViewModel(clazz: Class<T>): T {
         return ViewModelProvider(this).get(clazz)
     }
 
-    override fun onStart()
-    {
+    override fun onStart() {
         Log.d(TAG, "onStart")
         super.onStart()
     }
 
-    override fun onResume()
-    {
+    override fun onResume() {
         Log.d(TAG, "onResume")
         super.onResume()
     }
 
-    override fun onAttach(context: Context)
-    {
+    override fun onAttach(context: Context) {
         Log.d(TAG, "onAttach")
         super.onAttach(context)
     }
 
-    override fun onAttachFragment(childFragment: Fragment)
-    {
+    override fun onAttachFragment(childFragment: Fragment) {
         Log.d(TAG, "onAttachFragment")
         super.onAttachFragment(childFragment)
     }
 
-    override fun onPause()
-    {
+    override fun onPause() {
         Log.d(TAG, "onPause")
         super.onPause()
     }
 
-    override fun onStop()
-    {
+    override fun onStop() {
         Log.d(TAG, "onStop")
         super.onStop()
     }
 
-    override fun onDetach()
-    {
+    override fun onDetach() {
         Log.d(TAG, "onDetach")
         super.onDetach()
     }
 
-    override fun onDestroy()
-    {
+    override fun onDestroy() {
         Log.d(TAG, "onDestroy")
         super.onDestroy()
     }
 
-    open fun initView()
-    {
+    open fun initView() {
 
     }
 
-    open fun initData()
-    {
+    open fun initData() {
 
     }
 
-    open fun initListener()
-    {
+    open fun initListener() {
 
     }
 }

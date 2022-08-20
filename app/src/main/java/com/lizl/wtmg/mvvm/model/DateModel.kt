@@ -5,10 +5,8 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
-class DateModel(private val localDateTime: LocalDateTime)
-{
-    companion object
-    {
+class DateModel(private val localDateTime: LocalDateTime) {
+    companion object {
         private const val ZONE_OFFSET_ID = "+8"
 
         fun dayStart(year: Int, month: Int = 1, day: Int = 1) = DateModel(year, month, day)
@@ -42,14 +40,10 @@ class DateModel(private val localDateTime: LocalDateTime)
 
     fun minusMonth(months: Long) = DateModel(localDateTime.minusMonths(months))
 
-    fun toFormatString(showSecond: Boolean = false): String
-    {
-        return if (showSecond)
-        {
+    fun toFormatString(showSecond: Boolean = false): String {
+        return if (showSecond) {
             "%d-%02d-%02d %02d:%02d:%02d".format(getYear(), getMonth(), getDay(), getHour(), getMinute(), getSecond())
-        }
-        else
-        {
+        } else {
             "%d-%02d-%02d %02d:%02d".format(getYear(), getMonth(), getDay(), getHour(), getMinute())
         }
     }

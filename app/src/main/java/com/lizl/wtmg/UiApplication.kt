@@ -19,21 +19,19 @@ import com.lizl.wtmg.module.config.util.ConfigUtil
 import com.lizl.wtmg.module.skin.util.SkinUtil
 import com.lizl.wtmg.mvvm.activity.MoneyTracesRecordActivity
 
-class UiApplication : Application(), Thread.UncaughtExceptionHandler, ViewModelStoreOwner
-{
+class UiApplication : Application(), Thread.UncaughtExceptionHandler, ViewModelStoreOwner {
+
     private val TAG = "UiApplication"
 
     private val exceptionLogFilePath: String by lazy { PathUtils.getExternalAppFilesPath() + "/exception.log" }
 
     private lateinit var viewModelStore: ViewModelStore
 
-    companion object
-    {
+    companion object {
         lateinit var instance: UiApplication
     }
 
-    override fun onCreate()
-    {
+    override fun onCreate() {
         super.onCreate()
         viewModelStore = ViewModelStore()
         instance = this
@@ -55,8 +53,7 @@ class UiApplication : Application(), Thread.UncaughtExceptionHandler, ViewModelS
 
     override fun getViewModelStore() = viewModelStore
 
-    override fun uncaughtException(t: Thread, e: Throwable)
-    {
+    override fun uncaughtException(t: Thread, e: Throwable) {
         val exceptionInfo = Log.getStackTraceString(e)
         Log.d(TAG, "uncaughtException() called with: t = [$t], e = [$exceptionInfo]")
         launchDefault {
@@ -65,8 +62,7 @@ class UiApplication : Application(), Thread.UncaughtExceptionHandler, ViewModelS
         }
     }
 
-    private fun setupShortcuts()
-    {
+    private fun setupShortcuts() {
         val shortcutManager = getSystemService(ShortcutManager::class.java)
 
         val intent = Intent(this, MoneyTracesRecordActivity::class.java)

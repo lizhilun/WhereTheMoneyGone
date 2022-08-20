@@ -15,8 +15,7 @@ import com.lizl.wtmg.module.skin.view.SkinImageView
 import skin.support.constraint.SkinCompatConstraintLayout
 import skin.support.widget.SkinCompatEditText
 
-class AccountInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : SkinCompatConstraintLayout(context, attrs, defStyleAttr)
-{
+class AccountInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : SkinCompatConstraintLayout(context, attrs, defStyleAttr) {
     private val TAG = "AccountInputView"
 
     constructor(context: Context) : this(context, null)
@@ -31,19 +30,16 @@ class AccountInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int
 
     private var accountType = ""
 
-    init
-    {
+    init {
         initView(attrs)
     }
 
-    companion object
-    {
+    companion object {
         const val TEXT_GRAVITY_START = 1
         const val TEXT_GRAVITY_END = 2
     }
 
-    private fun initView(attrs: AttributeSet?)
-    {
+    private fun initView(attrs: AttributeSet?) {
         ivAccount.id = View.generateViewId()
         ivAccount.imageTintList = null
         addView(ivAccount)
@@ -71,10 +67,8 @@ class AccountInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int
         constraintSet.constrainWidth(coverView.id, LayoutParams.MATCH_PARENT)
         constraintSet.constrainHeight(coverView.id, LayoutParams.MATCH_PARENT)
 
-        when (typeArray.getInt(R.styleable.AccountInputView_textGravity, TEXT_GRAVITY_START))
-        {
-            TEXT_GRAVITY_START ->
-            {
+        when (typeArray.getInt(R.styleable.AccountInputView_textGravity, TEXT_GRAVITY_START)) {
+            TEXT_GRAVITY_START -> {
                 constraintSet.connect(ivAccount.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
                 constraintSet.connect(ivAccount.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
                 constraintSet.connect(ivAccount.id, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
@@ -84,8 +78,7 @@ class AccountInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int
 
                 etAccount.gravity = Gravity.START or Gravity.CENTER_VERTICAL
             }
-            TEXT_GRAVITY_END ->
-            {
+            TEXT_GRAVITY_END -> {
                 constraintSet.connect(ivAccount.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
                 constraintSet.connect(ivAccount.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
                 constraintSet.connect(ivAccount.id, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
@@ -104,8 +97,7 @@ class AccountInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int
         coverView.setOnClickListener { onLayoutClickListener?.invoke() }
     }
 
-    fun setInputEnable(enable: Boolean)
-    {
+    fun setInputEnable(enable: Boolean) {
         ivAccount.isVisible = false
         etAccount.setText("")
         etAccount.isEnabled = enable
@@ -113,21 +105,18 @@ class AccountInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int
         accountType = ""
     }
 
-    fun setHint(hint: String)
-    {
+    fun setHint(hint: String) {
         etAccount.hint = hint
     }
 
-    fun setAccountType(accountType: String)
-    {
+    fun setAccountType(accountType: String) {
         this.accountType = accountType
         ivAccount.isVisible = true
         ivAccount.setImageResource(accountType.getIcon())
         etAccount.setText(accountType.translate())
     }
 
-    fun setAccountName(accountName: String)
-    {
+    fun setAccountName(accountName: String) {
         this.accountType = ""
         etAccount.setText(accountName)
     }
@@ -136,8 +125,7 @@ class AccountInputView(context: Context, attrs: AttributeSet?, defStyleAttr: Int
 
     fun getInputAccountType() = if (accountType.isBlank()) etAccount.text.toString() else accountType
 
-    fun setOnLayoutClickListener(onLayoutClickListener: (() -> Unit)? = null)
-    {
+    fun setOnLayoutClickListener(onLayoutClickListener: (() -> Unit)? = null) {
         this.onLayoutClickListener = onLayoutClickListener
     }
 }

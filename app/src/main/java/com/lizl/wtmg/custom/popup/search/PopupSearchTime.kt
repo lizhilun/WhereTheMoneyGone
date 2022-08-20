@@ -9,12 +9,10 @@ import com.lizl.wtmg.mvvm.model.DateModel
 import com.lxj.xpopup.core.AttachPopupView
 import kotlinx.android.synthetic.main.popup_search_time.view.*
 
-class PopupSearchTime(context: Context, private val callback: (Int, Long, Long) -> Unit) : AttachPopupView(context)
-{
+class PopupSearchTime(context: Context, private val callback: (Int, Long, Long) -> Unit) : AttachPopupView(context) {
     override fun getImplLayoutId() = R.layout.popup_search_time
 
-    companion object
-    {
+    companion object {
         const val TIME_TYPE_CURRENT_MONTH = 1
         const val TIME_TYPE_LAST_MONTH = 2
         const val TIME_TYPE_CURRENT_YEAR = 3
@@ -26,8 +24,7 @@ class PopupSearchTime(context: Context, private val callback: (Int, Long, Long) 
     private var startTime = 0L
     private var endTime = 0L
 
-    override fun onCreate()
-    {
+    override fun onCreate() {
         popupInfo?.let {
             it.hasShadowBg = false
         }

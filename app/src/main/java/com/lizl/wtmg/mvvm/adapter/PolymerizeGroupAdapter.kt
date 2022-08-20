@@ -9,16 +9,13 @@ import com.lizl.wtmg.databinding.ItemPolymerizeGroupBinding
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeChildModel
 import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeGroupModel
 
-class PolymerizeGroupAdapter : BaseDBAdapter<PolymerizeGroupModel, BaseViewHolder, ItemPolymerizeGroupBinding>(R.layout.item_polymerize_group)
-{
-    companion object
-    {
+class PolymerizeGroupAdapter : BaseDBAdapter<PolymerizeGroupModel, BaseViewHolder, ItemPolymerizeGroupBinding>(R.layout.item_polymerize_group) {
+    companion object {
         private const val PAYLOAD_CHILD_LIST = "PAYLOAD_CHILD_LIST"
         private const val PAYLOAD_INFO = "PAYLOAD_INFO"
     }
 
-    init
-    {
+    init {
         setDiffCallback(CustomDiffUtil({ oldItem, newItem -> oldItem.name == newItem.name }, { oldItem, newItem -> oldItem == newItem }, { oldItem, newItem ->
             mutableListOf<String>().apply {
                 if (oldItem.info != newItem.info || oldItem.name != newItem.name) add(PAYLOAD_INFO)
@@ -31,8 +28,7 @@ class PolymerizeGroupAdapter : BaseDBAdapter<PolymerizeGroupModel, BaseViewHolde
 
     private var onChildItemLongClickListener: ((PolymerizeChildModel) -> Unit)? = null
 
-    override fun bindViewHolder(dataBinding: ItemPolymerizeGroupBinding, item: PolymerizeGroupModel)
-    {
+    override fun bindViewHolder(dataBinding: ItemPolymerizeGroupBinding, item: PolymerizeGroupModel) {
         with(dataBinding) {
 
             polymerizeGroupModel = item
@@ -46,38 +42,31 @@ class PolymerizeGroupAdapter : BaseDBAdapter<PolymerizeGroupModel, BaseViewHolde
         }
     }
 
-    override fun bindViewHolder(dataBinding: ItemPolymerizeGroupBinding, item: PolymerizeGroupModel, payloads: List<Any>)
-    {
+    override fun bindViewHolder(dataBinding: ItemPolymerizeGroupBinding, item: PolymerizeGroupModel, payloads: List<Any>) {
         with(dataBinding) {
             payloads.forEach { payloadList ->
-                if (payloadList !is MutableList<*>)
-                {
+                if (payloadList !is MutableList<*>) {
                     return@forEach
                 }
                 payloadList.forEach { payload ->
-                    when (payload)
-                    {
-                        PAYLOAD_CHILD_LIST ->
-                        {
-                            if (rvChildList.adapter is PolymerizeChildAdapter)
-                            {
+                    when (payload) {
+                        PAYLOAD_CHILD_LIST -> {
+                            if (rvChildList.adapter is PolymerizeChildAdapter) {
                                 (rvChildList.adapter as PolymerizeChildAdapter).setDiffNewData(item.childList)
                             }
                         }
-                        PAYLOAD_INFO       -> polymerizeGroupModel = item
+                        PAYLOAD_INFO -> polymerizeGroupModel = item
                     }
                 }
             }
         }
     }
 
-    fun setOnChildItemClickListener(onChildItemClickListener: (PolymerizeChildModel) -> Unit)
-    {
+    fun setOnChildItemClickListener(onChildItemClickListener: (PolymerizeChildModel) -> Unit) {
         this.onChildItemClickListener = onChildItemClickListener
     }
 
-    fun setOnChildItemLongClickListener(onChildItemLongClickListener: (PolymerizeChildModel) -> Unit)
-    {
+    fun setOnChildItemLongClickListener(onChildItemLongClickListener: (PolymerizeChildModel) -> Unit) {
         this.onChildItemLongClickListener = onChildItemLongClickListener
     }
 }

@@ -14,14 +14,12 @@ import com.lizl.wtmg.module.skin.view.SkinImageView
 import skin.support.constraint.SkinCompatConstraintLayout
 import skin.support.widget.SkinCompatTextView
 
-class TextViewWithDes(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : SkinCompatConstraintLayout(context, attrs, defStyleAttr)
-{
+class TextViewWithDes(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : SkinCompatConstraintLayout(context, attrs, defStyleAttr) {
     constructor(context: Context) : this(context, null)
 
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
-    companion object
-    {
+    companion object {
         const val VIEW_TYPE_TOP_BOTTOM = 1
         const val VIEW_TYPE_START_END = 2
     }
@@ -30,13 +28,11 @@ class TextViewWithDes(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
     private val tvMain = LayoutInflater.from(context).inflate(R.layout.layout_textview, null) as SkinCompatTextView
     private val ivRight = LayoutInflater.from(context).inflate(R.layout.layout_imageview, null) as SkinImageView
 
-    init
-    {
+    init {
         initView(context, attrs)
     }
 
-    private fun initView(context: Context, attrs: AttributeSet?)
-    {
+    private fun initView(context: Context, attrs: AttributeSet?) {
         tvDec.id = View.generateViewId()
         addView(tvDec)
 
@@ -65,10 +61,8 @@ class TextViewWithDes(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
         constraintSet.constrainWidth(ivRight.id, LayoutParams.WRAP_CONTENT)
         constraintSet.constrainHeight(ivRight.id, LayoutParams.WRAP_CONTENT)
 
-        when (typeArray.getInt(R.styleable.TextViewWithDes_viewType, VIEW_TYPE_TOP_BOTTOM))
-        {
-            VIEW_TYPE_START_END ->
-            {
+        when (typeArray.getInt(R.styleable.TextViewWithDes_viewType, VIEW_TYPE_TOP_BOTTOM)) {
+            VIEW_TYPE_START_END -> {
                 constraintSet.connect(tvDec.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
                 constraintSet.connect(tvDec.id, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
                 constraintSet.connect(tvDec.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
@@ -81,8 +75,7 @@ class TextViewWithDes(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
                 constraintSet.connect(ivRight.id, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
                 constraintSet.connect(ivRight.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
             }
-            VIEW_TYPE_TOP_BOTTOM ->
-            {
+            VIEW_TYPE_TOP_BOTTOM -> {
                 constraintSet.connect(tvDec.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
                 constraintSet.connect(tvDec.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
                 constraintSet.connect(tvDec.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
@@ -103,13 +96,11 @@ class TextViewWithDes(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
         typeArray.recycle()
     }
 
-    fun setDecText(text: String)
-    {
+    fun setDecText(text: String) {
         tvDec.text = text
     }
 
-    fun setMainText(text: String)
-    {
+    fun setMainText(text: String) {
         tvMain.text = text
     }
 }

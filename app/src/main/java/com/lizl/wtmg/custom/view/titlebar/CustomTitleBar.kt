@@ -9,22 +9,19 @@ import com.lizl.wtmg.R
 import com.lizl.wtmg.custom.view.StatusBarPlaceholder
 import kotlinx.android.synthetic.main.layout_custom_title_bar.view.*
 
-class CustomTitleBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : LinearLayout(context, attrs, defStyleAttr)
-{
+class CustomTitleBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : LinearLayout(context, attrs, defStyleAttr) {
     private var onBackBtnClickListener: (() -> Unit)? = null
 
     constructor(context: Context) : this(context, null)
 
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
-    init
-    {
+    init {
         orientation = VERTICAL
         initView(context, attrs)
     }
 
-    private fun initView(context: Context, attrs: AttributeSet?)
-    {
+    private fun initView(context: Context, attrs: AttributeSet?) {
         addView(StatusBarPlaceholder(context))
 
         LayoutInflater.from(context).inflate(R.layout.layout_custom_title_bar, null).apply {
@@ -41,18 +38,15 @@ class CustomTitleBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
         }
     }
 
-    fun setTitle(text: String)
-    {
+    fun setTitle(text: String) {
         tv_title.text = text
     }
 
-    fun setActionList(btnList: List<TitleBarBtnBean.BaseBtnBean>)
-    {
+    fun setActionList(btnList: List<TitleBarBtnBean.BaseBtnBean>) {
         rv_action_list.adapter = TitleBarBtnListAdapter(btnList)
     }
 
-    fun setOnBackBtnClickListener(onBackBtnClickListener: () -> Unit)
-    {
+    fun setOnBackBtnClickListener(onBackBtnClickListener: () -> Unit) {
         this.onBackBtnClickListener = onBackBtnClickListener
     }
 }

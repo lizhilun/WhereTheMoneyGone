@@ -18,8 +18,7 @@ import java.util.*
 /**
  * 文件工具类
  */
-object FileUtil
-{
+object FileUtil {
     private const val sBufferSize = 524288
     private const val TAG = "FileUtil"
 
@@ -42,58 +41,40 @@ object FileUtil
      * 读TXT文件内容
      * @par
      */
-    fun readTxtFile(fileUrl: Uri): String
-    {
-        if (fileUrl.scheme == ContentResolver.SCHEME_CONTENT)
-        {
-            try
-            {
+    fun readTxtFile(fileUrl: Uri): String {
+        if (fileUrl.scheme == ContentResolver.SCHEME_CONTENT) {
+            try {
                 var os: ByteArrayOutputStream? = null
                 val context = ActivityUtils.getTopActivity() ?: return ""
-                val inputStream = context.contentResolver.openInputStream(fileUrl)?.buffered() ?: return ""
-                try
-                {
+                val inputStream = context.contentResolver.openInputStream(fileUrl)?.buffered()
+                        ?: return ""
+                try {
                     os = ByteArrayOutputStream()
                     val b = ByteArray(sBufferSize)
                     var len: Int
-                    while (inputStream.read(b, 0, sBufferSize).also { len = it } != -1)
-                    {
+                    while (inputStream.read(b, 0, sBufferSize).also { len = it } != -1) {
                         os.write(b, 0, len)
                     }
                     return String(os.toByteArray())
-                }
-                catch (e: IOException)
-                {
+                } catch (e: IOException) {
                     e.printStackTrace()
-                }
-                finally
-                {
-                    try
-                    {
+                } finally {
+                    try {
                         inputStream.close()
-                    }
-                    catch (e: IOException)
-                    {
+                    } catch (e: IOException) {
                         e.printStackTrace()
                     }
-                    try
-                    {
+                    try {
                         os?.close()
-                    }
-                    catch (e: IOException)
-                    {
+                    } catch (e: IOException) {
                         e.printStackTrace()
                     }
                 }
-            }
-            catch (e: FileNotFoundException)
-            {
+            } catch (e: FileNotFoundException) {
                 e.printStackTrace()
             }
             return ""
-        }
-        else if (fileUrl.scheme == ContentResolver.SCHEME_CONTENT || fileUrl.scheme == ContentResolver.SCHEME_FILE)
-        {
+        } else if (fileUrl.scheme == ContentResolver.SCHEME_CONTENT || fileUrl.scheme == ContentResolver.SCHEME_FILE) {
             val filePath = fileUrl.path ?: return ""
             return readTxtFile(filePath)
         }
@@ -113,41 +94,34 @@ object FileUtil
     /**
      * 获取文件uri
      */
-    private fun getFileUri(file: File): Uri
-    {
+    private fun getFileUri(file: File): Uri {
         return FileProvider.getUriForFile(ActivityUtils.getTopActivity(), "com.lizl.wtmg.fileprovider", file);
     }
 
     /**
      * 获取文件大小
      */
-    fun getFileSize(file: File): String
-    {
+    fun getFileSize(file: File): String {
         val len = FileUtils.getFileLength(file)
-        return when
-        {
-            len < 0                  -> "0B"
-            len < 1024               -> "%.1fB".format(len.toDouble())
-            len < 1024 * 1024        -> "%.1fKB".format(len.toDouble() / 1024)
+        return when {
+            len < 0 -> "0B"
+            len < 1024 -> "%.1fB".format(len.toDouble())
+            len < 1024 * 1024 -> "%.1fKB".format(len.toDouble() / 1024)
             len < 1024 * 1024 * 1024 -> "%.1fMB".format(len.toDouble() / (1024 * 1024))
-            else                     -> "%.1fGB".format(len.toDouble() / (1024 * 1024 * 1024))
+            else -> "%.1fGB".format(len.toDouble() / (1024 * 1024 * 1024))
         }
     }
 
     /**
      * 分享所有类型的文件
      */
-    fun shareAllTypeFile(file: File)
-    {
-        try
-        {
+    fun shareAllTypeFile(file: File) {
+        try {
             val shareIntent = Intent(Intent.ACTION_SEND)
             shareIntent.putExtra(Intent.EXTRA_STREAM, getFileUri(file))
             shareIntent.type = "*/*"; //此处可发送多种文件
             ActivityUtils.getTopActivity().startActivity(Intent.createChooser(shareIntent, ""))
-        }
-        catch (e: Exception)
-        {
+        } catch (e: Exception) {
             Log.e(TAG, "shareAllTypeFile error:", e)
         }
     }

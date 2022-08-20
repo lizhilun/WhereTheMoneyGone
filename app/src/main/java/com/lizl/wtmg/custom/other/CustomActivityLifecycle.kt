@@ -12,62 +12,48 @@ import com.lizl.wtmg.module.skin.util.SkinUtil
 import com.lizl.wtmg.mvvm.activity.LockActivity
 import com.lizl.wtmg.util.ActivityUtil
 
-object CustomActivityLifecycle : Application.ActivityLifecycleCallbacks
-{
+object CustomActivityLifecycle : Application.ActivityLifecycleCallbacks {
     var isFromActivityResult = false
 
     private var lastAppStopTime = 0L
 
-    init
-    {
-        AppUtils.registerAppStatusChangedListener(this, object : Utils.OnAppStatusChangedListener
-        {
-            override fun onForeground()
-            {
-                if (isFromActivityResult || ActivityUtils.getTopActivity() is LockActivity)
-                {
+    init {
+        AppUtils.registerAppStatusChangedListener(this, object : Utils.OnAppStatusChangedListener {
+            override fun onForeground() {
+                if (isFromActivityResult || ActivityUtils.getTopActivity() is LockActivity) {
                     return
                 }
-                if (TimeUtils.getNowMills() - lastAppStopTime <= 30_000)
-                {
+                if (TimeUtils.getNowMills() - lastAppStopTime <= 30_000) {
                     return
                 }
                 ActivityUtil.turnToActivity(LockActivity::class.java)
             }
 
-            override fun onBackground()
-            {
+            override fun onBackground() {
                 lastAppStopTime = TimeUtils.getNowMills()
             }
         })
     }
 
-    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?)
-    {
+    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         launchDefault { SkinUtil.updateStatusBarLightMode(activity) }
     }
 
-    override fun onActivityStarted(activity: Activity)
-    {
+    override fun onActivityStarted(activity: Activity) {
     }
 
-    override fun onActivityResumed(activity: Activity)
-    {
+    override fun onActivityResumed(activity: Activity) {
     }
 
-    override fun onActivityPaused(activity: Activity)
-    {
+    override fun onActivityPaused(activity: Activity) {
     }
 
-    override fun onActivityStopped(activity: Activity)
-    {
+    override fun onActivityStopped(activity: Activity) {
     }
 
-    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle)
-    {
+    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
     }
 
-    override fun onActivityDestroyed(activity: Activity)
-    {
+    override fun onActivityDestroyed(activity: Activity) {
     }
 }

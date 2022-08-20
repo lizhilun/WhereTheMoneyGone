@@ -105,6 +105,7 @@
     <string name="jdbt">京东白条</string>
     <string name="cmb">招商银行</string>
     <string name="cmbc">民生银行</string>
+    <string name="wrcb">武汉农村商业银行</string>
 
     <string name="capital_account">资金账户</string>
     <string name="credit_account">信用账户</string>

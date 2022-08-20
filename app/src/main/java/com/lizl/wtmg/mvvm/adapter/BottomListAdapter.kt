@@ -9,21 +9,18 @@ import com.lizl.wtmg.mvvm.model.polymerize.PolymerizeModel
 import kotlinx.android.synthetic.main.item_bottom_polymerize_child.view.*
 import kotlinx.android.synthetic.main.item_bottom_polymerize_group.view.*
 
-class BottomListAdapter(bottomList: MutableList<PolymerizeModel>) : BaseDBMultiAdapter<PolymerizeModel, BaseViewHolder>(bottomList)
-{
-    companion object
-    {
+class BottomListAdapter(bottomList: MutableList<PolymerizeModel>) : BaseDBMultiAdapter<PolymerizeModel, BaseViewHolder>(bottomList) {
+    companion object {
         private const val ITEM_TYPE_GROUP = 1
         private const val ITEM_TYPE_CHILD = 2
     }
 
     private var onChildItemClickListener: ((PolymerizeChildModel) -> Unit)? = null
 
-    override fun registerItemType(item: PolymerizeModel) = when (item)
-    {
+    override fun registerItemType(item: PolymerizeModel) = when (item) {
         is PolymerizeGroupModel -> ITEM_TYPE_GROUP
         is PolymerizeChildModel -> ITEM_TYPE_CHILD
-        else                    -> ITEM_TYPE_CHILD
+        else -> ITEM_TYPE_CHILD
     }
 
     override fun registerItemLayout() = mutableListOf<Pair<Int, Int>>().apply {
@@ -31,13 +28,10 @@ class BottomListAdapter(bottomList: MutableList<PolymerizeModel>) : BaseDBMultiA
         add(Pair(ITEM_TYPE_CHILD, R.layout.item_bottom_polymerize_child))
     }
 
-    override fun convert(helper: BaseViewHolder, item: PolymerizeModel)
-    {
+    override fun convert(helper: BaseViewHolder, item: PolymerizeModel) {
         with(helper.itemView) {
-            when (item)
-            {
-                is PolymerizeGroupModel ->
-                {
+            when (item) {
+                is PolymerizeGroupModel -> {
                     tv_group_name.text = item.name
                     tv_group_info.text = item.info
 
@@ -46,8 +40,7 @@ class BottomListAdapter(bottomList: MutableList<PolymerizeModel>) : BaseDBMultiA
 
                     childListAdapter.setOnChildItemClickListener { onChildItemClickListener?.invoke(it) }
                 }
-                is PolymerizeChildModel ->
-                {
+                is PolymerizeChildModel -> {
                     iv_child_icon.isVisible = item.icon != null
                     item.icon?.let { iv_child_icon.setImageResource(it) }
 
@@ -59,8 +52,7 @@ class BottomListAdapter(bottomList: MutableList<PolymerizeModel>) : BaseDBMultiA
         }
     }
 
-    fun setOnChildItemClickListener(onChildItemClickListener: (PolymerizeChildModel) -> Unit)
-    {
+    fun setOnChildItemClickListener(onChildItemClickListener: (PolymerizeChildModel) -> Unit) {
         this.onChildItemClickListener = onChildItemClickListener
     }
 }
